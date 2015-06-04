@@ -25,7 +25,7 @@ public class AbstractController {
     public ModelAndView panic(Throwable oops) {
         ModelAndView result;
 
-        result = new ModelAndView("misc/panic");
+         result = new ModelAndView("misc/panic");
         result.addObject("name", ClassUtils.getShortName(oops.getClass()));
         result.addObject("exception", oops.getMessage());
         result.addObject("stackTrace", ExceptionUtils.getStackTrace(oops));
