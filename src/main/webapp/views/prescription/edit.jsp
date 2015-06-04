@@ -33,10 +33,10 @@
 	<li><b><spring:message code="prescription.description" /></b> 
 	<jstl:out value="${prescription.description}"></jstl:out></li>
 
-</ul><%-- 
+</ul>
 <security:authorize access="hasRole('PATIENT')">
 		<a href="prescription/patient/print.do?prescriptionId=${prescription.id}"><spring:message code="prescription.print" /></a>
-		</security:authorize>  --%>
+		</security:authorize> 
 
 </jstl:if>
 

@@ -124,59 +124,59 @@ public class OfferPatientController extends AbstractController {
 		return result;
 	}
 
-//	@RequestMapping(value = "/print", method = RequestMethod.GET)
-//	public void print(HttpServletResponse response, @RequestParam int offerId)
-//			throws IOException {
-//		try {
-//			Offer offer;
-//			offer = offerService.findOneToEdit(offerId);
-//			Document document = new Document();
-//
-//			response.setHeader("Content-Disposition", "attachment;filename="
-//					+ offer.getTitle() + ".pdf");
-//			PdfWriter.getInstance(document, response.getOutputStream());
-//
-//			Paragraph parrafo = new Paragraph();
-//			document.open();
-//
-//			Chunk chunkTitle = new Chunk(offer.getTitle(), FontFactory.getFont(
-//					FontFactory.COURIER, 20, Font.TIMES_ROMAN, Color.BLACK));
-//			chunkTitle.setBackground(Color.GREEN);
-//			Chunk chunkDescription = new Chunk(offer.getDescription(),
-//					FontFactory.getFont(FontFactory.COURIER, 20,
-//							Font.TIMES_ROMAN, Color.BLACK));
-//			Chunk chunkStartMoment = new Chunk("Inicio: "
-//					+ offer.getStartMoment().toString(), FontFactory.getFont(
-//					FontFactory.COURIER, 14, Font.TIMES_ROMAN, Color.BLACK));
-//			Chunk chunkFinishMoment = new Chunk("Final: "
-//					+ offer.getFinishMoment().toString(), FontFactory.getFont(
-//					FontFactory.COURIER, 14, Font.TIMES_ROMAN, Color.BLACK));
-//			Chunk chunkEnrolles = new Chunk("Suscritos: "
-//					+ offer.getEnrollees(), FontFactory.getFont(
-//					FontFactory.COURIER, 14, Font.TIMES_ROMAN, Color.BLACK));
-//			Chunk chunkAmountPerson = new Chunk("Aforo: "
-//					+ offer.getAmountPerson(), FontFactory.getFont(
-//					FontFactory.COURIER, 14, Font.TIMES_ROMAN, Color.BLACK));
-//
-//			document.add(parrafo);
-//			document.add(chunkTitle);
-//			document.add(parrafo);
-//			document.add(chunkDescription);
-//			document.add(parrafo);
-//			document.add(chunkStartMoment);
-//			document.add(parrafo);
-//			document.add(chunkFinishMoment);
-//			document.add(parrafo);
-//			document.add(chunkEnrolles);
-//			document.add(parrafo);
-//			document.add(chunkAmountPerson);
-//			document.add(parrafo);
-//
-//			document.close();
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
+	@RequestMapping(value = "/print", method = RequestMethod.GET)
+	public void print(HttpServletResponse response, @RequestParam int offerId)
+			throws IOException {
+		try {
+			Offer offer;
+			offer = offerService.findOneToEdit(offerId);
+			Document document = new Document();
+
+			response.setHeader("Content-Disposition", "attachment;filename="
+					+ offer.getTitle() + ".pdf");
+			PdfWriter.getInstance(document, response.getOutputStream());
+
+			Paragraph parrafo = new Paragraph();
+			document.open();
+
+			Chunk chunkTitle = new Chunk(offer.getTitle(), FontFactory.getFont(
+					FontFactory.COURIER, 20, Font.TIMES_ROMAN, Color.BLACK));
+			chunkTitle.setBackground(Color.GREEN);
+			Chunk chunkDescription = new Chunk(offer.getDescription(),
+					FontFactory.getFont(FontFactory.COURIER, 20,
+							Font.TIMES_ROMAN, Color.BLACK));
+			Chunk chunkStartMoment = new Chunk("Inicio: "
+					+ offer.getStartMoment().toString(), FontFactory.getFont(
+					FontFactory.COURIER, 14, Font.TIMES_ROMAN, Color.BLACK));
+			Chunk chunkFinishMoment = new Chunk("Final: "
+					+ offer.getFinishMoment().toString(), FontFactory.getFont(
+					FontFactory.COURIER, 14, Font.TIMES_ROMAN, Color.BLACK));
+			Chunk chunkEnrolles = new Chunk("Suscritos: "
+					+ offer.getEnrollees(), FontFactory.getFont(
+					FontFactory.COURIER, 14, Font.TIMES_ROMAN, Color.BLACK));
+			Chunk chunkAmountPerson = new Chunk("Aforo: "
+					+ offer.getAmountPerson(), FontFactory.getFont(
+					FontFactory.COURIER, 14, Font.TIMES_ROMAN, Color.BLACK));
+
+			document.add(parrafo);
+			document.add(chunkTitle);
+			document.add(parrafo);
+			document.add(chunkDescription);
+			document.add(parrafo);
+			document.add(chunkStartMoment);
+			document.add(parrafo);
+			document.add(chunkFinishMoment);
+			document.add(parrafo);
+			document.add(chunkEnrolles);
+			document.add(parrafo);
+			document.add(chunkAmountPerson);
+			document.add(parrafo);
+
+			document.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 }

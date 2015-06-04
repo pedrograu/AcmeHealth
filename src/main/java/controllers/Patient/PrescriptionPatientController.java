@@ -82,39 +82,39 @@ public class PrescriptionPatientController extends AbstractController {
 		return result;
 	}
 	
-//	@RequestMapping(value="/print", method = RequestMethod.GET)
-//	public void print(HttpServletResponse response, @RequestParam int prescriptionId) throws IOException {
-//		try{
-//			Prescription prescription;
-//			prescription = prescriptionService.findOneToEdit(prescriptionId);
-//			Document document = new Document();
-//			response.setHeader("Content-Disposition","attachment;filename="+prescription.getTitle());
-//			PdfWriter.getInstance(document, response.getOutputStream());
-//			document.open();
-//			Chunk chunkTitle = new Chunk(prescription.getTitle(), FontFactory.getFont(
-//					FontFactory.COURIER, 20, Font.TIMES_ROMAN, Color.BLACK));
-//
-//			Paragraph parrafo = new Paragraph();
-//
-//			Chunk chunkDescription = new Chunk(prescription.getDescription(), FontFactory.getFont(
-//					FontFactory.COURIER, 14, Font.TIMES_ROMAN, Color.BLACK));
-//			Chunk chunkprice = new Chunk("Precio: "+prescription.getPrice().toString(), FontFactory.getFont(
-//					FontFactory.COURIER, 14, Font.TIMES_ROMAN, Color.BLACK));
-//			Chunk chunkSpecialist = new Chunk("Especialista: "+prescription.getAppointment().getSpecialist().getName()+" en "+prescription.getAppointment().getSpecialist().getSpecialty().getName(), FontFactory.getFont(
-//					FontFactory.COURIER, 14, Font.TIMES_ROMAN, Color.BLACK));
-//			chunkTitle.setBackground(Color.BLUE);
-//			document.add(chunkTitle);		
-//			document.add(parrafo);
-//			document.add(chunkDescription);
-//			document.add(parrafo);
-//			document.add(chunkprice);
-//			document.add(parrafo);
-//			document.add(chunkSpecialist);
-//
-//			document.close();
-//			
-//		}catch (Exception e){
-//			e.printStackTrace();
-//		}
-//	}
+	@RequestMapping(value="/print", method = RequestMethod.GET)
+	public void print(HttpServletResponse response, @RequestParam int prescriptionId) throws IOException {
+		try{
+			Prescription prescription;
+			prescription = prescriptionService.findOneToEdit(prescriptionId);
+			Document document = new Document();
+			response.setHeader("Content-Disposition","attachment;filename="+prescription.getTitle());
+			PdfWriter.getInstance(document, response.getOutputStream());
+			document.open();
+			Chunk chunkTitle = new Chunk(prescription.getTitle(), FontFactory.getFont(
+					FontFactory.COURIER, 20, Font.TIMES_ROMAN, Color.BLACK));
+
+			Paragraph parrafo = new Paragraph();
+
+			Chunk chunkDescription = new Chunk(prescription.getDescription(), FontFactory.getFont(
+					FontFactory.COURIER, 14, Font.TIMES_ROMAN, Color.BLACK));
+			Chunk chunkprice = new Chunk("Precio: "+prescription.getPrice().toString(), FontFactory.getFont(
+					FontFactory.COURIER, 14, Font.TIMES_ROMAN, Color.BLACK));
+			Chunk chunkSpecialist = new Chunk("Especialista: "+prescription.getAppointment().getSpecialist().getName()+" en "+prescription.getAppointment().getSpecialist().getSpecialty().getName(), FontFactory.getFont(
+					FontFactory.COURIER, 14, Font.TIMES_ROMAN, Color.BLACK));
+			chunkTitle.setBackground(Color.BLUE);
+			document.add(chunkTitle);		
+			document.add(parrafo);
+			document.add(chunkDescription);
+			document.add(parrafo);
+			document.add(chunkprice);
+			document.add(parrafo);
+			document.add(chunkSpecialist);
+
+			document.close();
+			
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+	}
 }

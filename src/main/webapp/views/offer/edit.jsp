@@ -80,7 +80,7 @@
 			<li><b><spring:message code="offer.enrollees" /></b>
 				<jstl:out value="${offer.enrollees}"></jstl:out></li>
 		</ul> 
-		<%-- <security:authorize access="hasRole('PATIENT')">
+		<security:authorize access="hasRole('PATIENT')">
 		<a href="offer/patient/print.do?offerId=${offer.id}"><spring:message code="offer.print" /></a>
-		</security:authorize>  --%>
+		</security:authorize> 
 	</jstl:if>
