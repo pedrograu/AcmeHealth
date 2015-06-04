@@ -22,115 +22,110 @@ import forms.CommentForm;
 @RequestMapping("/comment/patient")
 public class CommentPatientController extends AbstractController {
 
-	// Services -----------------------------------------------------------
+    // Services -----------------------------------------------------------
 
-	@Autowired
-	private CommentService commentService;
+    @Autowired
+    private CommentService commentService;
 
-	@Autowired
-	private ProfileService profileService;
+    @Autowired
+    private ProfileService profileService;
 
-	// Constructors -----------------------------------------------------------
+    // Constructors -----------------------------------------------------------
 
-	public CommentPatientController() {
-		super();
-	}
+    public CommentPatientController() {
+        super();
+    }
 
-	// List ------------------------------------------------------------------
+    // List ------------------------------------------------------------------
 
-	// Edit........................
+    // Edit........................
 
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create(@RequestParam int profileId) {
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public ModelAndView create(@RequestParam int profileId) {
 
-		ModelAndView result;
+        ModelAndView result;
 
-		Profile profile = profileService.findOneToEdit(profileId);
-		CommentForm commentForm = new CommentForm();
-		commentForm.setProfile(profile);
-		// Comment i = commentService.create();
+        Profile profile = profileService.findOneToEdit(profileId);
+        CommentForm commentForm = new CommentForm();
+        commentForm.setProfile(profile);
+        // Comment i = commentService.create();
 
-		result = createEditModelAndView(commentForm);
-		result.addObject("details", false);
-		result.addObject("commentForm", commentForm);
+        result = createEditModelAndView(commentForm);
+        result.addObject("details", false);
+        result.addObject("commentForm", commentForm);
 
-		return result;
-	}
+        return result;
+    }
 
+    @RequestMapping(value = "/details", method = RequestMethod.GET)
+    public ModelAndView details(@RequestParam int commentId) {
 
-	@RequestMapping(value = "/details", method = RequestMethod.GET)
-	public ModelAndView details(@RequestParam int commentId) {
+        ModelAndView result;
+        Comment comment = commentService.findOneToEdit(commentId);
 
-		ModelAndView result;
-		Comment comment = commentService.findOneToEdit(commentId);
+        result = new ModelAndView("comment/edit");
+        result.addObject("comment", comment);
+        result.addObject("details", true);
+        result.addObject("requestURI", "comment/patient/details.do?commentId=" + comment.getId());
 
-		result = new ModelAndView("comment/edit");
-		result.addObject("comment", comment);
-		result.addObject("details", true);
-		result.addObject("requestURI", "comment/patient/details.do?commentId="+ comment.getId());
+        return result;
+    }
 
-		return result;
-	}
+    @RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+    public ModelAndView save(@Valid CommentForm commentForm, BindingResult binding) {
 
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid CommentForm commentForm,
-			BindingResult binding) {
+        ModelAndView result;
+        Comment comment;
 
-		ModelAndView result;
-		Comment comment;
+        if (binding.hasErrors()) {
+            result = createEditModelAndView(commentForm);
+        } else {
+            try {
+                comment = commentService.recontructor(commentForm);
+                commentService.save(comment);
+                result = new ModelAndView("redirect:../../profile/patient/details.do?specialistId="
+                        + commentForm.getProfile().getSpecialist().getId());
 
-		if (binding.hasErrors()) {
-			result = createEditModelAndView(commentForm);
-		} else {
-			try {
-				comment = commentService.recontructor(commentForm);
-				commentService.save(comment);
-				result = new ModelAndView(
-						"redirect:../../profile/patient/details.do?specialistId="+commentForm.getProfile().getSpecialist().getId());
+            } catch (Throwable oops) {
+                result = createEditModelAndView(commentForm, "comment.commit.error");
+            }
+        }
 
-			} catch (Throwable oops) {
-				result = createEditModelAndView(commentForm,
-						"comment.commit.error");
-			}
-		}
+        return result;
 
-		return result;
+    }
 
-	}
+    // Ancillary methods ------------------------------------------------------
 
-	// Ancillary methods ------------------------------------------------------
+    protected ModelAndView createEditModelAndView(CommentForm i) {
+        assert i != null;
+        ModelAndView result;
 
-	protected ModelAndView createEditModelAndView(CommentForm i) {
-		assert i != null;
-		ModelAndView result;
+        result = createEditModelAndView(i, null);
 
-		result = createEditModelAndView(i, null);
+        return result;
+    }
 
-		return result;
-	}
+    protected ModelAndView createEditModelAndView(CommentForm commentForm, String message) {
 
-	protected ModelAndView createEditModelAndView(CommentForm commentForm,
-			String message) {
+        Assert.notNull(commentForm);
+        ModelAndView result;
+        Profile profile = commentForm.getProfile();
+        Comment comment = commentService.findOneToEdit(commentForm.getId());
 
-		Assert.notNull(commentForm);
-		ModelAndView result;
-		Profile profile = commentForm.getProfile();
-		Comment comment = commentService.findOneToEdit(commentForm.getId());
+        result = new ModelAndView("comment/edit");
+        result.addObject("requestURI", "comment/patient/edit.do?commentId=" + commentForm.getId());
+        if (commentForm.getId() == 0) {
+            result.addObject("details", false);
+        } else {
+            result.addObject("details", true);
+        }
+        result.addObject("comment", comment);
+        result.addObject("profile", profile);
+        result.addObject("message", message);
+        result.addObject("commentForm", commentForm);
 
-		result = new ModelAndView("comment/edit");
-		result.addObject("requestURI", "comment/patient/edit.do?commentId="
-				+ commentForm.getId());
-		if(commentForm.getId()==0){
-			result.addObject("details", false);
-		}else{
-			result.addObject("details", true);
-		}
-		result.addObject("comment", comment);
-		result.addObject("profile", profile);
-		result.addObject("message", message);
-		result.addObject("commentForm", commentForm);
-
-		return result;
-	}
+        return result;
+    }
 
 }

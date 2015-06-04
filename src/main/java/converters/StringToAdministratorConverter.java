@@ -11,28 +11,28 @@ import repositories.*;
 
 @Component
 @Transactional
-public class StringToAdministratorConverter implements Converter<String, Administrator>{
-	
-	@Autowired
-	AdministratorRepository administratorRepository;
+public class StringToAdministratorConverter implements Converter<String, Administrator> {
 
-	@Override
-	public Administrator convert(String text) {
-		Administrator result;
-		int id;
+    @Autowired
+    AdministratorRepository administratorRepository;
 
-		try {
-			if (StringUtils.isEmpty(text))
-				result = null;
-			else {
-				id = Integer.valueOf(text);
-				result = administratorRepository.findOne(id);
-			}
-		} catch (Throwable oops) {
-			throw new IllegalArgumentException(oops);
-		}
+    @Override
+    public Administrator convert(String text) {
+        Administrator result;
+        int id;
 
-		return result;
-	}
+        try {
+            if (StringUtils.isEmpty(text))
+                result = null;
+            else {
+                id = Integer.valueOf(text);
+                result = administratorRepository.findOne(id);
+            }
+        } catch (Throwable oops) {
+            throw new IllegalArgumentException(oops);
+        }
+
+        return result;
+    }
 
 }

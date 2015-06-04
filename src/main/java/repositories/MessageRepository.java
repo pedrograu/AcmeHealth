@@ -9,12 +9,12 @@ import org.springframework.stereotype.Repository;
 import domain.Message;
 
 @Repository
-public interface MessageRepository extends JpaRepository<Message, Integer>{
-	
-	@Query("select m from Message m where m.recipient.id = ?1")
-	Collection<Message> getMessageInbox(int id);
+public interface MessageRepository extends JpaRepository<Message, Integer> {
 
-	@Query("select m from Message m where m.sender.id = ?1")
-	Collection<Message> getMessageOutbox(int id);
+    @Query("select m from Message m where m.recipient.id = ?1")
+    Collection<Message> getMessageInbox(int id);
+
+    @Query("select m from Message m where m.sender.id = ?1")
+    Collection<Message> getMessageOutbox(int id);
 
 }

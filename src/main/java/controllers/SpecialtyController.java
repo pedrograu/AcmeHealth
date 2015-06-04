@@ -18,87 +18,79 @@ import services.SpecialtyService;
 
 @Controller
 @RequestMapping("/specialty")
-public class SpecialtyController extends AbstractController{
-	
-	@Autowired
-	private SpecialtyService specialtyService;
-	
-	@Autowired
-	private SpecialistService specialistService;
+public class SpecialtyController extends AbstractController {
 
+    @Autowired
+    private SpecialtyService specialtyService;
 
-	public SpecialtyController() {
-		super();
-	}
-	
-	// Listing.....................
+    @Autowired
+    private SpecialistService specialistService;
 
+    public SpecialtyController() {
+        super();
+    }
 
-		@RequestMapping(value = "/list-all", method = RequestMethod.GET)
-		public ModelAndView listAll() {
+    // Listing.....................
 
-			ModelAndView result;
-			Collection<Specialty> specialtys;
+    @RequestMapping(value = "/list-all", method = RequestMethod.GET)
+    public ModelAndView listAll() {
 
-			specialtys = specialtyService.getAll();
+        ModelAndView result;
+        Collection<Specialty> specialtys;
 
-			result = new ModelAndView("specialty/list");
-			result.addObject("specialtys", specialtys);
-			result.addObject("requestURI", "specialty/list-all.do");
+        specialtys = specialtyService.getAll();
 
-			return result;
-		}
-		
-	
-		@RequestMapping(value = "/detail", method = RequestMethod.GET)
-		public ModelAndView detail(@RequestParam int specialtyId) {
+        result = new ModelAndView("specialty/list");
+        result.addObject("specialtys", specialtys);
+        result.addObject("requestURI", "specialty/list-all.do");
 
-			
-			ModelAndView result;
-			Specialty specialty = specialtyService.findOneToEdit(specialtyId);
-			
-			result = createEditModelAndView(specialty);
+        return result;
+    }
 
-			result.addObject("specialty", specialty);
-			result.addObject("details", true);
-			result.addObject("createSpecialty", false);
-			result.addObject("detailsSpecialty", true);
+    @RequestMapping(value = "/detail", method = RequestMethod.GET)
+    public ModelAndView detail(@RequestParam int specialtyId) {
 
-			return result;
-		}
-		
-		// Ancillary methods ------------------------------------------------------
+        ModelAndView result;
+        Specialty specialty = specialtyService.findOneToEdit(specialtyId);
 
-		protected ModelAndView createEditModelAndView(Specialty specialty) {
-			assert specialty != null;
-			ModelAndView result;
+        result = createEditModelAndView(specialty);
 
-			result = createEditModelAndView(specialty, null);
+        result.addObject("specialty", specialty);
+        result.addObject("details", true);
+        result.addObject("createSpecialty", false);
+        result.addObject("detailsSpecialty", true);
 
-			return result;
-		}
+        return result;
+    }
 
-		protected ModelAndView createEditModelAndView(Specialty specialty, String message) {
+    // Ancillary methods ------------------------------------------------------
 
-			Assert.notNull(specialty);
-			ModelAndView result;
-			
-			Collection<Specialist> specialists;
-			
-		
-			specialists = specialistService.findSpecialistsForSpecialty(specialty);
+    protected ModelAndView createEditModelAndView(Specialty specialty) {
+        assert specialty != null;
+        ModelAndView result;
 
-			result = new ModelAndView("specialty/edit");
-			result.addObject("specialty", specialty);
-			result.addObject("message", message);
-			result.addObject("createSpecialty", false);
-			result.addObject("detailsSpecialty", true);
-			result.addObject("specialists", specialists);
-			
-			
-			
+        result = createEditModelAndView(specialty, null);
 
-			return result;
-		}
+        return result;
+    }
+
+    protected ModelAndView createEditModelAndView(Specialty specialty, String message) {
+
+        Assert.notNull(specialty);
+        ModelAndView result;
+
+        Collection<Specialist> specialists;
+
+        specialists = specialistService.findSpecialistsForSpecialty(specialty);
+
+        result = new ModelAndView("specialty/edit");
+        result.addObject("specialty", specialty);
+        result.addObject("message", message);
+        result.addObject("createSpecialty", false);
+        result.addObject("detailsSpecialty", true);
+        result.addObject("specialists", specialists);
+
+        return result;
+    }
 
 }

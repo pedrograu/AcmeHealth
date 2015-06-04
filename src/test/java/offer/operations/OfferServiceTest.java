@@ -25,159 +25,156 @@ import domain.Offer;
 import domain.Patient;
 import domain.Specialist;
 
-@ContextConfiguration(locations = { "classpath:spring/datasource.xml",
-		"classpath:spring/config/packages.xml" })
+@ContextConfiguration(locations = { "classpath:spring/datasource.xml", "classpath:spring/config/packages.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 public class OfferServiceTest {
 
-	@Autowired
-	private OfferService offerService;
-	@Autowired
-	private SpecialistService specialistService;
-	@Autowired
-	private LoginService loginService;
-	@Autowired
-	private PatientService patientService;
+    @Autowired
+    private OfferService offerService;
+    @Autowired
+    private SpecialistService specialistService;
+    @Autowired
+    private LoginService loginService;
+    @Autowired
+    private PatientService patientService;
 
-	public void authenticate(String username) {
-		UserDetails userDetails;
-		TestingAuthenticationToken authenticationToken;
-		SecurityContext context;
+    public void authenticate(String username) {
+        UserDetails userDetails;
+        TestingAuthenticationToken authenticationToken;
+        SecurityContext context;
 
-		userDetails = loginService.loadUserByUsername(username);
-		authenticationToken = new TestingAuthenticationToken(userDetails, null);
-		context = SecurityContextHolder.getContext();
-		context.setAuthentication(authenticationToken);
-	}
+        userDetails = loginService.loadUserByUsername(username);
+        authenticationToken = new TestingAuthenticationToken(userDetails, null);
+        context = SecurityContextHolder.getContext();
+        context.setAuthentication(authenticationToken);
+    }
 
-	public void desauthenticate() {
-		UserDetails userDetails;
-		TestingAuthenticationToken authenticationToken;
-		SecurityContext context;
+    public void desauthenticate() {
+        UserDetails userDetails;
+        TestingAuthenticationToken authenticationToken;
+        SecurityContext context;
 
-		userDetails = loginService.loadUserByUsername(null);
-		authenticationToken = new TestingAuthenticationToken(userDetails, null);
-		context = SecurityContextHolder.getContext();
-		context.setAuthentication(authenticationToken);
-	}
+        userDetails = loginService.loadUserByUsername(null);
+        authenticationToken = new TestingAuthenticationToken(userDetails, null);
+        context = SecurityContextHolder.getContext();
+        context.setAuthentication(authenticationToken);
+    }
 
-	@Before
-	public void setUp() {
-		PopulateDatabase.main(null);
-	}
+    @Before
+    public void setUp() {
+        PopulateDatabase.main(null);
+    }
 
-	@Test
-	public void testCreateOffer() {
-		authenticate("administrator1");
-		Date startMoment = new Date(2014, 05, 30);
-		Date finishMoment = new Date(2015, 05, 30);
-		Specialist specialist = specialistService.findOneToEdit(12);
-		Offer offer = offerService.create();
-		offer.setSpecialist(specialist);
-		offer.setStartMoment(startMoment);
-		offer.setFinishMoment(finishMoment);
-		offer.setTitle("Masaje terapeutico");
-		offer.setDescription("Lo mejor para tu espalda");
-		offer.setPrice(30.2);
-		offer.setAmountPerson(100);
+    @Test
+    public void testCreateOffer() {
+        authenticate("administrator1");
+        Date startMoment = new Date(2014, 05, 30);
+        Date finishMoment = new Date(2015, 05, 30);
+        Specialist specialist = specialistService.findOneToEdit(12);
+        Offer offer = offerService.create();
+        offer.setSpecialist(specialist);
+        offer.setStartMoment(startMoment);
+        offer.setFinishMoment(finishMoment);
+        offer.setTitle("Masaje terapeutico");
+        offer.setDescription("Lo mejor para tu espalda");
+        offer.setPrice(30.2);
+        offer.setAmountPerson(100);
 
-		offerService.save(offer);
-		Collection<Offer> offers = offerService.findOwn();
-		boolean res = false;
-		for (Offer o : offers) {
-			if (o.getTitle().equals(offer.getTitle())) {
-				res = true;
-				break;
-			}
+        offerService.save(offer);
+        Collection<Offer> offers = offerService.findOwn();
+        boolean res = false;
+        for (Offer o : offers) {
+            if (o.getTitle().equals(offer.getTitle())) {
+                res = true;
+                break;
+            }
 
-		}
-		Assert.isTrue(res);
+        }
+        Assert.isTrue(res);
 
-	}
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testCreateOfferNotAuthenticated() {
-		desauthenticate();
-		Date startMoment = new Date(2014, 05, 30);
-		Date finishMoment = new Date(2015, 05, 30);
-		Specialist specialist = specialistService.findOneToEdit(12);
-		Offer offer = offerService.create();
-		offer.setSpecialist(specialist);
-		offer.setStartMoment(startMoment);
-		offer.setFinishMoment(finishMoment);
-		offer.setTitle("Masaje terapeutico");
-		offer.setDescription("Lo mejor para tu espalda");
-		offer.setPrice(30.2);
-		offer.setAmountPerson(100);
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateOfferNotAuthenticated() {
+        desauthenticate();
+        Date startMoment = new Date(2014, 05, 30);
+        Date finishMoment = new Date(2015, 05, 30);
+        Specialist specialist = specialistService.findOneToEdit(12);
+        Offer offer = offerService.create();
+        offer.setSpecialist(specialist);
+        offer.setStartMoment(startMoment);
+        offer.setFinishMoment(finishMoment);
+        offer.setTitle("Masaje terapeutico");
+        offer.setDescription("Lo mejor para tu espalda");
+        offer.setPrice(30.2);
+        offer.setAmountPerson(100);
 
-		offerService.save(offer);
+        offerService.save(offer);
 
-	}
-	
-	@Test
-	public void testDelete(){
-		authenticate("administrator1");
-		Offer offer = offerService.findOneToEdit(23);
-		offerService.delete(offer);
-		Assert.isTrue(offerService.findOneToEdit(23) == null);
-		
-	}
-	
-	@Test(expected = IllegalArgumentException.class)
-	public void testDeleteFailNotAuthenticated(){
-		desauthenticate();
-		Offer offer = offerService.findOneToEdit(23);
-		offerService.delete(offer);
-		
-		
-	}
-	
-	@Test(expected = IllegalArgumentException.class)
-	public void testDeleteFailPatientEnroller(){
-		authenticate("administrator1");
-		Offer offer = offerService.findOneToEdit(22);
-		offerService.delete(offer);
-		
-		
-	}
-	@Test
-	public void testHire(){
-		authenticate("patient1");
-		Patient patientConnect = patientService.findByPrincipal();
-		Offer offer = offerService.findOneToEdit(23);
-		offerService.hire(offer);
-		Assert.isTrue(offerService.findOneToEdit(23).getEnrollees().equals(1));
-		Assert.isTrue(patientConnect.getOffers().contains(offerService.findOneToEdit(23)));
-	}
-	
-	@Test(expected = IllegalArgumentException.class)
-	public void testHireFailNotAuthenticated(){
-		desauthenticate();
-		Offer offer = offerService.findOneToEdit(23);
-		offerService.hire(offer);
-		
-		
-	}
-	
-	//Intentar apuntarse a una oferta que no tiene plazas libres
-	@Test(expected = IllegalArgumentException.class)
-	public void testHireEnrolleesFull(){
-		authenticate("patient2");
+    }
 
-		Offer offer = offerService.findOneToEdit(22);
-		offerService.hire(offer);
+    @Test
+    public void testDelete() {
+        authenticate("administrator1");
+        Offer offer = offerService.findOneToEdit(23);
+        offerService.delete(offer);
+        Assert.isTrue(offerService.findOneToEdit(23) == null);
 
-	}
-	
-	//Intentar apuntarse a una oferta que a finalizado
-	@Test(expected = IllegalArgumentException.class)
-	public void testHireOfferFinish(){
-		authenticate("patient2");
+    }
 
-		Offer offer = offerService.findOneToEdit(25);
-		offerService.hire(offer);
+    @Test(expected = IllegalArgumentException.class)
+    public void testDeleteFailNotAuthenticated() {
+        desauthenticate();
+        Offer offer = offerService.findOneToEdit(23);
+        offerService.delete(offer);
 
-	}
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testDeleteFailPatientEnroller() {
+        authenticate("administrator1");
+        Offer offer = offerService.findOneToEdit(22);
+        offerService.delete(offer);
+
+    }
+
+    @Test
+    public void testHire() {
+        authenticate("patient1");
+        Patient patientConnect = patientService.findByPrincipal();
+        Offer offer = offerService.findOneToEdit(23);
+        offerService.hire(offer);
+        Assert.isTrue(offerService.findOneToEdit(23).getEnrollees().equals(1));
+        Assert.isTrue(patientConnect.getOffers().contains(offerService.findOneToEdit(23)));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testHireFailNotAuthenticated() {
+        desauthenticate();
+        Offer offer = offerService.findOneToEdit(23);
+        offerService.hire(offer);
+
+    }
+
+    //Intentar apuntarse a una oferta que no tiene plazas libres
+    @Test(expected = IllegalArgumentException.class)
+    public void testHireEnrolleesFull() {
+        authenticate("patient2");
+
+        Offer offer = offerService.findOneToEdit(22);
+        offerService.hire(offer);
+
+    }
+
+    //Intentar apuntarse a una oferta que a finalizado
+    @Test(expected = IllegalArgumentException.class)
+    public void testHireOfferFinish() {
+        authenticate("patient2");
+
+        Offer offer = offerService.findOneToEdit(25);
+        offerService.hire(offer);
+
+    }
 
 }

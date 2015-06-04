@@ -18,103 +18,93 @@ import controllers.AbstractController;
 import domain.Profile;
 import domain.Specialist;
 
-
-
 @Controller
 @RequestMapping("/profile/specialist")
-public class ProfileSpecialistController extends AbstractController{
-	
-	@Autowired
-	private ProfileService profileService;
-	
-	@Autowired
-	private SpecialistService specialistService;
-	
-	
-	public ProfileSpecialistController() {
-		super();
-	}
-	
-	@RequestMapping(value = "/detail", method = RequestMethod.GET)
-	public ModelAndView detail() {
+public class ProfileSpecialistController extends AbstractController {
 
-		
-		ModelAndView result;
-		Specialist specialist = specialistService.findByPrincipal();
-		Profile profile = specialist.getProfile();
-		
-		result = new ModelAndView("profile/edit");
+    @Autowired
+    private ProfileService profileService;
 
-		result.addObject("profile", profile);
-		result.addObject("specialist", specialist);
-		result.addObject("detailsProfile", true);
-		
+    @Autowired
+    private SpecialistService specialistService;
 
-		return result;
-	}
-	
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam int profileId) {
+    public ProfileSpecialistController() {
+        super();
+    }
 
-		ModelAndView result;
+    @RequestMapping(value = "/detail", method = RequestMethod.GET)
+    public ModelAndView detail() {
 
-		Profile profile = profileService.findOneToEdit(profileId);
+        ModelAndView result;
+        Specialist specialist = specialistService.findByPrincipal();
+        Profile profile = specialist.getProfile();
 
-		result = createEditModelAndView(profile);
-		result.addObject("detailsProfile", false);
-		
-		return result;
-	}
-	
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid Profile profile, BindingResult binding) {
+        result = new ModelAndView("profile/edit");
 
-		ModelAndView result ;
+        result.addObject("profile", profile);
+        result.addObject("specialist", specialist);
+        result.addObject("detailsProfile", true);
 
+        return result;
+    }
 
-		if (binding.hasErrors()) {
-			result = createEditModelAndView(profile);
-		} else {
-			try {
-				profileService.save2(profile);
-				result = new ModelAndView("redirect:detail.do");
-			} catch (Throwable oops) {
-				result = createEditModelAndView(profile,"profile.commit.error");
-			}
-		}
-		
-		return result;
+    @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    public ModelAndView edit(@RequestParam int profileId) {
 
-	}
+        ModelAndView result;
 
-	
-	// Ancillary methods ------------------------------------------------------
+        Profile profile = profileService.findOneToEdit(profileId);
 
-	protected ModelAndView createEditModelAndView(Profile profile) {
-		assert profile != null;
-		ModelAndView result;
+        result = createEditModelAndView(profile);
+        result.addObject("detailsProfile", false);
 
-		result = createEditModelAndView(profile, null);
+        return result;
+    }
 
-		return result;
-	}
+    @RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+    public ModelAndView save(@Valid Profile profile, BindingResult binding) {
 
-	protected ModelAndView createEditModelAndView(Profile profile,String message) {
-		
-		
-		Assert.notNull(profile);
-		ModelAndView result;
-		
+        ModelAndView result;
 
-	result = new ModelAndView("profile/edit");
+        if (binding.hasErrors()) {
+            result = createEditModelAndView(profile);
+        } else {
+            try {
+                profileService.save2(profile);
+                result = new ModelAndView("redirect:detail.do");
+            } catch (Throwable oops) {
+                result = createEditModelAndView(profile, "profile.commit.error");
+            }
+        }
 
-	result.addObject("profile", profile);
-	result.addObject("requestURI","profile/specialist/edit.do");
-	result.addObject("message", message);
-	result.addObject("detailsProfile", false);
-	
+        return result;
 
-		return result;
-	}
+    }
+
+    // Ancillary methods ------------------------------------------------------
+
+    protected ModelAndView createEditModelAndView(Profile profile) {
+        assert profile != null;
+        ModelAndView result;
+
+        result = createEditModelAndView(profile, null);
+
+        return result;
+    }
+
+    protected ModelAndView createEditModelAndView(Profile profile, String message) {
+
+        Assert.notNull(profile);
+        ModelAndView result;
+
+        result = new ModelAndView("profile/edit");
+
+        result.addObject("profile", profile);
+        result.addObject("requestURI", "profile/specialist/edit.do");
+        result.addObject("message", message);
+        result.addObject("detailsProfile", false);
+
+        return result;
+    }
 
 }

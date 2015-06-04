@@ -19,97 +19,92 @@ import forms.CommentForm;
 @Transactional
 public class CommentService {
 
-	// Managed repository ---------------------------------------
-	@Autowired
-	private CommentRepository commentRepository;
+    // Managed repository ---------------------------------------
+    @Autowired
+    private CommentRepository commentRepository;
 
-	@Autowired
-	private PatientService patientService;
-	
-	@Autowired
-	private AppointmentService appointmentService;
+    @Autowired
+    private PatientService patientService;
 
-	@Autowired
-	private ProfileService profileService;
+    @Autowired
+    private AppointmentService appointmentService;
 
-	// Supporting services --------------------------------------
+    @Autowired
+    private ProfileService profileService;
 
-	// Constructors ---------------------------------------------
+    // Supporting services --------------------------------------
 
-	public CommentService() {
-		super();
-	}
+    // Constructors ---------------------------------------------
 
-	// Simple CRUD methods --------------------------------------
+    public CommentService() {
+        super();
+    }
 
-	public Collection<Comment> getCommentsForSpecialist(Specialist specialist) {
-		Collection<Comment> comments = commentRepository
-				.getCommentsForSpecialist(specialist.getId());
-		return comments;
-	}
+    // Simple CRUD methods --------------------------------------
 
-	public Comment findOneToEdit(int commentId) {
-		Comment comment = commentRepository.findOne(commentId);
-		return comment;
-	}
+    public Collection<Comment> getCommentsForSpecialist(Specialist specialist) {
+        Collection<Comment> comments = commentRepository.getCommentsForSpecialist(specialist.getId());
+        return comments;
+    }
 
-	public CommentForm createForm(Comment comment) {
-		CommentForm commentForm = new CommentForm();
-		commentForm.setId(comment.getId());
-		commentForm.setVersion(comment.getVersion());
+    public Comment findOneToEdit(int commentId) {
+        Comment comment = commentRepository.findOne(commentId);
+        return comment;
+    }
 
-		commentForm.setText(comment.getText());
-		commentForm.setRating(comment.getRating());
-		commentForm.setProfile(comment.getProfile());
+    public CommentForm createForm(Comment comment) {
+        CommentForm commentForm = new CommentForm();
+        commentForm.setId(comment.getId());
+        commentForm.setVersion(comment.getVersion());
 
-		return null;
-	}
+        commentForm.setText(comment.getText());
+        commentForm.setRating(comment.getRating());
+        commentForm.setProfile(comment.getProfile());
 
-	public Comment recontructor(CommentForm commentForm) {
-		Comment result = create();
+        return null;
+    }
 
-		result.setId(commentForm.getId());
-		result.setVersion(commentForm.getVersion());
-		result.setProfile(commentForm.getProfile());
-		result.setRating(commentForm.getRating());
-		result.setText(commentForm.getText());
+    public Comment recontructor(CommentForm commentForm) {
+        Comment result = create();
 
-		return result;
-	}
+        result.setId(commentForm.getId());
+        result.setVersion(commentForm.getVersion());
+        result.setProfile(commentForm.getProfile());
+        result.setRating(commentForm.getRating());
+        result.setText(commentForm.getText());
 
-	public Comment create() {
+        return result;
+    }
 
-		Comment result = new Comment();
-		
-		Patient patient = patientService.findByPrincipal();
-		Date creationMoment = new Date();
-		
-		result.setPatient(patient);
-		result.setCreationMoment(creationMoment);
-		
-		
+    public Comment create() {
 
-		return result;
-	}
+        Comment result = new Comment();
 
-	public void save(Comment comment) {
-		
-		
+        Patient patient = patientService.findByPrincipal();
+        Date creationMoment = new Date();
 
-		Patient patient = patientService.findByPrincipal();
-		Specialist specialist = comment.getProfile().getSpecialist();
-		Collection<Appointment> appointments = appointmentService.getAppointmentforOneSpecialistAndOnePatient(specialist, patient);
-		Assert.isTrue(!appointments.isEmpty());
-		commentRepository.save(comment);
-		profileService.updateRating(comment.getProfile());
+        result.setPatient(patient);
+        result.setCreationMoment(creationMoment);
 
-	}
+        return result;
+    }
 
-	public void delete2(Collection<Comment> comments) {
-		
-		commentRepository.delete(comments);
-		
-		
-	}
+    public void save(Comment comment) {
+
+        Patient patient = patientService.findByPrincipal();
+        Specialist specialist = comment.getProfile().getSpecialist();
+        Collection<Appointment> appointments = appointmentService.getAppointmentforOneSpecialistAndOnePatient(
+                specialist, patient);
+        Assert.isTrue(!appointments.isEmpty());
+        commentRepository.save(comment);
+        profileService.updateRating(comment.getProfile());
+
+    }
+
+    public void delete2(Collection<Comment> comments) {
+
+        commentRepository.delete(comments);
+
+    }
 
 }

@@ -20,58 +20,56 @@ import utilities.PopulateDatabase;
 import domain.MedicalHistory;
 import domain.Patient;
 
-@ContextConfiguration(locations = { "classpath:spring/datasource.xml",
-"classpath:spring/config/packages.xml" })
+@ContextConfiguration(locations = { "classpath:spring/datasource.xml", "classpath:spring/config/packages.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 public class MedicalHistoryServiceTest {
 
-	@Autowired
-	private PatientService patientService;
+    @Autowired
+    private PatientService patientService;
 
-	@Autowired
-	private MedicalHistoryService medicalHistoryService;
+    @Autowired
+    private MedicalHistoryService medicalHistoryService;
 
-	@Autowired
-	private LoginService loginService;
+    @Autowired
+    private LoginService loginService;
 
-	public void authenticate(String username) {
-		UserDetails userDetails;
-		TestingAuthenticationToken authenticationToken;
-		SecurityContext context;
+    public void authenticate(String username) {
+        UserDetails userDetails;
+        TestingAuthenticationToken authenticationToken;
+        SecurityContext context;
 
-		userDetails = loginService.loadUserByUsername(username);
-		authenticationToken = new TestingAuthenticationToken(userDetails, null);
-		context = SecurityContextHolder.getContext();
-		context.setAuthentication(authenticationToken);
-	}
+        userDetails = loginService.loadUserByUsername(username);
+        authenticationToken = new TestingAuthenticationToken(userDetails, null);
+        context = SecurityContextHolder.getContext();
+        context.setAuthentication(authenticationToken);
+    }
 
-	public void desauthenticate() {
-		UserDetails userDetails;
-		TestingAuthenticationToken authenticationToken;
-		SecurityContext context;
+    public void desauthenticate() {
+        UserDetails userDetails;
+        TestingAuthenticationToken authenticationToken;
+        SecurityContext context;
 
-		userDetails = loginService.loadUserByUsername(null);
-		authenticationToken = new TestingAuthenticationToken(userDetails, null);
-		context = SecurityContextHolder.getContext();
-		context.setAuthentication(authenticationToken);
-	}
+        userDetails = loginService.loadUserByUsername(null);
+        authenticationToken = new TestingAuthenticationToken(userDetails, null);
+        context = SecurityContextHolder.getContext();
+        context.setAuthentication(authenticationToken);
+    }
 
-	@Before
-	public void setUp() {
-		PopulateDatabase.main(null);
-	}
+    @Before
+    public void setUp() {
+        PopulateDatabase.main(null);
+    }
 
-	@Test
-	public void testEditMedicalHistory() {
-		authenticate("specialist1");
-		MedicalHistory medicalHistory = medicalHistoryService.findOneToEdit(19);
-		Patient owner = patientService.findOneToEdit(18);
-		medicalHistory.setAllergy("Graminias");
-		medicalHistoryService.save(medicalHistory);
-		Assert.isTrue(owner.getMedicalHistory().getAllergy()
-				.equals(medicalHistory.getAllergy()));
+    @Test
+    public void testEditMedicalHistory() {
+        authenticate("specialist1");
+        MedicalHistory medicalHistory = medicalHistoryService.findOneToEdit(19);
+        Patient owner = patientService.findOneToEdit(18);
+        medicalHistory.setAllergy("Graminias");
+        medicalHistoryService.save(medicalHistory);
+        Assert.isTrue(owner.getMedicalHistory().getAllergy().equals(medicalHistory.getAllergy()));
 
-	}
+    }
 
 }

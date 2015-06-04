@@ -11,29 +11,28 @@ import domain.MedicalHistory;
 
 @Component
 @Transactional
-public class StringToMedicalHistoryConverter implements Converter<String, MedicalHistory>{
-	
-	@Autowired
-	MedicalHistoryRepository medicalHistoryRepository;
+public class StringToMedicalHistoryConverter implements Converter<String, MedicalHistory> {
 
-	@Override
-	public MedicalHistory convert(String text) {
-		MedicalHistory result;
-		int id;
+    @Autowired
+    MedicalHistoryRepository medicalHistoryRepository;
 
-		try {
-			if (StringUtils.isEmpty(text))
-				result = null;
-			else {
-				id = Integer.valueOf(text);
-				result = medicalHistoryRepository.findOne(id);
-			}
-		} catch (Throwable oops) {
-			throw new IllegalArgumentException(oops);
-		}
+    @Override
+    public MedicalHistory convert(String text) {
+        MedicalHistory result;
+        int id;
 
-		return result;
-	}
+        try {
+            if (StringUtils.isEmpty(text))
+                result = null;
+            else {
+                id = Integer.valueOf(text);
+                result = medicalHistoryRepository.findOne(id);
+            }
+        } catch (Throwable oops) {
+            throw new IllegalArgumentException(oops);
+        }
+
+        return result;
+    }
 
 }
-

@@ -18,7 +18,6 @@ import services.MedicalHistoryService;
 import services.PatientService;
 import services.SpecialistService;
 import controllers.AbstractController;
-import domain.MedicalHistory;
 import domain.Patient;
 import domain.Specialist;
 import forms.PatientForm;
@@ -26,127 +25,116 @@ import forms.PatientForm;
 @Controller
 @RequestMapping("/register/patient")
 public class RegisterPatientController extends AbstractController {
-	
-	// Services ---------------------------------------------------------------
 
-		@Autowired
-		private PatientService patientService;
-		
-		@Autowired
-		private MedicalHistoryService medicalHistoryService;
-		
-		
-		@Autowired
-		private SpecialistService specialistService;
+    // Services ---------------------------------------------------------------
 
+    @Autowired
+    private PatientService patientService;
 
-		// Constructors
-		// ---------------------------------------------------------------
+    @Autowired
+    private MedicalHistoryService medicalHistoryService;
 
-		public RegisterPatientController() {
-			super();
-		}
-		
-		// Registration -----------------------------------------------------------
+    @Autowired
+    private SpecialistService specialistService;
 
-		@RequestMapping(value = "/edit", method = RequestMethod.GET)
-		public ModelAndView register() {
-			ModelAndView result;
-			PatientForm patientForm = new PatientForm();
+    // Constructors
+    // ---------------------------------------------------------------
 
-			result = createEditModelAndView(patientForm);
+    public RegisterPatientController() {
+        super();
+    }
 
-			return result;
-		}
+    // Registration -----------------------------------------------------------
 
-		@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-		public ModelAndView save(@Valid PatientForm patientForm,
-				BindingResult binding) {
+    @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    public ModelAndView register() {
+        ModelAndView result;
+        PatientForm patientForm = new PatientForm();
 
-			ModelAndView result;
-			Patient patient;
-			Calendar currentMoment = new GregorianCalendar();
-			int month = patientForm.getCreditCard().getExpirationMonth();
-			int year = patientForm.getCreditCard().getExpirationYear();
-			Calendar dateCreditCard = new GregorianCalendar();
-			dateCreditCard.set(year, month, 1);
+        result = createEditModelAndView(patientForm);
 
-			if (binding.hasErrors()) {
-				result = createEditModelAndView(patientForm);
+        return result;
+    }
 
-			} else {
+    @RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+    public ModelAndView save(@Valid PatientForm patientForm, BindingResult binding) {
 
-				try {
-					patient = patientService.reconstruct(patientForm);
+        ModelAndView result;
+        Patient patient;
+        Calendar currentMoment = new GregorianCalendar();
+        int month = patientForm.getCreditCard().getExpirationMonth();
+        int year = patientForm.getCreditCard().getExpirationYear();
+        Calendar dateCreditCard = new GregorianCalendar();
+        dateCreditCard.set(year, month, 1);
 
-					patientService.save(patient);
+        if (binding.hasErrors()) {
+            result = createEditModelAndView(patientForm);
 
-					result = new ModelAndView("redirect:../../security/login.do");
+        } else {
 
-				} catch (DataIntegrityViolationException oops) {
-					result = createEditModelAndView(patientForm,
-							"register.duplicate.error");
+            try {
+                patient = patientService.reconstruct(patientForm);
 
-				} catch (Throwable oops) {
-					oops.getMessage();
+                patientService.save(patient);
 
-					if (!(patientForm.getSecondPassword().equals(patientForm.getPassword()))) {
-						result = createEditModelAndView(patientForm,
-								"register.wrongSecondPassword.error");
-					} else {
+                result = new ModelAndView("redirect:../../security/login.do");
 
-						if (patientForm.getAvailable()== false) {
-							result = createEditModelAndView(patientForm,
-									"register.available.error");
-						} else if(!currentMoment.before(dateCreditCard)){
-							result = createEditModelAndView(patientForm,
-									"register.creditCard.error");
-						}else{
-							result = createEditModelAndView(patientForm,
-									"register.commit.error");
-						} 
-					}
+            } catch (DataIntegrityViolationException oops) {
+                result = createEditModelAndView(patientForm, "register.duplicate.error");
 
-				}
-			}
-			return result;
-		}
+            } catch (Throwable oops) {
+                oops.getMessage();
 
-		// Ancillary methods ------------------------------------------------------
+                if (!(patientForm.getSecondPassword().equals(patientForm.getPassword()))) {
+                    result = createEditModelAndView(patientForm, "register.wrongSecondPassword.error");
+                } else {
 
-		protected ModelAndView createEditModelAndView(PatientForm patientForm) {
+                    if (patientForm.getAvailable() == false) {
+                        result = createEditModelAndView(patientForm, "register.available.error");
+                    } else if (!currentMoment.before(dateCreditCard)) {
+                        result = createEditModelAndView(patientForm, "register.creditCard.error");
+                    } else {
+                        result = createEditModelAndView(patientForm, "register.commit.error");
+                    }
+                }
 
-			ModelAndView result;
+            }
+        }
+        return result;
+    }
 
-			result = createEditModelAndView(patientForm, null);
+    // Ancillary methods ------------------------------------------------------
 
-			return result;
-		}
+    protected ModelAndView createEditModelAndView(PatientForm patientForm) {
 
-		protected ModelAndView createEditModelAndView(PatientForm patientForm,
-				String message) {
+        ModelAndView result;
 
-			ModelAndView result;
+        result = createEditModelAndView(patientForm, null);
 
-			Patient patient = patientService.create();
-			Collection<Specialist> specialists;
+        return result;
+    }
 
-			specialists = specialistService.findAllSpecialistsOfGeneralMedicine();
+    protected ModelAndView createEditModelAndView(PatientForm patientForm, String message) {
 
-			result = new ModelAndView("register/edit");
-			result.addObject("patientForm", patientForm);
-			result.addObject("patient", patient);
-			result.addObject("actor", "patientForm");
-			result.addObject("requestURI", "register/patient/edit.do");
-			result.addObject("registerPatient", true);
-		
-			result.addObject("specialists", specialists);
+        ModelAndView result;
 
-			result.addObject("message", message);
+        Patient patient = patientService.create();
+        Collection<Specialist> specialists;
 
-			return result;
-		}
-	
+        specialists = specialistService.findAllSpecialistsOfGeneralMedicine();
 
+        result = new ModelAndView("register/edit");
+        result.addObject("patientForm", patientForm);
+        result.addObject("patient", patient);
+        result.addObject("actor", "patientForm");
+        result.addObject("requestURI", "register/patient/edit.do");
+        result.addObject("registerPatient", true);
+
+        result.addObject("specialists", specialists);
+
+        result.addObject("message", message);
+
+        return result;
+    }
 
 }

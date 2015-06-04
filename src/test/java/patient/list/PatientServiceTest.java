@@ -1,6 +1,5 @@
 package patient.list;
 
-
 import java.util.Collection;
 
 import javax.transaction.Transactional;
@@ -25,79 +24,71 @@ import utilities.PopulateDatabase;
 import domain.Patient;
 import domain.Specialist;
 
-
-@ContextConfiguration(locations = { "classpath:spring/datasource.xml",
-		"classpath:spring/config/packages.xml" })
+@ContextConfiguration(locations = { "classpath:spring/datasource.xml", "classpath:spring/config/packages.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 public class PatientServiceTest {
 
-	@Autowired
-	private OfferService offerService;
-	@Autowired
-	private LoginService loginService;
-	@Autowired
-	private PatientService patientService;
-	@Autowired
-	private SpecialistService specialistService;
-	
+    @Autowired
+    private OfferService offerService;
+    @Autowired
+    private LoginService loginService;
+    @Autowired
+    private PatientService patientService;
+    @Autowired
+    private SpecialistService specialistService;
 
-	
-	public void authenticate(String username) {
-		UserDetails userDetails;
-		TestingAuthenticationToken authenticationToken;
-		SecurityContext context;
+    public void authenticate(String username) {
+        UserDetails userDetails;
+        TestingAuthenticationToken authenticationToken;
+        SecurityContext context;
 
-		userDetails = loginService.loadUserByUsername(username);
-		authenticationToken = new TestingAuthenticationToken(userDetails, null);
-		context = SecurityContextHolder.getContext();
-		context.setAuthentication(authenticationToken);
-	}
+        userDetails = loginService.loadUserByUsername(username);
+        authenticationToken = new TestingAuthenticationToken(userDetails, null);
+        context = SecurityContextHolder.getContext();
+        context.setAuthentication(authenticationToken);
+    }
 
-	public void desauthenticate() {
-		UserDetails userDetails;
-		TestingAuthenticationToken authenticationToken;
-		SecurityContext context;
+    public void desauthenticate() {
+        UserDetails userDetails;
+        TestingAuthenticationToken authenticationToken;
+        SecurityContext context;
 
-		userDetails = loginService.loadUserByUsername(null);
-		authenticationToken = new TestingAuthenticationToken(userDetails, null);
-		context = SecurityContextHolder.getContext();
-		context.setAuthentication(authenticationToken);
-	}
+        userDetails = loginService.loadUserByUsername(null);
+        authenticationToken = new TestingAuthenticationToken(userDetails, null);
+        context = SecurityContextHolder.getContext();
+        context.setAuthentication(authenticationToken);
+    }
 
+    @Before
+    public void setUp() {
+        PopulateDatabase.main(null);
+    }
 
-	@Before
-	public void setUp() {
-		PopulateDatabase.main(null);
-	}
+    //listar los pacientes que ha recibido en el dia de hoy
+    @Test
+    public void testPatientsAttendToday() {
+        authenticate("specialist1");
 
-	//listar los pacientes que ha recibido en el dia de hoy
-	@Test
-	public void testPatientsAttendToday() {
-		authenticate("specialist1");
-		
-		Collection<Patient> patients = patientService.findToday();
-		
-		Assert.isTrue(patients.size()==0);
-		
-		
-	}
-	
-	//listar todos sus pacientes actuales
-	@Test
-	public void testPatientsActual() {
-		authenticate("specialist1");
-		Specialist specialist = specialistService.findByPrincipal();
-		Collection<Patient> patients = patientService.findOwn();
-		
-		Assert.isTrue(patients.size()==2);
-		
+        Collection<Patient> patients = patientService.findToday();
 
-		for(Patient patient : patients){
-			Assert.isTrue(patient.getSpecialist().equals(specialist));
-		}
-		
-		
-	}
-	
+        Assert.isTrue(patients.size() == 0);
+
+    }
+
+    //listar todos sus pacientes actuales
+    @Test
+    public void testPatientsActual() {
+        authenticate("specialist1");
+        Specialist specialist = specialistService.findByPrincipal();
+        Collection<Patient> patients = patientService.findOwn();
+
+        Assert.isTrue(patients.size() == 2);
+
+        for (Patient patient : patients) {
+            Assert.isTrue(patient.getSpecialist().equals(specialist));
+        }
+
+    }
+
 }

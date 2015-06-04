@@ -26,129 +26,127 @@ import domain.Message;
 import domain.Patient;
 import forms.MessageForm;
 
-@ContextConfiguration(locations = { "classpath:spring/datasource.xml",
-		"classpath:spring/config/packages.xml" })
+@ContextConfiguration(locations = { "classpath:spring/datasource.xml", "classpath:spring/config/packages.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 public class MessageServiceTest {
 
-	@Autowired
-	private CustomerService customerService;
+    @Autowired
+    private CustomerService customerService;
 
-	@Autowired
-	private MessageService messageService;
+    @Autowired
+    private MessageService messageService;
 
-	@Autowired
-	private LoginService loginService;
-	@Autowired
-	private PatientService patientService;
-	
+    @Autowired
+    private LoginService loginService;
+    @Autowired
+    private PatientService patientService;
 
-	public void authenticate(String username) {
-		UserDetails userDetails;
-		TestingAuthenticationToken authenticationToken;
-		SecurityContext context;
+    public void authenticate(String username) {
+        UserDetails userDetails;
+        TestingAuthenticationToken authenticationToken;
+        SecurityContext context;
 
-		userDetails = loginService.loadUserByUsername(username);
-		authenticationToken = new TestingAuthenticationToken(userDetails, null);
-		context = SecurityContextHolder.getContext();
-		context.setAuthentication(authenticationToken);
-	}
+        userDetails = loginService.loadUserByUsername(username);
+        authenticationToken = new TestingAuthenticationToken(userDetails, null);
+        context = SecurityContextHolder.getContext();
+        context.setAuthentication(authenticationToken);
+    }
 
-	public void desauthenticate() {
-		UserDetails userDetails;
-		TestingAuthenticationToken authenticationToken;
-		SecurityContext context;
+    public void desauthenticate() {
+        UserDetails userDetails;
+        TestingAuthenticationToken authenticationToken;
+        SecurityContext context;
 
-		userDetails = loginService.loadUserByUsername(null);
-		authenticationToken = new TestingAuthenticationToken(userDetails, null);
-		context = SecurityContextHolder.getContext();
-		context.setAuthentication(authenticationToken);
-	}
+        userDetails = loginService.loadUserByUsername(null);
+        authenticationToken = new TestingAuthenticationToken(userDetails, null);
+        context = SecurityContextHolder.getContext();
+        context.setAuthentication(authenticationToken);
+    }
 
-	@Before
-	public void setUp() {
-		PopulateDatabase.main(null);
-	}
+    @Before
+    public void setUp() {
+        PopulateDatabase.main(null);
+    }
 
-	@Test()
-	public void testCreateMessage() {
-		authenticate("patient1");
-		Customer customerRecipient = customerService.findOneToEdit(12);
-		Message message;
+    @Test()
+    public void testCreateMessage() {
+        authenticate("patient1");
+        Customer customerRecipient = customerService.findOneToEdit(12);
+        Message message;
 
-		MessageForm messageForm = new MessageForm();
-		messageForm.setTextBody("wolaaa");
-		messageForm.setSubject("jajaja");
-		messageForm.setRecipient(customerRecipient);
+        MessageForm messageForm = new MessageForm();
+        messageForm.setTextBody("wolaaa");
+        messageForm.setSubject("jajaja");
+        messageForm.setRecipient(customerRecipient);
 
-		message = messageService.recontructor(messageForm);
-		messageService.save(message);
-		Collection<Message> messages = messageService.getMessageOutbox();
+        message = messageService.recontructor(messageForm);
+        messageService.save(message);
+        Collection<Message> messages = messageService.getMessageOutbox();
 
-		boolean res = false;
-		for (Message m : messages) {
-			if (m.getTextBody().equals(messageForm.getTextBody())) {
-				res = true;
-				break;
-			}
-		}
-		Assert.isTrue(res);
+        boolean res = false;
+        for (Message m : messages) {
+            if (m.getTextBody().equals(messageForm.getTextBody())) {
+                res = true;
+                break;
+            }
+        }
+        Assert.isTrue(res);
 
-	}
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testCreateMessageFailNotAuthenticated() {
-		desauthenticate();
-		Customer customerRecipient = customerService.findOneToEdit(12);
-		Message message;
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateMessageFailNotAuthenticated() {
+        desauthenticate();
+        Customer customerRecipient = customerService.findOneToEdit(12);
+        Message message;
 
-		MessageForm messageForm = new MessageForm();
-		messageForm.setTextBody("wolaaa");
-		messageForm.setSubject("jajaja");
-		messageForm.setRecipient(customerRecipient);
+        MessageForm messageForm = new MessageForm();
+        messageForm.setTextBody("wolaaa");
+        messageForm.setSubject("jajaja");
+        messageForm.setRecipient(customerRecipient);
 
-		message = messageService.recontructor(messageForm);
-		messageService.save(message);
+        message = messageService.recontructor(messageForm);
+        messageService.save(message);
 
-	}
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testCreateFailPatientWithOtherPatient() {
-		authenticate("patient1");
-		Customer customerRecipient = customerService.findOneToEdit(20);
-		Message message;
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateFailPatientWithOtherPatient() {
+        authenticate("patient1");
+        Customer customerRecipient = customerService.findOneToEdit(20);
+        Message message;
 
-		MessageForm messageForm = new MessageForm();
-		messageForm.setTextBody("wolaaa");
-		messageForm.setSubject("jajaja");
-		messageForm.setRecipient(customerRecipient);
+        MessageForm messageForm = new MessageForm();
+        messageForm.setTextBody("wolaaa");
+        messageForm.setSubject("jajaja");
+        messageForm.setRecipient(customerRecipient);
 
-		message = messageService.recontructor(messageForm);
-		messageService.save(message);
+        message = messageService.recontructor(messageForm);
+        messageService.save(message);
 
-	}
-	
-	@Test
-	public void testEnableSendMessage(){
-		authenticate("administrator1");
-		Patient patient = patientService.findOneToEdit(20);
+    }
 
-		patient.setEnableMessage(true);
-		
-		Assert.isTrue(patient.getEnableMessage()==true);
-	
-	}
-	
-	@Test
-	public void testDisableSendMessage(){
-		authenticate("administrator1");
-		Patient patient = patientService.findOneToEdit(20);
+    @Test
+    public void testEnableSendMessage() {
+        authenticate("administrator1");
+        Patient patient = patientService.findOneToEdit(20);
 
-		patient.setEnableMessage(false);
-		
-		Assert.isTrue(patient.getEnableMessage()==false);
-	
-	}
+        patient.setEnableMessage(true);
+
+        Assert.isTrue(patient.getEnableMessage() == true);
+
+    }
+
+    @Test
+    public void testDisableSendMessage() {
+        authenticate("administrator1");
+        Patient patient = patientService.findOneToEdit(20);
+
+        patient.setEnableMessage(false);
+
+        Assert.isTrue(patient.getEnableMessage() == false);
+
+    }
 
 }

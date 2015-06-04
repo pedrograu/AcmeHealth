@@ -11,29 +11,28 @@ import domain.Patient;
 
 @Component
 @Transactional
-public class StringToPatientConverter implements Converter<String, Patient>{
-	
-	@Autowired
-	PatientRepository patientRepository;
+public class StringToPatientConverter implements Converter<String, Patient> {
 
-	@Override
-	public Patient convert(String text) {
-		Patient result;
-		int id;
+    @Autowired
+    PatientRepository patientRepository;
 
-		try {
-			if (StringUtils.isEmpty(text))
-				result = null;
-			else {
-				id = Integer.valueOf(text);
-				result = patientRepository.findOne(id);
-			}
-		} catch (Throwable oops) {
-			throw new IllegalArgumentException(oops);
-		}
+    @Override
+    public Patient convert(String text) {
+        Patient result;
+        int id;
 
-		return result;
-	}
+        try {
+            if (StringUtils.isEmpty(text))
+                result = null;
+            else {
+                id = Integer.valueOf(text);
+                result = patientRepository.findOne(id);
+            }
+        } catch (Throwable oops) {
+            throw new IllegalArgumentException(oops);
+        }
+
+        return result;
+    }
 
 }
-

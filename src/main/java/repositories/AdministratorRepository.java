@@ -7,9 +7,9 @@ import org.springframework.stereotype.Repository;
 import domain.Administrator;
 
 @Repository
-public interface AdministratorRepository extends JpaRepository<Administrator, Integer>{
+public interface AdministratorRepository extends JpaRepository<Administrator, Integer> {
 
-	@Query("select a from Administrator a where a.userAccount.id=?1")
-	Administrator findByUserAccountId(int id);
+    @Query("select a from Administrator a where a.userAccount.id=?1")
+    Administrator findByUserAccountId(int id);
 
 }

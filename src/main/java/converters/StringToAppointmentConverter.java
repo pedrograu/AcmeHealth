@@ -8,31 +8,31 @@ import org.springframework.transaction.annotation.Transactional;
 
 import repositories.AppointmentRepository;
 import domain.Appointment;
+
 @Component
 @Transactional
-public class StringToAppointmentConverter implements Converter<String, Appointment>{
-	
-	@Autowired
-	AppointmentRepository appointmentRepository;
+public class StringToAppointmentConverter implements Converter<String, Appointment> {
 
-	@Override
-	public Appointment convert(String text) {
-		Appointment result;
-		int id;
+    @Autowired
+    AppointmentRepository appointmentRepository;
 
-		try {
-			if (StringUtils.isEmpty(text))
-				result = null;
-			else {
-				id = Integer.valueOf(text);
-				result = appointmentRepository.findOne(id);
-			}
-		} catch (Throwable oops) {
-			throw new IllegalArgumentException(oops);
-		}
+    @Override
+    public Appointment convert(String text) {
+        Appointment result;
+        int id;
 
-		return result;
-	}
+        try {
+            if (StringUtils.isEmpty(text))
+                result = null;
+            else {
+                id = Integer.valueOf(text);
+                result = appointmentRepository.findOne(id);
+            }
+        } catch (Throwable oops) {
+            throw new IllegalArgumentException(oops);
+        }
+
+        return result;
+    }
 
 }
-

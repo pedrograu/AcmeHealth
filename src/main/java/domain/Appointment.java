@@ -15,117 +15,108 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Access(AccessType.PROPERTY)
-@Table(indexes={@Index(columnList="isFinish")})
-public class Appointment  extends Slot{
+@Table(indexes = { @Index(columnList = "isFinish") })
+public class Appointment extends Slot {
 
+    private String result;
+    private String purpose;
+    private boolean isFinish;
 
-	private String result;
-	private String purpose;
-	private boolean isFinish;
-	
+    @NotNull
+    public boolean getIsFinish() {
+        return isFinish;
+    }
 
-	@NotNull
-	public boolean getIsFinish() {
-		return isFinish;
-	}
+    public void setIsFinish(boolean isFinish) {
+        this.isFinish = isFinish;
+    }
 
-	public void setIsFinish(boolean isFinish) {
-		this.isFinish = isFinish;
-	}
+    public String getResult() {
+        return result;
+    }
 
-	public String getResult() {
-		return result;
-	}
+    public void setResult(String result) {
+        this.result = result;
+    }
 
-	public void setResult(String result) {
-		this.result = result;
-	}
+    public String getPurpose() {
+        return purpose;
+    }
 
-	public String getPurpose() {
-		return purpose;
-	}
+    public void setPurpose(String purpose) {
+        this.purpose = purpose;
+    }
 
-	public void setPurpose(String purpose) {
-		this.purpose = purpose;
-	}
+    // Relationships ----------------------------------------------------------
 
+    private MedicalHistory medicalHistory;
+    private Timetable timetable;
+    private Collection<Prescription> prescriptions;
+    private Offer offer;
+    private Patient patient;
+    private Specialist specialist;
 
-	// Relationships ----------------------------------------------------------
+    @Valid
+    @ManyToOne(optional = true)
+    public Specialist getSpecialist() {
+        return specialist;
+    }
 
+    public void setSpecialist(Specialist specialist) {
+        this.specialist = specialist;
+    }
 
-	private MedicalHistory medicalHistory;
-	private Timetable timetable;
-	private Collection<Prescription> prescriptions;
-	private Offer offer;
-	private Patient patient;
-	private Specialist specialist;
-	
-	
-	@Valid
-	@ManyToOne(optional=true)
-	public Specialist getSpecialist() {
-		return specialist;
-	}
+    @Valid
+    @NotNull
+    @ManyToOne(optional = false)
+    public MedicalHistory getMedicalHistory() {
+        return medicalHistory;
+    }
 
-	public void setSpecialist(Specialist specialist) {
-		this.specialist = specialist;
-	}
+    public void setMedicalHistory(MedicalHistory medicalHistory) {
+        this.medicalHistory = medicalHistory;
+    }
 
-	@Valid
-	@NotNull
-	@ManyToOne(optional=false)
-	public MedicalHistory getMedicalHistory() {
-		return medicalHistory;
-	}
+    @Valid
+    @NotNull
+    @ManyToOne(optional = false)
+    public Patient getPatient() {
+        return patient;
+    }
 
-	public void setMedicalHistory(MedicalHistory medicalHistory) {
-		this.medicalHistory = medicalHistory;
-	}
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
 
-	@Valid
-	@NotNull
-	@ManyToOne(optional=false)
-	public Patient getPatient() {
-		return patient;
-	}
+    @Valid
+    @ManyToOne(optional = true)
+    public Offer getOffer() {
+        return offer;
+    }
 
-	public void setPatient(Patient patient) {
-		this.patient = patient;
-	}
+    public void setOffer(Offer offer) {
+        this.offer = offer;
+    }
 
-	@Valid
-	@ManyToOne(optional=true)
-	public Offer getOffer() {
-		return offer;
-	}
+    @Valid
+    @NotNull
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "appointment")
+    public Collection<Prescription> getPrescriptions() {
+        return prescriptions;
+    }
 
-	public void setOffer(Offer offer) {
-		this.offer = offer;
-	}
+    public void setPrescriptions(Collection<Prescription> prescriptions) {
+        this.prescriptions = prescriptions;
+    }
 
-	@Valid
-	@NotNull
-	@OneToMany(cascade=CascadeType.ALL,mappedBy="appointment")
-	public Collection<Prescription> getPrescriptions() {
-		return prescriptions;
-	}
+    @Valid
+    @ManyToOne(optional = true)
+    public Timetable getTimetable() {
+        return timetable;
+    }
 
-	public void setPrescriptions(Collection<Prescription> prescriptions) {
-		this.prescriptions = prescriptions;
-	}
-
-
-	@Valid
-	@ManyToOne(optional=true)
-	public Timetable getTimetable() {
-		return timetable;
-	}
-
-	public void setTimetable(Timetable timetable) {
-		this.timetable = timetable;
-	}
-
-	
-	
+    public void setTimetable(Timetable timetable) {
+        this.timetable = timetable;
+    }
 
 }

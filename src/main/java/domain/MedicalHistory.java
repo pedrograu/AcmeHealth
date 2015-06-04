@@ -12,74 +12,69 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class MedicalHistory  extends DomainEntity{
-	
-	private String note;
-	private String bloodGroup;
-	private String allergy;
-	private String incompatibilities;
-	
+public class MedicalHistory extends DomainEntity {
 
-	public String getNote() {
-		return note;
-	}
+    private String note;
+    private String bloodGroup;
+    private String allergy;
+    private String incompatibilities;
 
-	public void setNote(String note) {
-		this.note = note;
-	}
+    public String getNote() {
+        return note;
+    }
 
-	public String getBloodGroup() {
-		return bloodGroup;
-	}
+    public void setNote(String note) {
+        this.note = note;
+    }
 
-	public void setBloodGroup(String bloodGroup) {
-		this.bloodGroup = bloodGroup;
-	}
+    public String getBloodGroup() {
+        return bloodGroup;
+    }
 
-	public String getAllergy() {
-		return allergy;
-	}
+    public void setBloodGroup(String bloodGroup) {
+        this.bloodGroup = bloodGroup;
+    }
 
-	public void setAllergy(String allergy) {
-		this.allergy = allergy;
-	}
+    public String getAllergy() {
+        return allergy;
+    }
 
-	public String getIncompatibilities() {
-		return incompatibilities;
-	}
+    public void setAllergy(String allergy) {
+        this.allergy = allergy;
+    }
 
-	public void setIncompatibilities(String incompatibilities) {
-		this.incompatibilities = incompatibilities;
-	}
-	
-	
+    public String getIncompatibilities() {
+        return incompatibilities;
+    }
 
-	// Relationships ----------------------------------------------------------
-	private Patient patient;
-	private Collection<Appointment> appointments;
+    public void setIncompatibilities(String incompatibilities) {
+        this.incompatibilities = incompatibilities;
+    }
 
-	@Valid
-	@NotNull
-	@OneToMany(mappedBy = "medicalHistory")
-	public Collection<Appointment> getAppointments() {
-		return appointments;
-	}
+    // Relationships ----------------------------------------------------------
+    private Patient patient;
+    private Collection<Appointment> appointments;
 
-	public void setAppointments(Collection<Appointment> appointments) {
-		this.appointments = appointments;
-	}
+    @Valid
+    @NotNull
+    @OneToMany(mappedBy = "medicalHistory")
+    public Collection<Appointment> getAppointments() {
+        return appointments;
+    }
 
-	@Valid
-	@NotNull
-	@OneToOne(optional=false)
-	public Patient getPatient() {
-		return patient;
-	}
+    public void setAppointments(Collection<Appointment> appointments) {
+        this.appointments = appointments;
+    }
 
-	public void setPatient(Patient patient) {
-		this.patient = patient;
-	}
+    @Valid
+    @NotNull
+    @OneToOne(optional = false)
+    public Patient getPatient() {
+        return patient;
+    }
 
-
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
 
 }

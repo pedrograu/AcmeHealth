@@ -21,108 +21,101 @@ import security.LoginService;
 import services.SpecialtyService;
 import utilities.PopulateDatabase;
 
-@ContextConfiguration(locations = { "classpath:spring/datasource.xml",
-		"classpath:spring/config/packages.xml" })
+@ContextConfiguration(locations = { "classpath:spring/datasource.xml", "classpath:spring/config/packages.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 public class SpecialtyServiceTest {
 
-	@Autowired
-	private SpecialtyService specialtyService;
-	@Autowired
-	private LoginService loginService;
+    @Autowired
+    private SpecialtyService specialtyService;
+    @Autowired
+    private LoginService loginService;
 
-	public void authenticate(String username) {
-		UserDetails userDetails;
-		TestingAuthenticationToken authenticationToken;
-		SecurityContext context;
+    public void authenticate(String username) {
+        UserDetails userDetails;
+        TestingAuthenticationToken authenticationToken;
+        SecurityContext context;
 
-		userDetails = loginService.loadUserByUsername(username);
-		authenticationToken = new TestingAuthenticationToken(userDetails, null);
-		context = SecurityContextHolder.getContext();
-		context.setAuthentication(authenticationToken);
-	}
+        userDetails = loginService.loadUserByUsername(username);
+        authenticationToken = new TestingAuthenticationToken(userDetails, null);
+        context = SecurityContextHolder.getContext();
+        context.setAuthentication(authenticationToken);
+    }
 
-	public void desauthenticate() {
-		UserDetails userDetails;
-		TestingAuthenticationToken authenticationToken;
-		SecurityContext context;
+    public void desauthenticate() {
+        UserDetails userDetails;
+        TestingAuthenticationToken authenticationToken;
+        SecurityContext context;
 
-		userDetails = loginService.loadUserByUsername(null);
-		authenticationToken = new TestingAuthenticationToken(userDetails, null);
-		context = SecurityContextHolder.getContext();
-		context.setAuthentication(authenticationToken);
-	}
+        userDetails = loginService.loadUserByUsername(null);
+        authenticationToken = new TestingAuthenticationToken(userDetails, null);
+        context = SecurityContextHolder.getContext();
+        context.setAuthentication(authenticationToken);
+    }
 
-	@Before
-	public void setUp() {
-		PopulateDatabase.main(null);
-	}
+    @Before
+    public void setUp() {
+        PopulateDatabase.main(null);
+    }
 
-	@Test
-	public void testCreateSpecialty() {
-		authenticate("administrator1");
+    @Test
+    public void testCreateSpecialty() {
+        authenticate("administrator1");
 
-		Specialty specialty = specialtyService.create();
-		specialty.setDescription("Esta es la description de la nueva especialidad");
-		specialty.setName("GinecologiaTest");
+        Specialty specialty = specialtyService.create();
+        specialty.setDescription("Esta es la description de la nueva especialidad");
+        specialty.setName("GinecologiaTest");
 
-		specialtyService.save(specialty);
-		Collection<Specialty> specialties = specialtyService.getAll();
-		boolean res = false;
-		for (Specialty s : specialties) {
-			if (s.getName().equals(specialty.getName())) {
-				res = true;
-				break;
-			}
+        specialtyService.save(specialty);
+        Collection<Specialty> specialties = specialtyService.getAll();
+        boolean res = false;
+        for (Specialty s : specialties) {
+            if (s.getName().equals(specialty.getName())) {
+                res = true;
+                break;
+            }
 
-		}
-		Assert.isTrue(res);
+        }
+        Assert.isTrue(res);
 
-	}
-	
-	
-	@Test(expected = IllegalArgumentException.class)
-	public void testCreateSpecialtyNotAuthenticated() {
-		desauthenticate();
+    }
 
-		Specialty specialty = specialtyService.create();
-		specialty.setDescription("Esta es la description de la nueva especialidad");
-		specialty.setName("GinecologiaTest");
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateSpecialtyNotAuthenticated() {
+        desauthenticate();
 
-		specialtyService.save(specialty);
-		
+        Specialty specialty = specialtyService.create();
+        specialty.setDescription("Esta es la description de la nueva especialidad");
+        specialty.setName("GinecologiaTest");
 
-	}
-	
-	//da un NullPointerException porque el checkprincipal devuelve nulo el administratorConnect
-	@Test(expected = NullPointerException.class)
-	public void testCreateSpecialtyAuthenticatedPatient() {
-		authenticate("patient1");
+        specialtyService.save(specialty);
 
-		Specialty specialty = specialtyService.create();
-		specialty.setDescription("Esta es la description de la nueva especialidad2");
-		specialty.setName("GinecologiaTest2");
+    }
 
-		specialtyService.save(specialty);
-		
+    //da un NullPointerException porque el checkprincipal devuelve nulo el administratorConnect
+    @Test(expected = NullPointerException.class)
+    public void testCreateSpecialtyAuthenticatedPatient() {
+        authenticate("patient1");
 
-	}
-	
-	//da un NullPointerException porque el checkprincipal devuelve nulo el administratorConnect
-	@Test(expected = NullPointerException.class)
-	public void testCreateSpecialtyAuthenticatedSpecialist() {
-		authenticate("specialist1");
+        Specialty specialty = specialtyService.create();
+        specialty.setDescription("Esta es la description de la nueva especialidad2");
+        specialty.setName("GinecologiaTest2");
 
-		Specialty specialty = specialtyService.create();
-		specialty.setDescription("Esta es la description de la nueva especialidad3");
-		specialty.setName("GinecologiaTest3");
+        specialtyService.save(specialty);
 
-		specialtyService.save(specialty);
-		
+    }
 
-	}
+    //da un NullPointerException porque el checkprincipal devuelve nulo el administratorConnect
+    @Test(expected = NullPointerException.class)
+    public void testCreateSpecialtyAuthenticatedSpecialist() {
+        authenticate("specialist1");
 
+        Specialty specialty = specialtyService.create();
+        specialty.setDescription("Esta es la description de la nueva especialidad3");
+        specialty.setName("GinecologiaTest3");
 
+        specialtyService.save(specialty);
+
+    }
 
 }

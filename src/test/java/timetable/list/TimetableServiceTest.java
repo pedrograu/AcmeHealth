@@ -22,75 +22,73 @@ import utilities.PopulateDatabase;
 import domain.Specialist;
 import domain.Timetable;
 
-@ContextConfiguration(locations = { "classpath:spring/datasource.xml",
-"classpath:spring/config/packages.xml" })
+@ContextConfiguration(locations = { "classpath:spring/datasource.xml", "classpath:spring/config/packages.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 public class TimetableServiceTest {
-	
-	@Autowired
-	private LoginService loginService;
-	
-	@Autowired
-	private TimetableService timetableService;
-	
-	@Autowired
-	private SpecialistService specialistService;
 
-	public void authenticate(String username) {
-		UserDetails userDetails;
-		TestingAuthenticationToken authenticationToken;
-		SecurityContext context;
+    @Autowired
+    private LoginService loginService;
 
-		userDetails = loginService.loadUserByUsername(username);
-		authenticationToken = new TestingAuthenticationToken(userDetails, null);
-		context = SecurityContextHolder.getContext();
-		context.setAuthentication(authenticationToken);
-	}
+    @Autowired
+    private TimetableService timetableService;
 
-	public void desauthenticate() {
-		UserDetails userDetails;
-		TestingAuthenticationToken authenticationToken;
-		SecurityContext context;
+    @Autowired
+    private SpecialistService specialistService;
 
-		userDetails = loginService.loadUserByUsername(null);
-		authenticationToken = new TestingAuthenticationToken(userDetails, null);
-		context = SecurityContextHolder.getContext();
-		context.setAuthentication(authenticationToken);
-	}
+    public void authenticate(String username) {
+        UserDetails userDetails;
+        TestingAuthenticationToken authenticationToken;
+        SecurityContext context;
 
-	@Before
-	public void setUp() {
-		PopulateDatabase.main(null);
-	}
-	
-	
-	@Test
-	public void testListTimetablesForSpecialistAuthenticatePatient(){
-		authenticate("administrator1");
-		Collection<Timetable> timetables;
-		Specialist specialist = specialistService.findOneToEdit(12);
-		timetables = timetableService.getTimetablesForSpecialist(specialist);
-		Assert.isTrue(timetables.size()==3);
+        userDetails = loginService.loadUserByUsername(username);
+        authenticationToken = new TestingAuthenticationToken(userDetails, null);
+        context = SecurityContextHolder.getContext();
+        context.setAuthentication(authenticationToken);
+    }
 
-		for(Timetable t : timetables){
-			Assert.isTrue(t.getSpecialist()==specialist);
-		}
-	}
-	
-	@Test
-	public void testListMyTimetablesForSpecialistAuthenticateSpecialist(){
-		
-		authenticate("specialist1");
-		
-		Collection<Timetable> timetables;
-		Specialist specialist = specialistService.findOneToEdit(12);
-		timetables = timetableService.getTimetablesForSpecialist(specialist);
-		Assert.isTrue(timetables.size()==3);
+    public void desauthenticate() {
+        UserDetails userDetails;
+        TestingAuthenticationToken authenticationToken;
+        SecurityContext context;
 
-		for(Timetable t : timetables){
-			Assert.isTrue(t.getSpecialist()==specialist);
-		}
-	}
+        userDetails = loginService.loadUserByUsername(null);
+        authenticationToken = new TestingAuthenticationToken(userDetails, null);
+        context = SecurityContextHolder.getContext();
+        context.setAuthentication(authenticationToken);
+    }
+
+    @Before
+    public void setUp() {
+        PopulateDatabase.main(null);
+    }
+
+    @Test
+    public void testListTimetablesForSpecialistAuthenticatePatient() {
+        authenticate("administrator1");
+        Collection<Timetable> timetables;
+        Specialist specialist = specialistService.findOneToEdit(12);
+        timetables = timetableService.getTimetablesForSpecialist(specialist);
+        Assert.isTrue(timetables.size() == 3);
+
+        for (Timetable t : timetables) {
+            Assert.isTrue(t.getSpecialist() == specialist);
+        }
+    }
+
+    @Test
+    public void testListMyTimetablesForSpecialistAuthenticateSpecialist() {
+
+        authenticate("specialist1");
+
+        Collection<Timetable> timetables;
+        Specialist specialist = specialistService.findOneToEdit(12);
+        timetables = timetableService.getTimetablesForSpecialist(specialist);
+        Assert.isTrue(timetables.size() == 3);
+
+        for (Timetable t : timetables) {
+            Assert.isTrue(t.getSpecialist() == specialist);
+        }
+    }
 
 }

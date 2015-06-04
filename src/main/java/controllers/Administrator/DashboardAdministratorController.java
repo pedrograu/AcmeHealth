@@ -22,43 +22,43 @@ import domain.Specialist;
 @RequestMapping("/dashboard/administrator")
 public class DashboardAdministratorController extends AbstractController {
 
-	@Autowired
-	private CustomerService customerService;
-	@Autowired
-	private PatientService patientService;
-	@Autowired
-	private SpecialistService specialistService;
-	@Autowired
-	private CommentService commentService;
-	@Autowired
-	private ProfileService profileService;
+    @Autowired
+    private CustomerService customerService;
+    @Autowired
+    private PatientService patientService;
+    @Autowired
+    private SpecialistService specialistService;
+    @Autowired
+    private CommentService commentService;
+    @Autowired
+    private ProfileService profileService;
 
-	public DashboardAdministratorController() {
-		super();
-	}
+    public DashboardAdministratorController() {
+        super();
+    }
 
-	// Listing ----------------------------------------------------------------
+    // Listing ----------------------------------------------------------------
 
-	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
-	public ModelAndView list() {
-		ModelAndView result;
-		Integer numberOfPatients = patientService.getNumberOfPatient();
-		Collection<Profile> bestSpecialist = profileService.getBestSpecialist();
-		Collection<Specialist> specialistWithMoreAppointment = specialistService.getSpecialistWithMoreAppointment();
-		Collection<Patient> patientWithMoreAppointment = patientService.getPatientWithMoreAppointment();
-		Collection<Patient> patientWithMoreSpending = patientService.getPatientWithMoreSpending();
-		Collection<Patient> patientLastYear = patientService.getPatientLastYear();
+    @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+    public ModelAndView list() {
+        ModelAndView result;
+        Integer numberOfPatients = patientService.getNumberOfPatient();
+        Collection<Profile> bestSpecialist = profileService.getBestSpecialist();
+        Collection<Specialist> specialistWithMoreAppointment = specialistService.getSpecialistWithMoreAppointment();
+        Collection<Patient> patientWithMoreAppointment = patientService.getPatientWithMoreAppointment();
+        Collection<Patient> patientWithMoreSpending = patientService.getPatientWithMoreSpending();
+        Collection<Patient> patientLastYear = patientService.getPatientLastYear();
 
-		result = new ModelAndView("dashboard/list");
-		result.addObject("numberOfPatients", numberOfPatients);
-		result.addObject("bestSpecialist", bestSpecialist);
-		result.addObject("specialistWithMoreAppointment", specialistWithMoreAppointment);
-		result.addObject("patientWithMoreAppointment", patientWithMoreAppointment);
-		result.addObject("patientWithMoreSpending", patientWithMoreSpending);
-		result.addObject("patientLastYear", patientLastYear);
+        result = new ModelAndView("dashboard/list");
+        result.addObject("numberOfPatients", numberOfPatients);
+        result.addObject("bestSpecialist", bestSpecialist);
+        result.addObject("specialistWithMoreAppointment", specialistWithMoreAppointment);
+        result.addObject("patientWithMoreAppointment", patientWithMoreAppointment);
+        result.addObject("patientWithMoreSpending", patientWithMoreSpending);
+        result.addObject("patientLastYear", patientLastYear);
 
-		result.addObject("requestURI", "dashboard/administrator/dashboard.do");
+        result.addObject("requestURI", "dashboard/administrator/dashboard.do");
 
-		return result;
-	}
+        return result;
+    }
 }

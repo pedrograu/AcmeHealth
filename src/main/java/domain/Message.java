@@ -17,69 +17,69 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class Message  extends DomainEntity{
+public class Message extends DomainEntity {
 
-	private String subject;
+    private String subject;
 
-	private String textBody;
+    private String textBody;
 
-	private Date creationMoment;
+    private Date creationMoment;
 
-	@NotBlank
-	public String getSubject() {
-		return subject;
-	}
+    @NotBlank
+    public String getSubject() {
+        return subject;
+    }
 
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
 
-	@NotBlank
-	public String getTextBody() {
-		return textBody;
-	}
+    @NotBlank
+    public String getTextBody() {
+        return textBody;
+    }
 
-	public void setTextBody(String textBody) {
-		this.textBody = textBody;
-	}
+    public void setTextBody(String textBody) {
+        this.textBody = textBody;
+    }
 
-	@Past
-	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-	public Date getCreationMoment() {
-		return creationMoment;
-	}
+    @Past
+    @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+    public Date getCreationMoment() {
+        return creationMoment;
+    }
 
-	public void setCreationMoment(Date creationMoment) {
-		this.creationMoment = creationMoment;
-	}
+    public void setCreationMoment(Date creationMoment) {
+        this.creationMoment = creationMoment;
+    }
 
-	// Relationships ----------------------------------------------------------
-	private Customer recipient;
+    // Relationships ----------------------------------------------------------
+    private Customer recipient;
 
-	private Customer sender;
+    private Customer sender;
 
-	@NotNull
-	@Valid
-	@ManyToOne(optional = false)
-	public Customer getRecipient() {
-		return recipient;
-	}
+    @NotNull
+    @Valid
+    @ManyToOne(optional = false)
+    public Customer getRecipient() {
+        return recipient;
+    }
 
-	public void setRecipient(Customer recipient) {
-		this.recipient = recipient;
-	}
+    public void setRecipient(Customer recipient) {
+        this.recipient = recipient;
+    }
 
-	@NotNull
-	@Valid
-	@ManyToOne(optional = false)
-	public Customer getSender() {
-		return sender;
-	}
+    @NotNull
+    @Valid
+    @ManyToOne(optional = false)
+    public Customer getSender() {
+        return sender;
+    }
 
-	public void setSender(Customer sender) {
-		this.sender = sender;
-	}
+    public void setSender(Customer sender) {
+        this.sender = sender;
+    }
 
 }

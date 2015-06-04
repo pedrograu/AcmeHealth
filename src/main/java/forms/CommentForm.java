@@ -1,6 +1,5 @@
 package forms;
 
-import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -11,59 +10,56 @@ import domain.Profile;
 
 public class CommentForm {
 
-	private int id;
-	private int version; 
-	
-	private String text;
-	private Integer rating;
-	private Profile profile;
-	
-	
-	
-	public int getId() {
-		return id;
-	}
+    private int id;
+    private int version;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    private String text;
+    private Integer rating;
+    private Profile profile;
 
-	public int getVersion() {
-		return version;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setVersion(int version) {
-		this.version = version;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	@NotBlank
-	public String getText() {
-		return text;
-	}
+    public int getVersion() {
+        return version;
+    }
 
-	public void setText(String text) {
-		this.text = text;
-	}
+    public void setVersion(int version) {
+        this.version = version;
+    }
 
-	@NotNull
-	@Range(min = 0, max = 10)
-	public Integer getRating() {
-		return rating;
-	}
+    @NotBlank
+    public String getText() {
+        return text;
+    }
 
-	public void setRating(Integer rating) {
-		this.rating = rating;
-	}
+    public void setText(String text) {
+        this.text = text;
+    }
 
-	@Valid
-	@NotNull
-	public Profile getProfile() {
-		return profile;
-	}
+    @NotNull
+    @Range(min = 0, max = 10)
+    public Integer getRating() {
+        return rating;
+    }
 
-	public void setProfile(Profile profile) {
-		this.profile = profile;
-	}
-	
-	
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
+
+    @Valid
+    @NotNull
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
+
 }

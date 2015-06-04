@@ -25,59 +25,59 @@ import javax.persistence.Version;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class DomainEntity {
 
-	// Constructors -----------------------------------------------------------
+    // Constructors -----------------------------------------------------------
 
-	public DomainEntity() {
-		super();
-	}
+    public DomainEntity() {
+        super();
+    }
 
-	// Identification ---------------------------------------------------------
+    // Identification ---------------------------------------------------------
 
-	private int id;
-	private int version;
+    private int id;
+    private int version;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE)
-	public int getId() {
-		return id;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    public int getId() {
+        return id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	@Version
-	public int getVersion() {
-		return version;
-	}
+    @Version
+    public int getVersion() {
+        return version;
+    }
 
-	public void setVersion(int version) {
-		this.version = version;
-	}
+    public void setVersion(int version) {
+        this.version = version;
+    }
 
-	// Equality ---------------------------------------------------------------
+    // Equality ---------------------------------------------------------------
 
-	@Override
-	public int hashCode() {
-		return this.getId();
-	}
+    @Override
+    public int hashCode() {
+        return this.getId();
+    }
 
-	@Override
-	public boolean equals(Object other) {
-		boolean result;
+    @Override
+    public boolean equals(Object other) {
+        boolean result;
 
-		if (this == other)
-			result = true;
-		else if (other == null)
-			result = false;
-		else if (other instanceof Integer)
-			result = (this.getId() == (Integer) other);
-		else if (!this.getClass().isInstance(other))
-			result = false;
-		else
-			result = (this.getId() == ((DomainEntity) other).getId());
+        if (this == other)
+            result = true;
+        else if (other == null)
+            result = false;
+        else if (other instanceof Integer)
+            result = (this.getId() == (Integer) other);
+        else if (!this.getClass().isInstance(other))
+            result = false;
+        else
+            result = (this.getId() == ((DomainEntity) other).getId());
 
-		return result;
-	}
+        return result;
+    }
 
 }

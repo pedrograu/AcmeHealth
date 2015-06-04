@@ -15,35 +15,32 @@ import domain.Comment;
 @Controller
 @RequestMapping("/comment/administrator")
 public class CommentAdministratorController extends AbstractController {
-	
-	// Services -----------------------------------------------------------
 
-		@Autowired
-		private CommentService commentService;
+    // Services -----------------------------------------------------------
 
+    @Autowired
+    private CommentService commentService;
 
+    // Constructors -----------------------------------------------------------
 
-		// Constructors -----------------------------------------------------------
+    public CommentAdministratorController() {
+        super();
+    }
 
-		public CommentAdministratorController() {
-			super();
-		}
+    // Edit........................
 
-		// Edit........................
-		
+    @RequestMapping(value = "/details", method = RequestMethod.GET)
+    public ModelAndView details(@RequestParam int commentId) {
 
-		@RequestMapping(value = "/details", method = RequestMethod.GET)
-		public ModelAndView details(@RequestParam int commentId) {
+        ModelAndView result;
+        Comment comment = commentService.findOneToEdit(commentId);
 
-			ModelAndView result;
-			Comment comment = commentService.findOneToEdit(commentId);
+        result = new ModelAndView("comment/edit");
+        result.addObject("comment", comment);
+        result.addObject("details", true);
+        result.addObject("requestURI", "comment/administrator/details.do?commentId=" + comment.getId());
 
-			result = new ModelAndView("comment/edit");
-			result.addObject("comment", comment);
-			result.addObject("details", true);
-			result.addObject("requestURI", "comment/administrator/details.do?commentId="+ comment.getId());
-
-			return result;
-		}
+        return result;
+    }
 
 }

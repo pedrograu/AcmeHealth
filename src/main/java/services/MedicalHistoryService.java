@@ -11,51 +11,48 @@ import repositories.MedicalHistoryRepository;
 import domain.Appointment;
 import domain.MedicalHistory;
 import domain.Patient;
-import domain.Specialty;
 
 @Service
 @Transactional
 public class MedicalHistoryService {
 
-	// Managed repository ---------------------------------------
-	@Autowired
-	private MedicalHistoryRepository medicalHistoryRepository;
+    // Managed repository ---------------------------------------
+    @Autowired
+    private MedicalHistoryRepository medicalHistoryRepository;
 
-	// Managed service ---------------------------------------
-	@Autowired
-	private PatientService patientService;
+    // Managed service ---------------------------------------
+    @Autowired
+    private PatientService patientService;
 
-	// Constructors ---------------------------------------------
+    // Constructors ---------------------------------------------
 
-	public MedicalHistoryService() {
-		super();
-	}
+    public MedicalHistoryService() {
+        super();
+    }
 
-	// Simple CRUD methods --------------------------------------
+    // Simple CRUD methods --------------------------------------
 
-	public MedicalHistory create(Patient patient2) {
+    public MedicalHistory create(Patient patient2) {
 
-		MedicalHistory medicalHistory = new MedicalHistory();
-		Collection<Appointment> appointments = new HashSet<Appointment>();
-		
-		medicalHistory.setPatient(patient2);
-		medicalHistory.setAppointments(appointments);
-		
-		return medicalHistory;
-	}
+        MedicalHistory medicalHistory = new MedicalHistory();
+        Collection<Appointment> appointments = new HashSet<Appointment>();
 
-	public void save(MedicalHistory medicalHistory) {
-		
-		MedicalHistory medicalHistory2 = medicalHistoryRepository.save(medicalHistory);
-		medicalHistory2.getPatient().setMedicalHistory(medicalHistory2);
+        medicalHistory.setPatient(patient2);
+        medicalHistory.setAppointments(appointments);
 
-		
-		
-	}
-	
-	public MedicalHistory findOneToEdit(int medicalHistoryId) {
-		MedicalHistory s = medicalHistoryRepository.findOne(medicalHistoryId);
-		return s;
-	}
+        return medicalHistory;
+    }
+
+    public void save(MedicalHistory medicalHistory) {
+
+        MedicalHistory medicalHistory2 = medicalHistoryRepository.save(medicalHistory);
+        medicalHistory2.getPatient().setMedicalHistory(medicalHistory2);
+
+    }
+
+    public MedicalHistory findOneToEdit(int medicalHistoryId) {
+        MedicalHistory s = medicalHistoryRepository.findOne(medicalHistoryId);
+        return s;
+    }
 
 }

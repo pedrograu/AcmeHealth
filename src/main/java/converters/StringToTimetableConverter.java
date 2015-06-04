@@ -1,4 +1,3 @@
-
 package converters;
 
 import org.apache.commons.lang.StringUtils;
@@ -8,34 +7,32 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import repositories.TimetableRepository;
-import domain.Prescription;
 import domain.Timetable;
 
 @Component
 @Transactional
-public class StringToTimetableConverter implements Converter<String, Timetable>{
-	
-	@Autowired
-	TimetableRepository timetableRepository;
+public class StringToTimetableConverter implements Converter<String, Timetable> {
 
-	@Override
-	public Timetable convert(String text) {
-		Timetable result;
-		int id;
+    @Autowired
+    TimetableRepository timetableRepository;
 
-		try {
-			if (StringUtils.isEmpty(text))
-				result = null;
-			else {
-				id = Integer.valueOf(text);
-				result = timetableRepository.findOne(id);
-			}
-		} catch (Throwable oops) {
-			throw new IllegalArgumentException(oops);
-		}
+    @Override
+    public Timetable convert(String text) {
+        Timetable result;
+        int id;
 
-		return result;
-	}
+        try {
+            if (StringUtils.isEmpty(text))
+                result = null;
+            else {
+                id = Integer.valueOf(text);
+                result = timetableRepository.findOne(id);
+            }
+        } catch (Throwable oops) {
+            throw new IllegalArgumentException(oops);
+        }
+
+        return result;
+    }
 
 }
-

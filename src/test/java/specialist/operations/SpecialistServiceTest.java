@@ -1,9 +1,5 @@
 package specialist.operations;
 
-
-import java.util.Collection;
-import java.util.Date;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,80 +18,76 @@ import services.OfferService;
 import services.PatientService;
 import services.SpecialistService;
 import utilities.PopulateDatabase;
-import domain.Offer;
 import domain.Patient;
 import domain.Specialist;
 
-@ContextConfiguration(locations = { "classpath:spring/datasource.xml",
-		"classpath:spring/config/packages.xml" })
+@ContextConfiguration(locations = { "classpath:spring/datasource.xml", "classpath:spring/config/packages.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 public class SpecialistServiceTest {
 
-	@Autowired
-	private OfferService offerService;
-	@Autowired
-	private SpecialistService specialistService;
-	@Autowired
-	private LoginService loginService;
-	@Autowired
-	private PatientService patientService;
+    @Autowired
+    private OfferService offerService;
+    @Autowired
+    private SpecialistService specialistService;
+    @Autowired
+    private LoginService loginService;
+    @Autowired
+    private PatientService patientService;
 
-	public void authenticate(String username) {
-		UserDetails userDetails;
-		TestingAuthenticationToken authenticationToken;
-		SecurityContext context;
+    public void authenticate(String username) {
+        UserDetails userDetails;
+        TestingAuthenticationToken authenticationToken;
+        SecurityContext context;
 
-		userDetails = loginService.loadUserByUsername(username);
-		authenticationToken = new TestingAuthenticationToken(userDetails, null);
-		context = SecurityContextHolder.getContext();
-		context.setAuthentication(authenticationToken);
-	}
+        userDetails = loginService.loadUserByUsername(username);
+        authenticationToken = new TestingAuthenticationToken(userDetails, null);
+        context = SecurityContextHolder.getContext();
+        context.setAuthentication(authenticationToken);
+    }
 
-	public void desauthenticate() {
-		UserDetails userDetails;
-		TestingAuthenticationToken authenticationToken;
-		SecurityContext context;
+    public void desauthenticate() {
+        UserDetails userDetails;
+        TestingAuthenticationToken authenticationToken;
+        SecurityContext context;
 
-		userDetails = loginService.loadUserByUsername(null);
-		authenticationToken = new TestingAuthenticationToken(userDetails, null);
-		context = SecurityContextHolder.getContext();
-		context.setAuthentication(authenticationToken);
-	}
+        userDetails = loginService.loadUserByUsername(null);
+        authenticationToken = new TestingAuthenticationToken(userDetails, null);
+        context = SecurityContextHolder.getContext();
+        context.setAuthentication(authenticationToken);
+    }
 
-	@Before
-	public void setUp() {
-		PopulateDatabase.main(null);
-	}
+    @Before
+    public void setUp() {
+        PopulateDatabase.main(null);
+    }
 
-	//cambiar su medico de cabecera por otro
-	@Test
-	public void testChangeSpecialist() {
-		
-		authenticate("patient1");
-		
-		Patient patient = patientService.findByPrincipal();
-		Specialist specialist = specialistService.findOneToEdit(14);
-		
-		patientService.save(patient, specialist);
-		
-		Assert.isTrue(patient.getSpecialist()==specialist);
-		
-	}
-	
-	//cambiar su medico de cabecera por otro que no es de "Medicina General"
-	@Test(expected = IllegalArgumentException.class)
-	public void testChangeSpecialistNotMedicalHistory() {
-		
-		authenticate("patient1");
-		
-		Patient patient = patientService.findByPrincipal();
-		Specialist specialist = specialistService.findOneToEdit(16);
-		
-		patientService.save(patient, specialist);
+    //cambiar su medico de cabecera por otro
+    @Test
+    public void testChangeSpecialist() {
 
-		
-	}
+        authenticate("patient1");
 
-	
+        Patient patient = patientService.findByPrincipal();
+        Specialist specialist = specialistService.findOneToEdit(14);
+
+        patientService.save(patient, specialist);
+
+        Assert.isTrue(patient.getSpecialist() == specialist);
+
+    }
+
+    //cambiar su medico de cabecera por otro que no es de "Medicina General"
+    @Test(expected = IllegalArgumentException.class)
+    public void testChangeSpecialistNotMedicalHistory() {
+
+        authenticate("patient1");
+
+        Patient patient = patientService.findByPrincipal();
+        Specialist specialist = specialistService.findOneToEdit(16);
+
+        patientService.save(patient, specialist);
+
+    }
+
 }

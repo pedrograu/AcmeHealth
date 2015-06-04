@@ -9,15 +9,15 @@ import domain.Specialty;
 @Component
 @Transactional
 public class SpecialtyToStringConverter implements Converter<Specialty, String> {
-	@Override
-	public String convert(Specialty specialty) {
-		String result;
+    @Override
+    public String convert(Specialty specialty) {
+        String result;
 
-		if (specialty == null)
-			result = null;
-		else
-			result = String.valueOf(specialty.getId());
+        if (specialty == null)
+            result = null;
+        else
+            result = String.valueOf(specialty.getId());
 
-		return result;
-	}
+        return result;
+    }
 }

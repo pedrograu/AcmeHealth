@@ -1,6 +1,5 @@
 package appointment.list;
 
-
 import java.util.Collection;
 
 import javax.transaction.Transactional;
@@ -27,109 +26,102 @@ import domain.Appointment;
 import domain.Patient;
 import domain.Specialist;
 
-
-@ContextConfiguration(locations = { "classpath:spring/datasource.xml",
-		"classpath:spring/config/packages.xml" })
+@ContextConfiguration(locations = { "classpath:spring/datasource.xml", "classpath:spring/config/packages.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 public class AppointmentServiceTest {
 
-	@Autowired
-	private FreeDayService freeDayService;
-	@Autowired
-	private LoginService loginService;
-	@Autowired
-	private PatientService patientService;
-	@Autowired
-	private SpecialistService specialistService;
-	@Autowired
-	private AppointmentService appointmentService;
-	
+    @Autowired
+    private FreeDayService freeDayService;
+    @Autowired
+    private LoginService loginService;
+    @Autowired
+    private PatientService patientService;
+    @Autowired
+    private SpecialistService specialistService;
+    @Autowired
+    private AppointmentService appointmentService;
 
-	
-	public void authenticate(String username) {
-		UserDetails userDetails;
-		TestingAuthenticationToken authenticationToken;
-		SecurityContext context;
+    public void authenticate(String username) {
+        UserDetails userDetails;
+        TestingAuthenticationToken authenticationToken;
+        SecurityContext context;
 
-		userDetails = loginService.loadUserByUsername(username);
-		authenticationToken = new TestingAuthenticationToken(userDetails, null);
-		context = SecurityContextHolder.getContext();
-		context.setAuthentication(authenticationToken);
-	}
+        userDetails = loginService.loadUserByUsername(username);
+        authenticationToken = new TestingAuthenticationToken(userDetails, null);
+        context = SecurityContextHolder.getContext();
+        context.setAuthentication(authenticationToken);
+    }
 
-	public void desauthenticate() {
-		UserDetails userDetails;
-		TestingAuthenticationToken authenticationToken;
-		SecurityContext context;
+    public void desauthenticate() {
+        UserDetails userDetails;
+        TestingAuthenticationToken authenticationToken;
+        SecurityContext context;
 
-		userDetails = loginService.loadUserByUsername(null);
-		authenticationToken = new TestingAuthenticationToken(userDetails, null);
-		context = SecurityContextHolder.getContext();
-		context.setAuthentication(authenticationToken);
-	}
+        userDetails = loginService.loadUserByUsername(null);
+        authenticationToken = new TestingAuthenticationToken(userDetails, null);
+        context = SecurityContextHolder.getContext();
+        context.setAuthentication(authenticationToken);
+    }
 
+    @Before
+    public void setUp() {
+        PopulateDatabase.main(null);
+    }
 
-	@Before
-	public void setUp() {
-		PopulateDatabase.main(null);
-	}
+    @Test
+    public void testListMyAppouintmentNotFinishAuthenticatedPatient() {
 
-	@Test
-	public void testListMyAppouintmentNotFinishAuthenticatedPatient() {
+        authenticate("patient2");
 
-		authenticate("patient2");
-		
-		Patient patient = patientService.findByPrincipal();
-		
-		Collection<Appointment> appointments = appointmentService.getMyScheduledAppointments();
-		
-		for(Appointment a :appointments){
-			
-			Assert.isTrue(a.getPatient()==patient);
-			Assert.isTrue(a.getIsFinish()==false);
-		}
-		
-		Assert.isTrue(patient.getAppointments().size()==1);
+        Patient patient = patientService.findByPrincipal();
 
-	}
-	
-	@Test
-	public void testListMyAppouintmentNotFinishAuthenticatedSpecialist() {
+        Collection<Appointment> appointments = appointmentService.getMyScheduledAppointments();
 
-		authenticate("specialist1");
-		
-		Specialist specialist = specialistService.findByPrincipal();
-		
-		Collection<Appointment> appointments = appointmentService.getAppointmentsNotFinish();
-		
-		for(Appointment a :appointments){
-			
-			Assert.isTrue(a.getSpecialist()==specialist && a.getIsFinish()==false);
-		}
-		
-		Assert.isTrue(appointments.size()==1);
+        for (Appointment a : appointments) {
 
-	}
-	
-	@Test
-	public void testListMyAppouintmentFinishAuthenticatedSpecialist() {
+            Assert.isTrue(a.getPatient() == patient);
+            Assert.isTrue(a.getIsFinish() == false);
+        }
 
-		authenticate("specialist1");
-		
-		Specialist specialist = specialistService.findByPrincipal();
-		
-		Collection<Appointment> appointments = appointmentService.getAppointmentsFinish();
-		
-		for(Appointment a :appointments){
-			
-			Assert.isTrue(a.getSpecialist()==specialist && a.getIsFinish()==true);
-		}
-		
-		Assert.isTrue(appointments.size()==1);
+        Assert.isTrue(patient.getAppointments().size() == 1);
 
-	}
+    }
 
-	
-	
+    @Test
+    public void testListMyAppouintmentNotFinishAuthenticatedSpecialist() {
+
+        authenticate("specialist1");
+
+        Specialist specialist = specialistService.findByPrincipal();
+
+        Collection<Appointment> appointments = appointmentService.getAppointmentsNotFinish();
+
+        for (Appointment a : appointments) {
+
+            Assert.isTrue(a.getSpecialist() == specialist && a.getIsFinish() == false);
+        }
+
+        Assert.isTrue(appointments.size() == 1);
+
+    }
+
+    @Test
+    public void testListMyAppouintmentFinishAuthenticatedSpecialist() {
+
+        authenticate("specialist1");
+
+        Specialist specialist = specialistService.findByPrincipal();
+
+        Collection<Appointment> appointments = appointmentService.getAppointmentsFinish();
+
+        for (Appointment a : appointments) {
+
+            Assert.isTrue(a.getSpecialist() == specialist && a.getIsFinish() == true);
+        }
+
+        Assert.isTrue(appointments.size() == 1);
+
+    }
+
 }

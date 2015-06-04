@@ -1,9 +1,7 @@
 package services;
 
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,74 +18,73 @@ import domain.Specialist;
 @Transactional
 public class PrescriptionService {
 
-	// Managed repository ---------------------------------------
-	@Autowired
-	private PrescriptionRepository prescriptionRepository;
+    // Managed repository ---------------------------------------
+    @Autowired
+    private PrescriptionRepository prescriptionRepository;
 
-	// Services----------------------------------
+    // Services----------------------------------
 
-	@Autowired
-	private PatientService patientService;
-	
-	@Autowired
-	private SpecialistService specialistService;
+    @Autowired
+    private PatientService patientService;
 
-	// Constructors ---------------------------------------------
+    @Autowired
+    private SpecialistService specialistService;
 
-	public PrescriptionService() {
-		super();
-	}
+    // Constructors ---------------------------------------------
 
-	// Metodos ---------------------------------------------
+    public PrescriptionService() {
+        super();
+    }
 
-	public Prescription create(Appointment a) {
+    // Metodos ---------------------------------------------
 
-		Prescription p = new Prescription();
-		Date currentMoment = new Date();
+    public Prescription create(Appointment a) {
 
-		p.setAppointment(a);
-		p.setCreationMoment(currentMoment);
+        Prescription p = new Prescription();
+        Date currentMoment = new Date();
 
-		return p;
+        p.setAppointment(a);
+        p.setCreationMoment(currentMoment);
 
-	}
+        return p;
 
-	public Prescription save(Prescription p) {
+    }
 
-		checkPrincipal(p);
-		Date currentMoment = new Date(System.currentTimeMillis()-1000);
-		p.setCreationMoment(currentMoment);
-		
-		Prescription prescription2 = prescriptionRepository.save(p);
-		
-		return prescription2;
-	}
+    public Prescription save(Prescription p) {
 
-	public Collection<Prescription> findMyPrescriptions() {
-		Patient patientConnect = patientService.findByPrincipal();
-		Collection<Prescription> prescriptions = prescriptionRepository
-				.findMyPrescriptions(patientConnect.getId());
-		return prescriptions;
-	}
+        checkPrincipal(p);
+        Date currentMoment = new Date(System.currentTimeMillis() - 1000);
+        p.setCreationMoment(currentMoment);
 
-	public Prescription findOneToEdit(int id) {
-		Assert.isTrue(id != 0);
-		Prescription res;
-		res = prescriptionRepository.findOne(id);
-		return res;
-	}
-	
-	public void checkPrincipal(Prescription prescription) {
-		Specialist specialistConnect = specialistService.findByPrincipal();
-		Assert.isTrue(prescription.getAppointment().getTimetable().getSpecialist().equals(specialistConnect));
-	}
+        Prescription prescription2 = prescriptionRepository.save(p);
 
-	public Collection<Prescription> findForPatient(Patient patientConnect) {
+        return prescription2;
+    }
 
-		Specialist specialistConnect = specialistService.findByPrincipal();
-		Collection<Prescription> prescriptions ;
-		prescriptions = prescriptionRepository.findForPatient(patientConnect.getId(), specialistConnect.getId());
-		return prescriptions;
-	}
+    public Collection<Prescription> findMyPrescriptions() {
+        Patient patientConnect = patientService.findByPrincipal();
+        Collection<Prescription> prescriptions = prescriptionRepository.findMyPrescriptions(patientConnect.getId());
+        return prescriptions;
+    }
+
+    public Prescription findOneToEdit(int id) {
+        Assert.isTrue(id != 0);
+        Prescription res;
+        res = prescriptionRepository.findOne(id);
+        return res;
+    }
+
+    public void checkPrincipal(Prescription prescription) {
+        Specialist specialistConnect = specialistService.findByPrincipal();
+        Assert.isTrue(prescription.getAppointment().getTimetable().getSpecialist().equals(specialistConnect));
+    }
+
+    public Collection<Prescription> findForPatient(Patient patientConnect) {
+
+        Specialist specialistConnect = specialistService.findByPrincipal();
+        Collection<Prescription> prescriptions;
+        prescriptions = prescriptionRepository.findForPatient(patientConnect.getId(), specialistConnect.getId());
+        return prescriptions;
+    }
 
 }

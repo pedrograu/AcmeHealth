@@ -11,29 +11,28 @@ import domain.Specialty;
 
 @Component
 @Transactional
-public class StringToSpecialtyConverter implements Converter<String, Specialty>{
-	
-	@Autowired
-	SpecialtyRepository specialtyRepository;
+public class StringToSpecialtyConverter implements Converter<String, Specialty> {
 
-	@Override
-	public Specialty convert(String text) {
-		Specialty result;
-		int id;
+    @Autowired
+    SpecialtyRepository specialtyRepository;
 
-		try {
-			if (StringUtils.isEmpty(text))
-				result = null;
-			else {
-				id = Integer.valueOf(text);
-				result = specialtyRepository.findOne(id);
-			}
-		} catch (Throwable oops) {
-			throw new IllegalArgumentException(oops);
-		}
+    @Override
+    public Specialty convert(String text) {
+        Specialty result;
+        int id;
 
-		return result;
-	}
+        try {
+            if (StringUtils.isEmpty(text))
+                result = null;
+            else {
+                id = Integer.valueOf(text);
+                result = specialtyRepository.findOne(id);
+            }
+        } catch (Throwable oops) {
+            throw new IllegalArgumentException(oops);
+        }
+
+        return result;
+    }
 
 }
-

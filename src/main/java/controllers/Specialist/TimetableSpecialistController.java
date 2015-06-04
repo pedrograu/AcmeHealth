@@ -23,113 +23,105 @@ import forms.TimetableForm;
 
 @Controller
 @RequestMapping("/timetable/specialist")
-public class TimetableSpecialistController extends AbstractController{
+public class TimetableSpecialistController extends AbstractController {
 
-	@Autowired
-	private SpecialistService specialistService;
-	@Autowired
-	private TimetableService timetableService;
+    @Autowired
+    private SpecialistService specialistService;
+    @Autowired
+    private TimetableService timetableService;
 
-	public TimetableSpecialistController() {
-		super();
-	}
-	
-	// List -------------------------------------------------------------------
-	
-	@RequestMapping(value = "/list-own", method = RequestMethod.GET)
-	public ModelAndView listOwn() {
+    public TimetableSpecialistController() {
+        super();
+    }
 
-		ModelAndView result;
-		Collection<Timetable> timetables;
-		Specialist specialistConnect = specialistService.findByPrincipal();
+    // List -------------------------------------------------------------------
 
-		timetables = timetableService.getTimetablesForSpecialist(specialistConnect);
+    @RequestMapping(value = "/list-own", method = RequestMethod.GET)
+    public ModelAndView listOwn() {
 
-		result = new ModelAndView("timetable/list");
-		result.addObject("timetables", timetables);
-		result.addObject("requestURI", "timetable/specialist/list-own.do");
+        ModelAndView result;
+        Collection<Timetable> timetables;
+        Specialist specialistConnect = specialistService.findByPrincipal();
 
-		return result;
-	}
-	
-	
-	
-	// Edition -----------------------------------------------------------------
+        timetables = timetableService.getTimetablesForSpecialist(specialistConnect);
 
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create() {
+        result = new ModelAndView("timetable/list");
+        result.addObject("timetables", timetables);
+        result.addObject("requestURI", "timetable/specialist/list-own.do");
 
-		ModelAndView result;
+        return result;
+    }
 
-		TimetableForm timetableForm = new TimetableForm();
+    // Edition -----------------------------------------------------------------
 
-		result = createEditModelAndView(timetableForm);
-		result.addObject("timetableForm", timetableForm);
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public ModelAndView create() {
 
-		return result;
-	}
+        ModelAndView result;
 
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid TimetableForm timetableForm,
-			BindingResult binding) {
+        TimetableForm timetableForm = new TimetableForm();
 
-		ModelAndView result;
-		Timetable timetable;
+        result = createEditModelAndView(timetableForm);
+        result.addObject("timetableForm", timetableForm);
 
-		if (binding.hasErrors()) {
-			result = createEditModelAndView(timetableForm);
-		} else {
-			try {
-				timetable = timetableService.recontructor(timetableForm);
-				timetableService.save(timetable);
-				result = new ModelAndView("redirect:list-own.do");
+        return result;
+    }
 
-			} catch (Throwable oops) {
-				result = createEditModelAndView(timetableForm,
-						"timetable.commit.error");
-			}
-		}
+    @RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+    public ModelAndView save(@Valid TimetableForm timetableForm, BindingResult binding) {
 
-		return result;
+        ModelAndView result;
+        Timetable timetable;
 
-	}
+        if (binding.hasErrors()) {
+            result = createEditModelAndView(timetableForm);
+        } else {
+            try {
+                timetable = timetableService.recontructor(timetableForm);
+                timetableService.save(timetable);
+                result = new ModelAndView("redirect:list-own.do");
 
-	// Ancillary methods ------------------------------------------------------
+            } catch (Throwable oops) {
+                result = createEditModelAndView(timetableForm, "timetable.commit.error");
+            }
+        }
 
-	protected ModelAndView createEditModelAndView(TimetableForm t) {
-		assert t != null;
-		ModelAndView result;
+        return result;
 
-		result = createEditModelAndView(t, null);
+    }
 
-		return result;
-	}
+    // Ancillary methods ------------------------------------------------------
 
-	protected ModelAndView createEditModelAndView(TimetableForm timetableForm,
-			String message) {
+    protected ModelAndView createEditModelAndView(TimetableForm t) {
+        assert t != null;
+        ModelAndView result;
 
-		Assert.notNull(timetableForm);
-		ModelAndView result;
-		Collection<Integer> days = new HashSet<Integer>();
-		days.add(1);
-		days.add(2);
-		days.add(3);
-		days.add(4);
-		days.add(5);
-		days.add(6);
-		days.add(7);
-		
-		
+        result = createEditModelAndView(t, null);
 
-		result = new ModelAndView("timetable/edit");
-		result.addObject("requestURI", "timetable/specialist/edit.do?timetableId="
-				+ timetableForm.getId());
-	
-		result.addObject("message", message);
-		result.addObject("timetableForm", timetableForm);
-		result.addObject("days", days);
+        return result;
+    }
 
-		return result;
-	}
+    protected ModelAndView createEditModelAndView(TimetableForm timetableForm, String message) {
+
+        Assert.notNull(timetableForm);
+        ModelAndView result;
+        Collection<Integer> days = new HashSet<Integer>();
+        days.add(1);
+        days.add(2);
+        days.add(3);
+        days.add(4);
+        days.add(5);
+        days.add(6);
+        days.add(7);
+
+        result = new ModelAndView("timetable/edit");
+        result.addObject("requestURI", "timetable/specialist/edit.do?timetableId=" + timetableForm.getId());
+
+        result.addObject("message", message);
+        result.addObject("timetableForm", timetableForm);
+        result.addObject("days", days);
+
+        return result;
+    }
 
 }

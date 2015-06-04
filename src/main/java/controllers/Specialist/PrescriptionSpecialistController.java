@@ -21,124 +21,110 @@ import domain.Appointment;
 import domain.Patient;
 import domain.Prescription;
 
-
 @Controller
 @RequestMapping("/prescription/specialist")
 public class PrescriptionSpecialistController extends AbstractController {
-	
-	// Services ----------------------------------------------------------------
-	
-	@Autowired
-	private PrescriptionService prescriptionService;
-	
-	@Autowired
-	private PatientService patientService;
-	
-	@Autowired
-	private AppointmentService appointmentService;
-	
-	
-	// Constructor ----------------------------------------------------------------
-	
-	public PrescriptionSpecialistController() {
-		super();
-	}
-	
-	//List --------------------------------------------------------------------
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(@RequestParam int patientId) {
 
-		ModelAndView result;
-		Patient patientConnect = patientService.findOneToEdit(patientId);
-		Collection<Prescription> prescriptions;
+    // Services ----------------------------------------------------------------
 
-		prescriptions = prescriptionService.findForPatient(patientConnect);
+    @Autowired
+    private PrescriptionService prescriptionService;
 
-		result = new ModelAndView("prescription/list");
-		result.addObject("prescriptions", prescriptions);
-		result.addObject("requestURI", "prescription/specialist/list.do");
+    @Autowired
+    private PatientService patientService;
 
-		return result;
-	}
-	
-	// Edition ----------------------------------------------------------------
+    @Autowired
+    private AppointmentService appointmentService;
 
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create(@RequestParam int appointmentId) {
+    // Constructor ----------------------------------------------------------------
 
-		ModelAndView result;
-		
-		Prescription prescription;
-		
-		Appointment a = appointmentService.findOneToEdit(appointmentId);
+    public PrescriptionSpecialistController() {
+        super();
+    }
 
-		prescription = prescriptionService.create(a);
+    //List --------------------------------------------------------------------
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public ModelAndView list(@RequestParam int patientId) {
 
-		result = createEditModelAndView(prescription);
+        ModelAndView result;
+        Patient patientConnect = patientService.findOneToEdit(patientId);
+        Collection<Prescription> prescriptions;
 
-		
-		result.addObject("prescription", prescription);
-		result.addObject("isPatient", false);
-		
+        prescriptions = prescriptionService.findForPatient(patientConnect);
 
-		return result;
-	}
+        result = new ModelAndView("prescription/list");
+        result.addObject("prescriptions", prescriptions);
+        result.addObject("requestURI", "prescription/specialist/list.do");
 
-	
-	
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid Prescription prescription, BindingResult binding) {
+        return result;
+    }
 
-		ModelAndView result ;
+    // Edition ----------------------------------------------------------------
 
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public ModelAndView create(@RequestParam int appointmentId) {
 
-		if (binding.hasErrors()) {
-			result = createEditModelAndView(prescription);
-		} else {
-			try {
-				prescriptionService.save(prescription);
-				result = new ModelAndView("redirect:../../appointment/specialist/edit.do?appointmentId="+prescription.getAppointment().getId());
-			} catch (Throwable oops) {
-				result = createEditModelAndView(prescription,"prescription.commit.error");
-			}
-		}
-		
-		return result;
+        ModelAndView result;
 
-	}
+        Prescription prescription;
 
-	
-	// Ancillary methods ------------------------------------------------------
+        Appointment a = appointmentService.findOneToEdit(appointmentId);
 
-	protected ModelAndView createEditModelAndView(Prescription prescription) {
-		assert prescription != null;
-		ModelAndView result;
+        prescription = prescriptionService.create(a);
 
-		result = createEditModelAndView(prescription, null);
+        result = createEditModelAndView(prescription);
 
-		return result;
-	}
+        result.addObject("prescription", prescription);
+        result.addObject("isPatient", false);
 
-	protected ModelAndView createEditModelAndView(Prescription prescription,String message) {
-		
-		
-		Assert.notNull(prescription);
-		ModelAndView result;
-		
+        return result;
+    }
 
-	result = new ModelAndView("prescription/edit");
+    @RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+    public ModelAndView save(@Valid Prescription prescription, BindingResult binding) {
 
-	result.addObject("prescription", prescription);
-	result.addObject("isPatient", false);
-	result.addObject("requestURI","prescription/specialist/edit.do?prescriptionId="+prescription.getId());
-	result.addObject("message", message);
+        ModelAndView result;
 
+        if (binding.hasErrors()) {
+            result = createEditModelAndView(prescription);
+        } else {
+            try {
+                prescriptionService.save(prescription);
+                result = new ModelAndView("redirect:../../appointment/specialist/edit.do?appointmentId="
+                        + prescription.getAppointment().getId());
+            } catch (Throwable oops) {
+                result = createEditModelAndView(prescription, "prescription.commit.error");
+            }
+        }
 
-	
+        return result;
 
-		return result;
-	}
+    }
 
+    // Ancillary methods ------------------------------------------------------
 
+    protected ModelAndView createEditModelAndView(Prescription prescription) {
+        assert prescription != null;
+        ModelAndView result;
+
+        result = createEditModelAndView(prescription, null);
+
+        return result;
+    }
+
+    protected ModelAndView createEditModelAndView(Prescription prescription, String message) {
+
+        Assert.notNull(prescription);
+        ModelAndView result;
+
+        result = new ModelAndView("prescription/edit");
+
+        result.addObject("prescription", prescription);
+        result.addObject("isPatient", false);
+        result.addObject("requestURI", "prescription/specialist/edit.do?prescriptionId=" + prescription.getId());
+        result.addObject("message", message);
+
+        return result;
+    }
 
 }

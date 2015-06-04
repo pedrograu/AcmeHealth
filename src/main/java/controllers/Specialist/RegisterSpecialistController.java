@@ -1,6 +1,5 @@
 package controllers.Specialist;
 
-
 import java.util.Collection;
 
 import javax.validation.Valid;
@@ -22,118 +21,108 @@ import forms.SpecialistForm;
 
 @Controller
 @RequestMapping("/register/specialist")
-public class RegisterSpecialistController extends AbstractController{
-	
-	// Services ---------------------------------------------------------------
+public class RegisterSpecialistController extends AbstractController {
 
-			
-			@Autowired
-			private SpecialistService specialistService;
-			
+    // Services ---------------------------------------------------------------
 
-			@Autowired
-			private SpecialtyService specialtyService;
-			
-			// Constructors
-			// ---------------------------------------------------------------
+    @Autowired
+    private SpecialistService specialistService;
 
-			public RegisterSpecialistController() {
-				super();
-			}
-			
-			// Registration -----------------------------------------------------------
+    @Autowired
+    private SpecialtyService specialtyService;
 
-			@RequestMapping(value = "/edit", method = RequestMethod.GET)
-			public ModelAndView register() {
-				ModelAndView result;
-				SpecialistForm specialistForm = new SpecialistForm();
+    // Constructors
+    // ---------------------------------------------------------------
 
-				result = createEditModelAndView(specialistForm);
+    public RegisterSpecialistController() {
+        super();
+    }
 
-				return result;
-			}
+    // Registration -----------------------------------------------------------
 
-			@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-			public ModelAndView save(@Valid SpecialistForm specialistForm,
-					BindingResult binding) {
+    @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    public ModelAndView register() {
+        ModelAndView result;
+        SpecialistForm specialistForm = new SpecialistForm();
 
-				ModelAndView result;
-				Specialist specialist;
-				
+        result = createEditModelAndView(specialistForm);
 
-				if (binding.hasErrors()) {
-					result = createEditModelAndView(specialistForm);
+        return result;
+    }
 
-				} else {
+    @RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+    public ModelAndView save(@Valid SpecialistForm specialistForm, BindingResult binding) {
 
-					try {
-						specialist = specialistService.reconstruct(specialistForm);
+        ModelAndView result;
+        Specialist specialist;
 
-						specialistService.save(specialist);
-						result = new ModelAndView("redirect:../../security/login.do");
+        if (binding.hasErrors()) {
+            result = createEditModelAndView(specialistForm);
 
-					} catch (DataIntegrityViolationException oops) {
-						result = createEditModelAndView(specialistForm,
-								"register.duplicate.error");
+        } else {
 
-					} catch (Throwable oops) {
-						oops.getMessage();
+            try {
+                specialist = specialistService.reconstruct(specialistForm);
 
-						if (!(specialistForm.getSecondPassword().equals(specialistForm.getPassword()))) {
-							result = createEditModelAndView(specialistForm,
-									"register.wrongSecondPassword.error");
-						} else {
+                specialistService.save(specialist);
+                result = new ModelAndView("redirect:../../security/login.do");
 
-							if (specialistForm.getAvailable()== false) {
-								result = createEditModelAndView(specialistForm,
-										"register.available.error");
-							
-							}else{
-								result = createEditModelAndView(specialistForm,
-										"register.commit.error");
-							} 
-						}
+            } catch (DataIntegrityViolationException oops) {
+                result = createEditModelAndView(specialistForm, "register.duplicate.error");
 
-					}
-				}
-				return result;
-			}
+            } catch (Throwable oops) {
+                oops.getMessage();
 
-			// Ancillary methods ------------------------------------------------------
+                if (!(specialistForm.getSecondPassword().equals(specialistForm.getPassword()))) {
+                    result = createEditModelAndView(specialistForm, "register.wrongSecondPassword.error");
+                } else {
 
-			protected ModelAndView createEditModelAndView(SpecialistForm specialistForm) {
+                    if (specialistForm.getAvailable() == false) {
+                        result = createEditModelAndView(specialistForm, "register.available.error");
 
-				ModelAndView result;
+                    } else {
+                        result = createEditModelAndView(specialistForm, "register.commit.error");
+                    }
+                }
 
-				result = createEditModelAndView(specialistForm, null);
+            }
+        }
+        return result;
+    }
 
-				return result;
-			}
+    // Ancillary methods ------------------------------------------------------
 
-			protected ModelAndView createEditModelAndView(SpecialistForm specialistForm,
-					String message) {
+    protected ModelAndView createEditModelAndView(SpecialistForm specialistForm) {
 
-				ModelAndView result;
+        ModelAndView result;
 
-				Specialist specialist = specialistService.create();
-				Collection<Specialty> specialtys;
+        result = createEditModelAndView(specialistForm, null);
 
-				specialtys = specialtyService.getAll();
+        return result;
+    }
 
-				result = new ModelAndView("register/edit");
-				result.addObject("specialistForm", specialistForm);
-				result.addObject("specialist", specialist);
-				result.addObject("actor", "specialistForm");
-				result.addObject("requestURI", "register/specialist/edit.do");
-				result.addObject("registerPatient", false);
-				result.addObject("registerSpecialist", true);
-			
-				result.addObject("specialtys", specialtys);
+    protected ModelAndView createEditModelAndView(SpecialistForm specialistForm, String message) {
 
-				result.addObject("message", message);
+        ModelAndView result;
 
-				return result;
-			}
+        Specialist specialist = specialistService.create();
+        Collection<Specialty> specialtys;
 
+        specialtys = specialtyService.getAll();
+
+        result = new ModelAndView("register/edit");
+        result.addObject("specialistForm", specialistForm);
+        result.addObject("specialist", specialist);
+        result.addObject("actor", "specialistForm");
+        result.addObject("requestURI", "register/specialist/edit.do");
+        result.addObject("registerPatient", false);
+        result.addObject("registerSpecialist", true);
+
+        result.addObject("specialtys", specialtys);
+
+        result.addObject("message", message);
+
+        return result;
+    }
 
 }

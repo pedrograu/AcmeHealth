@@ -18,43 +18,42 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class FreeDay extends Slot {
 
-	private String description;
-	private Date finishMoment;
+    private String description;
+    private Date finishMoment;
 
-	@NotBlank
-	public String getDescription() {
-		return description;
-	}
+    @NotBlank
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-	public Date getFinishMoment() {
-		return finishMoment;
-	}
+    @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+    public Date getFinishMoment() {
+        return finishMoment;
+    }
 
-	public void setFinishMoment(Date finishMoment) {
-		this.finishMoment = finishMoment;
-	}
+    public void setFinishMoment(Date finishMoment) {
+        this.finishMoment = finishMoment;
+    }
 
-	// RelationShips......................
+    // RelationShips......................
 
-	private Specialist specialist;
+    private Specialist specialist;
 
-	@Valid
-	@NotNull
-	@ManyToOne(optional = false)
-	public Specialist getSpecialist() {
-		return specialist;
-	}
+    @Valid
+    @NotNull
+    @ManyToOne(optional = false)
+    public Specialist getSpecialist() {
+        return specialist;
+    }
 
-	public void setSpecialist(Specialist specialist) {
-		this.specialist = specialist;
-	}
-
+    public void setSpecialist(Specialist specialist) {
+        this.specialist = specialist;
+    }
 
 }

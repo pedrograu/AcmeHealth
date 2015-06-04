@@ -9,32 +9,30 @@ import org.springframework.util.StringUtils;
 import security.UserAccount;
 import security.UserAccountRepository;
 
-
-
 @Component
 @Transactional
 public class StringToUserAccountConverter implements Converter<String, UserAccount> {
 
-	@Autowired
-	UserAccountRepository userAccountRepository;
+    @Autowired
+    UserAccountRepository userAccountRepository;
 
-	@Override
-	public UserAccount convert(String text) {
-		UserAccount result;
-		int id;
+    @Override
+    public UserAccount convert(String text) {
+        UserAccount result;
+        int id;
 
-		try {
-			if (StringUtils.isEmpty(text)) {
-				result = null;
-			} else {
-				id = Integer.valueOf(text);
-				result = userAccountRepository.findOne(id);
-			}
-		} catch (Throwable oops) {
-			throw new IllegalArgumentException(oops);
-		}
+        try {
+            if (StringUtils.isEmpty(text)) {
+                result = null;
+            } else {
+                id = Integer.valueOf(text);
+                result = userAccountRepository.findOne(id);
+            }
+        } catch (Throwable oops) {
+            throw new IllegalArgumentException(oops);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

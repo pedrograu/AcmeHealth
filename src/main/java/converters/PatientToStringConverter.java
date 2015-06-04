@@ -9,15 +9,15 @@ import domain.Patient;
 @Component
 @Transactional
 public class PatientToStringConverter implements Converter<Patient, String> {
-	@Override
-	public String convert(Patient patient) {
-		String result;
+    @Override
+    public String convert(Patient patient) {
+        String result;
 
-		if (patient == null)
-			result = null;
-		else
-			result = String.valueOf(patient.getId());
+        if (patient == null)
+            result = null;
+        else
+            result = String.valueOf(patient.getId());
 
-		return result;
-	}
+        return result;
+    }
 }

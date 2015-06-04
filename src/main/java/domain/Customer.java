@@ -5,10 +5,7 @@ import java.util.Collection;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.persistence.Index;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -16,30 +13,30 @@ import javax.validation.constraints.NotNull;
 @Access(AccessType.PROPERTY)
 public abstract class Customer extends Actor {
 
-	// RelationShips.............................
-	private Collection<Message> messageRecipient;
-	private Collection<Message> messageSender;
+    // RelationShips.............................
+    private Collection<Message> messageRecipient;
+    private Collection<Message> messageSender;
 
-	@Valid
-	@NotNull
-	@OneToMany(mappedBy = "recipient")
-	public Collection<Message> getMessageRecipient() {
-		return messageRecipient;
-	}
+    @Valid
+    @NotNull
+    @OneToMany(mappedBy = "recipient")
+    public Collection<Message> getMessageRecipient() {
+        return messageRecipient;
+    }
 
-	public void setMessageRecipient(Collection<Message> messageRecipient) {
-		this.messageRecipient = messageRecipient;
-	}
+    public void setMessageRecipient(Collection<Message> messageRecipient) {
+        this.messageRecipient = messageRecipient;
+    }
 
-	@Valid
-	@NotNull
-	@OneToMany(mappedBy = "sender")
-	public Collection<Message> getMessageSender() {
-		return messageSender;
-	}
+    @Valid
+    @NotNull
+    @OneToMany(mappedBy = "sender")
+    public Collection<Message> getMessageSender() {
+        return messageSender;
+    }
 
-	public void setMessageSender(Collection<Message> messageSender) {
-		this.messageSender = messageSender;
-	}
+    public void setMessageSender(Collection<Message> messageSender) {
+        this.messageSender = messageSender;
+    }
 
 }

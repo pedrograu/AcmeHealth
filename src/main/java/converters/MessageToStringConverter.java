@@ -9,15 +9,15 @@ import domain.Message;
 @Component
 @Transactional
 public class MessageToStringConverter implements Converter<Message, String> {
-	@Override
-	public String convert(Message message) {
-		String result;
+    @Override
+    public String convert(Message message) {
+        String result;
 
-		if (message == null)
-			result = null;
-		else
-			result = String.valueOf(message.getId());
+        if (message == null)
+            result = null;
+        else
+            result = String.valueOf(message.getId());
 
-		return result;
-	}
+        return result;
+    }
 }

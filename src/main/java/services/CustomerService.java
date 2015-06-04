@@ -6,58 +6,53 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import domain.Administrator;
-import domain.Customer;
-import domain.Profile;
-
 import repositories.CustomerRepository;
 import security.LoginService;
 import security.UserAccount;
+import domain.Customer;
 
 @Service
 @Transactional
 public class CustomerService {
-	// Managed repository ---------------------------------------
+    // Managed repository ---------------------------------------
 
-	@Autowired
-	private CustomerRepository customerRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
 
-	// Supporting services --------------------------------------
+    // Supporting services --------------------------------------
 
-	
-	// Constructors ---------------------------------------------
-	public CustomerService() {
-		super();
-	}
+    // Constructors ---------------------------------------------
+    public CustomerService() {
+        super();
+    }
 
-	public Customer findByPrincipal() {
-		UserAccount userAccount = LoginService.getPrincipal();
-		return findByUserAccount(userAccount);
-	}
+    public Customer findByPrincipal() {
+        UserAccount userAccount = LoginService.getPrincipal();
+        return findByUserAccount(userAccount);
+    }
 
-	public Customer findByUserAccount(UserAccount userAccount) {
-		Customer result;
+    public Customer findByUserAccount(UserAccount userAccount) {
+        Customer result;
 
-		result = customerRepository.findByUserAccountId(userAccount.getId());
+        result = customerRepository.findByUserAccountId(userAccount.getId());
 
-		return result;
-	}
+        return result;
+    }
 
-	public Collection<Customer> findOnlySpecialist() {
-		Collection<Customer> customers = customerRepository.findOnlySpecialist();
-		return customers;
-	}
+    public Collection<Customer> findOnlySpecialist() {
+        Collection<Customer> customers = customerRepository.findOnlySpecialist();
+        return customers;
+    }
 
-	public Collection<Customer> findAll() {
-		Collection<Customer> customers = customerRepository.findAll();
-		return customers;
-	}
+    public Collection<Customer> findAll() {
+        Collection<Customer> customers = customerRepository.findAll();
+        return customers;
+    }
 
-	public Customer findOneToEdit(int customerId) {
-		Customer customer = customerRepository.findOne(customerId);
-		
-		return customer;
-	}
+    public Customer findOneToEdit(int customerId) {
+        Customer customer = customerRepository.findOne(customerId);
 
+        return customer;
+    }
 
 }

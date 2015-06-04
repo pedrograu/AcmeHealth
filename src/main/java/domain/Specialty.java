@@ -16,55 +16,55 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Access(AccessType.PROPERTY)
-@Table(indexes={@Index(columnList="name")})
-public class Specialty  extends DomainEntity{
+@Table(indexes = { @Index(columnList = "name") })
+public class Specialty extends DomainEntity {
 
-	private String name;
-	private String description;
+    private String name;
+    private String description;
 
-	@NotBlank
-	public String getName() {
-		return name;
-	}
+    @NotBlank
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	@NotBlank
-	public String getDescription() {
-		return description;
-	}
+    @NotBlank
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	// Relationships ----------------------------------------------------------
+    // Relationships ----------------------------------------------------------
 
-	private Collection<Specialist> specialists;
-	private Administrator administrator;
+    private Collection<Specialist> specialists;
+    private Administrator administrator;
 
-	@Valid
-	@NotNull
-	@OneToMany(mappedBy = "specialty")
-	public Collection<Specialist> getSpecialists() {
-		return specialists;
-	}
+    @Valid
+    @NotNull
+    @OneToMany(mappedBy = "specialty")
+    public Collection<Specialist> getSpecialists() {
+        return specialists;
+    }
 
-	public void setSpecialists(Collection<Specialist> specialists) {
-		this.specialists = specialists;
-	}
+    public void setSpecialists(Collection<Specialist> specialists) {
+        this.specialists = specialists;
+    }
 
-	@NotNull
-	@Valid
-	@ManyToOne(optional = false)
-	public Administrator getAdministrator() {
-		return administrator;
-	}
+    @NotNull
+    @Valid
+    @ManyToOne(optional = false)
+    public Administrator getAdministrator() {
+        return administrator;
+    }
 
-	public void setAdministrator(Administrator administrator) {
-		this.administrator = administrator;
-	}
+    public void setAdministrator(Administrator administrator) {
+        this.administrator = administrator;
+    }
 
 }

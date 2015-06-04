@@ -8,25 +8,21 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/laws")
 public class LawsController extends AbstractController {
-	
-	// Constructors -----------------------------------------------------------
-	
-		public LawsController() {
-			super();
-		}
-		@RequestMapping(value = "/list")
-		public ModelAndView index(@RequestParam(required=false, defaultValue="") String name) {
-			ModelAndView result;
-			
-		
-			
-					
-			result = new ModelAndView("laws/list");
-			result.addObject("name", name);
-			
 
-			return result;
-		}
-		
+    // Constructors -----------------------------------------------------------
+
+    public LawsController() {
+        super();
+    }
+
+    @RequestMapping(value = "/list")
+    public ModelAndView index(@RequestParam(required = false, defaultValue = "") String name) {
+        ModelAndView result;
+
+        result = new ModelAndView("laws/list");
+        result.addObject("name", name);
+
+        return result;
+    }
 
 }

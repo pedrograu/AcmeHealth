@@ -10,12 +10,12 @@ import org.springframework.stereotype.Repository;
 import domain.Timetable;
 
 @Repository
-public interface TimetableRepository extends JpaRepository<Timetable, Integer>{
+public interface TimetableRepository extends JpaRepository<Timetable, Integer> {
 
-	@Query("select t from Timetable t where t.specialist.id=?1")
-	Collection<Timetable> getTimetablesForSpecialist(int id);
+    @Query("select t from Timetable t where t.specialist.id=?1")
+    Collection<Timetable> getTimetablesForSpecialist(int id);
 
-	@Query("select t from Timetable t where t.day=?1 and t.specialist.id=?2")
-	List<Timetable> getTimetablesForDayOfWeekAndSpecialist(int diaDeLaSemana, int specialist);
+    @Query("select t from Timetable t where t.day=?1 and t.specialist.id=?2")
+    List<Timetable> getTimetablesForDayOfWeekAndSpecialist(int diaDeLaSemana, int specialist);
 
 }

@@ -12,41 +12,37 @@ import services.SpecialistService;
 import controllers.AbstractController;
 import domain.Specialist;
 
-
 @Controller
 @RequestMapping("/specialist/patient")
 public class SpecialistPatientController extends AbstractController {
 
-	// Services -----------------------------------------------------------
+    // Services -----------------------------------------------------------
 
-	@Autowired
-	private SpecialistService specialistService;
-	
-	// Constructors -----------------------------------------------------------
-	
-	public SpecialistPatientController() {
-		super();
-	}
-		
-	// List ------------------------------------------------------------------		
+    @Autowired
+    private SpecialistService specialistService;
 
+    // Constructors -----------------------------------------------------------
 
+    public SpecialistPatientController() {
+        super();
+    }
 
-	//listar todos los especialistas del sistema
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list() {
+    // List ------------------------------------------------------------------		
 
-		ModelAndView result;
-		Collection<Specialist> specialists;
+    //listar todos los especialistas del sistema
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public ModelAndView list() {
 
-		specialists = specialistService.findAllSpecialists();
+        ModelAndView result;
+        Collection<Specialist> specialists;
 
-		result = new ModelAndView("specialist/list");
-		result.addObject("specialists", specialists);
-		result.addObject("requestURI", "specialist/patient/list.do");
+        specialists = specialistService.findAllSpecialists();
 
-		return result;
-	}
-	
+        result = new ModelAndView("specialist/list");
+        result.addObject("specialists", specialists);
+        result.addObject("requestURI", "specialist/patient/list.do");
+
+        return result;
+    }
 
 }

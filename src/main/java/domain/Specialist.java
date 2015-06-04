@@ -16,92 +16,89 @@ import javax.validation.constraints.NotNull;
 @Access(AccessType.PROPERTY)
 public class Specialist extends Customer {
 
-	// Relationships ----------------------------------------------------------
-	private Collection<Patient> patients;
-	private Profile profile;
-	private Collection<Timetable> timetables;
-	private Specialty specialty;
-	private Collection<Offer> offers;
-	private Collection<FreeDay> freeDays;
-	private Collection<Appointment> appointments;
-	
+    // Relationships ----------------------------------------------------------
+    private Collection<Patient> patients;
+    private Profile profile;
+    private Collection<Timetable> timetables;
+    private Specialty specialty;
+    private Collection<Offer> offers;
+    private Collection<FreeDay> freeDays;
+    private Collection<Appointment> appointments;
 
-	@Valid
-	@NotNull
-	@OneToMany(mappedBy = "specialist")
-	public Collection<Appointment> getAppointments() {
-		return appointments;
-	}
+    @Valid
+    @NotNull
+    @OneToMany(mappedBy = "specialist")
+    public Collection<Appointment> getAppointments() {
+        return appointments;
+    }
 
-	public void setAppointments(Collection<Appointment> appointments) {
-		this.appointments = appointments;
-	}
+    public void setAppointments(Collection<Appointment> appointments) {
+        this.appointments = appointments;
+    }
 
-	@Valid
-	@NotNull
-	@OneToMany(mappedBy = "specialist")
-	public Collection<Timetable> getTimetables() {
-		return timetables;
-	}
+    @Valid
+    @NotNull
+    @OneToMany(mappedBy = "specialist")
+    public Collection<Timetable> getTimetables() {
+        return timetables;
+    }
 
-	public void setTimetables(Collection<Timetable> timetables) {
-		this.timetables = timetables;
-	}
+    public void setTimetables(Collection<Timetable> timetables) {
+        this.timetables = timetables;
+    }
 
-	@Valid
-	@NotNull
-	@OneToMany(mappedBy = "specialist")
-	public Collection<Offer> getOffers() {
-		return offers;
-	}
+    @Valid
+    @NotNull
+    @OneToMany(mappedBy = "specialist")
+    public Collection<Offer> getOffers() {
+        return offers;
+    }
 
-	public void setOffers(Collection<Offer> offers) {
-		this.offers = offers;
-	}
+    public void setOffers(Collection<Offer> offers) {
+        this.offers = offers;
+    }
 
-	@Valid
-	@NotNull
-	@OneToMany(mappedBy = "specialist")
-	public Collection<Patient> getPatients() {
-		return patients;
-	}
+    @Valid
+    @NotNull
+    @OneToMany(mappedBy = "specialist")
+    public Collection<Patient> getPatients() {
+        return patients;
+    }
 
-	public void setPatients(Collection<Patient> patients) {
-		this.patients = patients;
-	}
+    public void setPatients(Collection<Patient> patients) {
+        this.patients = patients;
+    }
 
-	@Valid
-	@OneToOne(cascade=CascadeType.ALL,optional=true)
-	public Profile getProfile() {
-		return profile;
-	}
+    @Valid
+    @OneToOne(cascade = CascadeType.ALL, optional = true)
+    public Profile getProfile() {
+        return profile;
+    }
 
-	public void setProfile(Profile profile) {
-		this.profile = profile;
-	}
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
 
-	@NotNull
-	@Valid
-	@ManyToOne(optional = false)
-	public Specialty getSpecialty() {
-		return specialty;
-	}
+    @NotNull
+    @Valid
+    @ManyToOne(optional = false)
+    public Specialty getSpecialty() {
+        return specialty;
+    }
 
-	public void setSpecialty(Specialty specialty) {
-		this.specialty = specialty;
-	}
+    public void setSpecialty(Specialty specialty) {
+        this.specialty = specialty;
+    }
 
-	@Valid
-	@NotNull
-	@OneToMany(mappedBy = "specialist")
-	public Collection<FreeDay> getFreeDays() {
-		return freeDays;
-	}
+    @Valid
+    @NotNull
+    @OneToMany(mappedBy = "specialist")
+    public Collection<FreeDay> getFreeDays() {
+        return freeDays;
+    }
 
-	public void setFreeDays(Collection<FreeDay> freeDays) {
-		this.freeDays = freeDays;
-	}
-	
-	
+    public void setFreeDays(Collection<FreeDay> freeDays) {
+        this.freeDays = freeDays;
+    }
 
 }

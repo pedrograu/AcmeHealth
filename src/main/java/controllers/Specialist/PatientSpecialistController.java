@@ -11,57 +11,56 @@ import org.springframework.web.servlet.ModelAndView;
 import services.PatientService;
 import controllers.AbstractController;
 import domain.Patient;
+
 @Controller
 @RequestMapping("/patient/specialist")
-public class PatientSpecialistController  extends AbstractController {
-	
-	// Services -----------------------------------------------------------
+public class PatientSpecialistController extends AbstractController {
 
-			@Autowired
-			private PatientService patientService;
-			
-			
-			
-			// Constructors -----------------------------------------------------------
-			
-			public PatientSpecialistController() {
-				super();
-			}
-				
-			// List ------------------------------------------------------------------		
-			
-			@RequestMapping(value = "/list-own", method = RequestMethod.GET)
-			public ModelAndView listOwn() {
+    // Services -----------------------------------------------------------
 
-				ModelAndView result;
-				Collection<Patient> patients;
+    @Autowired
+    private PatientService patientService;
 
-				patients = patientService.findOwn();
+    // Constructors -----------------------------------------------------------
 
-				result = new ModelAndView("patient/list");
-				result.addObject("patients", patients);
-				result.addObject("today", false);
-				result.addObject("isSpecialist", true);
-				result.addObject("requestURI", "patient/specialist/list-own.do");
+    public PatientSpecialistController() {
+        super();
+    }
 
-				return result;
-			}
-			
-			@RequestMapping(value = "/list-today", method = RequestMethod.GET)
-			public ModelAndView listToday() {
+    // List ------------------------------------------------------------------		
 
-				ModelAndView result;
-				Collection<Patient> patients;
+    @RequestMapping(value = "/list-own", method = RequestMethod.GET)
+    public ModelAndView listOwn() {
 
-				patients = patientService.findToday();
+        ModelAndView result;
+        Collection<Patient> patients;
 
-				result = new ModelAndView("patient/list");
-				result.addObject("patients", patients);
-				result.addObject("today", true);
-				result.addObject("isSpecialist", true);
-				result.addObject("requestURI", "patient/specialist/list-today.do");
+        patients = patientService.findOwn();
 
-				return result;
-			}
+        result = new ModelAndView("patient/list");
+        result.addObject("patients", patients);
+        result.addObject("today", false);
+        result.addObject("isSpecialist", true);
+        result.addObject("requestURI", "patient/specialist/list-own.do");
+
+        return result;
+    }
+
+    @RequestMapping(value = "/list-today", method = RequestMethod.GET)
+    public ModelAndView listToday() {
+
+        ModelAndView result;
+        Collection<Patient> patients;
+
+        patients = patientService.findToday();
+
+        result = new ModelAndView("patient/list");
+        result.addObject("patients", patients);
+        result.addObject("today", true);
+        result.addObject("isSpecialist", true);
+        result.addObject("requestURI", "patient/specialist/list-today.do");
+
+        return result;
+    }
 
 }

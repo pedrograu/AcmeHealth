@@ -25,224 +25,217 @@ import domain.Specialist;
 @RequestMapping("/offer/administrator")
 public class OfferAdministratorController extends AbstractController {
 
-	// Services -----------------------------------------------------------
+    // Services -----------------------------------------------------------
 
-	@Autowired
-	private OfferService offerService;
+    @Autowired
+    private OfferService offerService;
 
-	@Autowired
-	private SpecialistService specialistService;
-	
-	@Autowired
-	private AdministratorService administratorService;
-	
+    @Autowired
+    private SpecialistService specialistService;
 
-	// Constructors -----------------------------------------------------------
+    @Autowired
+    private AdministratorService administratorService;
 
-	public OfferAdministratorController() {
-		super();
-	}
+    // Constructors -----------------------------------------------------------
 
-	// List ------------------------------------------------------------------
+    public OfferAdministratorController() {
+        super();
+    }
 
-	@RequestMapping(value = "/list-own", method = RequestMethod.GET)
-	public ModelAndView listOwn() {
+    // List ------------------------------------------------------------------
 
-		ModelAndView result;
-		Collection<Offer> offers;
+    @RequestMapping(value = "/list-own", method = RequestMethod.GET)
+    public ModelAndView listOwn() {
 
-		offers = offerService.findOwn();
+        ModelAndView result;
+        Collection<Offer> offers;
 
-		result = new ModelAndView("offer/list");
-		result.addObject("offers", offers);
-		result.addObject("own", true);
-		result.addObject("requestURI", "offer/administrator/list-own.do");
+        offers = offerService.findOwn();
 
-		return result;
-	}
+        result = new ModelAndView("offer/list");
+        result.addObject("offers", offers);
+        result.addObject("own", true);
+        result.addObject("requestURI", "offer/administrator/list-own.do");
 
-	@RequestMapping(value = "/list-not-finished", method = RequestMethod.GET)
-	public ModelAndView listNotFinished() {
+        return result;
+    }
 
-		ModelAndView result;
-		Collection<Offer> offers;
+    @RequestMapping(value = "/list-not-finished", method = RequestMethod.GET)
+    public ModelAndView listNotFinished() {
 
-		offers = offerService.findNotFinishedOwn();
+        ModelAndView result;
+        Collection<Offer> offers;
 
-		result = new ModelAndView("offer/list");
-		result.addObject("offers", offers);
+        offers = offerService.findNotFinishedOwn();
 
-		result.addObject("requestURI",
-				"offer/administrator/list-not-finished.do");
+        result = new ModelAndView("offer/list");
+        result.addObject("offers", offers);
 
-		return result;
-	}
+        result.addObject("requestURI", "offer/administrator/list-not-finished.do");
 
-	@RequestMapping(value = "/list-active", method = RequestMethod.GET)
-	public ModelAndView listActive() {
+        return result;
+    }
 
-		ModelAndView result;
-		Collection<Offer> offers;
+    @RequestMapping(value = "/list-active", method = RequestMethod.GET)
+    public ModelAndView listActive() {
 
-		offers = offerService.findActive();
+        ModelAndView result;
+        Collection<Offer> offers;
 
-		result = new ModelAndView("offer/list");
-		result.addObject("offers", offers);
+        offers = offerService.findActive();
 
-		result.addObject("requestURI", "offer/administrator/list-active.do");
+        result = new ModelAndView("offer/list");
+        result.addObject("offers", offers);
 
-		return result;
-	}
+        result.addObject("requestURI", "offer/administrator/list-active.do");
 
-	@RequestMapping(value = "/list-order", method = RequestMethod.GET)
-	public ModelAndView listOrder() {
+        return result;
+    }
 
-		ModelAndView result;
-		Collection<Offer> offers;
+    @RequestMapping(value = "/list-order", method = RequestMethod.GET)
+    public ModelAndView listOrder() {
 
-		offers = offerService.findOrder();
+        ModelAndView result;
+        Collection<Offer> offers;
 
-		result = new ModelAndView("offer/list");
-		result.addObject("offers", offers);
+        offers = offerService.findOrder();
 
-		result.addObject("requestURI", "offer/administrator/list-order.do");
+        result = new ModelAndView("offer/list");
+        result.addObject("offers", offers);
 
-		return result;
-	}
+        result.addObject("requestURI", "offer/administrator/list-order.do");
 
-	// Edition ----------------------------------------------------------------
+        return result;
+    }
 
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create() {
+    // Edition ----------------------------------------------------------------
 
-		ModelAndView result;
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public ModelAndView create() {
 
-		Offer offer;
+        ModelAndView result;
 
-		offer = offerService.create();
+        Offer offer;
 
-		result = createEditModelAndView(offer);
+        offer = offerService.create();
 
-		result.addObject("offer", offer);
-		result.addObject("createOffer", true);
-		result.addObject("detailsOffer", false);
+        result = createEditModelAndView(offer);
 
-		return result;
-	}
+        result.addObject("offer", offer);
+        result.addObject("createOffer", true);
+        result.addObject("detailsOffer", false);
 
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam int offerId) {
+        return result;
+    }
 
-		ModelAndView result;
+    @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    public ModelAndView edit(@RequestParam int offerId) {
 
-		Offer offer = offerService.findOneToEdit(offerId);
+        ModelAndView result;
 
-		result = createEditModelAndView(offer);
-		result.addObject("createOffer", false);
-		result.addObject("detailsOffer", true);
+        Offer offer = offerService.findOneToEdit(offerId);
 
-		return result;
-	}
+        result = createEditModelAndView(offer);
+        result.addObject("createOffer", false);
+        result.addObject("detailsOffer", true);
 
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView delete(@RequestParam int offerId) {
-	
-			ModelAndView result;
-			Offer offer = offerService.findOneToEdit(offerId);
-			Collection<Offer> offers;
-			
-			offers = offerService.findOwn();
+        return result;
+    }
 
-			
-			boolean canDelete = offerService.canDelete(offer);
-			
-			if(canDelete){
-				offerService.delete(offer);
-				result = new ModelAndView("redirect:list-own.do");
-				
-			}
-			
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    public ModelAndView delete(@RequestParam int offerId) {
 
-			else{
-				result = new ModelAndView("offer/list");
-				result.addObject("mostrarError",true);
-				result.addObject("own", true);
-				result.addObject("offers",offers);
-				result.addObject("requestURI", "offer/administrator/list-own.do");
-					
-			}
+        ModelAndView result;
+        Offer offer = offerService.findOneToEdit(offerId);
+        Collection<Offer> offers;
 
-	
-			return result;
-	}
+        offers = offerService.findOwn();
 
-	@RequestMapping(value = "/detail", method = RequestMethod.GET)
-	public ModelAndView detail(@RequestParam int offerId) {
+        boolean canDelete = offerService.canDelete(offer);
 
-		ModelAndView result;
-		Offer offer = offerService.findOneToEdit(offerId);
+        if (canDelete) {
+            offerService.delete(offer);
+            result = new ModelAndView("redirect:list-own.do");
 
-		result = new ModelAndView("offer/edit");
+        }
 
-		result.addObject("offer", offer);
-		result.addObject("details", true);
-		result.addObject("createOffer", false);
-		result.addObject("detailsOffer", true);
+        else {
+            result = new ModelAndView("offer/list");
+            result.addObject("mostrarError", true);
+            result.addObject("own", true);
+            result.addObject("offers", offers);
+            result.addObject("requestURI", "offer/administrator/list-own.do");
 
-		return result;
-	}
+        }
 
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid Offer offer, BindingResult binding) {
+        return result;
+    }
 
-		ModelAndView result;
+    @RequestMapping(value = "/detail", method = RequestMethod.GET)
+    public ModelAndView detail(@RequestParam int offerId) {
 
-		if (binding.hasErrors()) {
-			result = createEditModelAndView(offer);
-		} else {
-			try {
-				offerService.save(offer);
-				result = new ModelAndView("redirect:list-own.do");
-			} catch (Throwable oops) {
-				result = createEditModelAndView(offer, "offer.commit.error");
-			}
-		}
+        ModelAndView result;
+        Offer offer = offerService.findOneToEdit(offerId);
 
-		return result;
+        result = new ModelAndView("offer/edit");
 
-	}
+        result.addObject("offer", offer);
+        result.addObject("details", true);
+        result.addObject("createOffer", false);
+        result.addObject("detailsOffer", true);
 
+        return result;
+    }
 
-	// Ancillary methods ------------------------------------------------------
+    @RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+    public ModelAndView save(@Valid Offer offer, BindingResult binding) {
 
-	protected ModelAndView createEditModelAndView(Offer offer) {
-		assert offer != null;
-		ModelAndView result;
+        ModelAndView result;
 
-		result = createEditModelAndView(offer, null);
+        if (binding.hasErrors()) {
+            result = createEditModelAndView(offer);
+        } else {
+            try {
+                offerService.save(offer);
+                result = new ModelAndView("redirect:list-own.do");
+            } catch (Throwable oops) {
+                result = createEditModelAndView(offer, "offer.commit.error");
+            }
+        }
 
-		return result;
-	}
+        return result;
 
-	protected ModelAndView createEditModelAndView(Offer offer, String message) {
+    }
 
-		Assert.notNull(offer);
-		ModelAndView result;
-		Collection<Specialist> specialists;
+    // Ancillary methods ------------------------------------------------------
 
-		Administrator administratorConnect = administratorService.findByPrincipal();
-		result = new ModelAndView("offer/edit");
-		specialists = specialistService.findAllSpecialists();
+    protected ModelAndView createEditModelAndView(Offer offer) {
+        assert offer != null;
+        ModelAndView result;
 
-		result.addObject("offer", offer);
-		result.addObject("specialists", specialists);
-		result.addObject("requestURI", "offer/administrator/edit.do?offerId="
-				+ offer.getId());
-		result.addObject("message", message);
-		result.addObject("createOffer", true);
-		result.addObject("detailsOffer", false);
+        result = createEditModelAndView(offer, null);
 
-		return result;
-	}
+        return result;
+    }
+
+    protected ModelAndView createEditModelAndView(Offer offer, String message) {
+
+        Assert.notNull(offer);
+        ModelAndView result;
+        Collection<Specialist> specialists;
+
+        Administrator administratorConnect = administratorService.findByPrincipal();
+        result = new ModelAndView("offer/edit");
+        specialists = specialistService.findAllSpecialists();
+
+        result.addObject("offer", offer);
+        result.addObject("specialists", specialists);
+        result.addObject("requestURI", "offer/administrator/edit.do?offerId=" + offer.getId());
+        result.addObject("message", message);
+        result.addObject("createOffer", true);
+        result.addObject("detailsOffer", false);
+
+        return result;
+    }
 
 }

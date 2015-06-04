@@ -13,63 +13,57 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import security.UserAccount;
 
-
 @Entity
 @Access(AccessType.PROPERTY)
-public abstract class Actor extends DomainEntity{
+public abstract class Actor extends DomainEntity {
 
-	private String name;
+    private String name;
 
-	private String surname;
+    private String surname;
 
-	private String emailAddress;
-	
-	
-	@NotBlank
-	public String getName() {
-		return name;
-	}
+    private String emailAddress;
 
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	@NotBlank
-	public String getSurname() {
-		return surname;
-	}
+    @NotBlank
+    public String getName() {
+        return name;
+    }
 
-	public void setSurname(String surname) {
-		this.surname = surname;
-	}
-	
-	@Email 
-	@NotBlank
-	public String getEmailAddress() {
-		return emailAddress;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setEmailAddress(String emailAddress) {
-		this.emailAddress = emailAddress;
-	}
+    @NotBlank
+    public String getSurname() {
+        return surname;
+    }
 
-	
-	
-	// Relationships ----------------------------------------------------------
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
 
+    @Email
+    @NotBlank
+    public String getEmailAddress() {
+        return emailAddress;
+    }
 
-	private UserAccount userAccount; 
-	
-	@NotNull
-	@Valid
-	@OneToOne(cascade=CascadeType.ALL,optional=false) 
-	public UserAccount getUserAccount() {
-		return userAccount;
-	}
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
 
-	public void setUserAccount(UserAccount userAccount) {
-		this.userAccount = userAccount;
-	}
+    // Relationships ----------------------------------------------------------
+
+    private UserAccount userAccount;
+
+    @NotNull
+    @Valid
+    @OneToOne(cascade = CascadeType.ALL, optional = false)
+    public UserAccount getUserAccount() {
+        return userAccount;
+    }
+
+    public void setUserAccount(UserAccount userAccount) {
+        this.userAccount = userAccount;
+    }
 
 }
-

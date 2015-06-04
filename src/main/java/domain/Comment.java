@@ -20,66 +20,66 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class Comment extends DomainEntity {
 
-	private Date creationMoment;
-	private String text;
-	private Integer rating;
+    private Date creationMoment;
+    private String text;
+    private Integer rating;
 
-	@Past
-	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-	public Date getCreationMoment() {
-		return creationMoment;
-	}
+    @Past
+    @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+    public Date getCreationMoment() {
+        return creationMoment;
+    }
 
-	public void setCreationMoment(Date creationMoment) {
-		this.creationMoment = creationMoment;
-	}
+    public void setCreationMoment(Date creationMoment) {
+        this.creationMoment = creationMoment;
+    }
 
-	@NotBlank
-	public String getText() {
-		return text;
-	}
+    @NotBlank
+    public String getText() {
+        return text;
+    }
 
-	public void setText(String text) {
-		this.text = text;
-	}
+    public void setText(String text) {
+        this.text = text;
+    }
 
-	@NotNull
-	@Range(min = 0, max = 10)
-	public Integer getRating() {
-		return rating;
-	}
+    @NotNull
+    @Range(min = 0, max = 10)
+    public Integer getRating() {
+        return rating;
+    }
 
-	public void setRating(Integer rating) {
-		this.rating = rating;
-	}
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
 
-	// RelationShips.............................................
+    // RelationShips.............................................
 
-	private Patient patient;
-	private Profile profile;
+    private Patient patient;
+    private Profile profile;
 
-	@Valid
-	@NotNull
-	@ManyToOne(optional = false)
-	public Patient getPatient() {
-		return patient;
-	}
+    @Valid
+    @NotNull
+    @ManyToOne(optional = false)
+    public Patient getPatient() {
+        return patient;
+    }
 
-	public void setPatient(Patient patient) {
-		this.patient = patient;
-	}
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
 
-	@Valid
-	@NotNull
-	@ManyToOne(optional = false)
-	public Profile getProfile() {
-		return profile;
-	}
+    @Valid
+    @NotNull
+    @ManyToOne(optional = false)
+    public Profile getProfile() {
+        return profile;
+    }
 
-	public void setProfile(Profile profile) {
-		this.profile = profile;
-	}
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
 
 }

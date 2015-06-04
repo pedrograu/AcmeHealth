@@ -24,148 +24,134 @@ import domain.Specialty;
 @Controller
 @RequestMapping("/specialty/administrator")
 public class SpecialtyAdministratorController extends AbstractController {
-	
-	@Autowired
-	private SpecialtyService specialtyService;
-	
-	@Autowired
-	private SpecialistService specialistService;
-	
-	
-	public SpecialtyAdministratorController() {
-		super();
-	}
-	
-	// Listing.....................
 
+    @Autowired
+    private SpecialtyService specialtyService;
 
-		@RequestMapping(value = "/list-all", method = RequestMethod.GET)
-		public ModelAndView listAll() {
+    @Autowired
+    private SpecialistService specialistService;
 
-			ModelAndView result;
-			Collection<Specialty> specialtys;
+    public SpecialtyAdministratorController() {
+        super();
+    }
 
-			specialtys = specialtyService.getAll();
+    // Listing.....................
 
-			result = new ModelAndView("specialty/list");
-			result.addObject("specialtys", specialtys);
-			result.addObject("requestURI", "specialty/administrator/list-all.do");
+    @RequestMapping(value = "/list-all", method = RequestMethod.GET)
+    public ModelAndView listAll() {
 
-			return result;
-		}
-		
-		@RequestMapping(value = "/detail", method = RequestMethod.GET)
-		public ModelAndView detail(@RequestParam int specialtyId) {
+        ModelAndView result;
+        Collection<Specialty> specialtys;
 
-			
-			ModelAndView result;
-			Specialty specialty = specialtyService.findOneToEdit(specialtyId);
-			
-			result = createEditModelAndView(specialty);
+        specialtys = specialtyService.getAll();
 
-			result.addObject("specialty", specialty);
-			result.addObject("details", true);
-			result.addObject("createSpecialty", false);
-			result.addObject("detailsSpecialty", true);
+        result = new ModelAndView("specialty/list");
+        result.addObject("specialtys", specialtys);
+        result.addObject("requestURI", "specialty/administrator/list-all.do");
 
-			return result;
-		}
-		
-		
-		// Edition ----------------------------------------------------------------
+        return result;
+    }
 
-					@RequestMapping(value = "/create", method = RequestMethod.GET)
-					public ModelAndView create() {
+    @RequestMapping(value = "/detail", method = RequestMethod.GET)
+    public ModelAndView detail(@RequestParam int specialtyId) {
 
-						ModelAndView result;
-						
-						Specialty specialty;
+        ModelAndView result;
+        Specialty specialty = specialtyService.findOneToEdit(specialtyId);
 
-						specialty = specialtyService.create();
+        result = createEditModelAndView(specialty);
 
-						result = createEditModelAndView(specialty);
+        result.addObject("specialty", specialty);
+        result.addObject("details", true);
+        result.addObject("createSpecialty", false);
+        result.addObject("detailsSpecialty", true);
 
-						
-						result.addObject("specialty", specialty);
-						result.addObject("createSpecialty", true);
-						result.addObject("detailsSpecialty", false);
-						
-						
+        return result;
+    }
 
-						return result;
-					}
-					
-					@RequestMapping(value = "/edit", method = RequestMethod.GET)
-					public ModelAndView edit(@RequestParam int specialtyId) {
+    // Edition ----------------------------------------------------------------
 
-						ModelAndView result;
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public ModelAndView create() {
 
-						Specialty specialty = specialtyService.findOneToEdit(specialtyId);
+        ModelAndView result;
 
-						result = createEditModelAndView(specialty);
-						result.addObject("createSpecialty", false);
-						result.addObject("detailsSpecialty", true);
+        Specialty specialty;
 
+        specialty = specialtyService.create();
 
+        result = createEditModelAndView(specialty);
 
-						return result;
-					}
-					
-					@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-					public ModelAndView save(@Valid Specialty specialty, BindingResult binding) {
+        result.addObject("specialty", specialty);
+        result.addObject("createSpecialty", true);
+        result.addObject("detailsSpecialty", false);
 
-						ModelAndView result ;
+        return result;
+    }
 
+    @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    public ModelAndView edit(@RequestParam int specialtyId) {
 
-						if (binding.hasErrors()) {
-							result = createEditModelAndView(specialty);
-						} else {
-							try {
-								specialtyService.save(specialty);
-								result = new ModelAndView("redirect:list-all.do");
-							} catch (Throwable oops) {
-								result = createEditModelAndView(specialty,"specialty.commit.error");
-							}
-						}
-						
-						return result;
+        ModelAndView result;
 
-					}
-					
+        Specialty specialty = specialtyService.findOneToEdit(specialtyId);
 
+        result = createEditModelAndView(specialty);
+        result.addObject("createSpecialty", false);
+        result.addObject("detailsSpecialty", true);
 
-					// Ancillary methods ------------------------------------------------------
+        return result;
+    }
 
-					protected ModelAndView createEditModelAndView(Specialty specialty) {
-						assert specialty != null;
-						ModelAndView result;
+    @RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+    public ModelAndView save(@Valid Specialty specialty, BindingResult binding) {
 
-						result = createEditModelAndView(specialty, null);
+        ModelAndView result;
 
-						return result;
-					}
+        if (binding.hasErrors()) {
+            result = createEditModelAndView(specialty);
+        } else {
+            try {
+                specialtyService.save(specialty);
+                result = new ModelAndView("redirect:list-all.do");
+            } catch (Throwable oops) {
+                result = createEditModelAndView(specialty, "specialty.commit.error");
+            }
+        }
 
-					protected ModelAndView createEditModelAndView(Specialty specialty,String message) {
-						
-						
-						Assert.notNull(specialty);
-						ModelAndView result;
-						
-				    Collection<Specialist> specialists;
-						
-				    specialists = specialistService.findSpecialistsForSpecialty(specialty);	
+        return result;
 
-					result = new ModelAndView("specialty/edit");
+    }
 
-					result.addObject("specialty", specialty);
-					result.addObject("requestURI","specialty/administrator/edit.do?specialtyId=");
-					result.addObject("message", message);
-					result.addObject("createSpecialty", true);
-					result.addObject("detailsSpecialty", false);
-					result.addObject("specialists", specialists);
+    // Ancillary methods ------------------------------------------------------
 
-						return result;
-					}
-		
+    protected ModelAndView createEditModelAndView(Specialty specialty) {
+        assert specialty != null;
+        ModelAndView result;
+
+        result = createEditModelAndView(specialty, null);
+
+        return result;
+    }
+
+    protected ModelAndView createEditModelAndView(Specialty specialty, String message) {
+
+        Assert.notNull(specialty);
+        ModelAndView result;
+
+        Collection<Specialist> specialists;
+
+        specialists = specialistService.findSpecialistsForSpecialty(specialty);
+
+        result = new ModelAndView("specialty/edit");
+
+        result.addObject("specialty", specialty);
+        result.addObject("requestURI", "specialty/administrator/edit.do?specialtyId=");
+        result.addObject("message", message);
+        result.addObject("createSpecialty", true);
+        result.addObject("detailsSpecialty", false);
+        result.addObject("specialists", specialists);
+
+        return result;
+    }
 
 }

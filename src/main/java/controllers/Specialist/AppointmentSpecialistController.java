@@ -32,301 +32,270 @@ import forms.AppointmentForm3;
 @RequestMapping("/appointment/specialist")
 public class AppointmentSpecialistController extends AbstractController {
 
-	@Autowired
-	private AppointmentService appointmentService;
+    @Autowired
+    private AppointmentService appointmentService;
 
-	@Autowired
-	private PatientService patientService;
+    @Autowired
+    private PatientService patientService;
 
-	@Autowired
-	private TimetableService timetableService;
+    @Autowired
+    private TimetableService timetableService;
 
-	@Autowired
-	private SpecialistService specialistService;
-	@Autowired
-	private MessageService messageService;
+    @Autowired
+    private SpecialistService specialistService;
+    @Autowired
+    private MessageService messageService;
 
-	public AppointmentSpecialistController() {
-		super();
-	}
+    public AppointmentSpecialistController() {
+        super();
+    }
 
-	// Listing.....................
+    // Listing.....................
 
-	// citas finalizadas
-	@RequestMapping(value = "/listFinish", method = RequestMethod.GET)
-	public ModelAndView listFinish() {
+    // citas finalizadas
+    @RequestMapping(value = "/listFinish", method = RequestMethod.GET)
+    public ModelAndView listFinish() {
 
-		ModelAndView result;
-		Collection<Appointment> appointments;
+        ModelAndView result;
+        Collection<Appointment> appointments;
 
-		appointments = appointmentService.getAppointmentsFinish();
+        appointments = appointmentService.getAppointmentsFinish();
 
-		result = new ModelAndView("appointment/list");
-		result.addObject("appointments", appointments);
-		result.addObject("requestURI", "appointment/specialist/listFinish.do");
+        result = new ModelAndView("appointment/list");
+        result.addObject("appointments", appointments);
+        result.addObject("requestURI", "appointment/specialist/listFinish.do");
 
-		return result;
-	}
+        return result;
+    }
 
-	// citas pendientes
-	@RequestMapping(value = "/listNotFinish", method = RequestMethod.GET)
-	public ModelAndView listNotFinish() {
+    // citas pendientes
+    @RequestMapping(value = "/listNotFinish", method = RequestMethod.GET)
+    public ModelAndView listNotFinish() {
 
-		ModelAndView result;
-		Collection<Appointment> appointments;
+        ModelAndView result;
+        Collection<Appointment> appointments;
 
-		appointments = appointmentService.getAppointmentsNotFinish();
+        appointments = appointmentService.getAppointmentsNotFinish();
 
-		result = new ModelAndView("appointment/list");
-		result.addObject("appointments", appointments);
-		result.addObject("isNotFinish", true);
-		result.addObject("requestURI",
-				"appointment/specialist/listNotFinish.do");
+        result = new ModelAndView("appointment/list");
+        result.addObject("appointments", appointments);
+        result.addObject("isNotFinish", true);
+        result.addObject("requestURI", "appointment/specialist/listNotFinish.do");
 
-		return result;
-	}
+        return result;
+    }
 
-	// Edit.........................................
+    // Edit.........................................
 
-	// crear cita para un paciente
-	@RequestMapping(value = "/calendar", method = RequestMethod.GET)
-	public ModelAndView calendar(@RequestParam int patientId) {
+    // crear cita para un paciente
+    @RequestMapping(value = "/calendar", method = RequestMethod.GET)
+    public ModelAndView calendar(@RequestParam int patientId) {
 
-		ModelAndView result;
+        ModelAndView result;
 
-		Patient patient = patientService.findOneToEdit(patientId);
-		Collection<Specialist> specialists = specialistService
-				.getAllSpecialist();
+        Patient patient = patientService.findOneToEdit(patientId);
+        Collection<Specialist> specialists = specialistService.getAllSpecialist();
 
-		result = new ModelAndView("appointment/calendar");
-		result.addObject("isPatient", false);
-		result.addObject("patient", patient);
-		result.addObject("specialists", specialists);
-		result.addObject("requestURI",
-				"appointment/specialist/create.do?patientId=" + patientId);
+        result = new ModelAndView("appointment/calendar");
+        result.addObject("isPatient", false);
+        result.addObject("patient", patient);
+        result.addObject("specialists", specialists);
+        result.addObject("requestURI", "appointment/specialist/create.do?patientId=" + patientId);
 
-		return result;
-	}
+        return result;
+    }
 
-	@RequestMapping(value = "/cancel", method = RequestMethod.GET)
-	public ModelAndView cancel(@RequestParam int appointmentId) {
+    @RequestMapping(value = "/cancel", method = RequestMethod.GET)
+    public ModelAndView cancel(@RequestParam int appointmentId) {
 
-		ModelAndView result;
-		Appointment appointment = appointmentService.findOneToEdit(appointmentId);
-		Message message = messageService.create();
-		message.setRecipient(appointment.getPatient());
-		appointmentService.cancel(appointment);
+        ModelAndView result;
+        Appointment appointment = appointmentService.findOneToEdit(appointmentId);
+        Message message = messageService.create();
+        message.setRecipient(appointment.getPatient());
+        appointmentService.cancel(appointment);
 
-		
-		result = new ModelAndView("message/edit");
-		result.addObject("requestURI", "message/customer/answer.do??messageId="+ message.getId());
+        result = new ModelAndView("message/edit");
+        result.addObject("requestURI", "message/customer/answer.do??messageId=" + message.getId());
 
-		return result;
-	}
+        return result;
+    }
 
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create(@RequestParam String startMoment,
-			@RequestParam int patientId, @RequestParam int specialistId) {
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public ModelAndView create(@RequestParam String startMoment, @RequestParam int patientId,
+            @RequestParam int specialistId) {
 
-		ModelAndView result;
+        ModelAndView result;
 
-		Specialist specialist = specialistService.findOneToEdit(specialistId);
-		Patient patient = patientService.findOneToEdit(patientId);
+        Specialist specialist = specialistService.findOneToEdit(specialistId);
+        Patient patient = patientService.findOneToEdit(patientId);
 
-		boolean cumplePatron = appointmentService.cumplePatron(startMoment);
-
-		if (startMoment != "" && cumplePatron) {
-			Date fechaElegida = appointmentService.stringToDate(startMoment);
-			List<Date> listaDeFechas = timetableService.getDatesAvailables2(
-					fechaElegida, specialist);
+        boolean cumplePatron = appointmentService.cumplePatron(startMoment);
 
+        if (startMoment != "" && cumplePatron) {
+            Date fechaElegida = appointmentService.stringToDate(startMoment);
+            List<Date> listaDeFechas = timetableService.getDatesAvailables2(fechaElegida, specialist);
 
-			AppointmentForm3 appointmentForm = new AppointmentForm3();
-			appointmentForm.setPatient(patient);
-			appointmentForm.setSpecialist(specialist);
+            AppointmentForm3 appointmentForm = new AppointmentForm3();
+            appointmentForm.setPatient(patient);
+            appointmentForm.setSpecialist(specialist);
 
-			result = createEditModelAndView2(appointmentForm);
-
-			result.addObject("appointmentForm", appointmentForm);
-			result.addObject("listaDeFechas", listaDeFechas);
-			if (listaDeFechas.isEmpty()) {
-				result.addObject("hayHorasDisponibles", false);
-			} else {
-				result.addObject("hayHorasDisponibles", true);
-			}
-			result.addObject("create", false);
-			result.addObject("isOffer", false);
-			result.addObject("isSpecialist2", true);
-			result.addObject("existAppointment", false);
-
-		} else {
+            result = createEditModelAndView2(appointmentForm);
 
-			// appointment = appointmentService.create();
-			AppointmentForm3 appointmentForm = new AppointmentForm3();
-			appointmentForm.setPatient(patient);
-			appointmentForm.setSpecialist(specialist);
-
-			result = createEditModelAndView2(appointmentForm);
+            result.addObject("appointmentForm", appointmentForm);
+            result.addObject("listaDeFechas", listaDeFechas);
+            if (listaDeFechas.isEmpty()) {
+                result.addObject("hayHorasDisponibles", false);
+            } else {
+                result.addObject("hayHorasDisponibles", true);
+            }
+            result.addObject("create", false);
+            result.addObject("isOffer", false);
+            result.addObject("isSpecialist2", true);
+            result.addObject("existAppointment", false);
 
-			result.addObject("appointmentForm", appointmentForm);
-			result.addObject("hayHorasDisponibles", false);
-			result.addObject("create", false);
-			result.addObject("isOffer", false);
-			result.addObject("isSpecialist2", true);
-			result.addObject("existAppointment", false);
+        } else {
 
-		}
+            // appointment = appointmentService.create();
+            AppointmentForm3 appointmentForm = new AppointmentForm3();
+            appointmentForm.setPatient(patient);
+            appointmentForm.setSpecialist(specialist);
 
-		return result;
+            result = createEditModelAndView2(appointmentForm);
 
-	}
+            result.addObject("appointmentForm", appointmentForm);
+            result.addObject("hayHorasDisponibles", false);
+            result.addObject("create", false);
+            result.addObject("isOffer", false);
+            result.addObject("isSpecialist2", true);
+            result.addObject("existAppointment", false);
 
-	// Atender cita
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam int appointmentId) {
+        }
 
-		ModelAndView result;
-		Appointment appointment = appointmentService
-				.findOneToEdit(appointmentId);
-		AppointmentForm2 appointmentForm = appointmentService
-				.createForm2(appointment);
+        return result;
 
-		result = new ModelAndView("appointment/edit");
-		result.addObject("appointment", appointment);
-		result.addObject("appointmentForm", appointmentForm);
-		result.addObject("isSpecialist", true);
-		result.addObject(
-				"requestURI",
-				"appointment/specialist/edit.do?appointmentId="
-						+ appointment.getId());
+    }
 
-		return result;
-	}
+    // Atender cita
+    @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    public ModelAndView edit(@RequestParam int appointmentId) {
 
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid AppointmentForm2 appointmentForm,
-			BindingResult binding) {
+        ModelAndView result;
+        Appointment appointment = appointmentService.findOneToEdit(appointmentId);
+        AppointmentForm2 appointmentForm = appointmentService.createForm2(appointment);
 
-		ModelAndView result;
-		Specialist specialistConnect = specialistService.findByPrincipal();
+        result = new ModelAndView("appointment/edit");
+        result.addObject("appointment", appointment);
+        result.addObject("appointmentForm", appointmentForm);
+        result.addObject("isSpecialist", true);
+        result.addObject("requestURI", "appointment/specialist/edit.do?appointmentId=" + appointment.getId());
 
-		if (binding.hasErrors()) {
-			result = createEditModelAndView(appointmentForm);
-		} else {
-			try {
+        return result;
+    }
 
-				Appointment appointment = appointmentService
-						.recontructor2(appointmentForm);
-				appointment.setSpecialist(specialistConnect);
-				Appointment appointment2 = appointmentService
-						.save3(appointment);
-				result = new ModelAndView("redirect:edit.do?appointmentId="
-						+ appointment2.getId());
+    @RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+    public ModelAndView save(@Valid AppointmentForm2 appointmentForm, BindingResult binding) {
 
-			} catch (Throwable oops) {
-				result = createEditModelAndView(appointmentForm,
-						"appointment.commit.error");
-			}
-		}
+        ModelAndView result;
+        Specialist specialistConnect = specialistService.findByPrincipal();
 
-		return result;
+        if (binding.hasErrors()) {
+            result = createEditModelAndView(appointmentForm);
+        } else {
+            try {
 
-	}
+                Appointment appointment = appointmentService.recontructor2(appointmentForm);
+                appointment.setSpecialist(specialistConnect);
+                Appointment appointment2 = appointmentService.save3(appointment);
+                result = new ModelAndView("redirect:edit.do?appointmentId=" + appointment2.getId());
 
-	@RequestMapping(value = "/edit2", method = RequestMethod.POST, params = "save2")
-	public ModelAndView save2(@Valid AppointmentForm3 appointmentForm,
-			BindingResult binding) {
+            } catch (Throwable oops) {
+                result = createEditModelAndView(appointmentForm, "appointment.commit.error");
+            }
+        }
 
-		ModelAndView result;
+        return result;
 
-		if (binding.hasErrors()) {
-			result = createEditModelAndView2(appointmentForm);
-		} else {
-			try {
+    }
 
-				Appointment appointment = appointmentService
-						.recontructor3(appointmentForm);
-				appointmentService.save2(appointment);
-				result = new ModelAndView("redirect:listNotFinish.do");
+    @RequestMapping(value = "/edit2", method = RequestMethod.POST, params = "save2")
+    public ModelAndView save2(@Valid AppointmentForm3 appointmentForm, BindingResult binding) {
 
-			} catch (Throwable oops) {
-				result = createEditModelAndView2(appointmentForm,
-						"appointment.commit.error");
-			}
-		}
+        ModelAndView result;
 
-		return result;
+        if (binding.hasErrors()) {
+            result = createEditModelAndView2(appointmentForm);
+        } else {
+            try {
 
-	}
+                Appointment appointment = appointmentService.recontructor3(appointmentForm);
+                appointmentService.save2(appointment);
+                result = new ModelAndView("redirect:listNotFinish.do");
 
-	// Ancillary methods ------------------------------------------------------
+            } catch (Throwable oops) {
+                result = createEditModelAndView2(appointmentForm, "appointment.commit.error");
+            }
+        }
 
-	protected ModelAndView createEditModelAndView(
-			AppointmentForm2 appointmentForm) {
-		assert appointmentForm != null;
-		ModelAndView result;
+        return result;
 
-		result = createEditModelAndView(appointmentForm, null);
+    }
 
-		return result;
-	}
+    // Ancillary methods ------------------------------------------------------
 
-	protected ModelAndView createEditModelAndView(
-			AppointmentForm2 appointmentForm, String message) {
+    protected ModelAndView createEditModelAndView(AppointmentForm2 appointmentForm) {
+        assert appointmentForm != null;
+        ModelAndView result;
 
-		Assert.notNull(appointmentForm);
-		ModelAndView result;
+        result = createEditModelAndView(appointmentForm, null);
 
-		result = new ModelAndView("appointment/edit");
+        return result;
+    }
 
-		result.addObject("appointmentForm", appointmentForm);
-		result.addObject("isSpecialist", true);
-		result.addObject("requestURI",
-				"appointment/specialist/edit.do?appointmentId="
-						+ appointmentForm.getId());
-		result.addObject("message", message);
+    protected ModelAndView createEditModelAndView(AppointmentForm2 appointmentForm, String message) {
 
-		return result;
-	}
+        Assert.notNull(appointmentForm);
+        ModelAndView result;
 
-	protected ModelAndView createEditModelAndView2(
-			AppointmentForm3 appointmentForm) {
-		assert appointmentForm != null;
-		ModelAndView result;
+        result = new ModelAndView("appointment/edit");
 
-		result = createEditModelAndView2(appointmentForm, null);
+        result.addObject("appointmentForm", appointmentForm);
+        result.addObject("isSpecialist", true);
+        result.addObject("requestURI", "appointment/specialist/edit.do?appointmentId=" + appointmentForm.getId());
+        result.addObject("message", message);
 
-		return result;
-	}
+        return result;
+    }
 
-	protected ModelAndView createEditModelAndView2(
-			AppointmentForm3 appointmentForm, String message) {
+    protected ModelAndView createEditModelAndView2(AppointmentForm3 appointmentForm) {
+        assert appointmentForm != null;
+        ModelAndView result;
 
-		Assert.notNull(appointmentForm);
-		ModelAndView result;
+        result = createEditModelAndView2(appointmentForm, null);
 
-		Appointment appointment = appointmentService
-				.recontructor3(appointmentForm);
+        return result;
+    }
 
-		result = new ModelAndView("appointment/edit");
+    protected ModelAndView createEditModelAndView2(AppointmentForm3 appointmentForm, String message) {
 
-		result.addObject("appointmentForm", appointmentForm);
+        Assert.notNull(appointmentForm);
+        ModelAndView result;
 
-		result.addObject("existAppointment", false);
-		result.addObject(
-				"requestURI",
-				"appointment/patient/edit.do?appointmentId="
-						+ appointment.getId());
-		result.addObject("create", false);
-		result.addObject("hayHorasDisponibles", true);
+        Appointment appointment = appointmentService.recontructor3(appointmentForm);
 
-		result.addObject("isSpecialist2", true);
-		result.addObject("requestURI",
-				"appointment/specialist/edit2.do?appointmentId="
-						+ appointmentForm.getId());
-		result.addObject("message", message);
+        result = new ModelAndView("appointment/edit");
 
-		return result;
-	}
+        result.addObject("appointmentForm", appointmentForm);
+
+        result.addObject("existAppointment", false);
+        result.addObject("requestURI", "appointment/patient/edit.do?appointmentId=" + appointment.getId());
+        result.addObject("create", false);
+        result.addObject("hayHorasDisponibles", true);
+
+        result.addObject("isSpecialist2", true);
+        result.addObject("requestURI", "appointment/specialist/edit2.do?appointmentId=" + appointmentForm.getId());
+        result.addObject("message", message);
+
+        return result;
+    }
 
 }

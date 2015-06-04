@@ -11,60 +11,56 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.OfferService;
 
-
 import controllers.AbstractController;
 import domain.Offer;
 
 @Controller
 @RequestMapping("/offer/specialist")
 public class OfferSpecialistController extends AbstractController {
-	
-	// Services -----------------------------------------------------------
 
-		@Autowired
-		private OfferService offerService;
-		
-		
-		
-		// Constructors -----------------------------------------------------------
-		
-		public OfferSpecialistController() {
-			super();
-		}
-			
-		// List ------------------------------------------------------------------		
-		
-		@RequestMapping(value = "/list-not-finished", method = RequestMethod.GET)
-		public ModelAndView listNotFinished() {
+    // Services -----------------------------------------------------------
 
-			ModelAndView result;
-			Collection<Offer> offers;
+    @Autowired
+    private OfferService offerService;
 
-			offers = offerService.findNotFinishedOwnSpecialist();
+    // Constructors -----------------------------------------------------------
 
-			result = new ModelAndView("offer/list");
-			result.addObject("offers", offers);
-			result.addObject("notFinish", true);
-			result.addObject("requestURI", "offer/specialist/list-not-finished.do");
+    public OfferSpecialistController() {
+        super();
+    }
 
-			return result;
-		}
-		
-		@RequestMapping(value = "/detail", method = RequestMethod.GET)
-		public ModelAndView detail(@RequestParam int offerId) {
+    // List ------------------------------------------------------------------		
 
-			
-			ModelAndView result;
-			Offer offer = offerService.findOneToEdit(offerId);
-			
-			result = new ModelAndView("offer/edit");
+    @RequestMapping(value = "/list-not-finished", method = RequestMethod.GET)
+    public ModelAndView listNotFinished() {
 
-			result.addObject("offer", offer);
-			result.addObject("details", true);
-			result.addObject("createOffer", false);
-			result.addObject("detailsOffer", true);
+        ModelAndView result;
+        Collection<Offer> offers;
 
-			return result;
-		}
+        offers = offerService.findNotFinishedOwnSpecialist();
+
+        result = new ModelAndView("offer/list");
+        result.addObject("offers", offers);
+        result.addObject("notFinish", true);
+        result.addObject("requestURI", "offer/specialist/list-not-finished.do");
+
+        return result;
+    }
+
+    @RequestMapping(value = "/detail", method = RequestMethod.GET)
+    public ModelAndView detail(@RequestParam int offerId) {
+
+        ModelAndView result;
+        Offer offer = offerService.findOneToEdit(offerId);
+
+        result = new ModelAndView("offer/edit");
+
+        result.addObject("offer", offer);
+        result.addObject("details", true);
+        result.addObject("createOffer", false);
+        result.addObject("detailsOffer", true);
+
+        return result;
+    }
 
 }

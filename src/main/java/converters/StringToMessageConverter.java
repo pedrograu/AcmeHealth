@@ -11,29 +11,28 @@ import domain.Message;
 
 @Component
 @Transactional
-public class StringToMessageConverter implements Converter<String, Message>{
-	
-	@Autowired
-	MessageRepository messageRepository;
+public class StringToMessageConverter implements Converter<String, Message> {
 
-	@Override
-	public Message convert(String text) {
-		Message result;
-		int id;
+    @Autowired
+    MessageRepository messageRepository;
 
-		try {
-			if (StringUtils.isEmpty(text))
-				result = null;
-			else {
-				id = Integer.valueOf(text);
-				result = messageRepository.findOne(id);
-			}
-		} catch (Throwable oops) {
-			throw new IllegalArgumentException(oops);
-		}
+    @Override
+    public Message convert(String text) {
+        Message result;
+        int id;
 
-		return result;
-	}
+        try {
+            if (StringUtils.isEmpty(text))
+                result = null;
+            else {
+                id = Integer.valueOf(text);
+                result = messageRepository.findOne(id);
+            }
+        } catch (Throwable oops) {
+            throw new IllegalArgumentException(oops);
+        }
+
+        return result;
+    }
 
 }
-

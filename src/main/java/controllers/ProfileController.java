@@ -15,46 +15,43 @@ import services.SpecialistService;
 import domain.Comment;
 import domain.Specialist;
 
-
 @Controller
 @RequestMapping("/profile")
 public class ProfileController extends AbstractController {
 
-	// Services -----------------------------------------------------------
+    // Services -----------------------------------------------------------
 
-	@Autowired
-	private ProfileService profileService;
-	
-	@Autowired
-	private SpecialistService specialistService;
-	
-	@Autowired
-	private CommentService commentService;
-	
-	// Constructors -----------------------------------------------------------
-	
-	public ProfileController() {
-		super();
-	}
-		
+    @Autowired
+    private ProfileService profileService;
 
-	// Details.....................
-	@RequestMapping(value = "/details", method = RequestMethod.GET)
-	public ModelAndView details(@RequestParam int specialistId) {
+    @Autowired
+    private SpecialistService specialistService;
 
-		ModelAndView result;
+    @Autowired
+    private CommentService commentService;
 
-		Specialist specialist= specialistService.findOneToEdit(specialistId);
-		Collection<Comment> comments = commentService.getCommentsForSpecialist(specialist);
+    // Constructors -----------------------------------------------------------
 
-		result = new ModelAndView("profile/edit");
-		result.addObject("specialist", specialist);
-		result.addObject("comments", comments);
-		result.addObject("requestURI", "profile/details.do");
-		result.addObject("detailsProfile", true);
-	
+    public ProfileController() {
+        super();
+    }
 
-		return result;
-	}
+    // Details.....................
+    @RequestMapping(value = "/details", method = RequestMethod.GET)
+    public ModelAndView details(@RequestParam int specialistId) {
+
+        ModelAndView result;
+
+        Specialist specialist = specialistService.findOneToEdit(specialistId);
+        Collection<Comment> comments = commentService.getCommentsForSpecialist(specialist);
+
+        result = new ModelAndView("profile/edit");
+        result.addObject("specialist", specialist);
+        result.addObject("comments", comments);
+        result.addObject("requestURI", "profile/details.do");
+        result.addObject("detailsProfile", true);
+
+        return result;
+    }
 
 }

@@ -15,43 +15,41 @@ import controllers.AbstractController;
 import domain.Specialist;
 import domain.Timetable;
 
-
 @Controller
 @RequestMapping("/timetable/patient")
 public class TimetablePatientController extends AbstractController {
 
-	// Services.....................
-	
-	@Autowired
-	private TimetableService timetableService;
-	
-	@Autowired
-	private SpecialistService specialistService;
-	
-	//Controller-------------------------
+    // Services.....................
 
-	public TimetablePatientController() {
-		super();
-	}
+    @Autowired
+    private TimetableService timetableService;
 
-	// Listing.....................
-	
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(@RequestParam int specialistId) {
+    @Autowired
+    private SpecialistService specialistService;
 
-		ModelAndView result;
-		Collection<Timetable> timetables;
-		
-		Specialist specialist = specialistService.findOneToEdit(specialistId);
+    //Controller-------------------------
 
-		timetables = timetableService.getTimetablesForSpecialist(specialist);
+    public TimetablePatientController() {
+        super();
+    }
 
-		result = new ModelAndView("timetable/list");
-		result.addObject("timetables", timetables);
-		result.addObject("requestURI", "timetable/patient/list.do");
+    // Listing.....................
 
-		return result;
-	}
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public ModelAndView list(@RequestParam int specialistId) {
 
+        ModelAndView result;
+        Collection<Timetable> timetables;
+
+        Specialist specialist = specialistService.findOneToEdit(specialistId);
+
+        timetables = timetableService.getTimetablesForSpecialist(specialist);
+
+        result = new ModelAndView("timetable/list");
+        result.addObject("timetables", timetables);
+        result.addObject("requestURI", "timetable/patient/list.do");
+
+        return result;
+    }
 
 }

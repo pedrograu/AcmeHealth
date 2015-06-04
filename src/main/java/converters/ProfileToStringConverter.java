@@ -9,15 +9,15 @@ import domain.Profile;
 @Component
 @Transactional
 public class ProfileToStringConverter implements Converter<Profile, String> {
-	@Override
-	public String convert(Profile profile) {
-		String result;
+    @Override
+    public String convert(Profile profile) {
+        String result;
 
-		if (profile == null)
-			result = null;
-		else
-			result = String.valueOf(profile.getId());
+        if (profile == null)
+            result = null;
+        else
+            result = String.valueOf(profile.getId());
 
-		return result;
-	}
+        return result;
+    }
 }

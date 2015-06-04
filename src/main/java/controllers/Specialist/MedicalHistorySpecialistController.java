@@ -13,102 +13,90 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.MedicalHistoryService;
 
-
 import controllers.AbstractController;
 import domain.MedicalHistory;
-
-
 
 @Controller
 @RequestMapping("/medicalHistory/specialist")
 public class MedicalHistorySpecialistController extends AbstractController {
-	
-	@Autowired
-	private MedicalHistoryService medicalHistoryService;
-	
-	public MedicalHistorySpecialistController() {
-		super();
-	}
-	
-	@RequestMapping(value = "/detail", method = RequestMethod.GET)
-	public ModelAndView detail(@RequestParam int medicalHistoryId) {
 
-		
-		ModelAndView result;
-		MedicalHistory medicalHistory = medicalHistoryService.findOneToEdit(medicalHistoryId);
-		
-		result = new ModelAndView("medicalHistory/edit");
-		result.addObject("medicalHistory", medicalHistory);
-		result.addObject("detailsMedicalHistory", true);
+    @Autowired
+    private MedicalHistoryService medicalHistoryService;
 
-		return result;
-	}
-	
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam int medicalHistoryId) {
+    public MedicalHistorySpecialistController() {
+        super();
+    }
 
-		ModelAndView result;
+    @RequestMapping(value = "/detail", method = RequestMethod.GET)
+    public ModelAndView detail(@RequestParam int medicalHistoryId) {
 
-		MedicalHistory medicalHistory = medicalHistoryService.findOneToEdit(medicalHistoryId);
+        ModelAndView result;
+        MedicalHistory medicalHistory = medicalHistoryService.findOneToEdit(medicalHistoryId);
 
-		result = createEditModelAndView(medicalHistory);
-		result.addObject("detailsMedicalHistory", false);
-		
-		return result;
-	}
-	
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid MedicalHistory medicalHistory, BindingResult binding) {
+        result = new ModelAndView("medicalHistory/edit");
+        result.addObject("medicalHistory", medicalHistory);
+        result.addObject("detailsMedicalHistory", true);
 
-		ModelAndView result ;
+        return result;
+    }
 
+    @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    public ModelAndView edit(@RequestParam int medicalHistoryId) {
 
-		if (binding.hasErrors()) {
-			result = createEditModelAndView(medicalHistory);
-		} else {
-			try {
-				medicalHistoryService.save(medicalHistory);
-				result = new ModelAndView("redirect:detail.do?medicalHistoryId="+medicalHistory.getId());
-			} catch (Throwable oops) {
-				result = createEditModelAndView(medicalHistory,"medicalHistory.commit.error");
-			}
-		}
-		
-		return result;
+        ModelAndView result;
 
-	}
+        MedicalHistory medicalHistory = medicalHistoryService.findOneToEdit(medicalHistoryId);
 
-	
-	// Ancillary methods ------------------------------------------------------
+        result = createEditModelAndView(medicalHistory);
+        result.addObject("detailsMedicalHistory", false);
 
-	protected ModelAndView createEditModelAndView(MedicalHistory medicalHistory) {
-		assert medicalHistory != null;
-		ModelAndView result;
+        return result;
+    }
 
-		result = createEditModelAndView(medicalHistory, null);
+    @RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+    public ModelAndView save(@Valid MedicalHistory medicalHistory, BindingResult binding) {
 
-		return result;
-	}
+        ModelAndView result;
 
-	protected ModelAndView createEditModelAndView(MedicalHistory medicalHistory,String message) {
-		
-		
-		Assert.notNull(medicalHistory);
-		ModelAndView result;
-		
+        if (binding.hasErrors()) {
+            result = createEditModelAndView(medicalHistory);
+        } else {
+            try {
+                medicalHistoryService.save(medicalHistory);
+                result = new ModelAndView("redirect:detail.do?medicalHistoryId=" + medicalHistory.getId());
+            } catch (Throwable oops) {
+                result = createEditModelAndView(medicalHistory, "medicalHistory.commit.error");
+            }
+        }
 
-	result = new ModelAndView("medicalHistory/edit");
+        return result;
 
-	result.addObject("medicalHistory", medicalHistory);
-	result.addObject("requestURI","medicalHistory/specialist/edit.do?medicalHistoryId="+medicalHistory.getId());
-	result.addObject("message", message);
-	result.addObject("detailsMedicalHistory", false);
+    }
 
-	
+    // Ancillary methods ------------------------------------------------------
 
-		return result;
-	}
+    protected ModelAndView createEditModelAndView(MedicalHistory medicalHistory) {
+        assert medicalHistory != null;
+        ModelAndView result;
 
+        result = createEditModelAndView(medicalHistory, null);
 
+        return result;
+    }
+
+    protected ModelAndView createEditModelAndView(MedicalHistory medicalHistory, String message) {
+
+        Assert.notNull(medicalHistory);
+        ModelAndView result;
+
+        result = new ModelAndView("medicalHistory/edit");
+
+        result.addObject("medicalHistory", medicalHistory);
+        result.addObject("requestURI", "medicalHistory/specialist/edit.do?medicalHistoryId=" + medicalHistory.getId());
+        result.addObject("message", message);
+        result.addObject("detailsMedicalHistory", false);
+
+        return result;
+    }
 
 }

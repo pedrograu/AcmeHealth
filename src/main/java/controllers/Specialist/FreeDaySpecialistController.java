@@ -1,7 +1,6 @@
 package controllers.Specialist;
 
 import java.util.Collection;
-import java.util.HashSet;
 
 import javax.validation.Valid;
 
@@ -16,140 +15,122 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.FreeDayService;
 import services.SpecialistService;
-
-
 import controllers.AbstractController;
 import domain.FreeDay;
-import domain.Offer;
 import domain.Specialist;
-import domain.Timetable;
 import forms.FreeDayForm;
-import forms.TimetableForm;
-
 
 @Controller
 @RequestMapping("/freeDay/specialist")
 public class FreeDaySpecialistController extends AbstractController {
-	
-	@Autowired
-	private SpecialistService specialistService;
-	@Autowired
-	private FreeDayService freeDayService;
 
-	public FreeDaySpecialistController() {
-		super();
-	}
-	
-// List -------------------------------------------------------------------
-	
-	@RequestMapping(value = "/list-own", method = RequestMethod.GET)
-	public ModelAndView listOwn() {
+    @Autowired
+    private SpecialistService specialistService;
+    @Autowired
+    private FreeDayService freeDayService;
 
-		ModelAndView result;
-		Collection<FreeDay> freeDays;
-		Specialist specialistConnect = specialistService.findByPrincipal();
+    public FreeDaySpecialistController() {
+        super();
+    }
 
-		freeDays = freeDayService.getFreeDaysForSpecialist(specialistConnect);
+    // List -------------------------------------------------------------------
 
-		result = new ModelAndView("freeDay/list");
-		result.addObject("freeDays", freeDays);
-		result.addObject("requestURI", "freeDay/specialist/list-own.do");
+    @RequestMapping(value = "/list-own", method = RequestMethod.GET)
+    public ModelAndView listOwn() {
 
-		return result;
-	}
-	
-	
-	// Edition -----------------------------------------------------------------
+        ModelAndView result;
+        Collection<FreeDay> freeDays;
+        Specialist specialistConnect = specialistService.findByPrincipal();
 
-		@RequestMapping(value = "/create", method = RequestMethod.GET)
-		public ModelAndView create() {
+        freeDays = freeDayService.getFreeDaysForSpecialist(specialistConnect);
 
-			ModelAndView result;
+        result = new ModelAndView("freeDay/list");
+        result.addObject("freeDays", freeDays);
+        result.addObject("requestURI", "freeDay/specialist/list-own.do");
 
-			FreeDayForm freeDayForm = new FreeDayForm();
+        return result;
+    }
 
+    // Edition -----------------------------------------------------------------
 
-			result = createEditModelAndView(freeDayForm);
-			// result.addObject("details", false);
-			result.addObject("freeDayForm", freeDayForm);
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public ModelAndView create() {
 
-			return result;
-		}
+        ModelAndView result;
 
-		@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-		public ModelAndView save(@Valid FreeDayForm freeDayForm,
-				BindingResult binding) {
+        FreeDayForm freeDayForm = new FreeDayForm();
 
-			ModelAndView result;
-			FreeDay freeDay;
+        result = createEditModelAndView(freeDayForm);
+        // result.addObject("details", false);
+        result.addObject("freeDayForm", freeDayForm);
 
-			if (binding.hasErrors()) {
-				result = createEditModelAndView(freeDayForm);
-			} else {
-				try {
-					freeDay = freeDayService.recontructor(freeDayForm);
-					freeDayService.save(freeDay);
-					result = new ModelAndView("redirect:list-own.do");
+        return result;
+    }
 
-				} catch (Throwable oops) {
-					result = createEditModelAndView(freeDayForm,
-							"freeDay.commit.error");
-				}
-			}
+    @RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+    public ModelAndView save(@Valid FreeDayForm freeDayForm, BindingResult binding) {
 
-			return result;
+        ModelAndView result;
+        FreeDay freeDay;
 
-		}
-		
+        if (binding.hasErrors()) {
+            result = createEditModelAndView(freeDayForm);
+        } else {
+            try {
+                freeDay = freeDayService.recontructor(freeDayForm);
+                freeDayService.save(freeDay);
+                result = new ModelAndView("redirect:list-own.do");
 
-		
-		@RequestMapping(value = "/delete", method = RequestMethod.GET)
-		public ModelAndView delete(@RequestParam int freeDayId) {
+            } catch (Throwable oops) {
+                result = createEditModelAndView(freeDayForm, "freeDay.commit.error");
+            }
+        }
 
-			ModelAndView result;
-			FreeDay freeDay = freeDayService.findOneToEdit(freeDayId);
-			
-				freeDayService.delete(freeDay);
-				Collection<FreeDay> freeDays;
-	
-				freeDays = freeDayService.findAllFreeDays();
+        return result;
 
-			result = new ModelAndView("freeDay/list");
-			result.addObject("freeDays",freeDays);
-			result.addObject("requestURI", "freeDays/specialist/list-own.do");
+    }
 
-			return result;
-		}
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    public ModelAndView delete(@RequestParam int freeDayId) {
 
-		// Ancillary methods ------------------------------------------------------
+        ModelAndView result;
+        FreeDay freeDay = freeDayService.findOneToEdit(freeDayId);
 
-		protected ModelAndView createEditModelAndView(FreeDayForm freeDayForm) {
-			assert freeDayForm != null;
-			ModelAndView result;
+        freeDayService.delete(freeDay);
+        Collection<FreeDay> freeDays;
 
-			result = createEditModelAndView(freeDayForm, null);
+        freeDays = freeDayService.findAllFreeDays();
 
-			return result;
-		}
+        result = new ModelAndView("freeDay/list");
+        result.addObject("freeDays", freeDays);
+        result.addObject("requestURI", "freeDays/specialist/list-own.do");
 
-		protected ModelAndView createEditModelAndView(FreeDayForm freeDayForm,
-				String message) {
+        return result;
+    }
 
-			Assert.notNull(freeDayForm);
-			ModelAndView result;
-			
-			
-			
+    // Ancillary methods ------------------------------------------------------
 
-			result = new ModelAndView("freeDay/edit");
-			result.addObject("requestURI", "freeDay/specialist/edit.do?freeDayId="
-					+ freeDayForm.getId());
-		
-			result.addObject("message", message);
-			result.addObject("freeDayForm", freeDayForm);
-			
+    protected ModelAndView createEditModelAndView(FreeDayForm freeDayForm) {
+        assert freeDayForm != null;
+        ModelAndView result;
 
-			return result;
-		}
+        result = createEditModelAndView(freeDayForm, null);
+
+        return result;
+    }
+
+    protected ModelAndView createEditModelAndView(FreeDayForm freeDayForm, String message) {
+
+        Assert.notNull(freeDayForm);
+        ModelAndView result;
+
+        result = new ModelAndView("freeDay/edit");
+        result.addObject("requestURI", "freeDay/specialist/edit.do?freeDayId=" + freeDayForm.getId());
+
+        result.addObject("message", message);
+        result.addObject("freeDayForm", freeDayForm);
+
+        return result;
+    }
 
 }

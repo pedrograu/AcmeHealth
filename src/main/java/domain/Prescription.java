@@ -21,68 +21,68 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
-@Table(indexes={@Index(columnList="price")})
-public class Prescription  extends DomainEntity{
+@Table(indexes = { @Index(columnList = "price") })
+public class Prescription extends DomainEntity {
 
-	private String title;
-	private String description;
-	private Double price;
-	private Date creationMoment;
-	
-	@Past
-	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-	public Date getCreationMoment() {
-		return creationMoment;
-	}
+    private String title;
+    private String description;
+    private Double price;
+    private Date creationMoment;
 
-	public void setCreationMoment(Date creationMoment) {
-		this.creationMoment = creationMoment;
-	}
+    @Past
+    @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+    public Date getCreationMoment() {
+        return creationMoment;
+    }
 
-	@NotBlank
-	public String getTitle() {
-		return title;
-	}
+    public void setCreationMoment(Date creationMoment) {
+        this.creationMoment = creationMoment;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    @NotBlank
+    public String getTitle() {
+        return title;
+    }
 
-	@NotBlank
-	public String getDescription() {
-		return description;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    @NotBlank
+    public String getDescription() {
+        return description;
+    }
 
-	@NotNull
-	@Min(0)
-	@Digits(integer = 9, fraction = 2)
-	public Double getPrice() {
-		return price;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void setPrice(Double price) {
-		this.price = price;
-	}
+    @NotNull
+    @Min(0)
+    @Digits(integer = 9, fraction = 2)
+    public Double getPrice() {
+        return price;
+    }
 
-	// Relationships ----------------------------------------------------------
+    public void setPrice(Double price) {
+        this.price = price;
+    }
 
-	private Appointment appointment;
+    // Relationships ----------------------------------------------------------
 
-	@Valid
-	@NotNull
-	@ManyToOne(optional=false)
-	public Appointment getAppointment() {
-		return appointment;
-	}
+    private Appointment appointment;
 
-	public void setAppointment(Appointment appointment) {
-		this.appointment = appointment;
-	}
+    @Valid
+    @NotNull
+    @ManyToOne(optional = false)
+    public Appointment getAppointment() {
+        return appointment;
+    }
+
+    public void setAppointment(Appointment appointment) {
+        this.appointment = appointment;
+    }
 
 }

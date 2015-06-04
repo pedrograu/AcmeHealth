@@ -11,39 +11,36 @@ import org.springframework.web.servlet.ModelAndView;
 import services.SpecialistService;
 import domain.Specialist;
 
-
-
 @Controller
 @RequestMapping("/specialist")
 public class SpecialistController extends AbstractController {
 
-	// Services -----------------------------------------------------------
+    // Services -----------------------------------------------------------
 
-	@Autowired
-	private SpecialistService specialistService;
-	
-	// Constructors -----------------------------------------------------------
-	
-	public SpecialistController() {
-		super();
-	}
-		
-	// List ------------------------------------------------------------------		
+    @Autowired
+    private SpecialistService specialistService;
 
-	
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list() {
+    // Constructors -----------------------------------------------------------
 
-		ModelAndView result;
-		Collection<Specialist> specialists;
+    public SpecialistController() {
+        super();
+    }
 
-		specialists = specialistService.findAllSpecialists();
+    // List ------------------------------------------------------------------		
 
-		result = new ModelAndView("specialist/list");
-		result.addObject("specialists", specialists);
-		result.addObject("requestURI", "specialist/list.do");
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public ModelAndView list() {
 
-		return result;
-	}
+        ModelAndView result;
+        Collection<Specialist> specialists;
+
+        specialists = specialistService.findAllSpecialists();
+
+        result = new ModelAndView("specialist/list");
+        result.addObject("specialists", specialists);
+        result.addObject("requestURI", "specialist/list.do");
+
+        return result;
+    }
 
 }

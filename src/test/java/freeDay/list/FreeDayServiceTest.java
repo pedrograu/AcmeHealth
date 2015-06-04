@@ -1,7 +1,6 @@
 package freeDay.list;
 
 import java.util.Collection;
-import java.util.Date;
 
 import javax.transaction.Transactional;
 
@@ -25,66 +24,60 @@ import utilities.PopulateDatabase;
 import domain.FreeDay;
 import domain.Specialist;
 
-
-@ContextConfiguration(locations = { "classpath:spring/datasource.xml",
-		"classpath:spring/config/packages.xml" })
+@ContextConfiguration(locations = { "classpath:spring/datasource.xml", "classpath:spring/config/packages.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 public class FreeDayServiceTest {
 
-	@Autowired
-	private FreeDayService freeDayService;
-	@Autowired
-	private LoginService loginService;
-	@Autowired
-	private PatientService patientService;
-	@Autowired
-	private SpecialistService specialistService;
+    @Autowired
+    private FreeDayService freeDayService;
+    @Autowired
+    private LoginService loginService;
+    @Autowired
+    private PatientService patientService;
+    @Autowired
+    private SpecialistService specialistService;
 
-	
-	public void authenticate(String username) {
-		UserDetails userDetails;
-		TestingAuthenticationToken authenticationToken;
-		SecurityContext context;
+    public void authenticate(String username) {
+        UserDetails userDetails;
+        TestingAuthenticationToken authenticationToken;
+        SecurityContext context;
 
-		userDetails = loginService.loadUserByUsername(username);
-		authenticationToken = new TestingAuthenticationToken(userDetails, null);
-		context = SecurityContextHolder.getContext();
-		context.setAuthentication(authenticationToken);
-	}
+        userDetails = loginService.loadUserByUsername(username);
+        authenticationToken = new TestingAuthenticationToken(userDetails, null);
+        context = SecurityContextHolder.getContext();
+        context.setAuthentication(authenticationToken);
+    }
 
-	public void desauthenticate() {
-		UserDetails userDetails;
-		TestingAuthenticationToken authenticationToken;
-		SecurityContext context;
+    public void desauthenticate() {
+        UserDetails userDetails;
+        TestingAuthenticationToken authenticationToken;
+        SecurityContext context;
 
-		userDetails = loginService.loadUserByUsername(null);
-		authenticationToken = new TestingAuthenticationToken(userDetails, null);
-		context = SecurityContextHolder.getContext();
-		context.setAuthentication(authenticationToken);
-	}
+        userDetails = loginService.loadUserByUsername(null);
+        authenticationToken = new TestingAuthenticationToken(userDetails, null);
+        context = SecurityContextHolder.getContext();
+        context.setAuthentication(authenticationToken);
+    }
 
+    @Before
+    public void setUp() {
+        PopulateDatabase.main(null);
+    }
 
-	@Before
-	public void setUp() {
-		PopulateDatabase.main(null);
-	}
+    @Test
+    public void testListMyFreeDaysAuthenticateSpecialist() {
 
-	@Test
-	public void testListMyFreeDaysAuthenticateSpecialist() {
+        authenticate("specialist1");
+        Specialist specialist1 = specialistService.findByPrincipal();
 
-		authenticate("specialist1");
-		Specialist specialist1 = specialistService.findByPrincipal();
-		
-		Collection<FreeDay> freeDays = freeDayService.getFreeDaysForSpecialist(specialist1);
+        Collection<FreeDay> freeDays = freeDayService.getFreeDaysForSpecialist(specialist1);
 
-		
-		for(FreeDay f : freeDays){
-			Assert.isTrue(f.getSpecialist()==specialist1);
-		}
+        for (FreeDay f : freeDays) {
+            Assert.isTrue(f.getSpecialist() == specialist1);
+        }
 
-		Assert.isTrue(freeDays.size()==1);
-	}
-	
-	
+        Assert.isTrue(freeDays.size() == 1);
+    }
+
 }

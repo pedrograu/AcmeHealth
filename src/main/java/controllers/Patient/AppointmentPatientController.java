@@ -1,6 +1,5 @@
 package controllers.Patient;
 
-
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -25,333 +24,310 @@ import controllers.AbstractController;
 import domain.Appointment;
 import domain.Offer;
 import domain.Patient;
-import domain.Specialist;
 import forms.AppointmentForm;
-
 
 @Controller
 @RequestMapping("/appointment/patient")
 public class AppointmentPatientController extends AbstractController {
 
-	@Autowired
-	private AppointmentService appointmentService;
-	
-	@Autowired
-	private TimetableService timetableService;
-	
-	@Autowired
-	private OfferService offerService;
-	
-	@Autowired
-	private PatientService patientService;
-	
-	@Autowired
-	private SpecialistService specialistService;
+    @Autowired
+    private AppointmentService appointmentService;
 
+    @Autowired
+    private TimetableService timetableService;
 
-	public AppointmentPatientController() {
-		super();
-	}
+    @Autowired
+    private OfferService offerService;
 
-	// Listing.....................
-	
-	
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list() {
+    @Autowired
+    private PatientService patientService;
 
-		ModelAndView result;
-		Collection<Appointment> appointments;
+    @Autowired
+    private SpecialistService specialistService;
 
-		appointments = appointmentService.getMyScheduledAppointments();
+    public AppointmentPatientController() {
+        super();
+    }
 
-		result = new ModelAndView("appointment/list");
-		result.addObject("appointments", appointments);
-		result.addObject("requestURI", "appointment/patient/list.do");
+    // Listing.....................
 
-		return result;
-	}
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public ModelAndView list() {
 
-	// Edition ----------------------------------------------------------------
-	
-	//calendario (citas para medico de cabecera)
-	@RequestMapping(value = "/calendar", method = RequestMethod.GET)
-	public ModelAndView calendar() {
+        ModelAndView result;
+        Collection<Appointment> appointments;
 
-		ModelAndView result;
+        appointments = appointmentService.getMyScheduledAppointments();
 
+        result = new ModelAndView("appointment/list");
+        result.addObject("appointments", appointments);
+        result.addObject("requestURI", "appointment/patient/list.do");
 
-		result = new ModelAndView("appointment/calendar");
-		result.addObject("isPatient", true);
-		result.addObject("requestURI", "appointment/patient/create.do");
+        return result;
+    }
 
-		return result;
-	}
-	
-	//calendario (citas para oferta)
-		@RequestMapping(value = "/calendar2", method = RequestMethod.GET)
-		public ModelAndView calendar2(@RequestParam int offerId) {
+    // Edition ----------------------------------------------------------------
 
-			ModelAndView result;
+    //calendario (citas para medico de cabecera)
+    @RequestMapping(value = "/calendar", method = RequestMethod.GET)
+    public ModelAndView calendar() {
 
-			result = new ModelAndView("appointment/calendar");
-			result.addObject("isPatient", true);
-			result.addObject("requestURI", "appointment/patient/create2.do?offerId="+offerId);
+        ModelAndView result;
 
-			return result;
-		}
-	
+        result = new ModelAndView("appointment/calendar");
+        result.addObject("isPatient", true);
+        result.addObject("requestURI", "appointment/patient/create.do");
 
-	//citas para tu medico de cabecera
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create(@RequestParam String startMoment) {
+        return result;
+    }
 
-		ModelAndView result;
-		
-		//Appointment appointment;
-		
-		Patient patientConnect = patientService.findByPrincipal();
-		
-		boolean cumplePatron = appointmentService.cumplePatron(startMoment);
-		
-		if(startMoment!="" && cumplePatron && patientConnect.getSpecialist()!=null){
-		Date fechaElegida = appointmentService.stringToDate(startMoment);
-		List<Date> listaDeFechas = timetableService.getDatesAvailables(fechaElegida,null);
-		
-		//appointment = appointmentService.create();
-		AppointmentForm appointmentForm = new AppointmentForm();
-		
+    //calendario (citas para oferta)
+    @RequestMapping(value = "/calendar2", method = RequestMethod.GET)
+    public ModelAndView calendar2(@RequestParam int offerId) {
 
-		result = createEditModelAndView(appointmentForm);
+        ModelAndView result;
 
-		
-			result.addObject("appointmentForm", appointmentForm);
-			result.addObject("listaDeFechas", listaDeFechas);
-			if(listaDeFechas.isEmpty()){
-				result.addObject("hayHorasDisponibles", false);
-			}else{
-				result.addObject("hayHorasDisponibles", true);
-			}
-			result.addObject("create", false);
-			result.addObject("isOffer", false);
-			result.addObject("isSpecialist", false);
-			result.addObject("existAppointment", false);
+        result = new ModelAndView("appointment/calendar");
+        result.addObject("isPatient", true);
+        result.addObject("requestURI", "appointment/patient/create2.do?offerId=" + offerId);
 
-		}else{
-			
-			//appointment = appointmentService.create();
-			AppointmentForm appointmentForm = new AppointmentForm();
-			
+        return result;
+    }
 
-			result = createEditModelAndView(appointmentForm);
+    //citas para tu medico de cabecera
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public ModelAndView create(@RequestParam String startMoment) {
 
-			
-				result.addObject("appointmentForm", appointmentForm);
-				result.addObject("hayHorasDisponibles", false);
-				result.addObject("create", false);
-				result.addObject("isOffer", false);
-				result.addObject("isSpecialist", false);
-				result.addObject("existAppointment", false);
-			
-		}
-		
+        ModelAndView result;
 
-		return result;	
-		
-	}
-	
-	//citas para una oferta
-	@RequestMapping(value = "/create2", method = RequestMethod.GET)
-	public ModelAndView create2(@RequestParam String startMoment, @RequestParam int offerId) {
-		
+        //Appointment appointment;
 
-		Offer offer = offerService.findOneToEdit(offerId);
+        Patient patientConnect = patientService.findByPrincipal();
 
-		ModelAndView result;
-	
-		
-		boolean cumplePatron = appointmentService.cumplePatron(startMoment);
-		
-		if(startMoment!="" && cumplePatron ){
-			Date fechaElegida = appointmentService.stringToDate(startMoment);
-			List<Date> listaDeFechas = timetableService.getDatesAvailables(fechaElegida, offer);
-			
-			//appointment = appointmentService.create2(offer);
-			AppointmentForm appointmentForm = new AppointmentForm();
-			appointmentForm.setOffer(offer);
+        boolean cumplePatron = appointmentService.cumplePatron(startMoment);
 
-			result = createEditModelAndView(appointmentForm);
-			
+        if (startMoment != "" && cumplePatron && patientConnect.getSpecialist() != null) {
+            Date fechaElegida = appointmentService.stringToDate(startMoment);
+            List<Date> listaDeFechas = timetableService.getDatesAvailables(fechaElegida, null);
 
-			//controlar que si ya existe un appointment para esa oferta no puedas volver a pedir otra.
-			Appointment appointment2 = appointmentService.getAppointmentForPatientAndOffer(offer);
-			if(appointment2!=null){
-				result.addObject("existAppointment", true);
-			}else{
-				result.addObject("existAppointment", false);
-			}
-				result.addObject("appointmentForm", appointmentForm);
-				result.addObject("listaDeFechas", listaDeFechas);
-				if(listaDeFechas.isEmpty()){
-					result.addObject("hayHorasDisponibles", false);
-				}else{
-					result.addObject("hayHorasDisponibles", true);
-				}
-				result.addObject("create", false);
-				result.addObject("isOffer", true);
-				result.addObject("isSpecialist", false);
+            //appointment = appointmentService.create();
+            AppointmentForm appointmentForm = new AppointmentForm();
 
-			}else{
-				
-				//appointment = appointmentService.create2(offer);
-				AppointmentForm appointmentForm = new AppointmentForm();
-				appointmentForm.setOffer(offer);
-				
+            result = createEditModelAndView(appointmentForm);
 
-				result = createEditModelAndView(appointmentForm);
+            result.addObject("appointmentForm", appointmentForm);
+            result.addObject("listaDeFechas", listaDeFechas);
+            if (listaDeFechas.isEmpty()) {
+                result.addObject("hayHorasDisponibles", false);
+            } else {
+                result.addObject("hayHorasDisponibles", true);
+            }
+            result.addObject("create", false);
+            result.addObject("isOffer", false);
+            result.addObject("isSpecialist", false);
+            result.addObject("existAppointment", false);
 
-				
-					result.addObject("appointmentForm", appointmentForm);
-					result.addObject("hayHorasDisponibles", false);
-					result.addObject("create", false);
-					result.addObject("isOffer", true);
-					result.addObject("isSpecialist", false);
-					result.addObject("existAppointment", false);
-					result.addObject("requestURI", "appointment/patient/edit.do?offerId="+ offer.getId());
-				
-			}
+        } else {
 
-		return result;	
-		
-	}
-	
+            //appointment = appointmentService.create();
+            AppointmentForm appointmentForm = new AppointmentForm();
 
-	
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save2")
-	public ModelAndView save2(@Valid AppointmentForm appointmentForm, BindingResult binding) {
+            result = createEditModelAndView(appointmentForm);
 
-		ModelAndView result;
-		Appointment appointment;
-		Patient patientConnect = patientService.findByPrincipal();
+            result.addObject("appointmentForm", appointmentForm);
+            result.addObject("hayHorasDisponibles", false);
+            result.addObject("create", false);
+            result.addObject("isOffer", false);
+            result.addObject("isSpecialist", false);
+            result.addObject("existAppointment", false);
 
-		if (binding.hasErrors()) {
-			result = createEditModelAndView2(appointmentForm);
-		} else {
-			try {
-				boolean res ;
-				appointment = appointmentService.recontructor(appointmentForm);
-				if(appointment.getOffer()!=null){
-					appointment.setSpecialist(appointment.getOffer().getSpecialist());
-					//Controlar que la cita esta dentro del periodo de la oferta
-					res = offerService.appointmentValid(appointment,appointment.getOffer());
-				}else{
-					appointment.setSpecialist(patientConnect.getSpecialist());
-					res=true;
-				}
-				//para controlar concurrencia
-				Appointment appointment2 = appointmentService.getAppointmentForStartMoment(appointment.getStartMoment(),appointment.getSpecialist());
-				if(appointment2==null && res==true){
-					appointmentService.save2(appointment);
-					result = new ModelAndView("redirect:list.do");
-				}else{
-					result = createEditModelAndView2(appointmentForm, "appointment.commit.error");
-				}
+        }
 
-				
-			} catch (Throwable oops) {
-				result = createEditModelAndView2(appointmentForm, "appointment.commit.error");
-			}
-		}
+        return result;
 
-		return result;
+    }
 
-	}
+    //citas para una oferta
+    @RequestMapping(value = "/create2", method = RequestMethod.GET)
+    public ModelAndView create2(@RequestParam String startMoment, @RequestParam int offerId) {
 
+        Offer offer = offerService.findOneToEdit(offerId);
 
-	// Ancillary methods ------------------------------------------------------
+        ModelAndView result;
 
-	protected ModelAndView createEditModelAndView(AppointmentForm appointmentForm) {
-		assert appointmentForm != null;
-		ModelAndView result;
+        boolean cumplePatron = appointmentService.cumplePatron(startMoment);
 
-		result = createEditModelAndView(appointmentForm, null);
+        if (startMoment != "" && cumplePatron) {
+            Date fechaElegida = appointmentService.stringToDate(startMoment);
+            List<Date> listaDeFechas = timetableService.getDatesAvailables(fechaElegida, offer);
 
-		return result;
-	}
+            //appointment = appointmentService.create2(offer);
+            AppointmentForm appointmentForm = new AppointmentForm();
+            appointmentForm.setOffer(offer);
 
-	protected ModelAndView createEditModelAndView(AppointmentForm appointmentForm, String message) {
+            result = createEditModelAndView(appointmentForm);
 
-		Assert.notNull(appointmentForm);
-		ModelAndView result;
-		Appointment appointment = appointmentService.recontructor(appointmentForm);
+            //controlar que si ya existe un appointment para esa oferta no puedas volver a pedir otra.
+            Appointment appointment2 = appointmentService.getAppointmentForPatientAndOffer(offer);
+            if (appointment2 != null) {
+                result.addObject("existAppointment", true);
+            } else {
+                result.addObject("existAppointment", false);
+            }
+            result.addObject("appointmentForm", appointmentForm);
+            result.addObject("listaDeFechas", listaDeFechas);
+            if (listaDeFechas.isEmpty()) {
+                result.addObject("hayHorasDisponibles", false);
+            } else {
+                result.addObject("hayHorasDisponibles", true);
+            }
+            result.addObject("create", false);
+            result.addObject("isOffer", true);
+            result.addObject("isSpecialist", false);
 
+        } else {
 
-		result = new ModelAndView("appointment/edit");
+            //appointment = appointmentService.create2(offer);
+            AppointmentForm appointmentForm = new AppointmentForm();
+            appointmentForm.setOffer(offer);
 
-		if (appointment.getOffer() == null) {
-			result.addObject("existAppointment", false);
-		} else {
+            result = createEditModelAndView(appointmentForm);
 
-			Appointment appointment2 = appointmentService.getAppointmentForPatientAndOffer(appointment.getOffer());
-			if (appointment2 != null) {
-				result.addObject("existAppointment", true);
-			} else {
-				result.addObject("existAppointment", false);
-			}
-		}
-		result.addObject("appointmentForm", appointmentForm);
-		result.addObject("isSpecialist", false);
-		result.addObject("requestURI", "appointment/patient/edit.do?appointmentId="+ appointment.getId());
-		result.addObject("create", true);
-	
-		result.addObject("message", message);
+            result.addObject("appointmentForm", appointmentForm);
+            result.addObject("hayHorasDisponibles", false);
+            result.addObject("create", false);
+            result.addObject("isOffer", true);
+            result.addObject("isSpecialist", false);
+            result.addObject("existAppointment", false);
+            result.addObject("requestURI", "appointment/patient/edit.do?offerId=" + offer.getId());
 
-		return result;
-	}
-	
-	
-	
-	protected ModelAndView createEditModelAndView2(AppointmentForm appointmentForm) {
-		assert appointmentForm != null;
-		ModelAndView result;
+        }
 
-		result = createEditModelAndView2(appointmentForm, null);
+        return result;
 
-		return result;
-	}
+    }
 
-	protected ModelAndView createEditModelAndView2(AppointmentForm appointmentForm, String message) {
+    @RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save2")
+    public ModelAndView save2(@Valid AppointmentForm appointmentForm, BindingResult binding) {
 
-		Assert.notNull(appointmentForm);
-		ModelAndView result;
+        ModelAndView result;
+        Appointment appointment;
+        Patient patientConnect = patientService.findByPrincipal();
 
-		Appointment appointment = appointmentService.recontructor(appointmentForm);
-		
-		result = new ModelAndView("appointment/edit");
+        if (binding.hasErrors()) {
+            result = createEditModelAndView2(appointmentForm);
+        } else {
+            try {
+                boolean res;
+                appointment = appointmentService.recontructor(appointmentForm);
+                if (appointment.getOffer() != null) {
+                    appointment.setSpecialist(appointment.getOffer().getSpecialist());
+                    //Controlar que la cita esta dentro del periodo de la oferta
+                    res = offerService.appointmentValid(appointment, appointment.getOffer());
+                } else {
+                    appointment.setSpecialist(patientConnect.getSpecialist());
+                    res = true;
+                }
+                //para controlar concurrencia
+                Appointment appointment2 = appointmentService.getAppointmentForStartMoment(
+                        appointment.getStartMoment(), appointment.getSpecialist());
+                if (appointment2 == null && res == true) {
+                    appointmentService.save2(appointment);
+                    result = new ModelAndView("redirect:list.do");
+                } else {
+                    result = createEditModelAndView2(appointmentForm, "appointment.commit.error");
+                }
 
-		result.addObject("appointmentForm", appointmentForm);
-		result.addObject("isSpecialist", false);
-		result.addObject("existAppointment", false);
-		result.addObject("requestURI", "appointment/patient/edit.do?appointmentId="+ appointment.getId());
-		result.addObject("create", false);
+            } catch (Throwable oops) {
+                result = createEditModelAndView2(appointmentForm, "appointment.commit.error");
+            }
+        }
 
+        return result;
 
-		List<Date> listaDeFechas;
-		if(appointment.getOffer()!=null){
-			result.addObject("isOffer", true);
-			listaDeFechas = timetableService.getDatesAvailables(appointment.getStartMoment(),appointment.getOffer());
-		}else{
-			result.addObject("isOffer", false);
-			listaDeFechas = timetableService.getDatesAvailables(appointment.getStartMoment(),null);
-		}
-		if (listaDeFechas.isEmpty()) {
-			result.addObject("hayHorasDisponibles", false);
-		} else {
-			result.addObject("hayHorasDisponibles", true);
-		}
-		result.addObject("listaDeFechas", listaDeFechas);
-		result.addObject("message", message);
+    }
 
-		return result;
-	}
+    // Ancillary methods ------------------------------------------------------
+
+    protected ModelAndView createEditModelAndView(AppointmentForm appointmentForm) {
+        assert appointmentForm != null;
+        ModelAndView result;
+
+        result = createEditModelAndView(appointmentForm, null);
+
+        return result;
+    }
+
+    protected ModelAndView createEditModelAndView(AppointmentForm appointmentForm, String message) {
+
+        Assert.notNull(appointmentForm);
+        ModelAndView result;
+        Appointment appointment = appointmentService.recontructor(appointmentForm);
+
+        result = new ModelAndView("appointment/edit");
+
+        if (appointment.getOffer() == null) {
+            result.addObject("existAppointment", false);
+        } else {
+
+            Appointment appointment2 = appointmentService.getAppointmentForPatientAndOffer(appointment.getOffer());
+            if (appointment2 != null) {
+                result.addObject("existAppointment", true);
+            } else {
+                result.addObject("existAppointment", false);
+            }
+        }
+        result.addObject("appointmentForm", appointmentForm);
+        result.addObject("isSpecialist", false);
+        result.addObject("requestURI", "appointment/patient/edit.do?appointmentId=" + appointment.getId());
+        result.addObject("create", true);
+
+        result.addObject("message", message);
+
+        return result;
+    }
+
+    protected ModelAndView createEditModelAndView2(AppointmentForm appointmentForm) {
+        assert appointmentForm != null;
+        ModelAndView result;
+
+        result = createEditModelAndView2(appointmentForm, null);
+
+        return result;
+    }
+
+    protected ModelAndView createEditModelAndView2(AppointmentForm appointmentForm, String message) {
+
+        Assert.notNull(appointmentForm);
+        ModelAndView result;
+
+        Appointment appointment = appointmentService.recontructor(appointmentForm);
+
+        result = new ModelAndView("appointment/edit");
+
+        result.addObject("appointmentForm", appointmentForm);
+        result.addObject("isSpecialist", false);
+        result.addObject("existAppointment", false);
+        result.addObject("requestURI", "appointment/patient/edit.do?appointmentId=" + appointment.getId());
+        result.addObject("create", false);
+
+        List<Date> listaDeFechas;
+        if (appointment.getOffer() != null) {
+            result.addObject("isOffer", true);
+            listaDeFechas = timetableService.getDatesAvailables(appointment.getStartMoment(), appointment.getOffer());
+        } else {
+            result.addObject("isOffer", false);
+            listaDeFechas = timetableService.getDatesAvailables(appointment.getStartMoment(), null);
+        }
+        if (listaDeFechas.isEmpty()) {
+            result.addObject("hayHorasDisponibles", false);
+        } else {
+            result.addObject("hayHorasDisponibles", true);
+        }
+        result.addObject("listaDeFechas", listaDeFechas);
+        result.addObject("message", message);
+
+        return result;
+    }
 
 }

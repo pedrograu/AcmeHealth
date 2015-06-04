@@ -12,38 +12,34 @@ import domain.Administrator;
 @Service
 @Transactional
 public class AdministratorService {
-	
-	// Managed repository ---------------------------------------
-	
-	@Autowired
-	private AdministratorRepository administratorRepository;
 
-	// Supporting services --------------------------------------
+    // Managed repository ---------------------------------------
 
-	
-	
-	// Constructors ---------------------------------------------
+    @Autowired
+    private AdministratorRepository administratorRepository;
 
-	public AdministratorService() {
-		super();
-	}
+    // Supporting services --------------------------------------
 
-	// Simple CRUD methods --------------------------------------
-	
-	
-	public Administrator findByPrincipal() {
-		UserAccount userAccount = LoginService.getPrincipal();
-		return findByUserAccount(userAccount);
-	}
+    // Constructors ---------------------------------------------
 
+    public AdministratorService() {
+        super();
+    }
 
-	public Administrator findByUserAccount(UserAccount userAccount) {
+    // Simple CRUD methods --------------------------------------
 
-		Administrator result;
+    public Administrator findByPrincipal() {
+        UserAccount userAccount = LoginService.getPrincipal();
+        return findByUserAccount(userAccount);
+    }
 
-		result = administratorRepository.findByUserAccountId(userAccount.getId());
+    public Administrator findByUserAccount(UserAccount userAccount) {
 
-		return result;
-	}
+        Administrator result;
+
+        result = administratorRepository.findByUserAccountId(userAccount.getId());
+
+        return result;
+    }
 
 }

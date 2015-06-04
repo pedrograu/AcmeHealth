@@ -8,28 +8,29 @@ import org.springframework.transaction.annotation.Transactional;
 
 import repositories.CustomerRepository;
 import domain.Customer;
+
 @Component
 @Transactional
-public class StringToCustomerConverter implements Converter<String, Customer>{
-	@Autowired
-	CustomerRepository customerRepository;
+public class StringToCustomerConverter implements Converter<String, Customer> {
+    @Autowired
+    CustomerRepository customerRepository;
 
-	@Override
-	public Customer convert(String text) {
-		Customer result;
-		int id;
+    @Override
+    public Customer convert(String text) {
+        Customer result;
+        int id;
 
-		try {
-			if (StringUtils.isEmpty(text))
-				result = null;
-			else {
-				id = Integer.valueOf(text);
-				result = customerRepository.findOne(id);
-			}
-		} catch (Throwable oops) {
-			throw new IllegalArgumentException(oops);
-		}
+        try {
+            if (StringUtils.isEmpty(text))
+                result = null;
+            else {
+                id = Integer.valueOf(text);
+                result = customerRepository.findOne(id);
+            }
+        } catch (Throwable oops) {
+            throw new IllegalArgumentException(oops);
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

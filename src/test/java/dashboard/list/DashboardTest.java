@@ -26,141 +26,138 @@ import domain.Patient;
 import domain.Profile;
 import domain.Specialist;
 
-@ContextConfiguration(locations = { "classpath:spring/datasource.xml",
-		"classpath:spring/config/packages.xml" })
+@ContextConfiguration(locations = { "classpath:spring/datasource.xml", "classpath:spring/config/packages.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 public class DashboardTest {
 
-	@Autowired
-	private CustomerService customerService;
-	@Autowired
-	private PatientService patientService;
-	@Autowired
-	private SpecialistService specialistService;
-	@Autowired
-	private CommentService commentService;
-	@Autowired
-	private ProfileService profileService;
+    @Autowired
+    private CustomerService customerService;
+    @Autowired
+    private PatientService patientService;
+    @Autowired
+    private SpecialistService specialistService;
+    @Autowired
+    private CommentService commentService;
+    @Autowired
+    private ProfileService profileService;
 
-	@Autowired
-	private LoginService loginService;
+    @Autowired
+    private LoginService loginService;
 
-	public void authenticate(String username) {
-		UserDetails userDetails;
-		TestingAuthenticationToken authenticationToken;
-		SecurityContext context;
+    public void authenticate(String username) {
+        UserDetails userDetails;
+        TestingAuthenticationToken authenticationToken;
+        SecurityContext context;
 
-		userDetails = loginService.loadUserByUsername(username);
-		authenticationToken = new TestingAuthenticationToken(userDetails, null);
-		context = SecurityContextHolder.getContext();
-		context.setAuthentication(authenticationToken);
-	}
+        userDetails = loginService.loadUserByUsername(username);
+        authenticationToken = new TestingAuthenticationToken(userDetails, null);
+        context = SecurityContextHolder.getContext();
+        context.setAuthentication(authenticationToken);
+    }
 
-	public void desauthenticate() {
-		UserDetails userDetails;
-		TestingAuthenticationToken authenticationToken;
-		SecurityContext context;
+    public void desauthenticate() {
+        UserDetails userDetails;
+        TestingAuthenticationToken authenticationToken;
+        SecurityContext context;
 
-		userDetails = loginService.loadUserByUsername(null);
-		authenticationToken = new TestingAuthenticationToken(userDetails, null);
-		context = SecurityContextHolder.getContext();
-		context.setAuthentication(authenticationToken);
-	}
+        userDetails = loginService.loadUserByUsername(null);
+        authenticationToken = new TestingAuthenticationToken(userDetails, null);
+        context = SecurityContextHolder.getContext();
+        context.setAuthentication(authenticationToken);
+    }
 
-	@Before
-	public void setUp() {
-		PopulateDatabase.main(null);
-	}
+    @Before
+    public void setUp() {
+        PopulateDatabase.main(null);
+    }
 
-	@Test
-	public void testNumberOfPatients() {
+    @Test
+    public void testNumberOfPatients() {
 
-		Integer number = patientService.getNumberOfPatient();
-		Assert.isTrue(number.equals(2));
+        Integer number = patientService.getNumberOfPatient();
+        Assert.isTrue(number.equals(2));
 
-	}
+    }
 
-	@Test
-	public void testSpecialistWithMoreAppointment() {
-		Collection<Specialist> specialists = specialistService
-				.getSpecialistWithMoreAppointment();
+    @Test
+    public void testSpecialistWithMoreAppointment() {
+        Collection<Specialist> specialists = specialistService.getSpecialistWithMoreAppointment();
 
-		Boolean res = false;
+        Boolean res = false;
 
-		for (Specialist s : specialists) {
-			if (s.getName().equals("Francisco"))
-				;
-			res = true;
+        for (Specialist s : specialists) {
+            if (s.getName().equals("Francisco"))
+                ;
+            res = true;
 
-		}
-		Assert.isTrue(res);
+        }
+        Assert.isTrue(res);
 
-	}
+    }
 
-	@Test
-	public void testPatientWithMoreAppointment() {
-		Collection<Patient> patients = patientService
-				.getPatientWithMoreAppointment();
+    @Test
+    public void testPatientWithMoreAppointment() {
+        Collection<Patient> patients = patientService.getPatientWithMoreAppointment();
 
-		Boolean res = false;
+        Boolean res = false;
 
-		for (Patient p : patients) {
-			if (p.getName().equals("Maite"))
-				;
-			res = true;
+        for (Patient p : patients) {
+            if (p.getName().equals("Maite"))
+                ;
+            res = true;
 
-		}
-		Assert.isTrue(res);
+        }
+        Assert.isTrue(res);
 
-	}
+    }
 
-	@Test
-	public void testPatientWithMoreSpending() {
-		Collection<Patient> patients = patientService
-				.getPatientWithMoreSpending();
+    @Test
+    public void testPatientWithMoreSpending() {
+        Collection<Patient> patients = patientService.getPatientWithMoreSpending();
 
-		Boolean res = false;
+        Boolean res = false;
 
-		for (Patient p : patients) {
-			if (p.getName().equals("Antonio"))
-				;
-			res = true;
+        for (Patient p : patients) {
+            if (p.getName().equals("Antonio"))
+                ;
+            res = true;
 
-		}
-		Assert.isTrue(res);
+        }
+        Assert.isTrue(res);
 
-	}
+    }
 
-	@Test
-	public void testPatientLastYear() {
-		Collection<Patient> patients = patientService.getPatientLastYear();
+    @Test
+    public void testPatientLastYear() {
+        Collection<Patient> patients = patientService.getPatientLastYear();
 
-		Boolean res = false;
+        Boolean res = false;
 
-		for (Patient p : patients) {
-			if (p.getName().equals("Antonio"))
-				;
-			res = true;
+        for (Patient p : patients) {
+            if (p.getName().equals("Antonio"))
+                ;
+            res = true;
 
-		}
-		Assert.isTrue(res);
+        }
+        Assert.isTrue(res);
 
-	}
+    }
 
-	@Test
-	public void testBestSpecialist() {
-		Collection<Profile> profiles = profileService.getBestSpecialist();
+    @Test
+    public void testBestSpecialist() {
+        Collection<Profile> profiles = profileService.getBestSpecialist();
 
-		Boolean res = false;
+        Boolean res = false;
 
-		for (Profile p : profiles) {
-			if (p.getSpecialist().getName().equals("Antonio"));
-			res = true;
+        for (Profile p : profiles) {
+            if (p.getSpecialist().getName().equals("Antonio"))
+                ;
+            res = true;
 
-		}
-		Assert.isTrue(res);
+        }
+        Assert.isTrue(res);
 
-	}
+    }
 
 }

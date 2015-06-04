@@ -9,15 +9,15 @@ import domain.Prescription;
 @Component
 @Transactional
 public class PrescriptionToStringConverter implements Converter<Prescription, String> {
-	@Override
-	public String convert(Prescription prescription) {
-		String result;
+    @Override
+    public String convert(Prescription prescription) {
+        String result;
 
-		if (prescription == null)
-			result = null;
-		else
-			result = String.valueOf(prescription.getId());
+        if (prescription == null)
+            result = null;
+        else
+            result = String.valueOf(prescription.getId());
 
-		return result;
-	}
+        return result;
+    }
 }

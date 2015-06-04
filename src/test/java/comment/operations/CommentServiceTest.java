@@ -23,105 +23,100 @@ import domain.Comment;
 import domain.Profile;
 import forms.CommentForm;
 
-@ContextConfiguration(locations = { "classpath:spring/datasource.xml",
-		"classpath:spring/config/packages.xml" })
+@ContextConfiguration(locations = { "classpath:spring/datasource.xml", "classpath:spring/config/packages.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 public class CommentServiceTest {
-	
-	
-	@Autowired
-	private CommentService commentService;
-	@Autowired
-	private ProfileService profileService;
-	
-	
-	@Autowired
-	private LoginService loginService;
 
-	public void authenticate(String username) {
-		UserDetails userDetails;
-		TestingAuthenticationToken authenticationToken;
-		SecurityContext context;
+    @Autowired
+    private CommentService commentService;
+    @Autowired
+    private ProfileService profileService;
 
-		userDetails = loginService.loadUserByUsername(username);
-		authenticationToken = new TestingAuthenticationToken(userDetails, null);
-		context = SecurityContextHolder.getContext();
-		context.setAuthentication(authenticationToken);
-	}
+    @Autowired
+    private LoginService loginService;
 
-	public void desauthenticate() {
-		UserDetails userDetails;
-		TestingAuthenticationToken authenticationToken;
-		SecurityContext context;
+    public void authenticate(String username) {
+        UserDetails userDetails;
+        TestingAuthenticationToken authenticationToken;
+        SecurityContext context;
 
-		userDetails = loginService.loadUserByUsername(null);
-		authenticationToken = new TestingAuthenticationToken(userDetails, null);
-		context = SecurityContextHolder.getContext();
-		context.setAuthentication(authenticationToken);
-	}
+        userDetails = loginService.loadUserByUsername(username);
+        authenticationToken = new TestingAuthenticationToken(userDetails, null);
+        context = SecurityContextHolder.getContext();
+        context.setAuthentication(authenticationToken);
+    }
 
-	@Before
-	public void setUp() {
-		PopulateDatabase.main(null);
-	}
-	
-	//crear comentario para un especialista con el cual he tenido una cita.
-	@Test()
-	public void testCreateComment(){
-		authenticate("patient1");
-		Comment comment;
-		Profile profile = profileService.findOneToEdit(13);
-		CommentForm commentForm = new CommentForm();
-		commentForm.setProfile(profile);
-		commentForm.setText("Hola jUnit");
-		commentForm.setRating(6);
-		
-		comment = commentService.recontructor(commentForm);
-		commentService.save(comment);
-		Collection<Comment> comments = commentService.getCommentsForSpecialist(profile.getSpecialist());
+    public void desauthenticate() {
+        UserDetails userDetails;
+        TestingAuthenticationToken authenticationToken;
+        SecurityContext context;
 
-		boolean res = false;
-		for(Comment c :comments){
-			if(c.getText().equals(commentForm.getText())){
-				res = true;
-				break;
-			}
-		}
-		Assert.isTrue(res);
+        userDetails = loginService.loadUserByUsername(null);
+        authenticationToken = new TestingAuthenticationToken(userDetails, null);
+        context = SecurityContextHolder.getContext();
+        context.setAuthentication(authenticationToken);
+    }
 
-		
-	}
-	
-	//intentar crear comentario para un especialista con el cual no he tenido ninguna cita.
-	@Test(expected= IllegalArgumentException.class)
-	public void testCreateCommentNotAppointment(){
-		authenticate("patient1");
-		Comment comment;
-		Profile profile = profileService.findOneToEdit(15);
-		CommentForm commentForm = new CommentForm();
-		commentForm.setProfile(profile);
-		commentForm.setText("Hola jUnit");
-		commentForm.setRating(6);
-		
-		comment = commentService.recontructor(commentForm);
-		commentService.save(comment);
-		
-		
-	}
-	
-	@Test(expected= IllegalArgumentException.class)
-	public void testCreateCommentNotAuthenticated(){
-		desauthenticate();
-		Comment comment;
-		Profile profile = profileService.findOneToEdit(13);
-		CommentForm commentForm = new CommentForm();
-		commentForm.setProfile(profile);
-		commentForm.setText("Hola jUnit");
-		commentForm.setRating(6);
-		
-		comment = commentService.recontructor(commentForm);
-		commentService.save(comment);
+    @Before
+    public void setUp() {
+        PopulateDatabase.main(null);
+    }
 
-	}
+    //crear comentario para un especialista con el cual he tenido una cita.
+    @Test()
+    public void testCreateComment() {
+        authenticate("patient1");
+        Comment comment;
+        Profile profile = profileService.findOneToEdit(13);
+        CommentForm commentForm = new CommentForm();
+        commentForm.setProfile(profile);
+        commentForm.setText("Hola jUnit");
+        commentForm.setRating(6);
+
+        comment = commentService.recontructor(commentForm);
+        commentService.save(comment);
+        Collection<Comment> comments = commentService.getCommentsForSpecialist(profile.getSpecialist());
+
+        boolean res = false;
+        for (Comment c : comments) {
+            if (c.getText().equals(commentForm.getText())) {
+                res = true;
+                break;
+            }
+        }
+        Assert.isTrue(res);
+
+    }
+
+    //intentar crear comentario para un especialista con el cual no he tenido ninguna cita.
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateCommentNotAppointment() {
+        authenticate("patient1");
+        Comment comment;
+        Profile profile = profileService.findOneToEdit(15);
+        CommentForm commentForm = new CommentForm();
+        commentForm.setProfile(profile);
+        commentForm.setText("Hola jUnit");
+        commentForm.setRating(6);
+
+        comment = commentService.recontructor(commentForm);
+        commentService.save(comment);
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateCommentNotAuthenticated() {
+        desauthenticate();
+        Comment comment;
+        Profile profile = profileService.findOneToEdit(13);
+        CommentForm commentForm = new CommentForm();
+        commentForm.setProfile(profile);
+        commentForm.setText("Hola jUnit");
+        commentForm.setRating(6);
+
+        comment = commentService.recontructor(commentForm);
+        commentService.save(comment);
+
+    }
 }

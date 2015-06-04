@@ -9,15 +9,15 @@ import domain.MedicalHistory;
 @Component
 @Transactional
 public class MedicalHistoryToStringConverter implements Converter<MedicalHistory, String> {
-	@Override
-	public String convert(MedicalHistory medicalHistory) {
-		String result;
+    @Override
+    public String convert(MedicalHistory medicalHistory) {
+        String result;
 
-		if (medicalHistory == null)
-			result = null;
-		else
-			result = String.valueOf(medicalHistory.getId());
+        if (medicalHistory == null)
+            result = null;
+        else
+            result = String.valueOf(medicalHistory.getId());
 
-		return result;
-	}
+        return result;
+    }
 }

@@ -7,29 +7,28 @@ import org.springframework.core.convert.converter.Converter;
 import repositories.SpecialistRepository;
 import domain.Specialist;
 
-public class StringToSpecialistConverter implements Converter<String, Specialist>{
-	
-	@Autowired
-	SpecialistRepository specialistRepository;
+public class StringToSpecialistConverter implements Converter<String, Specialist> {
 
-	@Override
-	public Specialist convert(String text) {
-		Specialist result;
-		int id;
+    @Autowired
+    SpecialistRepository specialistRepository;
 
-		try {
-			if (StringUtils.isEmpty(text))
-				result = null;
-			else {
-				id = Integer.valueOf(text);
-				result = specialistRepository.findOne(id);
-			}
-		} catch (Throwable oops) {
-			throw new IllegalArgumentException(oops);
-		}
+    @Override
+    public Specialist convert(String text) {
+        Specialist result;
+        int id;
 
-		return result;
-	}
+        try {
+            if (StringUtils.isEmpty(text))
+                result = null;
+            else {
+                id = Integer.valueOf(text);
+                result = specialistRepository.findOne(id);
+            }
+        } catch (Throwable oops) {
+            throw new IllegalArgumentException(oops);
+        }
+
+        return result;
+    }
 
 }
-

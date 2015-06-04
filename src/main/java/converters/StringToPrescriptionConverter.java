@@ -11,29 +11,28 @@ import domain.Prescription;
 
 @Component
 @Transactional
-public class StringToPrescriptionConverter implements Converter<String, Prescription>{
-	
-	@Autowired
-	PrescriptionRepository prescriptionRepository;
+public class StringToPrescriptionConverter implements Converter<String, Prescription> {
 
-	@Override
-	public Prescription convert(String text) {
-		Prescription result;
-		int id;
+    @Autowired
+    PrescriptionRepository prescriptionRepository;
 
-		try {
-			if (StringUtils.isEmpty(text))
-				result = null;
-			else {
-				id = Integer.valueOf(text);
-				result = prescriptionRepository.findOne(id);
-			}
-		} catch (Throwable oops) {
-			throw new IllegalArgumentException(oops);
-		}
+    @Override
+    public Prescription convert(String text) {
+        Prescription result;
+        int id;
 
-		return result;
-	}
+        try {
+            if (StringUtils.isEmpty(text))
+                result = null;
+            else {
+                id = Integer.valueOf(text);
+                result = prescriptionRepository.findOne(id);
+            }
+        } catch (Throwable oops) {
+            throw new IllegalArgumentException(oops);
+        }
+
+        return result;
+    }
 
 }
-

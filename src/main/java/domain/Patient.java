@@ -24,141 +24,131 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
-@Table(indexes={@Index(columnList="address")})
+@Table(indexes = { @Index(columnList = "address") })
 public class Patient extends Customer {
-	
-	private CreditCard creditCard;
-	private String address;
-	private String phone;
-	private Date creationMoment;
-	private Boolean enableMessage;
-	
-	
-	
-	
-	@NotNull
-	public Boolean getEnableMessage() {
-		return enableMessage;
-	}
 
-	public void setEnableMessage(Boolean enableMessage) {
-		this.enableMessage = enableMessage;
-	}
+    private CreditCard creditCard;
+    private String address;
+    private String phone;
+    private Date creationMoment;
+    private Boolean enableMessage;
 
-	@Valid
-	@NotNull
-	public CreditCard getCreditCard() {
-		return creditCard;
-	}
+    @NotNull
+    public Boolean getEnableMessage() {
+        return enableMessage;
+    }
 
-	public void setCreditCard(CreditCard creditCard) {
-		this.creditCard = creditCard;
-	}
-	
-	@NotBlank
-	public String getAddress() {
-		return address;
-	}
+    public void setEnableMessage(Boolean enableMessage) {
+        this.enableMessage = enableMessage;
+    }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	
-	@NotBlank
-	public String getPhone() {
-		return phone;
-	}
+    @Valid
+    @NotNull
+    public CreditCard getCreditCard() {
+        return creditCard;
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    public void setCreditCard(CreditCard creditCard) {
+        this.creditCard = creditCard;
+    }
 
+    @NotBlank
+    public String getAddress() {
+        return address;
+    }
 
-	@Past
-	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-	public Date getCreationMoment() {
-		return creationMoment;
-	}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-	public void setCreationMoment(Date creationMoment) {
-		this.creationMoment = creationMoment;
-	}
-	
-	// Relationships ----------------------------------------------------------
-	
-	private MedicalHistory medicalHistory;
-	private Collection<Comment> comments;
-	private Specialist specialist;
-	private Collection<Offer> offers;
-	private Collection<Appointment> appointments;
+    @NotBlank
+    public String getPhone() {
+        return phone;
+    }
 
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-	@Valid
-	@NotNull
-	@OneToMany(mappedBy="patient")
-	public Collection<Appointment> getAppointments() {
-		return appointments;
-	}
+    @Past
+    @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+    public Date getCreationMoment() {
+        return creationMoment;
+    }
 
-	public void setAppointments(Collection<Appointment> appointments) {
-		this.appointments = appointments;
-	}
+    public void setCreationMoment(Date creationMoment) {
+        this.creationMoment = creationMoment;
+    }
 
-	@Valid
-	@OneToOne(cascade=CascadeType.ALL,optional=true)
-	public MedicalHistory getMedicalHistory() {
-		return medicalHistory;
-	}
+    // Relationships ----------------------------------------------------------
 
-	public void setMedicalHistory(MedicalHistory medicalHistory) {
-		this.medicalHistory = medicalHistory;
-	}
-	
-	@Valid
-	@NotNull
-	@OneToMany(mappedBy = "patient")
-	public Collection<Comment> getComments() {
-		return comments;
-	}
+    private MedicalHistory medicalHistory;
+    private Collection<Comment> comments;
+    private Specialist specialist;
+    private Collection<Offer> offers;
+    private Collection<Appointment> appointments;
 
-	public void setComments(Collection<Comment> comments) {
-		this.comments = comments;
-	}
+    @Valid
+    @NotNull
+    @OneToMany(mappedBy = "patient")
+    public Collection<Appointment> getAppointments() {
+        return appointments;
+    }
 
+    public void setAppointments(Collection<Appointment> appointments) {
+        this.appointments = appointments;
+    }
 
-	@Valid
-	@ManyToOne(optional = true)
-	public Specialist getSpecialist() {
-		return specialist;
-	}
+    @Valid
+    @OneToOne(cascade = CascadeType.ALL, optional = true)
+    public MedicalHistory getMedicalHistory() {
+        return medicalHistory;
+    }
 
-	public void setSpecialist(Specialist specialist) {
-		this.specialist = specialist;
-	}
+    public void setMedicalHistory(MedicalHistory medicalHistory) {
+        this.medicalHistory = medicalHistory;
+    }
 
-	@Valid
-	@NotNull
-	@ManyToMany(mappedBy = "patients")
-	public Collection<Offer> getOffers() {
-		return offers;
-	}
+    @Valid
+    @NotNull
+    @OneToMany(mappedBy = "patient")
+    public Collection<Comment> getComments() {
+        return comments;
+    }
 
-	public void setOffers(Collection<Offer> offers) {
-		this.offers = offers;
-	}
-	
-	
-	public boolean add(Offer o) {
-		return offers.add(o);
-	}
+    public void setComments(Collection<Comment> comments) {
+        this.comments = comments;
+    }
 
-	public boolean remove(Offer o) {
-		return offers.remove(o);
-	}
-	
-	
-	
+    @Valid
+    @ManyToOne(optional = true)
+    public Specialist getSpecialist() {
+        return specialist;
+    }
+
+    public void setSpecialist(Specialist specialist) {
+        this.specialist = specialist;
+    }
+
+    @Valid
+    @NotNull
+    @ManyToMany(mappedBy = "patients")
+    public Collection<Offer> getOffers() {
+        return offers;
+    }
+
+    public void setOffers(Collection<Offer> offers) {
+        this.offers = offers;
+    }
+
+    public boolean add(Offer o) {
+        return offers.add(o);
+    }
+
+    public boolean remove(Offer o) {
+        return offers.remove(o);
+    }
 
 }

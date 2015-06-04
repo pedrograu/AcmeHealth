@@ -11,29 +11,28 @@ import domain.Profile;
 
 @Component
 @Transactional
-public class StringToProfileConverter implements Converter<String, Profile>{
-	
-	@Autowired
-	ProfileRepository profileRepository;
+public class StringToProfileConverter implements Converter<String, Profile> {
 
-	@Override
-	public Profile convert(String text) {
-		Profile result;
-		int id;
+    @Autowired
+    ProfileRepository profileRepository;
 
-		try {
-			if (StringUtils.isEmpty(text))
-				result = null;
-			else {
-				id = Integer.valueOf(text);
-				result = profileRepository.findOne(id);
-			}
-		} catch (Throwable oops) {
-			throw new IllegalArgumentException(oops);
-		}
+    @Override
+    public Profile convert(String text) {
+        Profile result;
+        int id;
 
-		return result;
-	}
+        try {
+            if (StringUtils.isEmpty(text))
+                result = null;
+            else {
+                id = Integer.valueOf(text);
+                result = profileRepository.findOne(id);
+            }
+        } catch (Throwable oops) {
+            throw new IllegalArgumentException(oops);
+        }
+
+        return result;
+    }
 
 }
-

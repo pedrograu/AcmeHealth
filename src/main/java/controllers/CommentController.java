@@ -1,7 +1,5 @@
 package controllers;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,41 +10,35 @@ import org.springframework.web.servlet.ModelAndView;
 import services.CommentService;
 import domain.Comment;
 
-
-
-
 @Controller
 @RequestMapping("/comment")
 public class CommentController extends AbstractController {
 
-	// Services -----------------------------------------------------------
+    // Services -----------------------------------------------------------
 
-	@Autowired
-	private CommentService commentService;
+    @Autowired
+    private CommentService commentService;
 
+    // Constructors -----------------------------------------------------------
 
+    public CommentController() {
+        super();
+    }
 
-	// Constructors -----------------------------------------------------------
+    // Edit........................
 
-	public CommentController() {
-		super();
-	}
+    @RequestMapping(value = "/details", method = RequestMethod.GET)
+    public ModelAndView details(@RequestParam int commentId) {
 
-	// Edit........................
-	
+        ModelAndView result;
+        Comment comment = commentService.findOneToEdit(commentId);
 
-	@RequestMapping(value = "/details", method = RequestMethod.GET)
-	public ModelAndView details(@RequestParam int commentId) {
+        result = new ModelAndView("comment/edit");
+        result.addObject("comment", comment);
+        result.addObject("details", true);
+        result.addObject("requestURI", "comment/details.do?commentId=" + comment.getId());
 
-		ModelAndView result;
-		Comment comment = commentService.findOneToEdit(commentId);
-
-		result = new ModelAndView("comment/edit");
-		result.addObject("comment", comment);
-		result.addObject("details", true);
-		result.addObject("requestURI", "comment/details.do?commentId="+ comment.getId());
-
-		return result;
-	}
+        return result;
+    }
 
 }

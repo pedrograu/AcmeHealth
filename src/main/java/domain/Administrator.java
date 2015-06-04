@@ -2,7 +2,6 @@ package domain;
 
 import java.util.Collection;
 
-
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
@@ -15,34 +14,31 @@ import javax.validation.constraints.NotNull;
 @Access(AccessType.PROPERTY)
 public class Administrator extends Actor {
 
-	
-	
-	// Relationships ----------------------------------------------------------
+    // Relationships ----------------------------------------------------------
 
+    private Collection<Offer> offers;
+    private Collection<Specialty> specialties;
 
-	private Collection<Offer> offers;
-	private Collection<Specialty> specialties;
+    @Valid
+    @NotNull
+    @OneToMany(mappedBy = "administrator")
+    public Collection<Offer> getOffers() {
+        return offers;
+    }
 
-	@Valid
-	@NotNull
-	@OneToMany(mappedBy = "administrator")
-	public Collection<Offer> getOffers() {
-		return offers;
-	}
+    public void setOffers(Collection<Offer> offers) {
+        this.offers = offers;
+    }
 
-	public void setOffers(Collection<Offer> offers) {
-		this.offers = offers;
-	}
+    @Valid
+    @NotNull
+    @OneToMany(mappedBy = "administrator")
+    public Collection<Specialty> getSpecialties() {
+        return specialties;
+    }
 
-	@Valid
-	@NotNull
-	@OneToMany(mappedBy = "administrator")
-	public Collection<Specialty> getSpecialties() {
-		return specialties;
-	}
-
-	public void setSpecialties(Collection<Specialty> specialties) {
-		this.specialties = specialties;
-	}
+    public void setSpecialties(Collection<Specialty> specialties) {
+        this.specialties = specialties;
+    }
 
 }

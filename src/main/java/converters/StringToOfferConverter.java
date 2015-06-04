@@ -11,29 +11,28 @@ import domain.Offer;
 
 @Component
 @Transactional
-public class StringToOfferConverter implements Converter<String, Offer>{
-	
-	@Autowired
-	OfferRepository offerRepository;
+public class StringToOfferConverter implements Converter<String, Offer> {
 
-	@Override
-	public Offer convert(String text) {
-		Offer result;
-		int id;
+    @Autowired
+    OfferRepository offerRepository;
 
-		try {
-			if (StringUtils.isEmpty(text))
-				result = null;
-			else {
-				id = Integer.valueOf(text);
-				result = offerRepository.findOne(id);
-			}
-		} catch (Throwable oops) {
-			throw new IllegalArgumentException(oops);
-		}
+    @Override
+    public Offer convert(String text) {
+        Offer result;
+        int id;
 
-		return result;
-	}
+        try {
+            if (StringUtils.isEmpty(text))
+                result = null;
+            else {
+                id = Integer.valueOf(text);
+                result = offerRepository.findOne(id);
+            }
+        } catch (Throwable oops) {
+            throw new IllegalArgumentException(oops);
+        }
+
+        return result;
+    }
 
 }
-
