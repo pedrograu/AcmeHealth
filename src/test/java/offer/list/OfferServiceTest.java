@@ -132,7 +132,7 @@ public class OfferServiceTest {
 			Assert.isTrue(o.getStartMoment().before(currentMoment));
 		}
 		
-		Assert.isTrue(offers.size() == 1);
+		Assert.isTrue(offers.size() == 2);
 		
 		
 	}
