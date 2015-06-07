@@ -4,11 +4,9 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -18,13 +16,13 @@ public class Specialist extends Customer {
 
     // Relationships ----------------------------------------------------------
     private Collection<Patient> patients;
-    private Profile profile;
     private Collection<Timetable> timetables;
     private Specialty specialty;
     private Collection<Offer> offers;
-    private Collection<FreeDay> freeDays;
     private Collection<Appointment> appointments;
+    private Collection<FreeDay> freeDays;
 
+    
     @Valid
     @NotNull
     @OneToMany(mappedBy = "specialist")
@@ -35,6 +33,18 @@ public class Specialist extends Customer {
     public void setAppointments(Collection<Appointment> appointments) {
         this.appointments = appointments;
     }
+
+    @Valid
+    @NotNull
+    @OneToMany(mappedBy = "specialist")
+    public Collection<FreeDay> getFreeDays() {
+        return freeDays;
+    }
+
+    public void setFreeDays(Collection<FreeDay> freeDays) {
+        this.freeDays = freeDays;
+    }
+
 
     @Valid
     @NotNull
@@ -69,16 +79,6 @@ public class Specialist extends Customer {
         this.patients = patients;
     }
 
-    @Valid
-    @OneToOne(cascade = CascadeType.ALL, optional = true)
-    public Profile getProfile() {
-        return profile;
-    }
-
-    public void setProfile(Profile profile) {
-        this.profile = profile;
-    }
-
     @NotNull
     @Valid
     @ManyToOne(optional = false)
@@ -90,15 +90,5 @@ public class Specialist extends Customer {
         this.specialty = specialty;
     }
 
-    @Valid
-    @NotNull
-    @OneToMany(mappedBy = "specialist")
-    public Collection<FreeDay> getFreeDays() {
-        return freeDays;
-    }
-
-    public void setFreeDays(Collection<FreeDay> freeDays) {
-        this.freeDays = freeDays;
-    }
 
 }

@@ -11,7 +11,7 @@ import domain.Comment;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
 
-    @Query("select c from Comment c where c.profile.specialist.id = ?1")
+    @Query("select c from Comment c where c.profile.customer.id = ?1")
     Collection<Comment> getCommentsForSpecialist(int id);
 
 }

@@ -1,11 +1,13 @@
 package domain;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
@@ -23,6 +25,7 @@ public class Comment extends DomainEntity {
     private Date creationMoment;
     private String text;
     private Integer rating;
+
 
     @Past
     @NotNull
@@ -55,20 +58,25 @@ public class Comment extends DomainEntity {
         this.rating = rating;
     }
 
+
     // RelationShips.............................................
 
-    private Patient patient;
+    private Customer customer;
     private Profile profile;
+    private Comment commentParent;
+    private Collection<Comment> commentChilds;
+
+
 
     @Valid
     @NotNull
     @ManyToOne(optional = false)
-    public Patient getPatient() {
-        return patient;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setPatient(Patient patient) {
-        this.patient = patient;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     @Valid
@@ -80,6 +88,27 @@ public class Comment extends DomainEntity {
 
     public void setProfile(Profile profile) {
         this.profile = profile;
+    }
+    
+    @Valid
+    @ManyToOne(optional = true)
+    public Comment getCommentParent() {
+        return commentParent;
+    }
+
+    public void setCommentParent(Comment commentParent) {
+        this.commentParent = commentParent;
+    }
+    
+    @Valid
+    @NotNull
+    @OneToMany(mappedBy = "commentParent")
+    public Collection<Comment> getCommentChilds() {
+        return commentChilds;
+    }
+
+    public void setCommentChilds(Collection<Comment> commentChilds) {
+        this.commentChilds = commentChilds;
     }
 
 }

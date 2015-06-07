@@ -40,18 +40,19 @@ public class Profile extends DomainEntity {
 
     // Relationships ----------------------------------------------------------
 
-    private Specialist specialist;
+    private Customer customer;
     private Collection<Comment> comments;
+
 
     @Valid
     @NotNull
     @OneToOne(optional = false)
-    public Specialist getSpecialist() {
-        return specialist;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setSpecialist(Specialist specialist) {
-        this.specialist = specialist;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     @Valid
@@ -64,5 +65,6 @@ public class Profile extends DomainEntity {
     public void setComments(Collection<Comment> comments) {
         this.comments = comments;
     }
+
 
 }

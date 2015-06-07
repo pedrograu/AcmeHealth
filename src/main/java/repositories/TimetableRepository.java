@@ -16,6 +16,6 @@ public interface TimetableRepository extends JpaRepository<Timetable, Integer> {
     Collection<Timetable> getTimetablesForSpecialist(int id);
 
     @Query("select t from Timetable t where t.day=?1 and t.specialist.id=?2")
-    List<Timetable> getTimetablesForDayOfWeekAndSpecialist(int diaDeLaSemana, int specialist);
+    List<Timetable> getTimetablesForDayOfWeekAndSpecialist(int dayOfWeek, int specialist);
 
 }

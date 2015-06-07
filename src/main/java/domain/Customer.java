@@ -4,8 +4,10 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -16,6 +18,9 @@ public abstract class Customer extends Actor {
     // RelationShips.............................
     private Collection<Message> messageRecipient;
     private Collection<Message> messageSender;
+    private Collection<Comment> comments;
+    private Profile profile;
+    
 
     @Valid
     @NotNull
@@ -39,4 +44,24 @@ public abstract class Customer extends Actor {
         this.messageSender = messageSender;
     }
 
+    @Valid
+    @NotNull
+    @OneToMany(mappedBy = "customer")
+    public Collection<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Collection<Comment> comments) {
+        this.comments = comments;
+    }
+    
+    @Valid
+    @OneToOne(cascade = CascadeType.ALL, optional = true)
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
 }

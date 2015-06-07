@@ -85,7 +85,7 @@ public class Patient extends Customer {
     // Relationships ----------------------------------------------------------
 
     private MedicalHistory medicalHistory;
-    private Collection<Comment> comments;
+    //private Collection<Comment> comments;
     private Specialist specialist;
     private Collection<Offer> offers;
     private Collection<Appointment> appointments;
@@ -111,16 +111,16 @@ public class Patient extends Customer {
         this.medicalHistory = medicalHistory;
     }
 
-    @Valid
-    @NotNull
-    @OneToMany(mappedBy = "patient")
-    public Collection<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(Collection<Comment> comments) {
-        this.comments = comments;
-    }
+//    @Valid
+//    @NotNull
+//    @OneToMany(mappedBy = "patient")
+//    public Collection<Comment> getComments() {
+//        return comments;
+//    }
+//
+//    public void setComments(Collection<Comment> comments) {
+//        this.comments = comments;
+//    }
 
     @Valid
     @ManyToOne(optional = true)

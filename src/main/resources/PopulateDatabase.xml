@@ -275,6 +275,11 @@
 				<ref bean="appointment2" />
 			</list>
 		</property>
+        <property name="freeDays">
+            <list>
+                <ref bean="freeDay1" />
+            </list>
+        </property>
 		<property name="timetables">
 			<list>
 				<ref bean="timetable1" />
@@ -308,13 +313,16 @@
 				<ref bean="offer6" />
 			</list>
 		</property>
-		<property name="freeDays">
+<!-- 		<property name="freeDays">
 			<list>
 			<ref bean="freeDay1" />
 				
 			</list>
-		</property>
-		
+		</property> -->
+        <property name="comments">
+            <list>
+            </list>
+        </property>
 		
 	</bean>
 	
@@ -336,6 +344,11 @@
 				
 			</list>
 		</property>
+        <property name="freeDays">
+            <list>
+                
+            </list>
+        </property>
 		<property name="timetables">
 			<list>
 				<ref bean="timetable5" />
@@ -362,13 +375,16 @@
 				
 			</list>
 		</property>
-		<property name="freeDays">
+<!-- 		<property name="freeDays">
 			<list>
 			
 				
 			</list>
-		</property>
-		
+		</property> -->
+        <property name="comments">
+            <list>
+            </list>
+        </property>
 		
 	</bean>
 	
@@ -386,11 +402,16 @@
 				
 			</list>
 		</property>
-		<property name="appointments">
-			<list>
-				
-			</list>
-		</property>
+        <property name="appointments">
+            <list>
+                
+            </list>
+        </property>
+        <property name="freeDays">
+            <list>
+                
+            </list>
+        </property>
 		<property name="timetables">
 			<list>
 				<ref bean="timetable4" />
@@ -417,12 +438,16 @@
 				
 			</list>
 		</property>
-		<property name="freeDays">
+<!-- 		<property name="freeDays">
 			<list>
 			
 				
 			</list>
-		</property>
+		</property> -->
+		<property name="comments">
+            <list>
+            </list>
+        </property>
 		
 		
 	</bean>
@@ -445,6 +470,7 @@
 		<property name="medicalHistory">
 			<ref bean="medicalHistory1" /> 
 		</property> 
+
 		<property name="comments">
 			<list>
 				  <ref bean="comment1" />  
@@ -710,7 +736,7 @@
 			</list>
 		</property>
 
-		<property name="specialist">
+		<property name="customer">
 			<ref bean="specialist1" />
 		</property>
 		
@@ -727,7 +753,7 @@
 			</list>
 		</property>
 
-		<property name="specialist">
+		<property name="customer">
 			<ref bean="specialist2" />
 		</property>
 		
@@ -743,7 +769,7 @@
 			</list>
 		</property>
 
-		<property name="specialist">
+		<property name="customer">
 			<ref bean="specialist3" />
 		</property>
 		
@@ -797,12 +823,12 @@
 		<property name="specialist">
 			<ref bean="specialist1" />
 		</property> 
-		<property name="appointments">
+<!-- 		<property name="appointments">
 			<list>
 				<ref bean="appointment1" />
 				<ref bean="appointment2" />
 			</list>
-		</property>
+		</property> -->
 		
 	
 	</bean>
@@ -816,11 +842,11 @@
 		<property name="specialist">
 			<ref bean="specialist1" />
 		</property> 
-		<property name="appointments">
+<!-- 		<property name="appointments">
 			<list>
 
 			</list>
-		</property>
+		</property> -->
 		
 	
 	</bean>
@@ -834,11 +860,11 @@
 		<property name="specialist">
 			<ref bean="specialist1" />
 		</property> 
-		<property name="appointments">
+<!-- 		<property name="appointments">
 			<list>
 
 			</list>
-		</property>
+		</property> -->
 		
 	
 	</bean>
@@ -851,11 +877,11 @@
 		<property name="specialist">
 			<ref bean="specialist3" />
 		</property> 
-		<property name="appointments">
+<!-- 		<property name="appointments">
 			<list>
 
 			</list>
-		</property>
+		</property> -->
 		
 	
 	</bean>
@@ -869,11 +895,11 @@
 		<property name="specialist">
 			<ref bean="specialist2" />
 		</property> 
-		<property name="appointments">
+<!-- 		<property name="appointments">
 			<list>
 
 			</list>
-		</property>
+		</property> -->
 		
 	
 	</bean>
@@ -885,6 +911,7 @@
 		
 		<property name="isFinish" value="1"></property>
 		<property name="startMoment" value="01/06/2014 08:20"></property>
+		<property name="finishMoment" value="01/06/2014 08:30"></property>
 		<property name="result" value="Se va a morir usted en breve"></property>
 		<property name="purpose" value="Le duelen las entrañas"></property>
 		<property name="patient">
@@ -896,9 +923,9 @@
  		<property name="medicalHistory">
 			<ref bean="medicalHistory1" />
 		</property> 
-		<property name="timetable">
+<!-- 		<property name="timetable">
 			<ref bean="timetable1" />
-		</property> 
+		</property>  -->
 		<property name="prescriptions">
 			<list>
 				<ref bean="prescription1" />
@@ -911,7 +938,8 @@
 	<bean id="appointment2" class="domain.Appointment">
 		
 		<property name="isFinish" value="0"></property> 
-		<property name="startMoment" value="29/06/2014 08:30"></property>
+		<property name="startMoment" value="29/06/2015 08:30"></property>
+		<property name="finishMoment" value="29/06/2015 08:40"></property>
 <!-- 		<property name="result" value=""></property>
 		<property name="purpose" value=""></property> -->
 		<property name="patient">
@@ -923,9 +951,9 @@
  		<property name="medicalHistory">
 			<ref bean="medicalHistory2" />
 		</property> 
-		<property name="timetable">
+<!-- 		<property name="timetable">
 			<ref bean="timetable1" />
-		</property> 
+		</property>  -->
 		<property name="prescriptions">
 			<list>
 				
@@ -939,8 +967,8 @@
 	
 	<bean id="freeDay1" class="domain.FreeDay">
 		
-		<property name="startMoment" value="06/08/2014 23:59"></property>
-		<property name="finishMoment" value="06/22/2014 23:59"></property>
+		<property name="startMoment" value="06/08/2015 23:59"></property>
+		<property name="finishMoment" value="06/22/2015 23:59"></property>
 		<property name="description" value="Me voy al caribeeeee"></property>
 		<property name="specialist">
 			<ref bean="specialist1" />
@@ -974,13 +1002,19 @@
 		<property name="creationMoment" value="10/10/2010"></property>
 		<property name="text" value="esto es un comentario"></property>
 		<property name="rating" value="4"></property> 
- 		<property name="patient">
+ 		<property name="customer">
 			<ref bean="patient1" />
 		</property> 
 		<property name="profile">
 			<ref bean="profile1" />
 		</property>
-	
+        <!--aqui ponemos commentParent si tiene  -->
+        <property name="commentChilds">
+            <list>
+                
+            </list>
+        </property>
+        
 	</bean>
 	
 	<bean id="comment2" class="domain.Comment">
@@ -988,13 +1022,19 @@
 		<property name="creationMoment" value="10/10/2011"></property>
 		<property name="text" value="este es el comentario 2"></property>
 		<property name="rating" value="6"></property> 
- 		<property name="patient">
+ 		<property name="customer">
 			<ref bean="patient2" />
 		</property> 
 		<property name="profile">
 			<ref bean="profile1" />
 		</property>
-	
+        <!--aqui ponemos commentParent si tiene  -->
+        <property name="commentChilds">
+            <list>
+                
+            </list>
+        </property>
+        
 	</bean>
 	
 	
