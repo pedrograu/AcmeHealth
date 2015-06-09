@@ -7,14 +7,18 @@
  * http://www.tdg-seville.info/License.html
  * 
  */
- 
-table {
+
+/* table {
 	border: 1px solid #666;
 	width: 80%;
 	margin: 20px 0 20px 0 !important;
+} */
+.table {
+	border: 1px solid #666;
+	width: 80%;
 }
 
-th,td {
+th, td {
 	padding: 2px 4px 2px 4px !important;
 	text-align: left;
 	vertical-align: top;
@@ -28,7 +32,7 @@ th.sorted {
 	background-color: orange;
 }
 
-th a,th a:visited {
+th a, th a:visited {
 	color: black;
 }
 
@@ -37,7 +41,7 @@ th a:hover {
 	color: black;
 }
 
-th.sorted a,th.sortable a {
+th.sorted a, th.sortable a {
 	background-position: right;
 	display: block;
 	width: 100%;
@@ -47,26 +51,26 @@ th.sortable a {
 	background-image: url(../images/arrow_off.png);
 	background-repeat: no-repeat;
 	background-position: center center;
-	background-position: right;	
+	background-position: right;
 }
 
 th.order1 a {
 	background-image: url(../images/arrow_down.png);
 	background-repeat: no-repeat;
-	background-position: right;		
+	background-position: right;
 }
 
 th.order2 a {
 	background-image: url(../images/arrow_up.png);
 	background-repeat: no-repeat;
-	background-position: right;	
+	background-position: right;
 }
 
 tr.odd {
 	background-color: #fff
 }
 
-tr.tableRowEven,tr.even {
+tr.tableRowEven, tr.even {
 	background-color: #fea
 }
 
@@ -136,7 +140,7 @@ span.pagelinks {
 	border-top: 1px solid black;
 }
 
-.subtotal-sum,.grandtotal-sum {
+.subtotal-sum, .grandtotal-sum {
 	font-weight: bold;
 	text-align: right;
 }
@@ -146,7 +150,7 @@ span.pagelinks {
 	border-top: 1px solid white;
 }
 
-.subtotal-label,.grandtotal-label {
+.subtotal-label, .grandtotal-label {
 	border-top: 1px solid white;
 	font-weight: bold;
 }
