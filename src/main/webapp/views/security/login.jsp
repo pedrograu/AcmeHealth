@@ -22,18 +22,10 @@
 	<form:form action="j_spring_security_check"
 		modelAttribute="credentials">
 
-		<%-- <form:label path="username">
-			<spring:message code="security.username" />
-		</form:label>
-		<form:input path="username" /> --%>
 		<acme:textbox code="security.username" path="username" />
 		<form:errors class="error" path="username" />
 		<br />
 
-		<%-- <form:label path="password">
-			<spring:message code="security.password" />
-		</form:label>
-		<form:password path="password" /> --%>
 		<acme:password code="security.password" path="password" />
 		<form:errors class="error" path="password" />
 		<br />
@@ -44,7 +36,6 @@
 			</div>
 		</jstl:if>
 
-		<%-- <input type="submit" value="<spring:message code="security.login" />" /> --%>
 		<div class="pull-right saveimic">
 			<button type="submit" class="btn btn-primary  btn-lg pull-right"
 				onclick="${onclick}">
