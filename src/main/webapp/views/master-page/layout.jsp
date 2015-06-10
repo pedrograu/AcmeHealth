@@ -8,7 +8,8 @@
  * http://www.tdg-seville.info/License.html
  --%>
 
-<%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -23,7 +24,8 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
-<link rel="shortcut icon" href="favicon.ico"/> 
+<link rel="shortcut icon" href="favicon.ico" />
+<script src='scripts/jquery.min.js'></script>
 
 <script type="text/javascript" src="scripts/jquery.js"></script>
 <script type="text/javascript" src="scripts/jquery-ui.js"></script>
@@ -34,11 +36,19 @@
 	type="text/css" />
 <link rel="stylesheet" href="styles/displaytag.css" type="text/css">
 
+<link rel='stylesheet' href='styles/fullcalendar.css' />
+<script src='scripts/moment.min.js'></script>
+<script src='scripts/fullcalendar.js'></script>
+
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 
 <script type="text/javascript">
 	$(document).ready(function() {
+		$('#calendar').fullCalendar({
+		// put your options and callbacks here
+		});
 		$("#jMenu").jMenu();
+
 	});
 
 	function askSubmission(msg, form) {
@@ -48,16 +58,17 @@
 </script>
 
 <script type="text/javascript">
-		function relativeRedir(loc) {	
-			var b = document.getElementsByTagName('base');
-			if (b && b[0] && b[0].href) {
-	  			if (b[0].href.substr(b[0].href.length - 1) == '/' && loc.charAt(0) == '/')
-	    		loc = loc.substr(1);
-	  			loc = b[0].href + loc;
-			}
-			window.location.replace(loc);
+	function relativeRedir(loc) {
+		var b = document.getElementsByTagName('base');
+		if (b && b[0] && b[0].href) {
+			if (b[0].href.substr(b[0].href.length - 1) == '/'
+					&& loc.charAt(0) == '/')
+				loc = loc.substr(1);
+			loc = b[0].href + loc;
 		}
-	</script>
+		window.location.replace(loc);
+	}
+</script>
 
 </head>
 
@@ -70,11 +81,11 @@
 		<h1>
 			<tiles:insertAttribute name="title" />
 		</h1>
-		<tiles:insertAttribute name="body" />	
+		<tiles:insertAttribute name="body" />
 		<jstl:if test="${message != null}">
 			<br />
 			<span class="message"><spring:message code="${message}" /></span>
-		</jstl:if>	
+		</jstl:if>
 	</div>
 	<div>
 		<tiles:insertAttribute name="footer" />
