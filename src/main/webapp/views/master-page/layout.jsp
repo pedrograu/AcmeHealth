@@ -24,6 +24,8 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link rel="shortcut icon" href="favicon.ico" />
 
 
@@ -78,14 +80,23 @@
 		<tiles:insertAttribute name="header" />
 	</div>
 	<div>
-		<h1>
-			<tiles:insertAttribute name="title" />
-		</h1>
-		<tiles:insertAttribute name="body" />
-		<jstl:if test="${message != null}">
-			<br />
-			<span class="message"><spring:message code="${message}" /></span>
-		</jstl:if>
+		<%-- <div>
+			<h1>
+				<tiles:insertAttribute name="title" />
+			</h1>
+		</div> --%>
+		<div style="margin-left: 16px; margin-bottom: 20px;">
+			<h2>
+				<tiles:insertAttribute name="title" />
+			</h2>
+		</div>
+		<div class="container">
+			<tiles:insertAttribute name="body" />
+			<jstl:if test="${message != null}">
+				<br />
+				<span class="message"><spring:message code="${message}" /></span>
+			</jstl:if>
+		</div>
 	</div>
 	<div>
 		<tiles:insertAttribute name="footer" />

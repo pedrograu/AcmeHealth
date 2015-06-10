@@ -29,13 +29,16 @@
 <jstl:if test="${readonly == null}">
 	<jstl:set var="readonly" value="false" />
 </jstl:if>
+<jstl:if test="${maxlength == null}">
+    <jstl:set var="maxlength" value="255" />
+</jstl:if>
 
 <%-- Definition --%>
 
-<div>
-	<form:label path="${path}">
-		<spring:message code="${code}" />
-	</form:label>	
-	<form:input path="${path}" readonly="${readonly}" />	
-	<form:errors path="${path}" cssClass="error" />
-</div>	
+<div class="form-group">
+    <form:label path="${path}">
+        <spring:message code="${code}" />
+    </form:label>   
+    <form:input path="${path}" readonly="${readonly}" maxlength="${maxlength}" placeholder="${placeholder}" cssClass="form-control"/>
+    <form:errors path="${path}" cssClass="error" />
+</div>  

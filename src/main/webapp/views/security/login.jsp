@@ -16,29 +16,41 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
- 
-<form:form action="j_spring_security_check" modelAttribute="credentials">
+<%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-	<form:label path="username">
-		<spring:message code="security.username" />
-	</form:label>
-	<form:input path="username" />
-	<form:errors class="error" path="username" />
-	<br />
+<div class="col-md-5  col-md-offset-3">
+	<form:form action="j_spring_security_check"
+		modelAttribute="credentials">
 
-	<form:label path="password">
-		<spring:message code="security.password" />
-	</form:label>
-	<form:password path="password" />
-	<form:errors class="error" path="password" />
-	<br />
+		<%-- <form:label path="username">
+			<spring:message code="security.username" />
+		</form:label>
+		<form:input path="username" /> --%>
+		<acme:textbox code="security.username" path="username" />
+		<form:errors class="error" path="username" />
+		<br />
 
-	<jstl:if test="${showError == true}">
-		<div class="error">
-			<spring:message code="security.login.failed" />
+		<%-- <form:label path="password">
+			<spring:message code="security.password" />
+		</form:label>
+		<form:password path="password" /> --%>
+		<acme:password code="security.password" path="password" />
+		<form:errors class="error" path="password" />
+		<br />
+
+		<jstl:if test="${showError == true}">
+			<div class="error">
+				<spring:message code="security.login.failed" />
+			</div>
+		</jstl:if>
+
+		<%-- <input type="submit" value="<spring:message code="security.login" />" /> --%>
+		<div class="pull-right saveimic">
+			<button type="submit" class="btn btn-primary  btn-lg pull-right"
+				onclick="${onclick}">
+				<spring:message code="security.login" />
+			</button>
 		</div>
-	</jstl:if>
 
-	<input type="submit" value="<spring:message code="security.login" />" />
-
-</form:form>
+	</form:form>
+</div>
