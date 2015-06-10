@@ -145,7 +145,7 @@ public class AppointmentService {
         Appointment result;
 
         result = appointmentRepository.findOne(appointmentForm.getId());
-        Assert.isTrue(result.getTimetable().getSpecialist().getId() == specialist.getId());
+        Assert.isTrue(result.getSpecialist().getId() == specialist.getId());
 
         result.setId(appointmentForm.getId());
         result.setVersion(appointmentForm.getVersion());
@@ -380,12 +380,32 @@ public class AppointmentService {
 
     public void checkPrincipal(Appointment appointment) {
         Specialist specialist = specialistService.findByPrincipal();
-        Assert.isTrue(appointment.getTimetable().getSpecialist().equals(specialist));
+        Assert.isTrue(appointment.getSpecialist().equals(specialist));
     }
 
     public void cancel(Appointment appointment) {
         appointmentRepository.delete(appointment);
 
+    }
+    
+    public Collection<Appointment> getAppointmentforOneSpecialistAndDay(int id, Date d1){
+        
+        String format = new SimpleDateFormat("yyyy-MM-dd").format(d1);
+        String string1 = format+" "+"00:00:00.1";
+        String string2 = format+" "+"23:59:59.9";
+        Date date1 = new Date();
+        try {
+            date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").parse(string1);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Date date2 = new Date();
+        try {
+            date2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").parse(string2);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return appointmentRepository.getAppointmentforOneSpecialistAndDay(id, date1, date2);
     }
 
 }

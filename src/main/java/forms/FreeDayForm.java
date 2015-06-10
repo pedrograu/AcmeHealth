@@ -25,10 +25,21 @@ public class FreeDayForm {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+    
+    @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    public Date getStartMoment() {
+        return startMoment;
+    }
 
+    public void setStartMoment(Date startMoment) {
+        this.startMoment = startMoment;
+    }
+    
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	public Date getFinishMoment() {
 		return finishMoment;
 	}
@@ -52,17 +63,7 @@ public class FreeDayForm {
 	public void setVersion(int version) {
 		this.version = version;
 	}
-	
-	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-	public Date getStartMoment() {
-		return startMoment;
-	}
 
-	public void setStartMoment(Date startMoment) {
-		this.startMoment = startMoment;
-	}
 	
 
 }

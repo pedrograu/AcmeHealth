@@ -37,6 +37,9 @@ public class TimetableService {
 
     @Autowired
     private SpecialistService specialistService;
+    
+    @Autowired
+    private AppointmentService appointmentService;
 
     // Constructors ---------------------------------------------
 
@@ -60,15 +63,7 @@ public class TimetableService {
 
     public List<Date> getDatesAvailables(Date fechaElegida, Offer offer) {
 
-        // Este metodo coge del startmoment del appointment q recibe como
-        // parametro
-        // el dia de la semana seleccionado, coge el timetable correspondiente a
-        // ese dia para
-        // el medico de cabecera del patient conectado y muestra los intervalos
-        // disponibles.
 
-        // 1º vemos a que dia de la semana pertenece la fecha elegida y
-        // mostramos los timetables correspondientes a ese dia de la semana:
         Calendar starCalendar = new GregorianCalendar();
 
         starCalendar.setTime(fechaElegida);
@@ -84,20 +79,14 @@ public class TimetableService {
 
         List<Date> freeSlots = new ArrayList<Date>();
 
-        Calendar cal = new GregorianCalendar();
-        cal.setLenient(false);
-        cal.setTime(fechaElegida);
-        cal.add(Calendar.DAY_OF_MONTH, 1);
-        cal.getTime();
-
-        //miramos si el dia elegido es uno que esta contenido en algun freeDay de ese especialista.
+        //miramos si el dia elegido es uno que esta contenido en algun freeDay de ese especialista, en ese caso no hay citas disponibles para dicho dia.
         for (FreeDay f : specialist.getFreeDays()) {
 
             Date startShift = f.getStartMoment();
             Date endShift = f.getFinishMoment();
 
             //si esta contenida la fecha elegida en un freeDay devuelve la lista de freeSlots para ese dia vacia
-            if (cal.getTime().after(startShift) && fechaElegida.before(endShift)) {
+            if ((fechaElegida.after(startShift) || fechaElegida.equals(startShift)) && (fechaElegida.before(endShift) || fechaElegida.equals(endShift))) {
 
                 return freeSlots;
 
@@ -105,6 +94,7 @@ public class TimetableService {
 
         }
 
+        //dia de la semana al que pertenece la fecha elegida.
         int diaDeLaSemana = starCalendar.get(Calendar.DAY_OF_WEEK);
 
         List<Timetable> timetablesParaEseDiaDeLaSemana = new ArrayList<Timetable>();
@@ -140,19 +130,40 @@ public class TimetableService {
 
             // si la cita es para el dia de hoy comprobamos la hora actual para
             // no crear citas pasadas.
-            if (actualMoment.after(startShiftCalendar) && actualMoment.after(endShiftCalendar)) {
-                startShiftCalendar = actualMoment;
+            
+            //ESTOS CONDICIONALES LOS HARIA SIEMPRE, HAY QUE CAMBIARLO PARA QUE SOLO LO HAGO SI EL DIA DE LA CITA ES EL ACTUAL
+            boolean mismoDia = false;
+            if((starCalendar.get(Calendar.DAY_OF_MONTH) == actualMoment.get(Calendar.DAY_OF_MONTH))
+                    && (starCalendar.get(Calendar.MONTH) == actualMoment.get(Calendar.MONTH))
+                    && (starCalendar.get(Calendar.YEAR) == actualMoment.get(Calendar.YEAR))){
+                 mismoDia = true;
+            }
+            if (actualMoment.after(endShiftCalendar) && mismoDia) { //si la hora actual es mayor que la de ese timetable y fecha de la cita igual a la de hoy
+                continue;
 
-            } else if (actualMoment.after(startShiftCalendar)) {
-                startShiftCalendar = actualMoment;
+            } else if (actualMoment.after(startShiftCalendar) && actualMoment.before(endShiftCalendar) && mismoDia) {//si la hora actual está contenida en ese 
+                                                                                              // timetable y fecha de la cita igual a la de hoy
+                List<Date> freeSlotsProvisionales = new ArrayList<Date>();
+                
+                Calendar startShiftCalendarProvisional = (Calendar) startShiftCalendar.clone();
+                Calendar endShiftCalendarProvisional = (Calendar) endShiftCalendar.clone();
 
-                while (startShiftCalendar.before(endShiftCalendar)) {
-                    startShiftCalendar.add(Calendar.MINUTE, 10); // Añadimos 10
-                                                                 // minutos
-                    freeSlots.add(startShiftCalendar.getTime());
+                freeSlotsProvisionales.add(startShiftCalendarProvisional.getTime());
+                while (startShiftCalendarProvisional.before(endShiftCalendarProvisional)) {
+                    startShiftCalendarProvisional.add(Calendar.MINUTE, 10); // Añadimos 10
+                                                                            // minutos
+                    freeSlotsProvisionales.add(startShiftCalendarProvisional.getTime());
                 }
-
-            } else {
+                
+                for(Date elemento : freeSlotsProvisionales){
+                    if(actualMoment.getTime().equals(elemento) || actualMoment.getTime().after(elemento)){
+                        freeSlotsProvisionales.remove(elemento);
+                    }
+                }
+                
+                freeSlots.addAll(freeSlotsProvisionales);
+                
+            } else {//si la hora actual es menor que ese timetable y la cita es para dia distinto al de hoy
 
                 freeSlots.add(startShiftCalendar.getTime());
                 while (startShiftCalendar.before(endShiftCalendar)) {
@@ -168,26 +179,35 @@ public class TimetableService {
 
         List<Date> ocupadosSlots = new ArrayList<Date>();
 
-        for (Timetable t : timetablesParaEseDiaDeLaSemana) {
-            for (Appointment a : t.getAppointments()) {
-                for (Date d : freeSlots) {
+ 
+        List<Appointment> ap = (List<Appointment>) appointmentsForDay(specialist, fechaElegida );
+        
+        for (Appointment a : ap) {
+            for (Date d : freeSlots) {
 
-                    Calendar fecha = new GregorianCalendar();
-                    Calendar fecha2 = new GregorianCalendar();
+                Calendar fecha = new GregorianCalendar();
+                Calendar fecha2 = new GregorianCalendar();
 
-                    fecha.setTime(a.getStartMoment());
-                    fecha2.setTime(d);
+                fecha.setTime(a.getStartMoment());
+                fecha2.setTime(d);
 
-                    if (fecha.equals(fecha2)) {
-                        ocupadosSlots.add(fecha2.getTime());
-                    }
+                if (fecha.equals(fecha2)) {
+                    ocupadosSlots.add(fecha2.getTime());
                 }
             }
         }
 
+
         freeSlots.removeAll(ocupadosSlots);
 
         return freeSlots;
+    }
+    
+    public Collection<Appointment> appointmentsForDay (Specialist s, Date day){
+        
+        Collection<Appointment> aps = appointmentService.getAppointmentforOneSpecialistAndDay(s.getId(), day);
+        
+        return aps;
     }
 
     public List<Date> getDatesAvailables2(Date fechaElegida, Specialist specialist) {
@@ -216,11 +236,11 @@ public class TimetableService {
 
         List<Date> freeSlots = new ArrayList<Date>();
 
-        Calendar cal = new GregorianCalendar();
-        cal.setLenient(false);
-        cal.setTime(fechaElegida);
-        cal.add(Calendar.DAY_OF_MONTH, 1);
-        cal.getTime();
+//        Calendar cal = new GregorianCalendar();
+//        cal.setLenient(false);
+//        cal.setTime(fechaElegida);
+//        cal.add(Calendar.DAY_OF_MONTH, 1);
+//        cal.getTime();
 
         //miramos si el dia elegido es uno que esta contenido en algun freeDay de ese especialista.
         for (FreeDay f : specialist.getFreeDays()) {
@@ -229,7 +249,7 @@ public class TimetableService {
             Date endShift = f.getFinishMoment();
 
             //si esta contenida la fecha elegida en un freeDay devuelve la lista de freeSlots para ese dia vacia
-            if (cal.getTime().after(startShift) && fechaElegida.before(endShift)) {
+            if ((fechaElegida.after(startShift) || fechaElegida.equals(startShift)) && (fechaElegida.before(endShift) || fechaElegida.equals(endShift))) {
 
                 return freeSlots;
 
@@ -340,10 +360,8 @@ public class TimetableService {
 
     public Timetable create() {
         Specialist specialistConnect = specialistService.findByPrincipal();
-        Collection<Appointment> appointments = new HashSet<Appointment>();
         Timetable result = new Timetable();
         result.setSpecialist(specialistConnect);
-        result.setAppointments(appointments);
 
         return result;
     }

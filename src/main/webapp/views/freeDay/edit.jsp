@@ -30,7 +30,7 @@
 	<script>
 	$(function(){
 		$('#startMoment').datepicker({
-			dateFormat : 'dd/mm/yy 00:01',
+			dateFormat : 'dd/mm/yy',
 		});
 	});
 	</script>
@@ -40,7 +40,7 @@
 	<script>
 	$(function(){
 		$('#finishMoment').datepicker({
-			dateFormat : 'dd/mm/yy 23:59',
+			dateFormat : 'dd/mm/yy',
 		});
 	});
 	</script>

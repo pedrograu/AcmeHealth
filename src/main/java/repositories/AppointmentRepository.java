@@ -15,12 +15,9 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
     @Query("select a from Appointment a where a.patient.id=?1 and a.isFinish=false")
     Collection<Appointment> getAppointmentsNotFinish(int id);
 
-//    @Query("select a from Appointment a where a.timetable.specialist.id=?1 and a.isFinish=false")
-//    Collection<Appointment> getAppointmentsNotFinish2(int id);
+    @Query("select a from Appointment a where a.specialist.id=?1 and a.isFinish=false")
+    Collection<Appointment> getAppointmentsNotFinish2(int id);
 
-//    @Query("select a from Appointment a where a.timetable.specialist.id=?1 and a.isFinish=true")
-//    Collection<Appointment> getAppointmentsFinish(int id);
-    
     @Query("select a from Appointment a where a.specialist.id=?1 and a.isFinish=true")
     Collection<Appointment> getAppointmentsFinish(int id);
 
@@ -35,5 +32,8 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
     
     @Query("select a from Appointment a where a.specialist.id=?1 and a.patient.id =?2")
     Collection<Appointment> getAppointmentforOneSpecialistAndOnePatient(int id, int id2);
+    
+    @Query("select a from Appointment a where a.specialist.id=?1 and a.startMoment > ?2 and a.startMoment < ?3")
+    Collection<Appointment> getAppointmentforOneSpecialistAndDay(int id, Date id2, Date id3);
 
 }
