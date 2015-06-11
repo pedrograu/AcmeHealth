@@ -40,9 +40,9 @@
 
 <br />
 
-
+<div class="table-responsive">
 <display:table name="comments" id="row" requestURI="${requestURI}"
-	pagesize="5" class="displaytag" keepStatus="true">
+	pagesize="5" class="table table-hover" keepStatus="true">
 	
 
 	<jstl:if test="${itemSeller==true }">
@@ -69,7 +69,7 @@
 	<display:column property="rating" title="${rating}" sortable="${true}" />
 
 </display:table>
-
+</div>
 <jstl:if test="${notMyItem==false || isBuyer==true}">
 	<b><a href="comment/customer/create.do?itemId=${itemId}"><spring:message
 				code="comment.create" /></a></b>

@@ -26,37 +26,39 @@
 <jstl:if test="${details==true }">
 	<b><spring:message code="comment.details" /></b>
 	<ul>
-		
+
 		<li><b><spring:message code="comment.text" /></b> <jstl:out
 				value="${comment.text}"></jstl:out></li>
 		<li><b><spring:message code="comment.rating" /></b> <jstl:out
 				value="${comment.rating}"></jstl:out></li>
-				
-		<li><b><spring:message code="comment.creationMoment" /></b>
-		<fmt:formatDate value="${comment.creationMoment}"
-				pattern="dd/MM/yyyy HH:mm" /></li>
+
+		<li><b><spring:message code="comment.creationMoment" /></b> <fmt:formatDate
+				value="${comment.creationMoment}" pattern="dd/MM/yyyy HH:mm" /></li>
 	</ul>
 </jstl:if>
 
 <br />
 <jstl:if test="${details==false }">
-	<form:form action="${requestURI}" modelAttribute="commentForm">
+	<div class="col-md-7  col-md-offset-2" style="margin-bottom: 100px;">
+		<form:form action="${requestURI}" modelAttribute="commentForm">
 
 
-		<form:hidden path="id" />
-		<form:hidden path="version" />
-		<form:hidden path="profile" />
-	
+			<form:hidden path="id" />
+			<form:hidden path="version" />
+			<form:hidden path="profile" />
 
 
-		<acme:textarea code="comment.text" path="text" />
-		<acme:textbox code="comment.rating" path="rating" />
-	
 
-		<acme:submit code="comment.save" name="save" />
-		<acme:cancel url="profile/patient/details.do?specialistId=${profile.specialist.id}" code="comment.cancel" />
+			<acme:textarea code="comment.text" path="text" />
+			<acme:textbox code="comment.rating" path="rating" />
 
 
-	</form:form>
+			<acme:submit code="comment.save" name="save" />
+			<acme:cancel
+				url="profile/patient/details.do?specialistId=${profile.specialist.id}"
+				code="comment.cancel" />
 
+
+		</form:form>
+	</div>
 </jstl:if>

@@ -36,7 +36,7 @@
 			</div>
 		</jstl:if>
 
-		<div class="pull-right saveimic">
+		<div class="pull-right form-group">
 			<button type="submit" class="btn btn-primary  btn-lg pull-right"
 				onclick="${onclick}">
 				<spring:message code="security.login" />

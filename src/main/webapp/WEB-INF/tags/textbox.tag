@@ -36,7 +36,7 @@
 <%-- Definition --%>
 
 <div class="form-group">
-    <form:label path="${path}">
+    <form:label path="${path}" >
         <spring:message code="${code}" />
     </form:label>   
     <form:input path="${path}" readonly="${readonly}" maxlength="${maxlength}" placeholder="${placeholder}" cssClass="form-control"/>

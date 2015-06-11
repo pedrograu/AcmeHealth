@@ -21,7 +21,7 @@
 
 
 <display:table name="freeDays" id="row" requestURI="${requestURI}"
-	pagesize="5" class="displaytag" keepStatus="true">
+	pagesize="5" class="table table-hover" keepStatus="true">
 	
 		<display:column>
 			<a href="freeDay/specialist/delete.do?freeDayId=${row.id}"><spring:message code="freeDay.delete" /></a>

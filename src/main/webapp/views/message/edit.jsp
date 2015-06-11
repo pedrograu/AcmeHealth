@@ -47,42 +47,43 @@
 
 <br />
 <jstl:if test="${details==false }">
-	<form:form action="${requestURI}" modelAttribute="messageForm">
+	<div class="col-md-7  col-md-offset-2" style="margin-bottom: 100px;">
+		<form:form action="${requestURI}" modelAttribute="messageForm">
 
 
-		<form:hidden path="id" />
-		<form:hidden path="version" />
+			<form:hidden path="id" />
+			<form:hidden path="version" />
 
-		<jstl:if test="${answer==true }">
-			<form:hidden path="recipient" />
-		</jstl:if>
-
-
+			<jstl:if test="${answer==true }">
+				<form:hidden path="recipient" />
+			</jstl:if>
 
 
-		<acme:textbox code="message.subject" path="subject" />
-		<acme:textarea code="message.textBody" path="textBody" />
 
 
-		<jstl:if test="${answer==false }">
-			<acme:select items="${customers}" itemLabel="name"
-				code="message.recipient" path="recipient" />
-		</jstl:if>
-		<jstl:if test="${cancel == false}">
-			<acme:submit code="message.save" name="save" />
-		</jstl:if>
-		<jstl:if test="${cancel == true }">
-			<acme:submit code="message.save" name="save2" />
-		</jstl:if>
-		<jstl:if test="${cancel == false}">
-		<acme:cancel url="message/customer/list-outbox.do"
-			code="comment.cancel" />
-		</jstl:if>
-		<jstl:if test="${cancel == true}">
-		<acme:cancel url="appointment/specialist/listNotFinish.do"
-			code="comment.cancel" />
-		</jstl:if>
+			<acme:textbox code="message.subject" path="subject" />
+			<acme:textarea code="message.textBody" path="textBody" />
 
-	</form:form>
 
+			<jstl:if test="${answer==false }">
+				<acme:select items="${customers}" itemLabel="name"
+					code="message.recipient" path="recipient" />
+			</jstl:if>
+			<jstl:if test="${cancel == false}">
+				<acme:submit code="message.save" name="save" />
+			</jstl:if>
+			<jstl:if test="${cancel == true }">
+				<acme:submit code="message.save" name="save2" />
+			</jstl:if>
+			<jstl:if test="${cancel == false}">
+				<acme:cancel url="message/customer/list-outbox.do"
+					code="comment.cancel" />
+			</jstl:if>
+			<jstl:if test="${cancel == true}">
+				<acme:cancel url="appointment/specialist/listNotFinish.do"
+					code="comment.cancel" />
+			</jstl:if>
+
+		</form:form>
+	</div>
 </jstl:if>

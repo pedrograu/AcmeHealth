@@ -79,18 +79,19 @@
 	<div>
 		<tiles:insertAttribute name="header" />
 	</div>
+	<div class="container-fluid">
 	<div>
 		<%-- <div>
 			<h1>
 				<tiles:insertAttribute name="title" />
 			</h1>
 		</div> --%>
-		<div style="margin-left: 16px; margin-bottom: 20px;">
+		<div>
 			<h2>
 				<tiles:insertAttribute name="title" />
 			</h2>
 		</div>
-		<div class="container">
+		
 			<tiles:insertAttribute name="body" />
 			<jstl:if test="${message != null}">
 				<br />

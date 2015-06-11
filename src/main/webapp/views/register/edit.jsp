@@ -75,11 +75,11 @@
 		<acme:checkbox path="available" url="laws/list.do"
 			code="register.text" />
 
+		<div class="form-group">
+			<acme:submit code="register.save" name="save" />
 
-		<acme:submit code="register.save" name="save" />
-
-		<acme:cancel url="welcome/index.do" code="register.cancel" />
-
+			<acme:cancel url="welcome/index.do" code="register.cancel" />
+		</div>
 
 
 

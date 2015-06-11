@@ -7,7 +7,7 @@
  * TDG Licence, a copy of which you may download from 
  * http://www.tdg-seville.info/License.html
  --%>
- 
+
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -19,18 +19,19 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<form:form action="${requestURI}" modelAttribute="timetableForm">
+<div class="col-md-7  col-md-offset-2" style="margin-bottom: 100px;">
+	<form:form action="${requestURI}" modelAttribute="timetableForm">
 
 
-	<form:hidden path="id" />
-	<form:hidden path="version" />
+		<form:hidden path="id" />
+		<form:hidden path="version" />
 
 
 
 
-	<acme:textbox code="timetable.startShift" path="startShift" />
-	<acme:textbox code="timetable.endShift" path="endShift" />
-	<%-- <!-- Del tag -->
+		<acme:textbox code="timetable.startShift" path="startShift" />
+		<acme:textbox code="timetable.endShift" path="endShift" />
+		<%-- <!-- Del tag -->
 		<form:label path="day">
 			<spring:message code="timetable.day" />
 		</form:label>
@@ -41,47 +42,48 @@
 		</form:select>
 		<form:errors path="${path}" cssClass="error" />
 	 --%>
-	
-	<form:label path="day">
-		<spring:message code="timetable.day" />
-	</form:label>
- 	<form:select path="day">
-		<form:option label="1"  value="1" >
-			<spring:message code="timetable.day.sunday"/>
-		</form:option>
-		<form:option label="2"  value="2" >
-			<spring:message code="timetable.day.monday"/>
-		</form:option>
-		<form:option label="3"  value="3" >
-			<spring:message code="timetable.day.tuesday"/>
-		</form:option>
-		<form:option label="4"  value="4" >
-			<spring:message code="timetable.day.wednesday"/>
-		</form:option>
-		<form:option label="5"  value="5" >
-			<spring:message code="timetable.day.thursday"/>
-		</form:option>
-		<form:option label="6"  value="6" >
-			<spring:message code="timetable.day.friday"/>
-		</form:option>
-		<form:option label="7"  value="7" >
-			<spring:message code="timetable.day.saturday"/>
-		</form:option>
-		
-		
-		
-		<%-- <form:option label="<spring:message code="timetable.day.monday" />" value="1" />
+		<div class="form-group">
+			<form:label path="day">
+				<spring:message code="timetable.day" />
+			</form:label>
+			<form:select path="day" class="form-control" >
+				<form:option label="1" value="1">
+					<spring:message code="timetable.day.sunday" />
+				</form:option>
+				<form:option label="2" value="2">
+					<spring:message code="timetable.day.monday" />
+				</form:option>
+				<form:option label="3" value="3">
+					<spring:message code="timetable.day.tuesday" />
+				</form:option>
+				<form:option label="4" value="4">
+					<spring:message code="timetable.day.wednesday" />
+				</form:option>
+				<form:option label="5" value="5">
+					<spring:message code="timetable.day.thursday" />
+				</form:option>
+				<form:option label="6" value="6">
+					<spring:message code="timetable.day.friday" />
+				</form:option>
+				<form:option label="7" value="7">
+					<spring:message code="timetable.day.saturday" />
+				</form:option>
+
+
+
+				<%-- <form:option label="<spring:message code="timetable.day.monday" />" value="1" />
 		<form:option label="<spring:message code="timetable.day.tuesday" />" value="2" />
 		<form:option label="<spring:message code="timetable.day.wednesday" />" value="3" />
 		<form:option label="<spring:message code="timetable.day.thursday" />" value="4" />
 		<form:option label="<spring:message code="timetable.day.friday" />" value="5" />
 		<form:option label="<spring:message code="timetable.day.saturday" />" value="6" />
 		 --%>
-		<%-- <form:options items="${days}" itemLabel="title" itemValue="id" /> --%>
-	</form:select>
-	<form:errors cssClass="error" path="day" />
-	<br /> 
-	<%-- 
+				<%-- <form:options items="${days}" itemLabel="title" itemValue="id" /> --%>
+			</form:select>
+		</div>
+		<form:errors cssClass="error" path="day" />
+		<br />
+		<%-- 
 	<!-- Del curriculim -->
 	<form:label path="curriculum">
 		<spring:message code="application.curriculum" />
@@ -92,11 +94,12 @@
 	</form:select>
 	<form:errors cssClass="error" path="curriculum" />
 	<br />  --%>
-	
-
-	<acme:submit code="timetable.save" name="save" />
-	<acme:cancel url="timetable/specialist/list-own.do"	code="comment.cancel" />
 
 
-</form:form>
+		<acme:submit code="timetable.save" name="save" />
+		<acme:cancel url="timetable/specialist/list-own.do"
+			code="comment.cancel" />
 
+
+	</form:form>
+</div>

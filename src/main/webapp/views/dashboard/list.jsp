@@ -25,7 +25,7 @@
 
 	<li><b><spring:message code="dashboard.bestSpecialist" /></b></li>
 	<display:table name="bestSpecialist" id="row"
-		requestURI="${requestURI}" pagesize="5" class="displaytag"
+		requestURI="${requestURI}" pagesize="5" class="table table-hover"
 		keepStatus="true">
 
 		<spring:message code="dashboard.name" var="name" />
@@ -47,7 +47,7 @@
 	<li><b><spring:message
 				code="dashboard.specialistWithMoreAppointment" /></b></li>
 	<display:table name="specialistWithMoreAppointment" id="row"
-		requestURI="${requestURI}" pagesize="5" class="displaytag"
+		requestURI="${requestURI}" pagesize="5" class="table table-hover"
 		keepStatus="true">
 
 		<spring:message code="dashboard.name" var="name" />
@@ -67,7 +67,7 @@
 	<li><b><spring:message
 				code="dashboard.patientWithMoreAppointment" /></b></li>
 	<display:table name="patientWithMoreAppointment" id="row"
-		requestURI="${requestURI}" pagesize="5" class="displaytag"
+		requestURI="${requestURI}" pagesize="5" class="table table-hover"
 		keepStatus="true">
 
 		<spring:message code="dashboard.name" var="name" />
@@ -87,7 +87,7 @@
 	<li><b><spring:message
 				code="dashboard.patientWithMoreSpending" /></b></li>
 	<display:table name="patientWithMoreSpending" id="row"
-		requestURI="${requestURI}" pagesize="5" class="displaytag"
+		requestURI="${requestURI}" pagesize="5" class="table table-hover"
 		keepStatus="true">
 
 		<spring:message code="dashboard.name" var="name" />
@@ -107,7 +107,7 @@
 	<li><b><spring:message
 				code="dashboard.patientLastYear" /></b></li>
 	<display:table name="patientLastYear" id="row"
-		requestURI="${requestURI}" pagesize="5" class="displaytag"
+		requestURI="${requestURI}" pagesize="5" class="table table-hover"
 		keepStatus="true">
 
 		<spring:message code="dashboard.name" var="name" />
