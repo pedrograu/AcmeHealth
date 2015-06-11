@@ -73,8 +73,12 @@ public class AppointmentPatientController extends AbstractController {
     public ModelAndView calendar() {
 
         ModelAndView result;
-
+        
+        
+        String eventos = "[{\"id\" : \"1\",\"title\" : \"evento 1\",\"start\" : \"06/11/2015 16:30\",\"end\" :   \"06/11/2015 16:40\",\"url\" : \"appointment/patient/create.do?startMoment=07/29/2015\"}, {\"id\" : \"1\",\"title\" : \"evento 2\",\"start\" : \"06/12/2015 13:30\",\"end\" :   \"06/12/2015 18:30\",\"url\" : \"appointment/patient/create.do\"}]";
+       
         result = new ModelAndView("appointment/calendar");
+        result.addObject("eventos", eventos);
         result.addObject("isPatient", true);
         result.addObject("requestURI", "appointment/patient/create.do");
 

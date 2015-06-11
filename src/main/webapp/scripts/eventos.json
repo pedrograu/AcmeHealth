@@ -1,0 +1,11 @@
+[{
+    "title" : "evento 1",
+    "start" : "06/11/2015 16:30",
+    "end" :   "06/11/2015 17:30",
+    "url" : "http://google.com/"
+}, {
+    "title" : "evento 2",
+    "start" : "06/12/2015 13:30",
+    "end" :   "06/12/2015 18:30",
+    "url" : "http://google.com/"
+}]

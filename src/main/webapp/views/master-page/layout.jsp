@@ -42,11 +42,45 @@
 
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 
+<style type="text/css">
+
+
+#calendar {
+	width: 900px;
+	margin: 0 auto;
+}
+</style>
+
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#calendar').fullCalendar({
-		// put your options and callbacks here
+
+        if ( $("#eventos").length > 0  ) {
+            var string = $("#eventos").val();
+            var eventos = JSON.parse(string);
+
+        }
+		var calendar = $('#calendar').fullCalendar({
+
+			header : {
+				left : 'prev,next today',
+				center : 'title',
+				right : 'month,agendaWeek,agendaDay'
+			},
+
+			defaultView : 'agendaWeek',
+
+			selectable : false,
+			selectHelper : false,
+			editable : false,
+
+			eventColor: '#19D119',
+			slotDuration: '00:20:00',
+			events: eventos
+
 		});
+		
+       
+        
 		$("#jMenu").jMenu();
 
 	});
