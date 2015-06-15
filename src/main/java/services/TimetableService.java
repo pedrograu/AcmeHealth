@@ -340,10 +340,8 @@ public class TimetableService {
 
     public Timetable create() {
         Specialist specialistConnect = specialistService.findByPrincipal();
-        Collection<Appointment> appointments = new HashSet<Appointment>();
         Timetable result = new Timetable();
         result.setSpecialist(specialistConnect);
-        result.setAppointments(appointments);
 
         return result;
     }
