@@ -28,30 +28,31 @@
 
 <link rel="shortcut icon" href="favicon.ico" />
 
-
-
+<!-- Css -->
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="styles/bootstrap.min.css">
 
 <!-- Optional theme -->
 <link rel="stylesheet" href="styles/bootstrap-theme.min.css">
 
-<script src="scripts/bootstrap.min.js"></script>
-<script type="text/javascript" src="scripts/jquery.js"></script>
-<script type="text/javascript" src="scripts/jquery-ui.js"></script>
-<script type="text/javascript" src="scripts/jmenu.js"></script>
-
 <link rel="stylesheet" href="styles/common.css" type="text/css">
-<link rel="stylesheet" href="styles/jmenu.css" media="screen"
-	type="text/css" />
+
 <link rel="stylesheet" href="styles/displaytag.css" type="text/css">
+
+<!-- Scripts -->
+<script type="text/javascript" src="scripts/jquery.min.js"></script>
+<script type="text/javascript" src="scripts/bootstrap.min.js"></script>
+<script type="text/javascript" src="scripts/jquery-ui.js"></script>
+
+
+
 
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 
 <script type="text/javascript">
-	$(document).ready(function() {
+	/* $(document).ready(function() {
 		$("#jMenu").jMenu();
-	});
+	}); */
 
 	function askSubmission(msg, form) {
 		if (confirm(msg))
@@ -74,7 +75,7 @@
 
 </head>
 
-<body>
+<body style="padding-top: 60px;">
 
 	<div>
 		<tiles:insertAttribute name="header" />
