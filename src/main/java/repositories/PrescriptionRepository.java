@@ -14,7 +14,7 @@ public interface PrescriptionRepository extends JpaRepository<Prescription, Inte
     @Query("select p from Prescription p where p.appointment.medicalHistory.patient.id = ?1 order by p.creationMoment")
     Collection<Prescription> findMyPrescriptions(int id);
 
-    @Query("select a.prescriptions from Appointment a where a.medicalHistory.patient.id = ?1 and a.timetable.specialist.id = ?2  ")
+    @Query("select a.prescriptions from Appointment a where a.medicalHistory.patient.id = ?1 and a.specialist.id = ?2  ")
     Collection<Prescription> findForPatient(int id, int id2);
 
 }

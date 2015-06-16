@@ -26,7 +26,7 @@ public interface SpecialistRepository extends JpaRepository<Specialist, Integer>
     @Query("select s from Specialist s where s.userAccount.username=?1")
     Specialist findForUsername(String username);
 
-    @Query("select a.timetable.specialist from Appointment a group by a.timetable.specialist having sum(a) >= all (select sum(a) from Appointment a group by a.timetable.specialist having a.timetable.specialist != null)")
+    @Query("select a.specialist from Appointment a group by a.specialist having sum(a) >= all (select sum(a) from Appointment a group by a.specialist having a.specialist != null)")
     Collection<Specialist> getSpecialistWithMoreAppointment();
 
     @Query("select s from Specialist s")
