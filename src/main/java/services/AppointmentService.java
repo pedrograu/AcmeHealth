@@ -345,7 +345,7 @@ public class AppointmentService {
 
     public Date stringToDate(String startMoment) {
 
-        SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         String strFecha = startMoment;
         Date fecha = null;
 
