@@ -247,35 +247,14 @@ public class AppointmentService {
             Assert.isTrue(appointment.getOffer().getPatients().contains(appointment.getPatient()));
 
         }
-
-        Appointment appointment2 = appointmentRepository.save(appointment);
-
-        //Le asociamos el timetable correspondiente a la cita elegida.
-
-        Calendar starCalendar = new GregorianCalendar();
-        Date startMomentAppointment = appointment.getStartMoment();
-
-        starCalendar.setTime(startMomentAppointment);
-
-        int diaDeLaSemana = starCalendar.get(Calendar.DAY_OF_WEEK);
-        Specialist specialist = appointment.getSpecialist();
-        List<Timetable> timetablesParaEseDiaDeLaSemana = new ArrayList<Timetable>();
-        timetablesParaEseDiaDeLaSemana = timetableService.getTimetablesForDayOfWeekAndSpecialist(diaDeLaSemana,
-                specialist.getId());
-
-        Date fechaElegida = appointment2.getStartMoment();
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(fechaElegida);
-        Integer h = calendar.get(Calendar.HOUR_OF_DAY);
-
-        for (Timetable t : timetablesParaEseDiaDeLaSemana) {
-            Integer h2 = t.getStartShift().getHours();
-            Integer h3 = t.getEndShift().getHours();
-            if (h >= h2 && h <= h3) {
-                appointment2.setTimetable(t);
-                break;
-            }
-        }
+        
+        //le sumamos 10 min a la fecha de inicio para obtener el finishMoment:
+        Calendar c = Calendar.getInstance();
+        c.setTime(appointment.getStartMoment());
+        c.add(Calendar.MINUTE, 10);
+        appointment.setFinishMoment(c.getTime());
+        
+        appointmentRepository.save(appointment);
 
     }
 
