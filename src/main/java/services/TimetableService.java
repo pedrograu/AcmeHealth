@@ -64,7 +64,7 @@ public class TimetableService {
         return timetable;
     }
 
-    public List<Date> getDatesAvailables(Date fechaElegida, Offer offer) {
+    public List<Date> getDatesAvailables(Offer offer) {
 
         //miramos si es para tu medico de cabecera o para un especialista de una oferta
         Specialist specialist;
