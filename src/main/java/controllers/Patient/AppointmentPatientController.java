@@ -75,8 +75,10 @@ public class AppointmentPatientController extends AbstractController {
 
         ModelAndView result;
         
+        List<Date> lista = timetableService.getDatesAvailables(new Date(), null);
+        String eventos = timetableService.convertListToStringJson(lista);
         
-        String eventos = "[{\"id\" : \"1\",\"title\" : \"evento 1\",\"start\" : \"06/11/2015 16:30\",\"end\" :   \"06/11/2015 16:40\",\"url\" : \"appointment/patient/create.do?startMoment=21/06/2015 08:30\"}, {\"id\" : \"1\",\"title\" : \"evento 2\",\"start\" : \"06/12/2015 13:30\",\"end\" :   \"06/12/2015 18:30\",\"url\" : \"appointment/patient/create.do?startMoment=06/12/2015 13:30\"}]";
+        //String eventos = "[{\"id\" : \"1\",\"title\" : \"evento 1\",\"start\" : \"06/11/2015 16:30\",\"end\" :   \"06/11/2015 16:40\",\"url\" : \"appointment/patient/create.do?startMoment=21/06/2015 08:30\"}, {\"id\" : \"1\",\"title\" : \"evento 2\",\"start\" : \"06/12/2015 13:30\",\"end\" :   \"06/12/2015 18:30\",\"url\" : \"appointment/patient/create.do?startMoment=06/12/2015 13:30\"}]";
        
         result = new ModelAndView("appointment/calendar");
         result.addObject("eventos", eventos);

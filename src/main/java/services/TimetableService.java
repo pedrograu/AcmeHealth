@@ -1,6 +1,8 @@
 package services;
 
 import java.sql.Time;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -38,10 +40,9 @@ public class TimetableService {
 
     @Autowired
     private SpecialistService specialistService;
-    
+
     @Autowired
     private AppointmentService appointmentService;
-    
 
     // Constructors ---------------------------------------------
 
@@ -250,6 +251,46 @@ public class TimetableService {
         }
 
         return freeSlotsComplete;
+    }
+
+    public String convertListToStringJson(List<Date> listaDeFechas) {
+
+        //List<Date> listaDeFechas = getDatesAvailables(new Date(), null);
+
+        String cadena = "[";
+        int i = 0;
+        for (Date d : listaDeFechas) {
+            
+            //convertiendo de date a string (1º forma):
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            String dateString = df.format(d);
+            
+            //convertiendo de date a string (2º forma):
+            DateFormat df2 = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+            String dateString2 = df2.format(d);
+            
+            //añadir 10 min para obtener fecha de fin y convertiendo a string:
+            Calendar cal = new GregorianCalendar();
+            cal.setLenient(false);
+            cal.setTime(d);
+            cal.add(Calendar.MINUTE, 10);
+            Date datePlusTeenMinutes = cal.getTime();
+            DateFormat df3 = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+            String dateString3 = df3.format(datePlusTeenMinutes);
+
+            if (i == 0) {
+                cadena += "{\"title\" : \"disponible\",\"start\" : \"" + dateString2 + "\",\"end\" :   \""
+                        + dateString3 + "\",\"url\" : \"appointment/patient/create.do?startMoment=" + dateString;
+            } else {
+                cadena += ",{\"title\" : \"disponible\",\"start\" : \"" + dateString2 + "\",\"end\" :   \""
+                        + dateString3 + "\",\"url\" : \"appointment/patient/create.do?startMoment=" + dateString;
+            }
+            cadena += "\"}";
+            i++;
+        }
+        cadena += "]";
+        
+        return cadena;
     }
 
     public Collection<Appointment> appointmentsForDay(Specialist s, Date day) {
