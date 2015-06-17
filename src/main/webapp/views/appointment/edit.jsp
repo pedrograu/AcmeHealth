@@ -49,7 +49,21 @@
 	<jstl:if test="${hayHorasDisponibles==true}">
 	<form:select  hidden="true" path="startMoment" items="${listaDeFechas}"></form:select>
 
-	<acme:submit code="appointment.save" name="save2" />
+    <b><spring:message code="appointment.confirmAppointment" />${fecha}
+        <spring:message code="appointment.at" /> ${hora}
+        <spring:message code="appointment.hours" />?
+    </b><br/>
+
+	<acme:submit code="appointment.confirm" name="save2" />
+	
+	<jstl:if test="${isOffer==false}">
+	    <acme:cancel url="appointment/patient/calendar.do" code="appointment.cancel" />
+    </jstl:if>
+    
+    <jstl:if test="${isOffer==true}">
+        <acme:cancel url="appointment/patient/calendar2.do?offerId=${appointmentForm.offer.id}" code="appointment.cancel" />
+    </jstl:if>
+    
 	</jstl:if>
 	
 	<jstl:if test="${hayHorasDisponibles==false}">
@@ -63,15 +77,16 @@
 </form:form>
 
 
-	<jstl:if test="${isOffer==false}">
+<%-- 	<jstl:if test="${isOffer==false}">
 		<br/>
+		
 		<a href="appointment/patient/calendar.do"> <spring:message code="appointment.selectOther" /></a>
 	</jstl:if>
 	
 	<jstl:if test="${isOffer==true}">
 		<br/>
 		<a href="appointment/patient/calendar2.do?offerId=${appointmentForm.offer.id}"> <spring:message code="appointment.selectOther" /></a>
-	</jstl:if>
+	</jstl:if> --%>
 
 </jstl:if>
 

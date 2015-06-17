@@ -1,5 +1,7 @@
 package controllers.Patient;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -124,6 +126,13 @@ public class AppointmentPatientController extends AbstractController {
             //List<Date> listaDeFechas = timetableService.getDatesAvailables(fechaElegida, null);
             List<Date> listaDeFechas = new ArrayList<Date>();
             listaDeFechas.add(fechaElegida);
+            
+            DateFormat fec = new SimpleDateFormat("dd/MM/yyyy");
+            String fecha = fec.format(listaDeFechas.get(0));
+            
+            DateFormat hor = new SimpleDateFormat("HH:mm");
+            String hora = hor.format(listaDeFechas.get(0));
+
             //appointment = appointmentService.create();
             AppointmentForm appointmentForm = new AppointmentForm();
 
@@ -131,6 +140,8 @@ public class AppointmentPatientController extends AbstractController {
 
             result.addObject("appointmentForm", appointmentForm);
             result.addObject("listaDeFechas", listaDeFechas);
+            result.addObject("fecha", fecha);
+            result.addObject("hora", hora);
 //            if (listaDeFechas.isEmpty()) {
 //                result.addObject("hayHorasDisponibles", false);
 //            } else {
@@ -176,6 +187,12 @@ public class AppointmentPatientController extends AbstractController {
             Date fechaElegida = appointmentService.stringToDate(startMoment);
             List<Date> listaDeFechas = timetableService.getDatesAvailables(offer);
             listaDeFechas.add(fechaElegida);
+            
+            DateFormat fec = new SimpleDateFormat("dd/MM/yyyy");
+            String fecha = fec.format(listaDeFechas.get(0));
+            
+            DateFormat hor = new SimpleDateFormat("HH:mm");
+            String hora = hor.format(listaDeFechas.get(0));
             //appointment = appointmentService.create2(offer);
             AppointmentForm appointmentForm = new AppointmentForm();
             appointmentForm.setOffer(offer);
@@ -191,11 +208,14 @@ public class AppointmentPatientController extends AbstractController {
             }
             result.addObject("appointmentForm", appointmentForm);
             result.addObject("listaDeFechas", listaDeFechas);
+            result.addObject("fecha", fecha);
+            result.addObject("hora", hora);
 //            if (listaDeFechas.isEmpty()) {
 //                result.addObject("hayHorasDisponibles", false);
 //            } else {
 //                result.addObject("hayHorasDisponibles", true);
 //            }
+            result.addObject("hayHorasDisponibles", true);
             result.addObject("create", false);
             result.addObject("isOffer", true);
             result.addObject("isSpecialist", false);
