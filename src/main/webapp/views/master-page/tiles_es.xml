@@ -20,6 +20,7 @@
 		<put-attribute name="title" value="" />
 		<put-attribute name="header" value="/views/master-page/header.jsp" />
 		<put-attribute name="body" value="" />
+		<put-attribute name="sidebar" value="/views/master-page/sidebar.jsp" />
 		<put-attribute name="footer" value="/views/master-page/footer.jsp" />
 	</definition>
 
