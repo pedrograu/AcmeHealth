@@ -47,7 +47,7 @@
 	<jstl:if test="${create==false}">
 
 	<jstl:if test="${hayHorasDisponibles==true}">
-	<form:select path="startMoment" items="${listaDeFechas}"></form:select>
+	<form:select  hidden="true" path="startMoment" items="${listaDeFechas}"></form:select>
 
 	<acme:submit code="appointment.save" name="save2" />
 	</jstl:if>
