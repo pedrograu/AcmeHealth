@@ -13,6 +13,14 @@
 
 <jsp:useBean id="date" class="java.util.Date" />
 
-<hr />
+ <!--footer start-->
+      <footer class="site-footer">
+          <div class="text-center">
+              <b>Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> Acme-Health Co., Inc.</b>
+              <a href="index.html#" class="go-top">
+                  <i class="fa fa-angle-up"></i>
+              </a>
+          </div>
+      </footer>
+      <!--footer end-->
 
-<b>Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> Acme-Health Co., Inc.</b>

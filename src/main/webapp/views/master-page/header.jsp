@@ -25,8 +25,9 @@
    <!-- settings start -->
    <!-- settings end -->
    <!-- inbox dropdown start-->
+   <!-- 
    <li id="header_inbox_bar" class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
-     <i class="fa fa-envelope-o"></i> <span class="badge bg-theme">5</span>
+     <i class="fa fa-envelope-o"></i>
    </a>
     <ul class="dropdown-menu extended inbox">
      <div class="notify-arrow notify-arrow-green"></div>
@@ -50,32 +51,42 @@
       </span> <span class="message"> Please, answer asap. </span>
      </a></li>
      <li><a href="index.html#">See all messages</a></li>
-    </ul></li>
+    </ul></li> -->
    <!-- inbox dropdown end -->
+
   </ul>
   <!--  notification end -->
  </div>
 
- <!-- AUTHENTICATED -->
- <security:authorize access="isAuthenticated()">
-  <div class="top-menu">
-   <ul class="nav pull-right top-menu">
+
+
+
+
+ <div class="top-menu">
+  <ul class="nav pull-right top-menu">
+   <!-- ANONYMOUS -->
+   <security:authorize access="isAnonymous()">
+    <%--  <li><a class="logout" href="security/login.do"><spring:message code="master.page.login" /></a></li>
+    <li><a class="logout" href="register/patient/edit.do"><spring:message code="master.page.register.patient" /></a></li> --%>
+    <li style="margin-top: 15px; margin-right: 15px;">
+     <div class="btn-group ">
+      <button type="button" class="btn btn-theme dropdown-toggle" data-toggle="dropdown">
+       <i class="fa fa-sign-out"></i> <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+       <li><a href="security/login.do"><spring:message code="master.page.login" /></a></li>
+       <li><a href="register/patient/edit.do"><spring:message code="master.page.register.patient" /></a></li>
+      </ul>
+     </div>
+    </li>
+
+   </security:authorize>
+   <!-- AUTHENTICATED -->
+   <security:authorize access="isAuthenticated()">
     <li><a class="logout" href="j_spring_security_logout"><spring:message code="master.page.logout" /></a></li>
-   </ul>
-  </div>
- </security:authorize>
- <!-- ANONYMOUS -->
- <security:authorize access="isAnonymous()">
-  <div class="top-menu">
-   <ul class="nav pull-right top-menu">
-    <li><a class="logout" href="security/login.do"><spring:message code="master.page.login" /></a></li>
-   </ul>
-  </div>
-  <div class="top-menu">
-   <ul class="nav pull-right top-menu">
-    <li><a class="logout" href="register/patient/edit.do"><spring:message code="master.page.register.patient" /></a></li>
-   </ul>
-  </div>
- </security:authorize>
+   </security:authorize>
+  </ul>
+ </div>
+
 </header>
 

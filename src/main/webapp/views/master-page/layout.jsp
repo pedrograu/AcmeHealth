@@ -46,7 +46,9 @@
 </head>
 
 <body>
- <section id="container"> <!-- ******************************************************************************************************************
+
+ <section id="container">
+  <!-- ******************************************************************************************************************
             TOP BAR CONTENT & NOTIFICATIONS
       **************************************************************************************************************-->
  <!--header start-->
@@ -60,43 +62,35 @@
  <!--sidebar start-->
  <div>
   <tiles:insertAttribute name="sidebar" />
- </div> 
+ </div>
  <!--sidebar end-->
+ <!--main content start--> 
+ <section id="main-content"> 
+    <section class="wrapper site-min-height">
 
+      
 
-
-
-
-
-
-
-
-
-
- <div class="container-fluid">
-  <div>
-   <%-- <div>
-            <h1>
-                <tiles:insertAttribute name="title" />
-            </h1>
-        </div> --%>
-   <div>
+ <div>
     <h2>
      <tiles:insertAttribute name="title" />
     </h2>
    </div>
+   
+        <tiles:insertAttribute name="body" />
+        <jstl:if test="${message != null}">
+        <br />
+            <span class="message"><spring:message code="${message}" /></span>
+        </jstl:if>
+        
+ 
+    </section> 
+ </section>
+  <!--main content end-->
 
-   <tiles:insertAttribute name="body" />
-   <jstl:if test="${message != null}">
-    <br />
-    <span class="message"><spring:message code="${message}" /></span>
-   </jstl:if>
-  </div>
- </div>
  <div>
   <tiles:insertAttribute name="footer" />
  </div>
-
+</section>
 
 
  <!-- js placed at the end of the document so the pages load faster --> <script src="assets/js/jquery.js"></script> <script
@@ -129,6 +123,8 @@
 				window.location.replace(loc);
 			}
 		</script> <script type="application/javascript">
+			
+			
 			
 			
 			
@@ -172,6 +168,8 @@
         
 								
 								
+		
+		
 		
 		
 		
