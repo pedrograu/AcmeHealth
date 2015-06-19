@@ -24,6 +24,10 @@
      <security:authorize access="hasRole('ADMINISTRATOR')">
       <a href="customerArea/administrator/list.do"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a>
      </security:authorize>
+     <!-- PATIENT -->
+     <security:authorize access="hasRole('PATIENT')">
+      <a href="customerArea/patient/list.do"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a>
+     </security:authorize>
      <a href="profile.html"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a>
     </p>
     <h5 class="centered"></h5>
@@ -31,16 +35,16 @@
 
    <!-- ADMINISTRATOR -->
    <security:authorize access="hasRole('ADMINISTRATOR')">
-   
-<%--     <li class="mt"><a href="register/specialist/edit.do"> <i class="fa fa-dashboard"></i> <span><spring:message
+
+    <%--     <li class="mt"><a href="register/specialist/edit.do"> <i class="fa fa-dashboard"></i> <span><spring:message
         code="master.page.register.specialist" /></span>
     </a></li> --%>
 
     <li class="mt"><a href="specialty/administrator/list-all.do"> <i class="fa fa-dashboard"></i> <span><spring:message
         code="master.page.specialty.listAll" /></span>
-    </a></li> 
-    
-<%--     <li class="sub-menu"><a href="javascript:;"> <i class="fa fa-desktop"></i> <span><spring:message
+    </a></li>
+
+    <%--     <li class="sub-menu"><a href="javascript:;"> <i class="fa fa-desktop"></i> <span><spring:message
         code="master.page.specialty" /></span>
     </a>
      <ul class="sub">
@@ -61,7 +65,7 @@
       <li><a href="offer/administrator/list-active.do"><spring:message code="master.page.offer.listActive" /></a></li>
       <%-- <li><a href="offer/administrator/list-order.do"><spring:message code="master.page.offer.listOrder" /></a></li> --%>
      </ul></li>
-     
+
     <li class=""><a href="patient/administrator/list.do"> <i class="fa fa-dashboard"></i> <span><spring:message
         code="master.page.patient.list" /></span>
     </a></li>
@@ -73,14 +77,10 @@
 
    <!-- PATIENT -->
    <security:authorize access="hasRole('PATIENT')">
-    <li class="sub-menu"><a href="javascript:;"> <i class="fa fa-desktop"></i> <span><spring:message
-        code="master.page.appointment" /></span>
-    </a>
-     <ul class="sub">
 
-      <li><a href="appointment/patient/list.do"><spring:message code="master.page.appointment.list" /></a></li>
-      <li><a href="appointment/patient/calendar.do"><spring:message code="master.page.appointment.create" /></a></li>
-     </ul></li>
+    <li class=""><a href="appointment/patient/list.do"> <i class="fa fa-dashboard"></i> <span><spring:message
+        code="master.page.appointment.list" /></span>
+    </a></li>
 
     <li class=""><a href="prescription/patient/list-my-prescription.do"> <i class="fa fa-dashboard"></i> <span><spring:message
         code="master.page.prescription.listMyPrescription" /></span>

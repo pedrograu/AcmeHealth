@@ -76,6 +76,8 @@
 			access="hasRole('PATIENT')" />
 		<security:intercept-url pattern="/timetable/patient/**"
 			access="hasRole('PATIENT')" />
+		<security:intercept-url pattern="/customerArea/patient/list.do"
+            access="hasRole('PATIENT')" />
 
 		<!-- <security:intercept-url pattern="/message/customer/list-outbox.do" 
 			access="hasRole('PATIENT')" /> <security:intercept-url pattern="/message/customer/list-inbox.do" 
@@ -139,6 +141,8 @@
 			access="hasRole('SPECIALIST')" />			
 		<security:intercept-url pattern="/prescription/specialist/list.do"
 			access="hasRole('SPECIALIST')" />
+		<security:intercept-url pattern="/customerArea/specialist/list.do"
+            access="hasRole('SPECIALIST')" />
 
 		<security:intercept-url pattern="/message/customer/list-outbox.do"
 			access="hasRole('CUSTOMER')" />
@@ -154,8 +158,7 @@
 			access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/message/customer/cancel.do"
 			access="hasRole('CUSTOMER')" />
-		<security:intercept-url pattern="/customerArea/customer/list.do"
-            access="hasRole('CUSTOMER')" />
+		
 
 		<!-- <security:intercept-url pattern="/message/customer/**" access="hasRole('SPECIALIST')" 
 			/> -->

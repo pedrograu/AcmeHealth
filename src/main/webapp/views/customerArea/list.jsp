@@ -18,10 +18,11 @@
 
 <div class="row mt">
  <div class="col-lg-12">
+  <!-- ADMINISTRATOR -->
   <security:authorize access="hasRole('ADMINISTRATOR')">
-   <! -- 1st ROW OF PANELS -->
+   <!-- 1st ROW OF PANELS -->
    <div class="row">
-    <!-- ADMINISTRATOR -->
+
 
 
     <!-- TWITTER PANEL -->
@@ -34,7 +35,7 @@
 
     <!-- /col-md-4 -->
 
-   <div class="col-lg-4 col-md-4 col-sm-4 mb">
+    <div class="col-lg-4 col-md-4 col-sm-4 mb">
      <div class="product-panel-2 pn">
       <a href="specialty/administrator/create.do"> <img src="assets/img/product.jpg" width="300" alt="">
       </a>
@@ -50,19 +51,155 @@
     </div>
     <!-- /col-md-4 -->
    </div>
-   <! --/END 1ST ROW OF PANELS -->
+   <!--/END 1ST ROW OF PANELS-->
   </security:authorize>
-  <! -- 2ND ROW OF PANELS -->
+
+
+  <!--PATIENT-->
+  <security:authorize access="hasRole('PATIENT')">
+   <!-- 1st ROW OF PANELS -->
+   <div class="row">
+
+
+
+    <!--TWITTER PANEL-->
+    <div class="col-lg-4 col-md-4 col-sm-4 mb">
+     <div class="product-panel-2 pn">
+      <a href="appointment/patient/calendar.do"> <img src="assets/img/product.jpg" width="300" alt="">
+      </a>
+     </div>
+    </div>
+
+    <!-- /col-md-4 -->
+
+    <div class="col-lg-4 col-md-4 col-sm-4 mb">
+     <div class="product-panel-2 pn">
+      <a href="appointment/patient/calendar.do"> <img src="assets/img/product.jpg" width="300" alt="">
+      </a>
+     </div>
+    </div>
+    <!-- /col-md-4 -->
+
+
+    <!-- /col-md-4 -->
+   </div>
+   <!--/END 1ST ROW OF PANELS-->
+  </security:authorize>
+
+
+  <!-- SPECIALIST -->
+  <security:authorize access="hasRole('SPECIALIST')">
+   <!--1st ROW OF PANELS-->
+   <div class="row">
+
+    <!-- TWITTER PANEL -->
+    <div class="col-lg-4 col-md-4 col-sm-4 mb">
+     <div class="product-panel-2 pn">
+      <a href="profile/specialist/detail.do"> <img src="assets/img/product.jpg" width="300" alt="">
+      </a>
+     </div>
+    </div>
+
+    <!-- /col-md-4 -->
+
+    <div class="col-lg-4 col-md-4 col-sm-4 mb">
+     <div class="product-panel-2 pn">
+      <a href="timetable/specialist/create.do"> <img src="assets/img/product.jpg" width="300" alt="">
+      </a>
+     </div>
+    </div>
+    <!-- /col-md-4 -->
+
+    <div class="col-lg-4 col-md-4 col-sm-4 mb">
+     <div class="product-panel-2 pn">
+      <a href="freeDay/specialist/create.do"> <img src="assets/img/product.jpg" width="300" alt="">
+      </a>
+     </div>
+    </div>
+    <!-- /col-md-4 -->
+   </div>
+   <!--/END 1ST ROW OF PANELS-->
+  </security:authorize>
+
+
+  <!-- 2ND ROW OF PANELS -->
+  <!-- ADMINISTRATOR -->
   <security:authorize access="hasRole('ADMINISTRATOR')">
-  <div class="row">
-   <! -- TODO PANEL -->
-  <div class="col-lg-4 col-md-4 col-sm-4 mb">
+   <div class="row">
+    <!-- TODO PANEL-->
+    <div class="col-lg-4 col-md-4 col-sm-4 mb">
      <div class="product-panel-2 pn">
       <a href="dashboard/administrator/dashboard.do"> <img src="assets/img/product.jpg" width="300" alt="">
       </a>
      </div>
     </div>
-   <! --/col-md-4 -->
-  </div>
+    <!--/col-md-4-->
+   </div>
+  </security:authorize>
+  <!--PATIENT-->
+  <security:authorize access="hasRole('PATIENT')">
+   <div class="row">
+    <!-- TODO PANEL-->
+    <div class="col-lg-12 col-md-12 col-sm-12 mb">
+     <div class="table-responsive">
+      <display:table name="appointments" id="row" requestURI="${requestURI}" pagesize="5" class="table table-hover"
+       keepStatus="true">
+
+       <spring:message code="appointment.startMoment" var="startMoment" />
+       <display:column property="startMoment" title="${startMoment}" sortable="${true}"
+        format="{0,date,dd/MM/yyyy HH:mm}" />
+
+       <spring:message code="appointment.specialist" var="specialist" />
+       <display:column property="timetable.specialist.name" title="${specialist}" sortable="${true}" />
+
+       <spring:message code="appointment.specialty" var="specialty" />
+       <display:column property="timetable.specialist.specialty.name" title="${specialty}" sortable="${true}" />
+
+
+      </display:table>
+     </div>
+    </div>
+    <!--/col-md-4-->
+   </div>
+  </security:authorize>
+  <!-- SPECIALIST -->
+  <security:authorize access="hasRole('SPECIALIST')">
+   <div class="row">
+    <!-- TODO PANEL-->
+    <div class="col-lg-12 col-md-12 col-sm-12 mb">
+     <div class="table-responsive">
+      <display:table name="appointments" id="row" requestURI="${requestURI}" pagesize="5" class="table table-hover"
+       keepStatus="true">
+
+
+       <security:authorize access="hasRole('SPECIALIST')">
+        <jstl:if test="${isNotFinish==true}">
+         <display:column>
+          <a href="appointment/specialist/edit.do?appointmentId=${row.id}"><spring:message code="appointment.attend" /></a>
+         </display:column>
+         <display:column>
+          <a href="message/customer/cancel.do?appointmentId=${row.id}"><spring:message code="appointment.cancel" /></a>
+         </display:column>
+        </jstl:if>
+       </security:authorize>
+
+
+       <spring:message code="appointment.startMoment" var="startMoment" />
+       <display:column property="startMoment" title="${startMoment}" sortable="${true}"
+        format="{0,date,dd/MM/yyyy HH:mm}" />
+
+       <spring:message code="appointment.specialist" var="specialist" />
+       <display:column property="timetable.specialist.name" title="${specialist}" sortable="${true}" />
+
+       <spring:message code="appointment.specialty" var="specialty" />
+       <display:column property="timetable.specialist.specialty.name" title="${specialty}" sortable="${true}" />
+
+
+      </display:table>
+     </div>
+    </div>
+    <!--/col-md-4 -->
+   </div>
   </security:authorize>
  </div>
+</div>
