@@ -33,7 +33,8 @@
 		<value>/views/medicalHistory/tiles.xml</value>
 		<value>/views/dashboard/tiles.xml</value> 
 		<value>/views/freeDay/tiles.xml</value> 
-		<value>/views/patient/tiles.xml</value> 
+		<value>/views/patient/tiles.xml</value>
+		<value>/views/customerArea/tiles.xml</value>  
 		
 
 	</util:list>

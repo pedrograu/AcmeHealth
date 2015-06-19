@@ -102,6 +102,8 @@
 			access="hasRole('ADMINISTRATOR')" />
 		<security:intercept-url pattern="/patient/administrator/ban.do"
 			access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url pattern="/customerArea/administrator/list.do"
+            access="hasRole('ADMINISTRATOR')" />
 
 
 		<security:intercept-url pattern="/appointment/specialist/**"
@@ -152,6 +154,8 @@
 			access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/message/customer/cancel.do"
 			access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/customerArea/customer/list.do"
+            access="hasRole('CUSTOMER')" />
 
 		<!-- <security:intercept-url pattern="/message/customer/**" access="hasRole('SPECIALIST')" 
 			/> -->

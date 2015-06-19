@@ -18,7 +18,12 @@
   <!-- sidebar menu start-->
   <ul class="sidebar-menu" id="nav-accordion">
    <security:authorize access="isAuthenticated()">
+
     <p class="centered">
+     <!-- ADMINISTRATOR -->
+     <security:authorize access="hasRole('ADMINISTRATOR')">
+      <a href="customerArea/administrator/list.do"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a>
+     </security:authorize>
      <a href="profile.html"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a>
     </p>
     <h5 class="centered"></h5>
@@ -26,11 +31,16 @@
 
    <!-- ADMINISTRATOR -->
    <security:authorize access="hasRole('ADMINISTRATOR')">
-    <li class="mt"><a href="register/specialist/edit.do"> <i class="fa fa-dashboard"></i> <span><spring:message
+   
+<%--     <li class="mt"><a href="register/specialist/edit.do"> <i class="fa fa-dashboard"></i> <span><spring:message
         code="master.page.register.specialist" /></span>
-    </a></li>
+    </a></li> --%>
 
-    <li class="sub-menu"><a href="javascript:;"> <i class="fa fa-desktop"></i> <span><spring:message
+    <li class="mt"><a href="specialty/administrator/list-all.do"> <i class="fa fa-dashboard"></i> <span><spring:message
+        code="master.page.specialty.listAll" /></span>
+    </a></li> 
+    
+<%--     <li class="sub-menu"><a href="javascript:;"> <i class="fa fa-desktop"></i> <span><spring:message
         code="master.page.specialty" /></span>
     </a>
      <ul class="sub">
@@ -38,7 +48,7 @@
       <li><a href="specialty/administrator/list-all.do"><spring:message code="master.page.specialty.listAll" /></a></li>
       <li><a href="specialty/administrator/create.do"><spring:message code="master.page.specialty.create" /></a></li>
 
-     </ul></li>
+     </ul></li> --%>
 
     <li class="sub-menu"><a href="javascript:;"> <i class="fa fa-desktop"></i> <span><spring:message
         code="master.page.offer" /></span>
@@ -49,17 +59,14 @@
       <li><a href="offer/administrator/list-not-finished.do"><spring:message
          code="master.page.offer.listNotFinished" /></a></li>
       <li><a href="offer/administrator/list-active.do"><spring:message code="master.page.offer.listActive" /></a></li>
-      <li><a href="offer/administrator/list-order.do"><spring:message code="master.page.offer.listOrder" /></a></li>
-      <li><a href="offer/administrator/create.do"><spring:message code="master.page.offer.create" /></a></li>
+      <%-- <li><a href="offer/administrator/list-order.do"><spring:message code="master.page.offer.listOrder" /></a></li> --%>
      </ul></li>
+     
     <li class=""><a href="patient/administrator/list.do"> <i class="fa fa-dashboard"></i> <span><spring:message
         code="master.page.patient.list" /></span>
     </a></li>
     <li class=""><a href="specialist/administrator/list.do"> <i class="fa fa-dashboard"></i> <span><spring:message
         code="master.page.specialist.list" /></span>
-    </a></li>
-    <li class=""><a href="dashboard/administrator/dashboard.do"> <i class="fa fa-dashboard"></i> <span><spring:message
-        code="master.page.dashboard" /></span>
     </a></li>
 
    </security:authorize>
