@@ -28,7 +28,10 @@
      <security:authorize access="hasRole('PATIENT')">
       <a href="customerArea/patient/list.do"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a>
      </security:authorize>
-     <a href="profile.html"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a>
+     <!-- SPECIALIST -->
+     <security:authorize access="hasRole('SPECIALIST')">
+      <a href="customerArea/specialist/list.do"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a>
+     </security:authorize>
     </p>
     <h5 class="centered"></h5>
    </security:authorize>
@@ -113,16 +116,10 @@
    <!-- SPECIALIST -->
    <security:authorize access="hasRole('SPECIALIST')">
 
-    <li class="sub-menu"><a href="javascript:;"> <i class="fa fa-desktop"></i> <span><spring:message
-        code="master.page.appointment" /></span>
-    </a>
-     <ul class="sub">
+    <li class=""><a href=appointment/specialist/listFinish.do> <i class="fa fa-dashboard"></i> <span><spring:message
+        code="master.page.appointment.listFinish" /></span>
+    </a></li>
 
-      <li><a href="appointment/specialist/listNotFinish.do"><spring:message
-         code="master.page.appointment.listNotFinish" /></a></li>
-      <li><a href="appointment/specialist/listFinish.do"><spring:message
-         code="master.page.appointment.listFinish" /></a></li>
-     </ul></li>
 
     <li class="sub-menu"><a href="javascript:;"> <i class="fa fa-desktop"></i> <span><spring:message
         code="master.page.specialist.patient" /></span>
@@ -136,35 +133,19 @@
      </ul></li>
 
 
-    <li class="sub-menu"><a href="javascript:;"> <i class="fa fa-desktop"></i> <span><spring:message
-        code="master.page.specialist.timetable" /></span>
-    </a>
-     <ul class="sub">
+    <li class=""><a href=timetable/specialist/list-own.do> <i class="fa fa-dashboard"></i> <span><spring:message
+        code="master.page.specialist.timetable.list.own" /></span>
+    </a></li>
 
-      <li><a href="timetable/specialist/list-own.do"><spring:message
-         code="master.page.specialist.timetable.list.own" /></a></li>
-      <li><a href="timetable/specialist/create.do"><spring:message
-         code="master.page.specialist.timetable.create" /></a></li>
-     </ul></li>
+
+
 
     <li class=""><a href="offer/specialist/list-not-finished.do"> <i class="fa fa-dashboard"></i> <span><spring:message
         code="master.page.specialist.listNotFinish" /></span>
     </a></li>
 
-
-    <li class="sub-menu"><a href="javascript:;"> <i class="fa fa-desktop"></i> <span><spring:message
-        code="master.page.specialist.freeDay" /></span>
-    </a>
-     <ul class="sub">
-
-      <li><a href="freeDay/specialist/list-own.do"><spring:message
-         code="master.page.specialist.freeDays.list-own" /></a></li>
-      <li><a href="freeDay/specialist/create.do"><spring:message code="master.page.specialist.freeDays.create" /></a></li>
-     </ul></li>
-
-
-    <li class=""><a href="profile/specialist/detail.do"> <i class="fa fa-dashboard"></i> <span><spring:message
-        code="master.page.profile.details" /></span>
+    <li class=""><a href="freeDay/specialist/list-own.do"> <i class="fa fa-dashboard"></i> <span><spring:message
+        code="master.page.specialist.freeDays.list-own" /></span>
     </a></li>
 
 

@@ -172,16 +172,7 @@
        keepStatus="true">
 
 
-       <security:authorize access="hasRole('SPECIALIST')">
-        <jstl:if test="${isNotFinish==true}">
-         <display:column>
-          <a href="appointment/specialist/edit.do?appointmentId=${row.id}"><spring:message code="appointment.attend" /></a>
-         </display:column>
-         <display:column>
-          <a href="message/customer/cancel.do?appointmentId=${row.id}"><spring:message code="appointment.cancel" /></a>
-         </display:column>
-        </jstl:if>
-       </security:authorize>
+
 
 
        <spring:message code="appointment.startMoment" var="startMoment" />
@@ -193,6 +184,16 @@
 
        <spring:message code="appointment.specialty" var="specialty" />
        <display:column property="timetable.specialist.specialty.name" title="${specialty}" sortable="${true}" />
+       
+       <security:authorize access="hasRole('SPECIALIST')">
+        <display:column>
+         <a href="appointment/specialist/edit.do?appointmentId=${row.id}"><spring:message code="appointment.attend" /></a>
+        </display:column>
+        <display:column>
+         <a href="message/customer/cancel.do?appointmentId=${row.id}"><spring:message code="appointment.cancel" /></a>
+        </display:column>
+
+       </security:authorize>
 
 
       </display:table>
