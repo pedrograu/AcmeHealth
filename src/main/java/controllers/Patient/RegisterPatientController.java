@@ -21,6 +21,7 @@ import controllers.AbstractController;
 import domain.Patient;
 import domain.Specialist;
 import forms.PatientForm;
+import forms.TokenForm;
 
 @Controller
 @RequestMapping("/register/patient")
@@ -45,6 +46,41 @@ public class RegisterPatientController extends AbstractController {
     }
 
     // Registration -----------------------------------------------------------
+
+    @RequestMapping(value = "/mutua", method = RequestMethod.GET)
+    public ModelAndView mutua() {
+        ModelAndView result;
+        TokenForm tokenForm = new TokenForm();
+
+        result = createEditModelAndView2(tokenForm);
+
+        return result;
+    }
+
+    @RequestMapping(value = "/mutua", method = RequestMethod.POST, params = "check")
+    public ModelAndView check(@Valid TokenForm tokenForm, BindingResult binding) {
+
+        ModelAndView result;
+
+        if (binding.hasErrors()) {
+            result = createEditModelAndView2(tokenForm);
+
+        } else {
+            String nif = tokenForm.getNif();
+            String pass = tokenForm.getPass();
+
+            String token = patientService.getToken(nif, pass);
+
+            if (token == "null") {
+                result = new ModelAndView("register/mutua");
+                result.addObject("error", true);
+            } else {
+                result = new ModelAndView("redirect:edit.do?token=" + token);
+            }
+
+        }
+        return result;
+    }
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public ModelAndView register() {
@@ -131,6 +167,30 @@ public class RegisterPatientController extends AbstractController {
         result.addObject("registerPatient", true);
 
         result.addObject("specialists", specialists);
+
+        result.addObject("message", message);
+
+        return result;
+    }
+
+    protected ModelAndView createEditModelAndView2(TokenForm tokenForm) {
+
+        ModelAndView result;
+
+        result = createEditModelAndView2(tokenForm, null);
+
+        return result;
+    }
+
+    protected ModelAndView createEditModelAndView2(TokenForm tokenForm, String message) {
+
+        ModelAndView result;
+
+        result = new ModelAndView("register/mutua");
+        result.addObject("tokenForm", tokenForm);
+        result.addObject("actor", "tokenForm");
+        result.addObject("error", false);
+        result.addObject("requestURI", "register/patient/mutua.do");
 
         result.addObject("message", message);
 

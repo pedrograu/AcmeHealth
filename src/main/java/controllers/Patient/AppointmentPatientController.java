@@ -1,5 +1,7 @@
 package controllers.Patient;
 
+import java.io.IOException;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,6 +34,8 @@ import forms.AppointmentForm;
 @Controller
 @RequestMapping("/appointment/patient")
 public class AppointmentPatientController extends AbstractController {
+    
+
 
     @Autowired
     private AppointmentService appointmentService;
@@ -77,6 +81,7 @@ public class AppointmentPatientController extends AbstractController {
 
         ModelAndView result;
         
+               
         List<Date> lista = timetableService.getDatesAvailables(null);
         String eventos = timetableService.convertListToStringJson(lista);
                
