@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -68,8 +69,13 @@ public class RegisterPatientController extends AbstractController {
         } else {
             String nif = tokenForm.getNif();
             String pass = tokenForm.getPass();
+            
+            //encriptamos pass
+            Md5PasswordEncoder encoder;
+            encoder = new Md5PasswordEncoder();
+            String hash = encoder.encodePassword(pass, null);
 
-            String token = patientService.getToken(nif, pass);
+            String token = patientService.getToken(nif, hash);
 
             if (token == "null") {
                 result = new ModelAndView("register/mutua");
