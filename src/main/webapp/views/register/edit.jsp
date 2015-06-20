@@ -19,6 +19,7 @@
 
 <form:form action="${requestURI}" modelAttribute="${actor}">
 
+    <acme:textbox code = "register.token" path ="token"/>
 	<acme:textbox code = "register.username" path ="username"/>
 	<acme:password code = "register.password" path ="password"/>
 	<acme:password code = "register.second.password" path ="secondPassword"/>

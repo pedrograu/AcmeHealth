@@ -74,6 +74,8 @@ public class RegisterPatientController extends AbstractController {
             if (token == "null") {
                 result = new ModelAndView("register/mutua");
                 result.addObject("error", true);
+                result.addObject("tokenForm", tokenForm);
+                result.addObject("actor", "tokenForm");
             } else {
                 result = new ModelAndView("redirect:edit.do?token=" + token);
             }
@@ -129,7 +131,10 @@ public class RegisterPatientController extends AbstractController {
                         result = createEditModelAndView(patientForm, "register.available.error");
                     } else if (!currentMoment.before(dateCreditCard)) {
                         result = createEditModelAndView(patientForm, "register.creditCard.error");
-                    } else {
+                    } else if (!patientService.getTokens().contains(patientForm.getToken())) {
+                        result = createEditModelAndView(patientForm, "register.token.error");
+                    } 
+                    else {
                         result = createEditModelAndView(patientForm, "register.commit.error");
                     }
                 }

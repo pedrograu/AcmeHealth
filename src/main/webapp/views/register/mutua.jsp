@@ -26,5 +26,19 @@
 </jstl:if>
 
 <jstl:if test="${error==true}">
-<p> errorrrr</p>
+
+<form:form action="${requestURI}" modelAttribute="${actor}">
+
+    <acme:textbox code = "register.nif" path ="nif"/>
+    <acme:password code = "register.pass" path ="pass"/>
+
+
+    <acme:submit code="register.check" name="check" />
+    <acme:cancel url="welcome/index.do" code="register.cancel" />
+
+    
+</form:form>
+
+<br/>
+<div style="color:red;"><b><spring:message code="register.message" /></b></div>
 </jstl:if>

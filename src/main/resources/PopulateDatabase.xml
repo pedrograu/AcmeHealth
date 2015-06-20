@@ -1001,6 +1001,27 @@
 	</bean>
 
 
+    <!-- Token -->
+
+
+    <bean id="mutua1" class="domain.Mutua">
+
+        <property name="token" value="jhJHG49jhgjhf6sdh3uh34h3"></property>
+
+    </bean>
+
+    <bean id="mutua2" class="domain.Mutua">
+
+        <property name="token" value="sdjhkjhj5903lnHJK8hkjJH6d"></property>
+
+    </bean>
+
+    <bean id="mutua3" class="domain.Mutua">
+
+        <property name="token" value="kjhHJjhjkkjk23jkh23jG23hj"></property>
+
+    </bean>
+
 
 
 </beans>

@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
@@ -19,6 +20,9 @@ import repositories.PatientRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import domain.Appointment;
 import domain.Comment;
 import domain.MedicalHistory;
@@ -28,8 +32,6 @@ import domain.Patient;
 import domain.Specialist;
 import domain.Token;
 import forms.PatientForm;
-import domain.Token;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 @Transactional
@@ -112,6 +114,12 @@ public class PatientService {
         medicalHistoryService.save(medicalHistory);
 
     }
+    
+    public Collection<String> getTokens(){
+        Collection<String> tokens = patientRepository.getTokens();
+    
+        return tokens;
+    }
 
     public Patient reconstruct(PatientForm patientForm) {
 
@@ -121,6 +129,8 @@ public class PatientService {
         Calendar dateCreditCard = new GregorianCalendar();
         dateCreditCard.set(year, month, 1);
 
+        Assert.isTrue(getTokens().contains(patientForm.getToken()));
+        
         Assert.isTrue(currentMoment.before(dateCreditCard));
 
         Patient patient = create();
