@@ -1,7 +1,5 @@
 package controllers.Patient;
 
-import java.io.IOException;
-import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,7 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 import services.AppointmentService;
 import services.OfferService;
 import services.PatientService;
-import services.SpecialistService;
 import services.TimetableService;
 import controllers.AbstractController;
 import domain.Appointment;
@@ -49,9 +46,7 @@ public class AppointmentPatientController extends AbstractController {
     @Autowired
     private PatientService patientService;
 
-    @Autowired
-    private SpecialistService specialistService;
-
+    
     public AppointmentPatientController() {
         super();
     }
@@ -83,7 +78,7 @@ public class AppointmentPatientController extends AbstractController {
         
                
         List<Date> lista = timetableService.getDatesAvailables(null);
-        String eventos = timetableService.convertListToStringJson(lista);
+        String eventos = timetableService.convertListToStringJson(lista,"calendar", 0,0,0);
                
         result = new ModelAndView("appointment/calendar");
         result.addObject("eventos", eventos);
@@ -101,7 +96,7 @@ public class AppointmentPatientController extends AbstractController {
         
         Offer offer = offerService.findOneToEdit(offerId);
         List<Date> lista = timetableService.getDatesAvailables(offer);
-        String eventos = timetableService.convertListToStringJson(lista);
+        String eventos = timetableService.convertListToStringJson(lista,"calendar2", offerId,0,0);
 
         result = new ModelAndView("appointment/calendar");
         result.addObject("eventos", eventos);
@@ -122,9 +117,9 @@ public class AppointmentPatientController extends AbstractController {
         Patient patientConnect = patientService.findByPrincipal();
 
         //boolean cumplePatron = appointmentService.cumplePatron(startMoment);
-        boolean cumplePatron = true;
+        //boolean cumplePatron = true;
         
-        if (startMoment != "" && cumplePatron && patientConnect.getSpecialist() != null) {
+        if (startMoment != "" && patientConnect.getSpecialist() != null) {
             
             
             Date fechaElegida = appointmentService.stringToDate(startMoment);
@@ -186,11 +181,11 @@ public class AppointmentPatientController extends AbstractController {
 
         ModelAndView result;
 
-        boolean cumplePatron = appointmentService.cumplePatron(startMoment);
+        //boolean cumplePatron = appointmentService.cumplePatron(startMoment);
 
-        if (startMoment != "" && cumplePatron) {
+        if (startMoment != "") {
             Date fechaElegida = appointmentService.stringToDate(startMoment);
-            List<Date> listaDeFechas = timetableService.getDatesAvailables(offer);
+            List<Date> listaDeFechas = new ArrayList<Date>();
             listaDeFechas.add(fechaElegida);
             
             DateFormat fec = new SimpleDateFormat("dd/MM/yyyy");

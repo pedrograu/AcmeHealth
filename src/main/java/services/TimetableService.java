@@ -253,22 +253,22 @@ public class TimetableService {
         return freeSlotsComplete;
     }
 
-    public String convertListToStringJson(List<Date> listaDeFechas) {
+    public String convertListToStringJson(List<Date> listaDeFechas, String tipo, int offerId, int patientId , int specialistId) {
 
         //List<Date> listaDeFechas = getDatesAvailables(new Date(), null);
 
         String cadena = "[";
         int i = 0;
         for (Date d : listaDeFechas) {
-            
+
             //convertiendo de date a string (1º forma):
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             String dateString = df.format(d);
-            
+
             //convertiendo de date a string (2º forma):
             DateFormat df2 = new SimpleDateFormat("MM/dd/yyyy HH:mm");
             String dateString2 = df2.format(d);
-            
+
             //añadir 10 min para obtener fecha de fin y convertiendo a string:
             Calendar cal = new GregorianCalendar();
             cal.setLenient(false);
@@ -278,18 +278,43 @@ public class TimetableService {
             DateFormat df3 = new SimpleDateFormat("MM/dd/yyyy HH:mm");
             String dateString3 = df3.format(datePlusTeenMinutes);
 
-            if (i == 0) {
-                cadena += "{\"title\" : \"disponible\",\"start\" : \"" + dateString2 + "\",\"end\" :   \""
-                        + dateString3 + "\",\"url\" : \"appointment/patient/create.do?startMoment=" + dateString;
+            if (tipo == "calendar") {
+
+                if (i == 0) {
+                    cadena += "{\"title\" : \"disponible\",\"start\" : \"" + dateString2 + "\",\"end\" :   \""
+                            + dateString3 + "\",\"url\" : \"appointment/patient/create.do?startMoment=" + dateString;
+                } else {
+                    cadena += ",{\"title\" : \"disponible\",\"start\" : \"" + dateString2 + "\",\"end\" :   \""
+                            + dateString3 + "\",\"url\" : \"appointment/patient/create.do?startMoment=" + dateString;
+                }
+
+            } else if (tipo == "calendar2") {
+
+                if (i == 0) {
+                    cadena += "{\"title\" : \"disponible\",\"start\" : \"" + dateString2 + "\",\"end\" :   \""
+                            + dateString3 + "\",\"url\" : \"appointment/patient/create2.do?startMoment=" + dateString+"&offerId="+offerId;
+                } else {
+                    cadena += ",{\"title\" : \"disponible\",\"start\" : \"" + dateString2 + "\",\"end\" :   \""
+                            + dateString3 + "\",\"url\" : \"appointment/patient/create2.do?startMoment=" + dateString+"&offerId="+offerId;
+                }
+
             } else {
-                cadena += ",{\"title\" : \"disponible\",\"start\" : \"" + dateString2 + "\",\"end\" :   \""
-                        + dateString3 + "\",\"url\" : \"appointment/patient/create.do?startMoment=" + dateString;
+
+                if (i == 0) {
+                    cadena += "{\"title\" : \"disponible\",\"start\" : \"" + dateString2 + "\",\"end\" :   \""
+                            + dateString3 + "\",\"url\" : \"appointment/specialist/create.do?startMoment=" + dateString+"&patientId="+patientId+"&specialistId="+specialistId;
+                } else {
+                    cadena += ",{\"title\" : \"disponible\",\"start\" : \"" + dateString2 + "\",\"end\" :   \""
+                            + dateString3 + "\",\"url\" : \"appointment/specialist/create.do?startMoment=" + dateString+"&patientId="+patientId+"&specialistId="+specialistId;
+                }
+
             }
+
             cadena += "\"}";
             i++;
         }
         cadena += "]";
-        
+
         return cadena;
     }
 
@@ -300,109 +325,156 @@ public class TimetableService {
         return aps;
     }
 
-    public List<Date> getDatesAvailables2(Date fechaElegida, Specialist specialist) {
+    public List<Date> getDatesAvailables2(Specialist specialist) {
 
-        // Este metodo coge del startmoment del appointment q recibe como
-        // parametro
-        // el dia de la semana seleccionado, coge el timetable correspondiente a
-        // ese dia para
-        // el medico de cabecera del patient conectado y muestra los intervalos
-        // disponibles.
-
-        // 1º vemos a que dia de la semana pertenece la fecha elegida y
-        // mostramos los timetables correspondientes a ese dia de la semana:
+        Date fechaDeHoy = new Date();
         Calendar starCalendar = new GregorianCalendar();
+        starCalendar.setTime(fechaDeHoy);
 
-        starCalendar.setTime(fechaElegida);
+        List<Date> freeSlotsComplete = new ArrayList<Date>();
 
-        int diaDeLaSemana = starCalendar.get(Calendar.DAY_OF_WEEK);
+        //iteramos 49 veces, uno por cada dia de la semana desde la fecha de hoy.(ofrece citas para los siguientes 2 meses)
+        mainLoop: //para que el break salga hasta aqui
+        for (int i = 0; i < 56; i++) {
 
-        List<Timetable> timetablesParaEseDiaDeLaSemana = new ArrayList<Timetable>();
-        timetablesParaEseDiaDeLaSemana = timetableRepository.getTimetablesForDayOfWeekAndSpecialist(diaDeLaSemana,
-                specialist.getId());
+            List<Date> freeSlots = new ArrayList<Date>();
 
-        // 2º sacamos el startMoment y el finishMoment de cada timetable, lo
-        // convertimos a tipo calendar y creamos los intervalos cada 10 minutos:
+            //miramos si el dia elegido es uno que esta contenido en algun freeDay de ese especialista, en ese caso no hay citas disponibles para dicho dia.
+            for (FreeDay f : specialist.getFreeDays()) {
 
-        List<Date> freeSlots = new ArrayList<Date>();
+                Date startShift = f.getStartMoment();
+                Date endShift = f.getFinishMoment();
 
-        Calendar cal = new GregorianCalendar();
-        cal.setLenient(false);
-        cal.setTime(fechaElegida);
-        cal.add(Calendar.DAY_OF_MONTH, 1);
-        cal.getTime();
+                //si esta contenida la fecha elegida en un freeDay devuelve la lista de freeSlots para ese dia vacia
+                if ((fechaDeHoy.after(startShift) || fechaDeHoy.equals(startShift))
+                        && (fechaDeHoy.before(endShift) || fechaDeHoy.equals(endShift))) {
 
-        //miramos si el dia elegido es uno que esta contenido en algun freeDay de ese especialista.
-        for (FreeDay f : specialist.getFreeDays()) {
+                    break mainLoop;
 
-            Date startShift = f.getStartMoment();
-            Date endShift = f.getFinishMoment();
-
-            //si esta contenida la fecha elegida en un freeDay devuelve la lista de freeSlots para ese dia vacia
-            if (cal.getTime().after(startShift) && fechaElegida.before(endShift)) {
-
-                return freeSlots;
+                }
 
             }
 
-        }
+            //dia de la semana al que pertenece la fecha elegida.
+            int diaDeLaSemana = starCalendar.get(Calendar.DAY_OF_WEEK);
 
-        Calendar actualMoment = new GregorianCalendar();
+            List<Timetable> timetablesParaEseDiaDeLaSemana = new ArrayList<Timetable>();
+            timetablesParaEseDiaDeLaSemana = timetableRepository.getTimetablesForDayOfWeekAndSpecialist(diaDeLaSemana,
+                    specialist.getId());
 
-        for (Timetable t : timetablesParaEseDiaDeLaSemana) {
+            // 2º sacamos el startMoment y el finishMoment de cada timetable, lo
+            // convertimos a tipo calendar y creamos los intervalos cada 10 minutos:
 
-            Date startShift = t.getStartShift();
-            Date endShift = t.getEndShift();
+            Calendar actualMoment = new GregorianCalendar();
 
-            Calendar startShiftCalendar = new GregorianCalendar();
-            Calendar endShiftCalendar = new GregorianCalendar();
+            for (Timetable t : timetablesParaEseDiaDeLaSemana) {
 
-            startShiftCalendar.setTime(startShift);
-            endShiftCalendar.setTime(endShift);
+                Date startShift = t.getStartShift();
+                Date endShift = t.getEndShift();
 
-            // cambiamos la fecha que nos da del 1/1/1970 por la seleccionada
-            // por el patient:
+                Calendar startShiftCalendar = new GregorianCalendar();
+                Calendar endShiftCalendar = new GregorianCalendar();
 
-            startShiftCalendar.set(Calendar.DAY_OF_MONTH, starCalendar.get(Calendar.DAY_OF_MONTH));
-            startShiftCalendar.set(Calendar.MONTH, starCalendar.get(Calendar.MONTH));
-            startShiftCalendar.set(Calendar.YEAR, starCalendar.get(Calendar.YEAR));
+                startShiftCalendar.setTime(startShift);
+                endShiftCalendar.setTime(endShift);
 
-            endShiftCalendar.set(Calendar.DAY_OF_MONTH, starCalendar.get(Calendar.DAY_OF_MONTH));
-            endShiftCalendar.set(Calendar.MONTH, starCalendar.get(Calendar.MONTH));
-            endShiftCalendar.set(Calendar.YEAR, starCalendar.get(Calendar.YEAR));
+                // cambiamos la fecha que nos da del 1/1/1970 por la seleccionada
+                // por el patient:
 
-            // si la cita es para el dia de hoy comprobamos la hora actual para
-            // no crear citas pasadas.
-            if (actualMoment.after(startShiftCalendar) && actualMoment.after(endShiftCalendar)) {
-                startShiftCalendar = actualMoment;
+                startShiftCalendar.set(Calendar.DAY_OF_MONTH, starCalendar.get(Calendar.DAY_OF_MONTH));
+                startShiftCalendar.set(Calendar.MONTH, starCalendar.get(Calendar.MONTH));
+                startShiftCalendar.set(Calendar.YEAR, starCalendar.get(Calendar.YEAR));
 
-            } else if (actualMoment.after(startShiftCalendar)) {
-                startShiftCalendar = actualMoment;
+                endShiftCalendar.set(Calendar.DAY_OF_MONTH, starCalendar.get(Calendar.DAY_OF_MONTH));
+                endShiftCalendar.set(Calendar.MONTH, starCalendar.get(Calendar.MONTH));
+                endShiftCalendar.set(Calendar.YEAR, starCalendar.get(Calendar.YEAR));
 
-                while (startShiftCalendar.before(endShiftCalendar)) {
-                    startShiftCalendar.add(Calendar.MINUTE, 10); // Añadimos 10
-                                                                 // minutos
-                    freeSlots.add(startShiftCalendar.getTime());
+                // si la cita es para el dia de hoy comprobamos la hora actual para
+                // no crear citas pasadas.
+
+                boolean mismoDia = false;
+                if ((starCalendar.get(Calendar.DAY_OF_MONTH) == actualMoment.get(Calendar.DAY_OF_MONTH))
+                        && (starCalendar.get(Calendar.MONTH) == actualMoment.get(Calendar.MONTH))
+                        && (starCalendar.get(Calendar.YEAR) == actualMoment.get(Calendar.YEAR))) {
+                    mismoDia = true;
                 }
 
-            } else {
+                //recogemos la hora actual:
+                Calendar calendario = new GregorianCalendar();
+                int hora = calendario.get(Calendar.HOUR_OF_DAY);
+                int minutos = calendario.get(Calendar.MINUTE);
+                Date horaActual = new Time(hora, minutos, 0);
 
-                freeSlots.add(startShiftCalendar.getTime());
-                while (startShiftCalendar.before(endShiftCalendar)) {
-                    startShiftCalendar.add(Calendar.MINUTE, 10); // Añadimos 10
-                                                                 // minutos
+                if (horaActual.after(t.getEndShift()) && mismoDia) { //si la hora actual es mayor que la de ese timetable y fecha de la cita igual a la de hoy
+                    continue;
+
+                } else if (horaActual.after(t.getStartShift()) && horaActual.before(t.getEndShift()) && mismoDia) {//si la hora actual está contenida en ese 
+                    // timetable y fecha de la cita igual a la de hoy
+                    List<Date> freeSlotsProvisionales = new ArrayList<Date>();
+
+                    Calendar startShiftCalendarProvisional = (Calendar) startShiftCalendar.clone();
+                    Calendar endShiftCalendarProvisional = (Calendar) endShiftCalendar.clone();
+
+                    freeSlotsProvisionales.add(startShiftCalendarProvisional.getTime());
+                    while (startShiftCalendarProvisional.before(endShiftCalendarProvisional)) {
+                        startShiftCalendarProvisional.add(Calendar.MINUTE, 10); // Añadimos 10
+                                                                                // minutos
+                        freeSlotsProvisionales.add(startShiftCalendarProvisional.getTime());
+                    }
+
+                    Iterator<Date> iter = freeSlotsProvisionales.iterator();
+
+                    while (iter.hasNext()) {
+
+                        Date elemento = iter.next();
+
+                        if (actualMoment.getTime().equals(elemento) || actualMoment.getTime().after(elemento)) {
+                            iter.remove();
+                        } else {
+                            break;
+                        }
+                    }
+
+                    freeSlots.addAll(freeSlotsProvisionales);
+
+                } else if (horaActual.before(t.getStartShift()) && horaActual.before(t.getEndShift()) && mismoDia) {//hora actual menor que timetable y mismo dia
+
+                    List<Date> freeSlotsProvisionales = new ArrayList<Date>();
+
+                    Calendar startShiftCalendarProvisional = (Calendar) startShiftCalendar.clone();
+                    Calendar endShiftCalendarProvisional = (Calendar) endShiftCalendar.clone();
+
+                    freeSlotsProvisionales.add(startShiftCalendarProvisional.getTime());
+                    while (startShiftCalendarProvisional.before(endShiftCalendarProvisional)) {
+                        startShiftCalendarProvisional.add(Calendar.MINUTE, 10); // Añadimos 10
+                                                                                // minutos
+                        freeSlotsProvisionales.add(startShiftCalendarProvisional.getTime());
+                    }
+
+                    freeSlots.addAll(freeSlotsProvisionales);
+
+                } else if (!mismoDia) {//si la cita es para dia distinto al de hoy
+
                     freeSlots.add(startShiftCalendar.getTime());
+                    while (startShiftCalendar.before(endShiftCalendar)) {
+                        startShiftCalendar.add(Calendar.MINUTE, 10); // Añadimos 10
+                                                                     // minutos
+                        freeSlots.add(startShiftCalendar.getTime());
+                    }
+                } else {
+                    //No debería entrar en aqui.
+                    break mainLoop;
                 }
+
             }
 
-        }
+            // 3º quitamos los slots ocupados
 
-        // 3º quitamos los slots ocupados: (primero vamos a quitar los appointment)
+            List<Date> ocupadosSlots = new ArrayList<Date>();
 
-        List<Date> ocupadosSlots = new ArrayList<Date>();
+            List<Appointment> ap = (List<Appointment>) appointmentsForDay(specialist, fechaDeHoy);
 
-        for (Timetable t : timetablesParaEseDiaDeLaSemana) {
-            for (Appointment a : t.getAppointments()) {
+            for (Appointment a : ap) {
                 for (Date d : freeSlots) {
 
                     Calendar fecha = new GregorianCalendar();
@@ -416,11 +488,21 @@ public class TimetableService {
                     }
                 }
             }
+
+            freeSlots.removeAll(ocupadosSlots);
+
+            freeSlotsComplete.addAll(freeSlots);
+
+            //avanzamos un dia:
+            Calendar c = Calendar.getInstance();
+            c.setTime(fechaDeHoy);
+            c.add(Calendar.DATE, 1);
+            fechaDeHoy = c.getTime();
+            starCalendar.setTime(fechaDeHoy);
+
         }
 
-        freeSlots.removeAll(ocupadosSlots);
-
-        return freeSlots;
+        return freeSlotsComplete;
     }
 
     public List<Timetable> getTimetablesForDayOfWeekAndSpecialist(int diaDeLaSemana, int id) {

@@ -1,5 +1,8 @@
 package controllers.Specialist;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -86,21 +89,36 @@ public class AppointmentSpecialistController extends AbstractController {
     }
 
     // Edit.........................................
+    
+    
+    //seleccionar especialista para pedir cita con él
+    @RequestMapping(value = "/select", method = RequestMethod.GET)
+    public ModelAndView select(@RequestParam int patientId) {
+
+        ModelAndView result;
+        
+        Collection<Specialist> specialists = specialistService.getAllSpecialist();
+
+        result = new ModelAndView("appointment/select");
+        result.addObject("specialists", specialists);
+        result.addObject("requestURI", "appointment/specialist/calendar.do?patientId=" + patientId);
+
+        return result;
+    }
 
     // crear cita para un paciente
     @RequestMapping(value = "/calendar", method = RequestMethod.GET)
-    public ModelAndView calendar(@RequestParam int patientId) {
+    public ModelAndView calendar(@RequestParam int patientId, @RequestParam int specialistId) {
 
         ModelAndView result;
-
-        Patient patient = patientService.findOneToEdit(patientId);
-        Collection<Specialist> specialists = specialistService.getAllSpecialist();
+        
+        Specialist specialist = specialistService.findOneToEdit(specialistId);
+        List<Date> lista = timetableService.getDatesAvailables2(specialist);
+        String eventos = timetableService.convertListToStringJson(lista,"calendarSpecialist", 0, patientId,specialistId );
 
         result = new ModelAndView("appointment/calendar");
-        result.addObject("isPatient", false);
-        result.addObject("patient", patient);
-        result.addObject("specialists", specialists);
-        result.addObject("requestURI", "appointment/specialist/create.do?patientId=" + patientId);
+        result.addObject("eventos", eventos);
+        result.addObject("requestURI", "appointment/specialist/create.do?patientId=" + patientId+"&specialistId="+specialistId);
 
         return result;
     }
@@ -121,19 +139,25 @@ public class AppointmentSpecialistController extends AbstractController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public ModelAndView create(@RequestParam String startMoment, @RequestParam int patientId,
-            @RequestParam int specialistId) {
+    public ModelAndView create(@RequestParam String startMoment, @RequestParam int patientId, @RequestParam int specialistId) {
 
         ModelAndView result;
 
         Specialist specialist = specialistService.findOneToEdit(specialistId);
         Patient patient = patientService.findOneToEdit(patientId);
 
-        boolean cumplePatron = appointmentService.cumplePatron(startMoment);
+        //boolean cumplePatron = appointmentService.cumplePatron(startMoment);
 
-        if (startMoment != "" && cumplePatron) {
+        if (startMoment != "") {
             Date fechaElegida = appointmentService.stringToDate(startMoment);
-            List<Date> listaDeFechas = timetableService.getDatesAvailables2(fechaElegida, specialist);
+            List<Date> listaDeFechas = new ArrayList<Date>();
+            listaDeFechas.add(fechaElegida);
+            
+            DateFormat fec = new SimpleDateFormat("dd/MM/yyyy");
+            String fecha = fec.format(listaDeFechas.get(0));
+            
+            DateFormat hor = new SimpleDateFormat("HH:mm");
+            String hora = hor.format(listaDeFechas.get(0));
 
             AppointmentForm3 appointmentForm = new AppointmentForm3();
             appointmentForm.setPatient(patient);
@@ -143,11 +167,14 @@ public class AppointmentSpecialistController extends AbstractController {
 
             result.addObject("appointmentForm", appointmentForm);
             result.addObject("listaDeFechas", listaDeFechas);
-            if (listaDeFechas.isEmpty()) {
-                result.addObject("hayHorasDisponibles", false);
-            } else {
-                result.addObject("hayHorasDisponibles", true);
-            }
+            result.addObject("fecha", fecha);
+            result.addObject("hora", hora);
+//            if (listaDeFechas.isEmpty()) {
+//                result.addObject("hayHorasDisponibles", false);
+//            } else {
+//                result.addObject("hayHorasDisponibles", true);
+//            }
+            result.addObject("hayHorasDisponibles", true);
             result.addObject("create", false);
             result.addObject("isOffer", false);
             result.addObject("isSpecialist2", true);
@@ -280,14 +307,14 @@ public class AppointmentSpecialistController extends AbstractController {
         Assert.notNull(appointmentForm);
         ModelAndView result;
 
-        Appointment appointment = appointmentService.recontructor3(appointmentForm);
+        //Appointment appointment = appointmentService.recontructor3(appointmentForm);
 
         result = new ModelAndView("appointment/edit");
 
         result.addObject("appointmentForm", appointmentForm);
 
         result.addObject("existAppointment", false);
-        result.addObject("requestURI", "appointment/patient/edit.do?appointmentId=" + appointment.getId());
+        //result.addObject("requestURI", "appointment/patient/edit.do?appointmentId=" + appointment.getId());
         result.addObject("create", false);
         result.addObject("hayHorasDisponibles", true);
 
