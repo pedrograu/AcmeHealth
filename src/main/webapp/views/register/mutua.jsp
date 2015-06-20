@@ -13,7 +13,7 @@
 
 <form:form action="${requestURI}" modelAttribute="${actor}">
 
-    <acme:textbox code = "register.nif" path ="nif"/>
+    <acme:textbox placeholder ="NNNNNNNNL" code = "register.nif" path ="nif"/>
     <acme:password code = "register.pass" path ="pass"/>
 
 
