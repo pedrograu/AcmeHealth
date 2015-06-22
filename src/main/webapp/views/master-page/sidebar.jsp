@@ -23,14 +23,17 @@
      <!-- ADMINISTRATOR -->
      <security:authorize access="hasRole('ADMINISTRATOR')">
       <a href="customerArea/administrator/list.do"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a>
+      <h5 class="centered"><security:authentication      property="principal.username" /></h5>
      </security:authorize>
      <!-- PATIENT -->
      <security:authorize access="hasRole('PATIENT')">
       <a href="customerArea/patient/list.do"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a>
+     <h5 class="centered"><security:authentication      property="principal.username" /></h5>
      </security:authorize>
      <!-- SPECIALIST -->
      <security:authorize access="hasRole('SPECIALIST')">
       <a href="customerArea/specialist/list.do"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a>
+      <h5 class="centered"><security:authentication      property="principal.username" /></h5>
      </security:authorize>
     </p>
     <h5 class="centered"></h5>
