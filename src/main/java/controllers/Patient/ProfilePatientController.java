@@ -67,6 +67,12 @@ public class ProfilePatientController extends AbstractController {
         } else {
             result.addObject("isGP", false);
         }
+        if (patient.getSpecialist().equals(specialist) && specialist
+                .getSpecialty().getName().equals("Medicina General")){
+            result.addObject("GPmine", true);
+        } else {
+            result.addObject("GPmine", false);
+        }
 
         if (!appointments.isEmpty()) {
             result.addObject("hasAppointmentFinish", true);

@@ -17,12 +17,12 @@
 <tiles-definitions>
 
 	<definition name="specialist/list" extends="master.page">	
-		<put-attribute name="title" value="Lista de especialistas " />
+		<put-attribute name="title" value="Especialistas " />
 		<put-attribute name="body" value="/views/specialist/list.jsp" />
 	</definition>
 	
 	<definition name="specialist/edit" extends="master.page">	
-		<put-attribute name="title" value="Edición de especialistas" />
+		<put-attribute name="title" value="Edición de especialista" />
 		<put-attribute name="body" value="/views/specialist/edit.jsp" />
 	</definition>
 	

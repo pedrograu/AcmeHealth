@@ -22,17 +22,17 @@
     <p class="centered">
      <!-- ADMINISTRATOR -->
      <security:authorize access="hasRole('ADMINISTRATOR')">
-      <a href="customerArea/administrator/list.do"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a>
+      <a href="customerArea/administrator/list.do"><i class="fa fa-user-secret fa-4x"></i></a>
       <h5 class="centered"><security:authentication      property="principal.username" /></h5>
      </security:authorize>
      <!-- PATIENT -->
      <security:authorize access="hasRole('PATIENT')">
-      <a href="customerArea/patient/list.do"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a>
+      <a href="customerArea/patient/list.do"><i class="fa fa-user fa-4x"></i></a>
      <h5 class="centered"><security:authentication      property="principal.username" /></h5>
      </security:authorize>
      <!-- SPECIALIST -->
      <security:authorize access="hasRole('SPECIALIST')">
-      <a href="customerArea/specialist/list.do"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a>
+      <a href="customerArea/specialist/list.do"><i class="fa fa-user-md fa-4x"></i></a>
       <h5 class="centered"><security:authentication      property="principal.username" /></h5>
      </security:authorize>
     </p>

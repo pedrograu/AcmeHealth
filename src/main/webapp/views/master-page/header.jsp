@@ -17,8 +17,8 @@
   <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation" style="color: white;"></div>
  </div>
  <!--logo start-->
- <!-- <img src="images/logoA.png"  width="60"> -->
- <a href="#" class="logo"><b>DASHGUM FREE</b></a>
+
+ <a href="#" class="logo"><img src="images/Apple-iconnaranja.png"  width="30" style="vertical-align=text-bottom;">    <b>Acme <b style="color:orange">Health</b></b></a>
  <!--logo end-->
  <div class="nav notify-row" id="top_menu">
   <!--  notification start -->
