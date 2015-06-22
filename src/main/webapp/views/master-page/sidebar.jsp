@@ -177,9 +177,9 @@
         code="master.page.specialist.listAll" /></span>
     </a></li>
 
-    <li class=""><a href="offer/list-not-finish.do"> <i class="fa fa-dashboard"></i> <span><spring:message
+<%--     <li class=""><a href="offer/list-not-finish.do"> <i class="fa fa-dashboard"></i> <span><spring:message
         code="master.page.offer.listNotFinished" /></span>
-    </a></li>
+    </a></li> --%>
 
 
    </security:authorize>

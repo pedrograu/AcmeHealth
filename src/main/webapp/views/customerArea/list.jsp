@@ -187,10 +187,13 @@
        
        <security:authorize access="hasRole('SPECIALIST')">
         <display:column>
-         <a href="appointment/specialist/edit.do?appointmentId=${row.id}"><spring:message code="appointment.attend" /></a>
+        <a href="appointment/specialist/edit.do?appointmentId=${row.id}">
+        <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button></a>
         </display:column>
         <display:column>
-         <a href="message/customer/cancel.do?appointmentId=${row.id}"><spring:message code="appointment.cancel" /></a>
+         <a href="message/customer/cancel.do?appointmentId=${row.id}">
+         <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+         </a>
         </display:column>
 
        </security:authorize>

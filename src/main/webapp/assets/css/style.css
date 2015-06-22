@@ -11,8 +11,8 @@ Premium: http://www.gridgum.com
 
 /* BASIC THEME CONFIGURATION */
 body {
-    color: #797979;
-	background: #f2f2f2;
+    color: #000;
+	background: #fff;
     font-family: 'Ruda', sans-serif;
     padding: 0px !important;
     margin: 0px !important;
@@ -92,8 +92,8 @@ a, a:hover, a:focus {
 
 .btn-theme {
   color: #fff;
-  background-color: #68dff0;
-  border-color: #48bcb4;
+  background-color: #168ccc;
+  border-color: #fff;
 }
 .btn-theme:hover,
 .btn-theme:focus,
@@ -218,10 +218,9 @@ ul.top-menu > li > .logout {
 	font-size: 12px;
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
-	border: 1px solid #64c3c2 !important;
+	border: 1px solid #fff !important;
 	padding: 5px 15px;
 	margin-right: 15px;
-	background: #68dff0;
 	margin-top: 15px;
 }
 
@@ -232,11 +231,11 @@ ul.top-menu > li > .logout {
     width: 210px;
     height: 100%;
     position: fixed;
-    background: #424a5d;
+    background: #f5f5f5;
 }
 
 #sidebar h5 {
-	color: #f2f2f2;
+	color: #000;
 	font-weight: 700;
 }
 
@@ -295,7 +294,7 @@ ul.sidebar-menu {
 }
 
 ul.sidebar-menu li ul.sub li{
-    background: #424a5d;
+    background: #F5F5F5;
     margin-bottom: 0;
     margin-left: 0;
     margin-right: 0;
@@ -316,11 +315,11 @@ ul.sidebar-menu li ul.sub li a {
     -o-transition: all 0.3s ease;
     -ms-transition: all 0.3s ease;
     transition: all 0.3s ease;
-    color: #aeb2b7;
+    color: #1692DA;
 }
 
 ul.sidebar-menu li ul.sub li a:hover {
-	color: white;
+	color: black;
 	background: transparent;
 }
 
@@ -350,7 +349,7 @@ ul.sidebar-menu li a span{
 }
 
 ul.sidebar-menu li a{
-    color: #aeb2b7;
+    color: #168CCC;
     text-decoration: none;
     display: block;
     padding: 15px 0 15px 10px;
@@ -365,7 +364,7 @@ ul.sidebar-menu li a{
 
 ul.sidebar-menu li a.active, ul.sidebar-menu li a:hover, ul.sidebar-menu li a:focus {
     background: #68dff0;
-    color: #fff;
+    color: #000;
     display: block;
 
     -webkit-transition: all 0.3s ease;
@@ -413,8 +412,8 @@ ul.sidebar-menu li a.active i {
 }
 
 .black-bg {
-    background: #ffd777;
-    border-bottom: 1px solid #c9aa5f;
+    background: #168ccc;
+    border-bottom: 1px solid #168ccc;
 }
 
 .wrapper {
@@ -2216,7 +2215,7 @@ label {
 
 /*footer*/
 .site-footer {
-    background: #68dff0;
+    background: #168CCC;
     color: #fff;
     padding: 10px 0;
 }
@@ -2225,7 +2224,7 @@ label {
 .go-top {
     margin-right: 1%;
     float: right;
-    background: rgba(255,255,255,.5);
+    background: #fff;
     width: 20px;
     height: 20px;
     border-radius: 50%;
