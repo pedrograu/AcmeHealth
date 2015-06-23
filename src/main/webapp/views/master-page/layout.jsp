@@ -126,6 +126,27 @@
  
  <script type="text/javascript">
 		$(document).ready(function() {
+			
+			if($('span.error').length > 0){
+				
+				if($('span.error').parent().length > 0){
+					$('span.error').parent().attr('style', 'color:red;');
+
+				}
+				if($('span.error').siblings('input').length > 0){
+					$('span.error').siblings('input').attr('style', 'border:1px solid red;');
+
+				}
+				if($('span.error').siblings('textarea').length > 0){
+					$('span.error').siblings('textarea').attr('style', 'border:1px solid red;');
+
+				}
+				if($('span.error').siblings('select').length > 0){
+					$('span.error').siblings('select').attr('style', 'border:1px solid red;');
+
+				}
+
+			}
 
 		});
 
