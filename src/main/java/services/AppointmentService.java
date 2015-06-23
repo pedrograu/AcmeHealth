@@ -343,7 +343,7 @@ public class AppointmentService {
 
     public boolean cumplePatron(String startMoment) {
         boolean res = false;
-        Pattern pat = Pattern.compile("^(0[1-9]|[12][0-9]|3[01])[/](0[1-9]|1[012])[/](19|20)[0-9][0-9]$");
+        Pattern pat = Pattern.compile("^(0[1-9]|[12][0-9]|3[01])[/](0[1-9]|1[012])[/](19|20)[0-9][0-9]\\s([01][0-9]|2[0-4]):[0-5][0-9]$");
         Matcher mat = pat.matcher(startMoment);
         if (mat.matches()) {
             res = true;

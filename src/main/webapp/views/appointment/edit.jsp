@@ -75,6 +75,19 @@
 				<jstl:if test="${hayHorasDisponibles==false}">
 					<br />
 					<b><spring:message code="appointment.message" /></b>
+					<jstl:if test="${isOffer==false}">
+						<br />
+
+						<a href="appointment/patient/calendar.do"> <spring:message
+								code="appointment.selectOther" /></a>
+					</jstl:if>
+
+					<jstl:if test="${isOffer==true}">
+						<br />
+						<a href="appointment/patient/calendar2.do?offerId=${appointmentForm.offer.id}">
+							<spring:message code="appointment.selectOther" />
+						</a>
+					</jstl:if>
 				</jstl:if>
 
 			</jstl:if>
@@ -145,6 +158,12 @@
 				<jstl:if test="${hayHorasDisponibles==false}">
 					<br />
 					<b><spring:message code="appointment.message" /></b>
+					
+					<br />
+                    <a href="appointment/specialist/calendar.do?patientId=<%=  request.getParameter("patientId")%>&specialistId=<%=  request.getParameter("specialistId")%>">
+                            <spring:message code="appointment.selectOther" />
+                    </a>
+					
 				</jstl:if>
 
 			</jstl:if>

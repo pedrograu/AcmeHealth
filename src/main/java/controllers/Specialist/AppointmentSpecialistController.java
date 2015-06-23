@@ -146,9 +146,9 @@ public class AppointmentSpecialistController extends AbstractController {
         Specialist specialist = specialistService.findOneToEdit(specialistId);
         Patient patient = patientService.findOneToEdit(patientId);
 
-        //boolean cumplePatron = appointmentService.cumplePatron(startMoment);
+        boolean cumplePatron = appointmentService.cumplePatron(startMoment);
 
-        if (startMoment != "") {
+        if (startMoment != "" & cumplePatron) {
             Date fechaElegida = appointmentService.stringToDate(startMoment);
             List<Date> listaDeFechas = new ArrayList<Date>();
             listaDeFechas.add(fechaElegida);
