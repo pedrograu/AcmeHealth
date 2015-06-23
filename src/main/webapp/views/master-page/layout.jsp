@@ -127,6 +127,7 @@
  <script type="text/javascript">
 		$(document).ready(function() {
 			
+			//poner en rojo los campos incorrectos
 			if($('span.error').length > 0){
 				
 				if($('span.error').parent().length > 0){
@@ -147,7 +148,22 @@
 				}
 
 			}
+			
+			
+			if($('div.error').length > 0){
+				$('div.error').attr('style', 'color:red;');
+				//alert('errorr');
+			}
 
+			//mover de sitio el error que debe salir debajo del formulario y ponerlo rojo.
+			if($('span.message').length > 0){
+				
+				$('span.message').replaceWith( "<div class=\"message\" style=\"color:red;\">"+$('span.message').text()+"</div>" );
+				
+				jQuery($('div.form-group:last')).append($('div.message'));
+				
+			}
+			
 		});
 
 		function askSubmission(msg, form) {
