@@ -13,6 +13,7 @@ import domain.Specialist;
 
 public class PatientForm {
 
+    private String token;
     private boolean available;
     private String secondPassword;
     private String name;
@@ -24,6 +25,15 @@ public class PatientForm {
     private String address;
     private String phone;
     private Specialist specialist;
+
+    @NotBlank
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     @Valid
     @NotNull

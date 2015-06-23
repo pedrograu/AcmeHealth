@@ -145,7 +145,7 @@ public class AppointmentService {
         Appointment result;
 
         result = appointmentRepository.findOne(appointmentForm.getId());
-        Assert.isTrue(result.getTimetable().getSpecialist().getId() == specialist.getId());
+        Assert.isTrue(result.getSpecialist().getId() == specialist.getId());
 
         result.setId(appointmentForm.getId());
         result.setVersion(appointmentForm.getVersion());
@@ -247,35 +247,14 @@ public class AppointmentService {
             Assert.isTrue(appointment.getOffer().getPatients().contains(appointment.getPatient()));
 
         }
-
-        Appointment appointment2 = appointmentRepository.save(appointment);
-
-        //Le asociamos el timetable correspondiente a la cita elegida.
-
-        Calendar starCalendar = new GregorianCalendar();
-        Date startMomentAppointment = appointment.getStartMoment();
-
-        starCalendar.setTime(startMomentAppointment);
-
-        int diaDeLaSemana = starCalendar.get(Calendar.DAY_OF_WEEK);
-        Specialist specialist = appointment.getSpecialist();
-        List<Timetable> timetablesParaEseDiaDeLaSemana = new ArrayList<Timetable>();
-        timetablesParaEseDiaDeLaSemana = timetableService.getTimetablesForDayOfWeekAndSpecialist(diaDeLaSemana,
-                specialist.getId());
-
-        Date fechaElegida = appointment2.getStartMoment();
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(fechaElegida);
-        Integer h = calendar.get(Calendar.HOUR_OF_DAY);
-
-        for (Timetable t : timetablesParaEseDiaDeLaSemana) {
-            Integer h2 = t.getStartShift().getHours();
-            Integer h3 = t.getEndShift().getHours();
-            if (h >= h2 && h <= h3) {
-                appointment2.setTimetable(t);
-                break;
-            }
-        }
+        
+        //le sumamos 10 min a la fecha de inicio para obtener el finishMoment:
+        Calendar c = Calendar.getInstance();
+        c.setTime(appointment.getStartMoment());
+        c.add(Calendar.MINUTE, 10);
+        appointment.setFinishMoment(c.getTime());
+        
+        appointmentRepository.save(appointment);
 
     }
 
@@ -345,7 +324,7 @@ public class AppointmentService {
 
     public Date stringToDate(String startMoment) {
 
-        SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         String strFecha = startMoment;
         Date fecha = null;
 
@@ -364,7 +343,7 @@ public class AppointmentService {
 
     public boolean cumplePatron(String startMoment) {
         boolean res = false;
-        Pattern pat = Pattern.compile("^(0[1-9]|[12][0-9]|3[01])[/](0[1-9]|1[012])[/](19|20)[0-9][0-9]$");
+        Pattern pat = Pattern.compile("^(0[1-9]|[12][0-9]|3[01])[/](0[1-9]|1[012])[/](19|20)[0-9][0-9]\\s([01][0-9]|2[0-4]):[0-5][0-9]$");
         Matcher mat = pat.matcher(startMoment);
         if (mat.matches()) {
             res = true;
@@ -378,9 +357,29 @@ public class AppointmentService {
         return ap;
     }
 
+    public Collection<Appointment> getAppointmentforOneSpecialistAndDay(int id, Date d1) {
+
+        String format = new SimpleDateFormat("yyyy-MM-dd").format(d1);
+        String string1 = format + " " + "00:00:00.1";
+        String string2 = format + " " + "23:59:59.9";
+        Date date1 = new Date();
+        try {
+            date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").parse(string1);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Date date2 = new Date();
+        try {
+            date2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").parse(string2);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return appointmentRepository.getAppointmentforOneSpecialistAndDay(id, date1, date2);
+    }
+
     public void checkPrincipal(Appointment appointment) {
         Specialist specialist = specialistService.findByPrincipal();
-        Assert.isTrue(appointment.getTimetable().getSpecialist().equals(specialist));
+        Assert.isTrue(appointment.getSpecialist().equals(specialist));
     }
 
     public void cancel(Appointment appointment) {

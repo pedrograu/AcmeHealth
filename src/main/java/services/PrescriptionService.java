@@ -76,7 +76,7 @@ public class PrescriptionService {
 
     public void checkPrincipal(Prescription prescription) {
         Specialist specialistConnect = specialistService.findByPrincipal();
-        Assert.isTrue(prescription.getAppointment().getTimetable().getSpecialist().equals(specialistConnect));
+        Assert.isTrue(prescription.getAppointment().getSpecialist().equals(specialistConnect));
     }
 
     public Collection<Prescription> findForPatient(Patient patientConnect) {

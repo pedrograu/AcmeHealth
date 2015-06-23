@@ -8,7 +8,8 @@
  * http://www.tdg-seville.info/License.html
  --%>
 
-<%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -24,11 +25,18 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
+<<<<<<< HEAD
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+=======
+<link rel="shortcut icon" href="favicon.ico" />
+
+<script src='scripts/jquery.min.js'></script>
+>>>>>>> appointment
 
 <link rel="shortcut icon" href="favicon.ico" />
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 
+<<<<<<< HEAD
 <!-- Bootstrap core CSS -->
 <link href="assets/css/bootstrap.css" rel="stylesheet">
 <!--external css-->
@@ -42,11 +50,87 @@
 <link href="assets/css/style-responsive.css" rel="stylesheet">
 
 <script src="assets/js/chart-master/Chart.js"></script>
+=======
+
+<link rel="stylesheet" href="styles/common.css" type="text/css">
+<link rel="stylesheet" href="styles/jmenu.css" media="screen"
+	type="text/css" />
+<link rel="stylesheet" href="styles/displaytag.css" type="text/css">
+
+<link rel='stylesheet' href='styles/fullcalendar.css' />
+<script src='scripts/moment.min.js'></script>
+<script src='scripts/fullcalendar.js'></script>
+
+<title><tiles:insertAttribute name="title" ignore="true" /></title>
+
+<style type="text/css">
+
+
+#calendar {
+	width: 900px;
+	margin: 0 auto;
+}
+</style>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+
+        if ( $("#eventos").length > 0  ) {
+            var string = $("#eventos").val();
+            var eventos = JSON.parse(string);
+
+        }
+		var calendar = $('#calendar').fullCalendar({
+
+			header : {
+				left : 'prev,next today',
+				center : 'title',
+				right : 'month,agendaWeek,agendaDay'
+			},
+
+			defaultView : 'agendaWeek',
+
+			selectable : false,
+			selectHelper : false,
+			editable : false,
+
+			eventColor: '#19D119',
+			slotDuration: '00:20:00',
+			events: eventos
+
+		});
+		
+       
+        
+		$("#jMenu").jMenu();
+
+	});
+
+	function askSubmission(msg, form) {
+		if (confirm(msg))
+			form.submit();
+	}
+</script>
+
+<script type="text/javascript">
+	function relativeRedir(loc) {
+		var b = document.getElementsByTagName('base');
+		if (b && b[0] && b[0].href) {
+			if (b[0].href.substr(b[0].href.length - 1) == '/'
+					&& loc.charAt(0) == '/')
+				loc = loc.substr(1);
+			loc = b[0].href + loc;
+		}
+		window.location.replace(loc);
+	}
+</script>
+>>>>>>> appointment
 
 </head>
 
 <body>
 
+<<<<<<< HEAD
  <section id="container">
   <!-- ******************************************************************************************************************
             TOP BAR CONTENT & NOTIFICATIONS
@@ -158,6 +242,24 @@
                 });
             });
 
+=======
+	<div>
+		<tiles:insertAttribute name="header" />
+	</div>
+	<div>
+		<h1>
+			<tiles:insertAttribute name="title" />
+		</h1>
+		<tiles:insertAttribute name="body" />
+		<jstl:if test="${message != null}">
+			<br />
+			<span class="message"><spring:message code="${message}" /></span>
+		</jstl:if>
+	</div>
+	<div>
+		<tiles:insertAttribute name="footer" />
+	</div>
+>>>>>>> appointment
 
             function myNavFunction(id) {
                 $("#date-popover").hide();

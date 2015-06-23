@@ -1,22 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- 
- * PopulateDatabase.xml
- *
- * Copyright (C) 2014 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
- * http://www.tdg-seville.info/License.html
- -->
- 
+<!-- * PopulateDatabase.xml * * Copyright (C) 2014 Universidad de Sevilla 
+	* * The use of this project is hereby constrained to the conditions of the 
+	* TDG Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
+
 
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	">
-	
+
 	<!-- User accounts -->
 
 	<bean id="userAccount1" class="security.UserAccount">
@@ -62,10 +56,10 @@
 			</list>
 		</property>
 	</bean>
-	
-	
-	
-	
+
+
+
+
 	<bean id="userAccount4" class="security.UserAccount">
 		<property name="username" value="administrator2" />
 		<property name="password" value="82954495ff7e2a735ed2192c35b2cd00" />
@@ -77,7 +71,7 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="userAccount5" class="security.UserAccount">
 		<property name="username" value="specialist2" />
 		<property name="password" value="2b7ca7c4d28823ad34e227d17fa73fdc" />
@@ -92,7 +86,7 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="userAccount6" class="security.UserAccount">
 		<property name="username" value="patient2" />
 		<property name="password" value="3d47080f1445cd844c3390b15c835ffa" />
@@ -107,7 +101,7 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="userAccount7" class="security.UserAccount">
 		<property name="username" value="specialist3" />
 		<property name="password" value="b4a7495aa0ec7fc2caa321ba632c36ef" />
@@ -156,7 +150,7 @@
 		<property name="cVVcode" value="181"></property>
 
 	</bean>
-	
+
 	<bean id="creditCard4" class="domain.CreditCard">
 		<property name="holderName" value="Maite"></property>
 		<property name="brandName" value="Gimeno"></property>
@@ -191,9 +185,9 @@
 			</list>
 		</property>
 	</bean>
-	
-	
-	
+
+
+
 	<bean id="administrator2" class="domain.Administrator">
 		<property name="userAccount">
 			<ref bean="userAccount4" />
@@ -213,50 +207,50 @@
 			</list>
 		</property>
 	</bean>
-	
-	
 
-	
-	
+
+
+
+
 	<!-- Specialty -->
-	
+
 	<bean id="specialty1" class="domain.Specialty">
 
 		<property name="name" value="Medicina General"></property>
 		<property name="description" value="Esta es la descripcion de la especialidad 1"></property>
 		<property name="specialists">
 			<list>
-				 <ref bean="specialist1" /> 
-				 <ref bean="specialist2" /> 
+				<ref bean="specialist1" />
+				<ref bean="specialist2" />
 			</list>
 		</property>
 		<property name="administrator">
 			<ref bean="administrator1" />
 		</property>
-		
+
 	</bean>
-	
+
 	<bean id="specialty2" class="domain.Specialty">
 
 		<property name="name" value="Traumatólogo"></property>
 		<property name="description" value="Esta es la descripcion del traumatologo"></property>
 		<property name="specialists">
 			<list>
-				 <ref bean="specialist3" />  
+				<ref bean="specialist3" />
 			</list>
 		</property>
 		<property name="administrator">
 			<ref bean="administrator2" />
 		</property>
-		
+
 	</bean>
-	
-	
-	
+
+
+
 	<!-- Specialist -->
 
 	<bean id="specialist1" class="domain.Specialist">
-	
+
 		<property name="userAccount">
 			<ref bean="userAccount3" />
 		</property>
@@ -275,6 +269,11 @@
 				<ref bean="appointment2" />
 			</list>
 		</property>
+		<property name="freeDays">
+			<list>
+				<ref bean="freeDay1" />
+			</list>
+		</property>
 		<property name="timetables">
 			<list>
 				<ref bean="timetable1" />
@@ -283,14 +282,14 @@
 			</list>
 		</property>
 		<property name="profile">
-			 <ref bean="profile1" /> 
-		</property> 
+			<ref bean="profile1" />
+		</property>
 		<property name="specialty">
 			<ref bean="specialty1" />
 		</property>
 		<property name="messageRecipient">
 			<list>
-				
+
 			</list>
 		</property>
 		<property name="messageSender">
@@ -308,18 +307,14 @@
 				<ref bean="offer6" />
 			</list>
 		</property>
-		<property name="freeDays">
-			<list>
-			<ref bean="freeDay1" />
-				
-			</list>
-		</property>
-		
-		
+		<!-- <property name="freeDays"> <list> <ref bean="freeDay1" /> </list> 
+			</property> -->
+
+
 	</bean>
-	
+
 	<bean id="specialist2" class="domain.Specialist">
-	
+
 		<property name="userAccount">
 			<ref bean="userAccount5" />
 		</property>
@@ -328,12 +323,17 @@
 		<property name="emailAddress" value="cgh@gmail.com"></property>
 		<property name="patients">
 			<list>
-				
+
 			</list>
 		</property>
 		<property name="appointments">
 			<list>
-				
+
+			</list>
+		</property>
+		<property name="freeDays">
+			<list>
+
 			</list>
 		</property>
 		<property name="timetables">
@@ -342,39 +342,34 @@
 			</list>
 		</property>
 		<property name="profile">
-			 <ref bean="profile2" /> 
-		</property> 
+			<ref bean="profile2" />
+		</property>
 		<property name="specialty">
 			<ref bean="specialty1" />
 		</property>
 		<property name="messageRecipient">
 			<list>
-				
+
 			</list>
 		</property>
 		<property name="messageSender">
 			<list>
-				
+
 			</list>
 		</property>
 		<property name="offers">
 			<list>
-				
+
 			</list>
 		</property>
-		<property name="freeDays">
-			<list>
-			
-				
-			</list>
-		</property>
-		
-		
+		<!-- <property name="freeDays"> <list> </list> </property> -->
+
+
 	</bean>
-	
-	
+
+
 	<bean id="specialist3" class="domain.Specialist">
-	
+
 		<property name="userAccount">
 			<ref bean="userAccount7" />
 		</property>
@@ -383,12 +378,17 @@
 		<property name="emailAddress" value="paperez@gmail.com"></property>
 		<property name="patients">
 			<list>
-				
+
 			</list>
 		</property>
 		<property name="appointments">
 			<list>
-				
+
+			</list>
+		</property>
+		<property name="freeDays">
+			<list>
+
 			</list>
 		</property>
 		<property name="timetables">
@@ -397,36 +397,30 @@
 			</list>
 		</property>
 		<property name="profile">
-			 <ref bean="profile3" /> 
-		</property> 
+			<ref bean="profile3" />
+		</property>
 		<property name="specialty">
 			<ref bean="specialty2" />
 		</property>
 		<property name="messageRecipient">
 			<list>
-				
+
 			</list>
 		</property>
 		<property name="messageSender">
 			<list>
-				
+
 			</list>
 		</property>
 		<property name="offers">
 			<list>
-				
+
 			</list>
 		</property>
-		<property name="freeDays">
-			<list>
-			
-				
-			</list>
-		</property>
-		
-		
+		<!-- <property name="freeDays"> <list> </list> </property> -->
+
 	</bean>
-	
+
 	<!-- Patient -->
 
 	<bean id="patient1" class="domain.Patient">
@@ -443,11 +437,11 @@
 			<ref bean="creditCard1" />
 		</property>
 		<property name="medicalHistory">
-			<ref bean="medicalHistory1" /> 
-		</property> 
+			<ref bean="medicalHistory1" />
+		</property>
 		<property name="comments">
 			<list>
-				  <ref bean="comment1" />  
+				<ref bean="comment1" />
 			</list>
 		</property>
 		<property name="specialist">
@@ -460,7 +454,7 @@
 		</property>
 		<property name="messageSender">
 			<list>
-				
+
 			</list>
 		</property>
 		<property name="offers">
@@ -470,14 +464,14 @@
 		</property>
 		<property name="appointments">
 			<list>
-				<ref bean="appointment1" />  
+				<ref bean="appointment1" />
 			</list>
 		</property>
 		<property name="enableMessage" value="true"></property>
-		
+
 	</bean>
-	
-	
+
+
 	<bean id="patient2" class="domain.Patient">
 		<property name="userAccount">
 			<ref bean="userAccount6" />
@@ -492,11 +486,11 @@
 			<ref bean="creditCard4" />
 		</property>
 		<property name="medicalHistory">
-			<ref bean="medicalHistory2" /> 
-		</property> 
+			<ref bean="medicalHistory2" />
+		</property>
 		<property name="comments">
 			<list>
-				  <ref bean="comment2" />  
+				<ref bean="comment2" />
 			</list>
 		</property>
 		<property name="specialist">
@@ -504,31 +498,31 @@
 		</property>
 		<property name="messageRecipient">
 			<list>
-				
+
 			</list>
 		</property>
 		<property name="messageSender">
 			<list>
-				
+
 			</list>
 		</property>
 		<property name="offers">
 			<list>
-				
+
 			</list>
 		</property>
 		<property name="appointments">
 			<list>
-				<ref bean="appointment2" />  
+				<ref bean="appointment2" />
 			</list>
 		</property>
 		<property name="enableMessage" value="false"></property>
-		
+
 	</bean>
-	
-	
+
+
 	<!-- Offer -->
-	
+
 	<bean id="offer1" class="domain.Offer">
 
 		<property name="creationMoment" value="12/12/2009"></property>
@@ -544,18 +538,20 @@
 		</property>
 		<property name="patients">
 			<list>
-				 <ref bean="patient1" />
+				<ref bean="patient1" />
 			</list>
 		</property>
-		<property name="specialist"><ref bean="specialist1" /></property>
+		<property name="specialist">
+			<ref bean="specialist1" />
+		</property>
 		<property name="appointments">
 			<list>
-				 
+
 			</list>
 		</property>
-		
+
 	</bean>
-	
+
 	<bean id="offer2" class="domain.Offer">
 
 		<property name="creationMoment" value="12/12/2010"></property>
@@ -571,18 +567,20 @@
 		</property>
 		<property name="patients">
 			<list>
-				 
+
 			</list>
 		</property>
-		<property name="specialist"><ref bean="specialist1" /></property>
+		<property name="specialist">
+			<ref bean="specialist1" />
+		</property>
 		<property name="appointments">
 			<list>
-				 
+
 			</list>
 		</property>
-		
+
 	</bean>
-	
+
 	<bean id="offer3" class="domain.Offer">
 
 		<property name="creationMoment" value="11/10/2009"></property>
@@ -598,19 +596,21 @@
 		</property>
 		<property name="patients">
 			<list>
-				 
+
 			</list>
 		</property>
-		<property name="specialist"><ref bean="specialist1" /></property>
+		<property name="specialist">
+			<ref bean="specialist1" />
+		</property>
 		<property name="appointments">
 			<list>
-				 
+
 			</list>
 		</property>
-		
+
 	</bean>
-	
-	
+
+
 	<bean id="offer4" class="domain.Offer">
 
 		<property name="creationMoment" value="11/04/2007"></property>
@@ -626,19 +626,21 @@
 		</property>
 		<property name="patients">
 			<list>
-				 
+
 			</list>
 		</property>
-		<property name="specialist"><ref bean="specialist1" /></property>
+		<property name="specialist">
+			<ref bean="specialist1" />
+		</property>
 		<property name="appointments">
 			<list>
-				 
+
 			</list>
 		</property>
-		
+
 	</bean>
-	
-	
+
+
 	<bean id="offer5" class="domain.Offer">
 
 		<property name="creationMoment" value="11/04/2013"></property>
@@ -654,20 +656,22 @@
 		</property>
 		<property name="patients">
 			<list>
-				 
+
 			</list>
 		</property>
-		<property name="specialist"><ref bean="specialist1" /></property>
+		<property name="specialist">
+			<ref bean="specialist1" />
+		</property>
 		<property name="appointments">
 			<list>
-				 
+
 			</list>
 		</property>
-		
+
 	</bean>
-	
-	
-	
+
+
+
 	<bean id="offer6" class="domain.Offer">
 
 		<property name="creationMoment" value="04/04/2007"></property>
@@ -683,20 +687,22 @@
 		</property>
 		<property name="patients">
 			<list>
-				 
+
 			</list>
 		</property>
-		<property name="specialist"><ref bean="specialist1" /></property>
+		<property name="specialist">
+			<ref bean="specialist1" />
+		</property>
 		<property name="appointments">
 			<list>
-				 
+
 			</list>
 		</property>
-		
+
 	</bean>
-	
-	
-	
+
+
+
 	<!-- Profile -->
 
 	<bean id="profile1" class="domain.Profile">
@@ -705,318 +711,317 @@
 		<property name="text" value="blablabla"></property>
 		<property name="comments">
 			<list>
-				  <ref bean="comment1" />
-				  <ref bean="comment2" />    
+				<ref bean="comment1" />
+				<ref bean="comment2" />
 			</list>
 		</property>
 
 		<property name="specialist">
 			<ref bean="specialist1" />
 		</property>
-		
+
 	</bean>
-	
-	
+
+
 	<bean id="profile2" class="domain.Profile">
 
 		<!-- <property name="rating" value="4"></property> -->
 		<property name="text" value="blablabla"></property>
 		<property name="comments">
 			<list>
-				  
+
 			</list>
 		</property>
 
 		<property name="specialist">
 			<ref bean="specialist2" />
 		</property>
-		
+
 	</bean>
-	
+
 	<bean id="profile3" class="domain.Profile">
 
 		<!-- <property name="rating" value=""></property> -->
 		<property name="text" value="blablabla2"></property>
 		<property name="comments">
 			<list>
-				  
+
 			</list>
 		</property>
 
 		<property name="specialist">
 			<ref bean="specialist3" />
 		</property>
-		
+
 	</bean>
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
 	<!-- MedicalHistory -->
 
- 
+
 	<bean id="medicalHistory1" class="domain.MedicalHistory">
 
- 		<property name="patient">
+		<property name="patient">
 			<ref bean="patient1" />
-		</property> 
+		</property>
 		<property name="appointments">
 			<list>
 				<ref bean="appointment1" />
 			</list>
 		</property>
-	
+
 	</bean>
-	
+
 	<bean id="medicalHistory2" class="domain.MedicalHistory">
 
- 		<property name="patient">
+		<property name="patient">
 			<ref bean="patient2" />
-		</property> 
+		</property>
 		<property name="appointments">
 			<list>
 				<ref bean="appointment2" />
 			</list>
 		</property>
-	
+
 	</bean>
-	
-	
+
+
 	<!-- Timetable -->
-	
-	
+
+
 	<bean id="timetable1" class="domain.Timetable">
-		
+
 		<property name="startShift" value="10/10/2014 08:00"></property>
 		<property name="endShift" value="11/11/2014 14:00"></property>
 		<property name="day" value="1"></property>
 		<property name="specialist">
 			<ref bean="specialist1" />
-		</property> 
-		<property name="appointments">
-			<list>
-				<ref bean="appointment1" />
-				<ref bean="appointment2" />
-			</list>
 		</property>
-		
-	
+		<!-- <property name="appointments"> <list> <ref bean="appointment1" /> 
+			<ref bean="appointment2" /> </list> </property> -->
+
+
 	</bean>
-	
-	
+
+
 	<bean id="timetable2" class="domain.Timetable">
-		
+
 		<property name="startShift" value="10/10/2014 16:00"></property>
 		<property name="endShift" value="11/11/2014 21:00"></property>
 		<property name="day" value="1"></property>
 		<property name="specialist">
 			<ref bean="specialist1" />
-		</property> 
-		<property name="appointments">
-			<list>
-
-			</list>
 		</property>
-		
-	
+		<!-- <property name="appointments"> <list> </list> </property> -->
+
+
 	</bean>
-	
-	
+
+
 	<bean id="timetable3" class="domain.Timetable">
-		
+
 		<property name="startShift" value="10/10/2014 21:00"></property>
 		<property name="endShift" value="11/11/2014 23:00"></property>
 		<property name="day" value="1"></property>
 		<property name="specialist">
 			<ref bean="specialist1" />
-		</property> 
-		<property name="appointments">
-			<list>
-
-			</list>
 		</property>
-		
-	
+		<!-- <property name="appointments"> <list> </list> </property> -->
+
+
 	</bean>
-	
+
 	<bean id="timetable4" class="domain.Timetable">
-		
+
 		<property name="startShift" value="10/10/2014 13:00"></property>
 		<property name="endShift" value="11/11/2014 18:00"></property>
 		<property name="day" value="3"></property>
 		<property name="specialist">
 			<ref bean="specialist3" />
-		</property> 
-		<property name="appointments">
-			<list>
-
-			</list>
 		</property>
-		
-	
+		<!-- <property name="appointments"> <list> </list> </property> -->
+
+
 	</bean>
-	
-	
+
+
 	<bean id="timetable5" class="domain.Timetable">
-		
+
 		<property name="startShift" value="10/10/2014 20:00"></property>
 		<property name="endShift" value="11/11/2014 23:00"></property>
 		<property name="day" value="4"></property>
 		<property name="specialist">
 			<ref bean="specialist2" />
-		</property> 
-		<property name="appointments">
-			<list>
-
-			</list>
 		</property>
-		
-	
+		<!-- <property name="appointments"> <list> </list> </property> -->
+
+
 	</bean>
-	
+
 	<!-- Appointment -->
-	
-	
+
 	<bean id="appointment1" class="domain.Appointment">
-		
+
 		<property name="isFinish" value="1"></property>
 		<property name="startMoment" value="01/06/2014 08:20"></property>
+		<property name="finishMoment" value="01/06/2014 08:30"></property>
 		<property name="result" value="Se va a morir usted en breve"></property>
 		<property name="purpose" value="Le duelen las entrañas"></property>
 		<property name="patient">
 			<ref bean="patient1" />
-		</property> 
+		</property>
 		<property name="specialist">
 			<ref bean="specialist1" />
-		</property> 
- 		<property name="medicalHistory">
+		</property>
+		<property name="medicalHistory">
 			<ref bean="medicalHistory1" />
-		</property> 
-		<property name="timetable">
-			<ref bean="timetable1" />
-		</property> 
+		</property>
+		<!-- <property name="timetable"> <ref bean="timetable1" /> </property> -->
 		<property name="prescriptions">
 			<list>
 				<ref bean="prescription1" />
 			</list>
 		</property>
-	
+
 	</bean>
-	
-	
+
+
 	<bean id="appointment2" class="domain.Appointment">
-		
-		<property name="isFinish" value="0"></property> 
-		<property name="startMoment" value="29/06/2014 08:30"></property>
-<!-- 		<property name="result" value=""></property>
-		<property name="purpose" value=""></property> -->
+
+		<property name="isFinish" value="0"></property>
+		<property name="startMoment" value="29/06/2015 08:30"></property>
+		<property name="finishMoment" value="29/06/2015 08:40"></property>
+		<!-- <property name="result" value=""></property> <property name="purpose" 
+			value=""></property> -->
 		<property name="patient">
 			<ref bean="patient2" />
-		</property> 
+		</property>
 		<property name="specialist">
 			<ref bean="specialist1" />
-		</property> 
- 		<property name="medicalHistory">
+		</property>
+		<property name="medicalHistory">
 			<ref bean="medicalHistory2" />
-		</property> 
-		<property name="timetable">
-			<ref bean="timetable1" />
-		</property> 
+		</property>
+		<!-- <property name="timetable"> <ref bean="timetable1" /> </property> -->
 		<property name="prescriptions">
 			<list>
-				
+
 			</list>
 		</property>
-	
+
 	</bean>
-	
+
 	<!-- FreeDay -->
-	
-	
+
+
+
 	<bean id="freeDay1" class="domain.FreeDay">
-		
-		<property name="startMoment" value="06/08/2014 23:59"></property>
-		<property name="finishMoment" value="06/22/2014 23:59"></property>
+
+		<property name="startMoment" value="06/08/2015 23:59"></property>
+		<property name="finishMoment" value="06/22/2015 23:59"></property>
 		<property name="description" value="Me voy al caribeeeee"></property>
 		<property name="specialist">
 			<ref bean="specialist1" />
-		</property> 
-	
-	</bean> 
-	
-	
-	
+		</property>
+
+	</bean>
+
+
+
 	<!-- Prescription -->
-	
-	
+
+
 	<bean id="prescription1" class="domain.Prescription">
-		
+
 		<property name="title" value="receta 1"></property>
 		<property name="creationMoment" value="09/11/2012"></property>
 		<property name="description" value="tomar medicamento recetado cada 8 horas"></property>
 		<property name="price" value="12.50"></property>
- 		<property name="appointment">
+		<property name="appointment">
 			<ref bean="appointment1" />
-		</property> 
-	
+		</property>
+
 	</bean>
-	
-	
+
+
 	<!-- Comment -->
 
- 
+
 	<bean id="comment1" class="domain.Comment">
 
 		<property name="creationMoment" value="10/10/2010"></property>
 		<property name="text" value="esto es un comentario"></property>
-		<property name="rating" value="4"></property> 
- 		<property name="patient">
+		<property name="rating" value="4"></property>
+		<property name="patient">
 			<ref bean="patient1" />
-		</property> 
+		</property>
 		<property name="profile">
 			<ref bean="profile1" />
 		</property>
-	
+
 	</bean>
-	
+
 	<bean id="comment2" class="domain.Comment">
 
 		<property name="creationMoment" value="10/10/2011"></property>
 		<property name="text" value="este es el comentario 2"></property>
-		<property name="rating" value="6"></property> 
- 		<property name="patient">
+		<property name="rating" value="6"></property>
+		<property name="patient">
 			<ref bean="patient2" />
-		</property> 
+		</property>
 		<property name="profile">
 			<ref bean="profile1" />
 		</property>
-	
+
 	</bean>
-	
-	
-	
+
+
+
 	<!-- Message -->
 
- 
+
 	<bean id="message1" class="domain.Message">
 
 		<property name="creationMoment" value="10/10/2010"></property>
 		<property name="subject" value="mensaje 1"></property>
-		<property name="textBody" value="este es el texto del mensaje"></property> 
- 		<property name="recipient">
+		<property name="textBody" value="este es el texto del mensaje"></property>
+		<property name="recipient">
 			<ref bean="patient1" />
-		</property> 
+		</property>
 		<property name="sender">
 			<ref bean="specialist1" />
 		</property>
-	
-	</bean>
-	
 
-	
-	
+	</bean>
+
+
+    <!-- Token -->
+
+
+    <bean id="mutua1" class="domain.Mutua">
+
+        <property name="token" value="jhJHG49jhgjhf6sdh3uh34h3"></property>
+
+    </bean>
+
+    <bean id="mutua2" class="domain.Mutua">
+
+        <property name="token" value="sdjhkjhj5903lnHJK8hkjJH6d"></property>
+
+    </bean>
+
+    <bean id="mutua3" class="domain.Mutua">
+
+        <property name="token" value="kjhHJjhjkkjk23jkh23jG23hj"></property>
+
+    </bean>
+
+
+
 </beans>

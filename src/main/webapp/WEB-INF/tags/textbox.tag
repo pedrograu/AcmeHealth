@@ -1,3 +1,4 @@
+
 <%--
  * textbox.tag
  *
@@ -25,20 +26,19 @@
 <%@ attribute name="code" required="true" %>
 
 <%@ attribute name="readonly" required="false" %>
+<%@ attribute name="value" required="false" %>
+<%@ attribute name="placeholder" required="false" %>
 
 <jstl:if test="${readonly == null}">
 	<jstl:set var="readonly" value="false" />
-</jstl:if>
-<jstl:if test="${maxlength == null}">
-    <jstl:set var="maxlength" value="255" />
 </jstl:if>
 
 <%-- Definition --%>
 
 <div class="form-group">
-    <form:label path="${path}" >
-        <spring:message code="${code}" />
-    </form:label>   
-    <form:input path="${path}" readonly="${readonly}" maxlength="${maxlength}" placeholder="${placeholder}" cssClass="form-control"/>
-    <form:errors path="${path}" cssClass="error" />
-</div>  
+	<form:label path="${path}">
+		<spring:message code="${code}" />
+	</form:label>	
+	<form:input path="${path}" readonly="${readonly}" value="${value}"  placeholder="${placeholder}"  cssClass="form-control"/>	
+	<form:errors path="${path}" cssClass="error" />
+</div>	

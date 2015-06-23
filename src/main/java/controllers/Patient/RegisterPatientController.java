@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ import controllers.AbstractController;
 import domain.Patient;
 import domain.Specialist;
 import forms.PatientForm;
+import forms.TokenForm;
 
 @Controller
 @RequestMapping("/register/patient")
@@ -45,6 +47,48 @@ public class RegisterPatientController extends AbstractController {
     }
 
     // Registration -----------------------------------------------------------
+
+    @RequestMapping(value = "/mutua", method = RequestMethod.GET)
+    public ModelAndView mutua() {
+        ModelAndView result;
+        TokenForm tokenForm = new TokenForm();
+
+        result = createEditModelAndView2(tokenForm);
+
+        return result;
+    }
+
+    @RequestMapping(value = "/mutua", method = RequestMethod.POST, params = "check")
+    public ModelAndView check(@Valid TokenForm tokenForm, BindingResult binding) {
+
+        ModelAndView result;
+
+        if (binding.hasErrors()) {
+            result = createEditModelAndView2(tokenForm);
+
+        } else {
+            String nif = tokenForm.getNif();
+            String pass = tokenForm.getPass();
+            
+            //encriptamos pass
+            Md5PasswordEncoder encoder;
+            encoder = new Md5PasswordEncoder();
+            String hash = encoder.encodePassword(pass, null);
+
+            String token = patientService.getToken(nif, hash);
+
+            if (token == "null") {
+                result = new ModelAndView("register/mutua");
+                result.addObject("error", true);
+                result.addObject("tokenForm", tokenForm);
+                result.addObject("actor", "tokenForm");
+            } else {
+                result = new ModelAndView("redirect:edit.do?token=" + token);
+            }
+
+        }
+        return result;
+    }
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public ModelAndView register() {
@@ -93,7 +137,10 @@ public class RegisterPatientController extends AbstractController {
                         result = createEditModelAndView(patientForm, "register.available.error");
                     } else if (!currentMoment.before(dateCreditCard)) {
                         result = createEditModelAndView(patientForm, "register.creditCard.error");
-                    } else {
+                    } else if (!patientService.getTokens().contains(patientForm.getToken())) {
+                        result = createEditModelAndView(patientForm, "register.token.error");
+                    } 
+                    else {
                         result = createEditModelAndView(patientForm, "register.commit.error");
                     }
                 }
@@ -131,6 +178,30 @@ public class RegisterPatientController extends AbstractController {
         result.addObject("registerPatient", true);
 
         result.addObject("specialists", specialists);
+
+        result.addObject("message", message);
+
+        return result;
+    }
+
+    protected ModelAndView createEditModelAndView2(TokenForm tokenForm) {
+
+        ModelAndView result;
+
+        result = createEditModelAndView2(tokenForm, null);
+
+        return result;
+    }
+
+    protected ModelAndView createEditModelAndView2(TokenForm tokenForm, String message) {
+
+        ModelAndView result;
+
+        result = new ModelAndView("register/mutua");
+        result.addObject("tokenForm", tokenForm);
+        result.addObject("actor", "tokenForm");
+        result.addObject("error", false);
+        result.addObject("requestURI", "register/patient/mutua.do");
 
         result.addObject("message", message);
 

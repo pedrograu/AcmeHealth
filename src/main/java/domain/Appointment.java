@@ -50,14 +50,16 @@ public class Appointment extends Slot {
     // Relationships ----------------------------------------------------------
 
     private MedicalHistory medicalHistory;
-    private Timetable timetable;
     private Collection<Prescription> prescriptions;
     private Offer offer;
     private Patient patient;
     private Specialist specialist;
 
+
+
     @Valid
-    @ManyToOne(optional = true)
+    @NotNull
+    @ManyToOne(optional = false)
     public Specialist getSpecialist() {
         return specialist;
     }
@@ -109,14 +111,5 @@ public class Appointment extends Slot {
         this.prescriptions = prescriptions;
     }
 
-    @Valid
-    @ManyToOne(optional = true)
-    public Timetable getTimetable() {
-        return timetable;
-    }
-
-    public void setTimetable(Timetable timetable) {
-        this.timetable = timetable;
-    }
 
 }

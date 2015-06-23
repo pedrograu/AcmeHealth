@@ -1,10 +1,14 @@
 package services;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
@@ -16,6 +20,9 @@ import repositories.PatientRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import domain.Appointment;
 import domain.Comment;
 import domain.MedicalHistory;
@@ -23,11 +30,14 @@ import domain.Message;
 import domain.Offer;
 import domain.Patient;
 import domain.Specialist;
+import domain.Token;
 import forms.PatientForm;
 
 @Service
 @Transactional
 public class PatientService {
+
+    public static final ObjectMapper JSON_MAPPER = new ObjectMapper();
 
     // Managed repository ---------------------------------------
     @Autowired
@@ -104,6 +114,12 @@ public class PatientService {
         medicalHistoryService.save(medicalHistory);
 
     }
+    
+    public Collection<String> getTokens(){
+        Collection<String> tokens = patientRepository.getTokens();
+    
+        return tokens;
+    }
 
     public Patient reconstruct(PatientForm patientForm) {
 
@@ -113,6 +129,8 @@ public class PatientService {
         Calendar dateCreditCard = new GregorianCalendar();
         dateCreditCard.set(year, month, 1);
 
+        Assert.isTrue(getTokens().contains(patientForm.getToken()));
+        
         Assert.isTrue(currentMoment.before(dateCreditCard));
 
         Patient patient = create();
@@ -229,6 +247,22 @@ public class PatientService {
             patient.setEnableMessage(true);
         }
 
+    }
+
+    public String getToken(String nif, String pass) {
+
+        String token = "null";
+        try {
+            ArrayList<Token> tokens = JSON_MAPPER.readValue(new URL(
+                    "http://52.24.124.225/index.php/api/mutua/search?nif=" + nif + "&pass=" + pass), JSON_MAPPER
+                    .getTypeFactory().constructCollectionType(ArrayList.class, Token.class));
+
+            Token t = tokens.get(0);
+            return t.getToken();
+
+        } catch (IOException e) {
+            return token;
+        }
     }
 
 }
