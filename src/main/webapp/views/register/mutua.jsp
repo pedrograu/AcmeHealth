@@ -9,6 +9,7 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<div class="col-md-5  col-md-offset-3">
 <jstl:if test="${error==false}">
 
 <form:form action="${requestURI}" modelAttribute="${actor}">
@@ -42,3 +43,4 @@
 <br/>
 <div style="color:red;"><b><spring:message code="register.message" /></b></div>
 </jstl:if>
+</div>

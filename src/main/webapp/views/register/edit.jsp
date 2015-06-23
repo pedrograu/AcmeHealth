@@ -16,70 +16,107 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
-<%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
-
-<div class="col-md-7  col-md-offset-2" style="margin-bottom: 100px;">
-<form:form action="${requestURI}" modelAttribute="${actor}">
-
-    
-	<acme:textbox code = "register.username" path ="username"/>
-	<acme:password code = "register.password" path ="password"/>
-	<acme:password code = "register.second.password" path ="secondPassword"/>
-	
-	
-	<acme:textbox code = "register.name" path ="name"/>
-	<acme:textbox code = "register.surname" path ="surname"/>
-	<acme:textbox code = "register.emailAddress" path ="emailAddress"/>
-
-	<jstl:if test="${registerPatient==true}">
-    <acme:textbox value="<%=request.getParameter(\"token\")%>"  readonly="true" code = "register.token" path ="token"/>
-
-	
-	<acme:textbox code = "register.address" path ="address"/>
-	
-	<acme:textbox code = "register.phone" path ="phone"/>
-	<%-- <acme:textbox code = "register.creationMoment" path ="creationMoment"/> --%>
-	
-	<acme:select items="${specialists}" itemLabel="name" code="register.specialist" path="specialist"/>
-	
-	
-
-	<fieldset>
-	<legend>Credit Card</legend>
-	
-	<acme:textbox code = "register.creditCard.holderName" path ="creditCard.holderName"/>
-	<acme:textbox code = "register.creditCard.brandName" path ="creditCard.brandName"/>
-	<acme:textbox code = "register.creditCard.number" path ="creditCard.number"/>
-	<acme:textbox code = "register.creditCard.expirationMonth" path ="creditCard.expirationMonth"/>
-	<acme:textbox code = "register.creditCard.expirationYear" path ="creditCard.expirationYear"/>
-	<acme:textbox code = "register.creditCard.cVVcode" path ="creditCard.cVVcode"/>
-	
-	
-	</fieldset>
-	
-	</jstl:if>
-	
-	<jstl:if test="${registerSpecialist==true}">
-	
-	<acme:select items="${specialtys}" itemLabel="name" code="register.specialty" path="specialty"/>
-	</jstl:if>
-
-	
-	
-	<acme:checkbox path="available" url="laws/list.do" code ="register.text"/>
-	
-
-	<acme:submit code="register.save" name="save" />
-	
-	<acme:cancel url="welcome/index.do" code="register.cancel" />
+<%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 
-	
+<jstl:if test="${registerPatient==true}">
+
+	<form:form action="${requestURI}" modelAttribute="${actor}">
+
+		<div class="col-md-6" style="margin-bottom: 100px;">
 
 
-	
+			<acme:textbox code="register.username" path="username" />
+			<acme:password code="register.password" path="password" />
+			<acme:password code="register.second.password" path="secondPassword" />
 
 
+			<acme:textbox code="register.name" path="name" />
+			<acme:textbox code="register.surname" path="surname" />
+			<acme:textbox code="register.emailAddress" path="emailAddress" />
+
+			<acme:textbox value="<%=request.getParameter(\"token\")%>"
+				readonly="true" code="register.token" path="token" />
+
+
+			<acme:textbox code="register.address" path="address" />
+
+			<acme:textbox code="register.phone" path="phone" />
+			<%-- <acme:textbox code = "register.creationMoment" path ="creationMoment"/> --%>
+
+			<acme:select items="${specialists}" itemLabel="name"
+				code="register.specialist" path="specialist" />
+
+
+		</div>
+		<div class="col-md-6">
+
+			<fieldset>
+				<legend>Credit Card</legend>
+
+				<acme:textbox code="register.creditCard.holderName"
+					path="creditCard.holderName" />
+				<acme:textbox code="register.creditCard.brandName"
+					path="creditCard.brandName" />
+				<acme:textbox code="register.creditCard.number"
+					path="creditCard.number" />
+				<acme:textbox code="register.creditCard.expirationMonth"
+					path="creditCard.expirationMonth" />
+				<acme:textbox code="register.creditCard.expirationYear"
+					path="creditCard.expirationYear" />
+				<acme:textbox code="register.creditCard.cVVcode"
+					path="creditCard.cVVcode" />
+
+
+			</fieldset>
+
+			<acme:checkbox path="available" url="laws/list.do"
+				code="register.text" />
+
+
+			<acme:submit code="register.save" name="save" />
+
+			<acme:cancel url="welcome/index.do" code="register.cancel" />
+
+
+		</div>
 	</form:form>
-</div>
 
+</jstl:if>
+
+<jstl:if test="${registerSpecialist==true}">
+
+
+	<form:form action="${requestURI}" modelAttribute="${actor}">
+
+		<div class="col-md-6  col-md-offset-3">
+
+
+
+			<acme:textbox code="register.username" path="username" />
+			<acme:password code="register.password" path="password" />
+			<acme:password code="register.second.password" path="secondPassword" />
+
+
+			<acme:textbox code="register.name" path="name" />
+			<acme:textbox code="register.surname" path="surname" />
+			<acme:textbox code="register.emailAddress" path="emailAddress" />
+
+
+			<acme:select items="${specialtys}" itemLabel="name"
+				code="register.specialty" path="specialty" />
+
+
+
+			<acme:checkbox path="available" url="laws/list.do"
+				code="register.text" />
+
+
+			<acme:submit code="register.save" name="save" />
+
+			<acme:cancel url="welcome/index.do" code="register.cancel" />
+
+		</div>
+	</form:form>
+
+</jstl:if>

@@ -58,17 +58,17 @@
 				<form:hidden path="recipient" />
 			</jstl:if>
 
-
+			<jstl:if test="${answer==false }">
+				<acme:select items="${customers}" itemLabel="name"
+					code="message.recipient" path="recipient" />
+			</jstl:if>
 
 
 			<acme:textbox code="message.subject" path="subject" />
 			<acme:textarea code="message.textBody" path="textBody" />
 
 
-			<jstl:if test="${answer==false }">
-				<acme:select items="${customers}" itemLabel="name"
-					code="message.recipient" path="recipient" />
-			</jstl:if>
+
 			<jstl:if test="${cancel == false}">
 				<acme:submit code="message.save" name="save" />
 			</jstl:if>
