@@ -1295,7 +1295,7 @@ PANELS CONFIGURATIONS
 
 /* Product Panel 2*/
 .product-panel-2 {
-	background: #dadad2;
+	background: #F5F5F5;
 	text-align: center;
 }
 .product-panel-2 .badge {
@@ -2239,4 +2239,59 @@ label {
     min-height: 900px;
 }
 
+/*New*/
 
+/*Large icon*/
+.fa-6x {
+  font-size: 19em;
+}
+
+/*Focus panel*/
+.portfolio-item{
+    margin-bottom: 30px;
+}
+.portfolio-item .hover-bg{
+    height: 260px;
+    overflow: hidden;
+    position: relative;
+}
+
+.hover-bg .hover-text {
+    position: absolute;
+    text-align: center;
+    margin: 0 auto;
+    color: #ffffff;
+    background: rgba(0, 0, 0, 0.66);
+    padding: 25% 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: all 0.5s;
+}
+.hover-bg .hover-text>h4{
+    opacity: 0;
+    -webkit-transform: translateY(100%);
+            transform: translateY(100%);
+            transition: all 0.3s;
+}
+.hover-bg:hover .hover-text>h4{
+    opacity: 1;
+    -webkit-backface-visibility:hidden;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+}
+.hover-bg .hover-text>i{
+    opacity: 0;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+            transition: all 0.3s;
+}
+.hover-bg:hover .hover-text>i{
+    opacity: 1;
+    -webkit-backface-visibility:hidden;
+   -webkit-transform: translateY(100%);
+            transform: translateY(100%);
+}
+.hover-bg:hover .hover-text{
+    opacity: 1;
+}

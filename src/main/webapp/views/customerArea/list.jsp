@@ -28,7 +28,7 @@
     <!-- TWITTER PANEL -->
     <div class="col-lg-4 col-md-4 col-sm-4 mb">
      <div class="product-panel-2 pn">
-      <a href="register/specialist/edit.do"> <img src="assets/img/product.jpg" width="300" alt="">
+      <a href="register/specialist/edit.do" style="color: rgb(22, 140, 204);"> <i class="fa fa-user-md fa-6x"></i>
       </a>
      </div>
     </div>
@@ -37,7 +37,7 @@
 
     <div class="col-lg-4 col-md-4 col-sm-4 mb">
      <div class="product-panel-2 pn">
-      <a href="specialty/administrator/create.do"> <img src="assets/img/product.jpg" width="300" alt="">
+      <a href="specialty/administrator/create.do" style="color: rgb(255, 165, 57);"> <i class="fa fa-medkit fa-6x"></i>
       </a>
      </div>
     </div>
@@ -45,7 +45,7 @@
 
     <div class="col-lg-4 col-md-4 col-sm-4 mb">
      <div class="product-panel-2 pn">
-      <a href="offer/administrator/create.do"> <img src="assets/img/product.jpg" width="300" alt="">
+      <a href="offer/administrator/create.do"> <i class="fa fa-plus-square  fa-6x"></i>
       </a>
      </div>
     </div>
@@ -65,8 +65,10 @@
     <!--TWITTER PANEL-->
     <div class="col-lg-4 col-md-4 col-sm-4 mb">
      <div class="product-panel-2 pn">
-      <a href="appointment/patient/calendar.do"> <img src="assets/img/product.jpg" width="300" alt="">
+      <a href="appointment/patient/calendar.do"> <i class="fa fa-calendar fa-6x"></i>
+      
       </a>
+      <h4>Logo Design</h4>
      </div>
     </div>
 
@@ -74,7 +76,7 @@
 
     <div class="col-lg-4 col-md-4 col-sm-4 mb">
      <div class="product-panel-2 pn">
-      <a href="appointment/patient/calendar.do"> <img src="assets/img/product.jpg" width="300" alt="">
+      <a href="appointment/patient/calendar.do"> <i class="fa fa-calendar fa-6x"></i>
       </a>
      </div>
     </div>
@@ -95,7 +97,7 @@
     <!-- TWITTER PANEL -->
     <div class="col-lg-4 col-md-4 col-sm-4 mb">
      <div class="product-panel-2 pn">
-      <a href="profile/specialist/detail.do"> <img src="assets/img/product.jpg" width="300" alt="">
+      <a href="profile/specialist/detail.do"> <i class="fa fa-user-md fa-6x"></i>
       </a>
      </div>
     </div>
@@ -104,7 +106,7 @@
 
     <div class="col-lg-4 col-md-4 col-sm-4 mb">
      <div class="product-panel-2 pn">
-      <a href="timetable/specialist/create.do"> <img src="assets/img/product.jpg" width="300" alt="">
+      <a href="timetable/specialist/create.do"> <i class="fa fa-user-md fa-6x"></i>
       </a>
      </div>
     </div>
@@ -112,7 +114,7 @@
 
     <div class="col-lg-4 col-md-4 col-sm-4 mb">
      <div class="product-panel-2 pn">
-      <a href="freeDay/specialist/create.do"> <img src="assets/img/product.jpg" width="300" alt="">
+      <a href="freeDay/specialist/create.do"> <i class="fa fa-user-md fa-6x"></i>
       </a>
      </div>
     </div>
@@ -129,7 +131,7 @@
     <!-- TODO PANEL-->
     <div class="col-lg-4 col-md-4 col-sm-4 mb">
      <div class="product-panel-2 pn">
-      <a href="dashboard/administrator/dashboard.do"> <img src="assets/img/product.jpg" width="300" alt="">
+      <a href="dashboard/administrator/dashboard.do"> <i class="fa fa-user-md fa-6x"></i>
       </a>
      </div>
     </div>
@@ -184,15 +186,20 @@
 
        <spring:message code="appointment.specialty" var="specialty" />
        <display:column property="timetable.specialist.specialty.name" title="${specialty}" sortable="${true}" />
-       
+
        <security:authorize access="hasRole('SPECIALIST')">
         <display:column>
-        <a href="appointment/specialist/edit.do?appointmentId=${row.id}">
-        <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button></a>
+         <a href="appointment/specialist/edit.do?appointmentId=${row.id}">
+          <button class="btn btn-primary btn-xs">
+           <i class="fa fa-pencil"></i>
+          </button>
+         </a>
         </display:column>
         <display:column>
          <a href="message/customer/cancel.do?appointmentId=${row.id}">
-         <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+          <button class="btn btn-danger btn-xs">
+           <i class="fa fa-trash-o "></i>
+          </button>
          </a>
         </display:column>
 

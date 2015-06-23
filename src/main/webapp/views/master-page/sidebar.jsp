@@ -22,7 +22,7 @@
     <p class="centered">
      <!-- ADMINISTRATOR -->
      <security:authorize access="hasRole('ADMINISTRATOR')">
-      <a href="customerArea/administrator/list.do"><i class="fa fa-user-secret fa-4x"></i></a>
+      <a href="customerArea/administrator/list.do"><i class="fa fa-user-plus fa-4x"></i></a>
       <h5 class="centered"><security:authentication      property="principal.username" /></h5>
      </security:authorize>
      <!-- PATIENT -->
@@ -46,7 +46,7 @@
         code="master.page.register.specialist" /></span>
     </a></li> --%>
 
-    <li class="mt"><a href="specialty/administrator/list-all.do"> <i class="fa fa-dashboard"></i> <span><spring:message
+    <li class="mt"><a href="specialty/administrator/list-all.do"> <i class="fa fa-medkit"></i> <span><spring:message
         code="master.page.specialty.listAll" /></span>
     </a></li>
 
@@ -72,10 +72,10 @@
       <%-- <li><a href="offer/administrator/list-order.do"><spring:message code="master.page.offer.listOrder" /></a></li> --%>
      </ul></li>
 
-    <li class=""><a href="patient/administrator/list.do"> <i class="fa fa-dashboard"></i> <span><spring:message
+    <li class=""><a href="patient/administrator/list.do"> <i class="fa fa-users"></i> <span><spring:message
         code="master.page.patient.list" /></span>
     </a></li>
-    <li class=""><a href="specialist/administrator/list.do"> <i class="fa fa-dashboard"></i> <span><spring:message
+    <li class=""><a href="specialist/administrator/list.do"> <i class="fa fa-users"></i> <span><spring:message
         code="master.page.specialist.list" /></span>
     </a></li>
 
@@ -91,7 +91,7 @@
     <li class=""><a href="prescription/patient/list-my-prescription.do"> <i class="fa fa-dashboard"></i> <span><spring:message
         code="master.page.prescription.listMyPrescription" /></span>
     </a></li>
-    <li class=""><a href="specialist/patient/list.do"> <i class="fa fa-dashboard"></i> <span><spring:message
+    <li class=""><a href="specialist/patient/list.do"> <i class="fa fa-users"></i> <span><spring:message
         code="master.page.specialist.listAll" /></span>
     </a></li>
 
@@ -119,7 +119,7 @@
    <!-- SPECIALIST -->
    <security:authorize access="hasRole('SPECIALIST')">
 
-    <li class=""><a href=appointment/specialist/listFinish.do> <i class="fa fa-dashboard"></i> <span><spring:message
+    <li class=""><a href=appointment/specialist/listFinish.do> <i class="fa fa-users"></i> <span><spring:message
         code="master.page.appointment.listFinish" /></span>
     </a></li>
 
@@ -152,7 +152,7 @@
     </a></li>
 
 
-    <li class="sub-menu"><a href="javascript:;"> <i class="fa fa-desktop"></i> <span><spring:message
+    <li class="sub-menu"><a href="javascript:;"> <i class="fa fa-envelope"></i> <span><spring:message
         code="master.page.message" /></span>
     </a>
      <ul class="sub">
@@ -169,11 +169,11 @@
    <!-- ANONYMOUS -->
    <security:authorize access="isAnonymous()">
 
-    <li class=""><a href="specialty/list-all.do"> <i class="fa fa-dashboard"></i> <span><spring:message
+    <li class=""><a href="specialty/list-all.do"> <i class="fa fa-medkit"></i> <span><spring:message
         code="master.page.specialty.listAll" /></span>
     </a></li>
 
-    <li class=""><a href="specialist/list.do"> <i class="fa fa-dashboard"></i> <span><spring:message
+    <li class=""><a href="specialist/list.do"> <i class="fa fa-users"></i> <span><spring:message
         code="master.page.specialist.listAll" /></span>
     </a></li>
 

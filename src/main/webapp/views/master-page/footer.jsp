@@ -20,7 +20,7 @@
     <br>
   <b>Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> Acme-Health Co., Inc. 
   </b> <a
-   href="index.html#" class="go-top"> <i class="fa fa-angle-up"></i>
+   href="" class="go-top"> <i class="fa fa-angle-up"></i>
   </a>
  </div>
 </footer>
