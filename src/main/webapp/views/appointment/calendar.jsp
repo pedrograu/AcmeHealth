@@ -22,7 +22,7 @@
  <jstl:otherwise>
   <textarea id="eventos" hidden="true">${eventos}</textarea>
 
-  <div id='calendar'></div>
+  <div  id='calendar'></div>
  </jstl:otherwise>
 </jstl:choose>
 

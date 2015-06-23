@@ -48,9 +48,6 @@
 <!-- Full Calendar -->
 
 <link rel='stylesheet' href='styles/fullcalendar.css' />
-<script src='scripts/moment.min.js'></script>
-<script src='scripts/fullcalendar.js'></script>
-
 
 <style type="text/css">
 #calendar {
@@ -103,6 +100,10 @@
 
 
  <!-- js placed at the end of the document so the pages load faster -->
+ 
+ 
+ <script src='scripts/jquery.min.js'></script>
+ 
  <script src="assets/js/jquery.js"></script>
  <script src="assets/js/jquery-1.8.3.min.js"></script>
  <script src="assets/js/bootstrap.min.js"></script>
@@ -118,6 +119,11 @@
  <!--script for this page-->
  <script src="assets/js/sparkline-chart.js"></script>
  <script src="assets/js/zabuto_calendar.js"></script>
+ 
+ <!-- Full Calendar -->
+ <script src='scripts/moment.min.js'></script>
+<script src='scripts/fullcalendar.js'></script>
+ 
  <script type="text/javascript">
 		$(document).ready(function() {
 
@@ -175,17 +181,7 @@
                 var to = $("#" + id).data("to");
                 console.log('nav ' + nav + ' to: ' + to.month + '/' + to.year);
             }
-        
-								
-								
-		
-		
-		
-		
-		
-		
-		
-		
+
 	</script>
 
 
@@ -217,7 +213,6 @@
 
 			});
 
-			$("#jMenu").jMenu();
 
 		});
 

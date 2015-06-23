@@ -21,7 +21,7 @@
 <div class="col-md-7  col-md-offset-2" style="margin-bottom: 100px;">
 <form:form action="${requestURI}" modelAttribute="${actor}">
 
-    <acme:textbox value="<%=request.getParameter(\"token\")%>"  readonly="true" code = "register.token" path ="token"/>
+    
 	<acme:textbox code = "register.username" path ="username"/>
 	<acme:password code = "register.password" path ="password"/>
 	<acme:password code = "register.second.password" path ="secondPassword"/>
@@ -32,6 +32,7 @@
 	<acme:textbox code = "register.emailAddress" path ="emailAddress"/>
 
 	<jstl:if test="${registerPatient==true}">
+    <acme:textbox value="<%=request.getParameter(\"token\")%>"  readonly="true" code = "register.token" path ="token"/>
 
 	
 	<acme:textbox code = "register.address" path ="address"/>

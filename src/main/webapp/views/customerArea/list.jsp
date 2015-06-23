@@ -152,10 +152,10 @@
         format="{0,date,dd/MM/yyyy HH:mm}" />
 
        <spring:message code="appointment.specialist" var="specialist" />
-       <display:column property="timetable.specialist.name" title="${specialist}" sortable="${true}" />
+       <display:column property="specialist.name" title="${specialist}" sortable="${true}" />
 
        <spring:message code="appointment.specialty" var="specialty" />
-       <display:column property="timetable.specialist.specialty.name" title="${specialty}" sortable="${true}" />
+       <display:column property="specialist.specialty.name" title="${specialty}" sortable="${true}" />
 
 
       </display:table>
@@ -182,10 +182,10 @@
         format="{0,date,dd/MM/yyyy HH:mm}" />
 
        <spring:message code="appointment.specialist" var="specialist" />
-       <display:column property="timetable.specialist.name" title="${specialist}" sortable="${true}" />
+       <display:column property="specialist.name" title="${specialist}" sortable="${true}" />
 
        <spring:message code="appointment.specialty" var="specialty" />
-       <display:column property="timetable.specialist.specialty.name" title="${specialty}" sortable="${true}" />
+       <display:column property="specialist.specialty.name" title="${specialty}" sortable="${true}" />
 
        <security:authorize access="hasRole('SPECIALIST')">
         <display:column>
