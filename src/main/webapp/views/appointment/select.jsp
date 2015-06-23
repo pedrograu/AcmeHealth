@@ -22,7 +22,7 @@
     <SELECT name="specialistId" id="specialistId">
 
         <jstl:forEach var="x" items="${specialists}">
-            <OPTION VALUE="${x.id}">${x.name}</OPTION>
+            <OPTION VALUE="${x.id}">${x.surname}, ${x.name}  (${x.specialty.name})</OPTION>
         </jstl:forEach>
 
     </SELECT> 

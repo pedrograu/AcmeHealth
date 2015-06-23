@@ -15,18 +15,18 @@
 
 
 
-
-  <jstl:when test="${error == true}">
-    <jstl:if test="${error==true}">
-    <br />
+<jstl:choose>
+    <jstl:when test="${error == true }">
+        <br />
     <b><spring:message code="appointment.error" /></b>
-</jstl:if>
-  </jstl:when>
-  <jstl:otherwise>
+    </jstl:when>
+
+    <jstl:otherwise>
     <textarea id="eventos" hidden="true">${eventos}</textarea>
 
     <div id='calendar'></div>
-  </jstl:otherwise>
+    </jstl:otherwise>
+</jstl:choose>
 
 
 
