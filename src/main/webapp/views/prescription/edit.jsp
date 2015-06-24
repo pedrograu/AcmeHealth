@@ -29,7 +29,7 @@
 	<li><b><spring:message code="prescription.price" /></b> 
 	<jstl:out value="${prescription.price}"></jstl:out></li>
 	<li><b><spring:message code="prescription.appointment.specialist" /></b> 
-	<jstl:out value="${prescription.appointment.timetable.specialist.name}"></jstl:out></li>
+	<jstl:out value="${prescription.appointment.specialist.name}"></jstl:out></li>
 	<li><b><spring:message code="prescription.description" /></b> 
 	<jstl:out value="${prescription.description}"></jstl:out></li>
 
