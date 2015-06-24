@@ -53,7 +53,7 @@ public class MessageCustomerController extends AbstractController {
 		result = new ModelAndView("message/list");
 
 		result.addObject("messages", messages);
-		result.addObject("inbox", true);
+		//result.addObject("inbox", true);
 		result.addObject("requestURI", "message/customer/list-inbox.do");
 
 		return result;
@@ -69,7 +69,7 @@ public class MessageCustomerController extends AbstractController {
 
 		result = new ModelAndView("message/list");
 		result.addObject("messages", messages);
-		result.addObject("inbox", false);
+		//result.addObject("inbox", false);
 		result.addObject("requestURI", "message/customer/list-outbox.do");
 
 		return result;
@@ -136,6 +136,11 @@ public class MessageCustomerController extends AbstractController {
 
 		result = new ModelAndView("message/edit");
 
+		if(messageCustomer.getSender().equals(customerService.findByPrincipal())){
+			result.addObject("inbox", false);
+		}else{
+			result.addObject("inbox", true);
+		}
 		result.addObject("messageCustomer", messageCustomer);
 		result.addObject("details", true);
 		result.addObject("requestURI", "message/customer/details.do?messageId="

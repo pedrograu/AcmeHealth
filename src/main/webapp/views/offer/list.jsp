@@ -78,18 +78,18 @@
 			</jstl:if>
 		</security:authorize>
 
-		<spring:message code="offer.title" var="title" />
+		<spring:message code="offer.title2" var="title" />
 		<display:column property="title" title="${title}" sortable="${true}" />
 
-		<spring:message code="offer.startMoment" var="startMoment" />
+		<spring:message code="offer.startMoment2" var="startMoment" />
 		<display:column property="startMoment" title="${startMoment}"
 			sortable="${true}" format="{0,date,dd/MM/yyyy }" />
 
-		<spring:message code="offer.finishMoment" var="finishMoment" />
+		<spring:message code="offer.finishMoment2" var="finishMoment" />
 		<display:column property="finishMoment" title="${finishMoment}"
 			sortable="${true}" format="{0,date,dd/MM/yyyy }" />
 
-		<spring:message code="offer.price" var="price" />
+		<spring:message code="offer.price2" var="price" />
 		<display:column property="price" title="${price}" sortable="${true}" />
 
 
@@ -99,6 +99,6 @@
 </div>
 
 <jstl:if test="${mostrarError==true}">
-	<b><spring:message code="offer.errorDelete" /></b>
+	<b style="color: red;"><spring:message code="offer.errorDelete" /></b>
 </jstl:if>
 

@@ -20,36 +20,57 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<div class="col-md-7  col-md-offset-2" style="margin-bottom: 20%;">
+	<br /> <br />
+
+	<jstl:if test="${details==true }">
+
+
+		<div class="col-lg-12">
+			<div class="row row-centered">
+				<div class="col-lg-12 col-md-12 col-sm-12 mb">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="centered">
+								<b><spring:message code="message.details" /></b>
+							</h3>
+						</div>
+						<div class="panel-body">
+							<ul>
+								<li><b><spring:message code="message.sender2" /></b> <jstl:out
+										value="${messageCustomer.sender.surname}, ${messageCustomer.sender.name}"></jstl:out></li>
+								<li><b><spring:message code="message.subject2" /></b> <jstl:out
+										value="${messageCustomer.subject}"></jstl:out></li>
+								<li><b><spring:message code="message.creationMoment2" /></b>
+									<fmt:formatDate value="${messageCustomer.creationMoment}"
+										pattern="dd/MM/yyyy HH:mm" /></li>
+								<li><b><spring:message code="message.textBody2" /></b> <jstl:out
+										value="${messageCustomer.textBody}"></jstl:out></li>
+
+
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<jstl:if test="${inbox==true }">
+			<div class="row">
+				<a href="message/customer/answer.do?messageId=${messageCustomer.id}">
+					<button type="button" class="btn btn-default btn-lg btn-block">
+						<spring:message code="message.reply" />
+					</button>
+				</a>
+			</div>
+			</jstl:if>
+		</div>
 
 
 
-<jstl:if test="${details==true }">
-	<b><spring:message code="message.details" /></b>
-	<ul>
-		<li><b><spring:message code="message.sender2" /></b> <jstl:out
-				value="${messageCustomer.sender.surname}, ${messageCustomer.sender.name}"></jstl:out></li>
-		<li><b><spring:message code="message.subject2" /></b> <jstl:out
-				value="${messageCustomer.subject}"></jstl:out></li>
-		<li><b><spring:message code="message.creationMoment2" /></b> <fmt:formatDate
-				value="${messageCustomer.creationMoment}" pattern="dd/MM/yyyy HH:mm" /></li>
-		<li><b><spring:message code="message.textBody2" /></b> <jstl:out
-				value="${messageCustomer.textBody}"></jstl:out></li>
+	</jstl:if>
 
-
-	</ul>
 	<br />
+	<jstl:if test="${details==false }">
 
-	<b><a
-		href="message/customer/answer.do?messageId=${messageCustomer.id}"><spring:message
-				code="message.answer" /></a></b>
-
-
-
-</jstl:if>
-
-<br />
-<jstl:if test="${details==false }">
-	<div class="col-md-7  col-md-offset-2" style="margin-bottom: 100px;">
 		<form:form action="${requestURI}" modelAttribute="messageForm">
 
 
@@ -90,5 +111,5 @@
 			</jstl:if>
 
 		</form:form>
-	</div>
-</jstl:if>
+	</jstl:if>
+</div>

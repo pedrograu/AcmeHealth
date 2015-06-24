@@ -25,12 +25,12 @@
 		pagesize="5" class="table table-hover" keepStatus="true">
 
 
-		<jstl:if test="${inbox==true }">
+<%-- 		<jstl:if test="${inbox==true }"> --%>
 			<display:column>
 				<a href="message/customer/details.do?messageId=${row.id}"><spring:message
 						code="message.details" /></a>
 			</display:column>
-		</jstl:if>
+<%-- 		</jstl:if> --%>
 
 
 		<spring:message code="message.subject" var="subject" />
@@ -56,9 +56,9 @@
 
 	</display:table>
 </div>
-
-<b><a href="message/customer/create.do"><spring:message
-			code="message.create" /></a></b>
+<br/>
+<h4><b><a href="message/customer/create.do"><spring:message
+			code="message.create" /></a></b></h4>
 
 
 

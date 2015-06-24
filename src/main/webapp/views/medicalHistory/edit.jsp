@@ -20,32 +20,56 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<jstl:if test="${detailsMedicalHistory==true}">
+<div class="col-md-7  col-md-offset-2" style="margin-bottom: 20%;">
+	<br /> <br />
 
-	<b><spring:message code="medicalHistory.details" /></b>
-	<br />
+	<jstl:if test="${detailsMedicalHistory==true}">
 
-	<ul>
-		<li><b><spring:message code="medicalHistory.note" /></b> <jstl:out
-				value="${medicalHistory.note}"></jstl:out></li>
-		<li><b><spring:message code="medicalHistory.bloodGroup" /></b> <jstl:out
-				value="${medicalHistory.bloodGroup}"></jstl:out></li>
-		<li><b><spring:message code="medicalHistory.allergy" /></b> <jstl:out
-				value="${medicalHistory.allergy}"></jstl:out></li>
-		<li><b><spring:message
-					code="medicalHistory.incompatibilities" /></b> <jstl:out
-				value="${medicalHistory.incompatibilities}"></jstl:out></li>
 
-	</ul>
 
-	<a
-		href="medicalHistory/specialist/edit.do?medicalHistoryId=${medicalHistory.id}"><spring:message
-			code="specialist.medicalHistory.edit" /></a>
+		<div class="col-lg-12">
+			<div class="row row-centered">
+				<div class="col-lg-12 col-md-12 col-sm-12 mb">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="centered">
+								<b><spring:message code="medicalHistory.details" /></b>
+							</h3>
+						</div>
+						<div class="panel-body">
+							<ul>
+								<li><b><spring:message code="medicalHistory.note" /></b> <jstl:out
+										value="${medicalHistory.note}"></jstl:out></li>
+								<li><b><spring:message code="medicalHistory.bloodGroup" /></b>
+									<jstl:out value="${medicalHistory.bloodGroup}"></jstl:out></li>
+								<li><b><spring:message code="medicalHistory.allergy" /></b>
+									<jstl:out value="${medicalHistory.allergy}"></jstl:out></li>
+								<li><b><spring:message
+											code="medicalHistory.incompatibilities" /></b> <jstl:out
+										value="${medicalHistory.incompatibilities}"></jstl:out></li>
 
-</jstl:if>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<a
+					href="medicalHistory/specialist/edit.do?medicalHistoryId=${medicalHistory.id}">
+					<button type="button" class="btn btn-default btn-lg btn-block">
+						<spring:message code="specialist.medicalHistory.edit" />
+					</button>
+				</a>
+			</div>
+		</div>
 
-<jstl:if test="${detailsMedicalHistory==false}">
-	<div class="col-md-7  col-md-offset-2" style="margin-bottom: 100px;">
+
+
+
+
+	</jstl:if>
+
+	<jstl:if test="${detailsMedicalHistory==false}">
 		<form:form action="${requestURI}" modelAttribute="medicalHistory">
 
 
@@ -70,9 +94,9 @@
 
 
 		</form:form>
-	</div>
-</jstl:if>
 
+	</jstl:if>
+</div>
 
 
 

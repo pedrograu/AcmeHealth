@@ -49,13 +49,13 @@
 				<a href="prescription/specialist/list.do?patientId=${row.id}"><spring:message
 						code="patient.prescription" /></a>
 			</display:column>
-		</jstl:if>
 
-		<display:column>
-			<a
-				href="medicalHistory/specialist/detail.do?medicalHistoryId=${row.medicalHistory.id}"><spring:message
-					code="patient.medicalHistory" /></a>
-		</display:column>
+			<display:column>
+				<a
+					href="medicalHistory/specialist/detail.do?medicalHistoryId=${row.medicalHistory.id}"><spring:message
+						code="patient.medicalHistory" /></a>
+			</display:column>
+		</jstl:if>
 
 	</display:table>
 </div>

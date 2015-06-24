@@ -22,7 +22,7 @@
 
 
 <jstl:if test="${createSpecialty==true}">
-	<div class="col-md-7  col-md-offset-2" style="margin-bottom: 100px;">
+	<div class="col-md-7  col-md-offset-2" style="margin-bottom: 20%;">
 		<form:form action="${requestURI}" modelAttribute="specialty">
 
 
@@ -62,10 +62,10 @@
 					</div>
 					<div class="panel-body">
 						<ul>
-							<li><b><spring:message code="specialty.name" /></b> <jstl:out
-									value="${specialty.name2}"></jstl:out></li>
-							<li><b><spring:message code="specialty.description" /></b>
-								<jstl:out value="${specialty.description2}"></jstl:out></li>
+							<li><b><spring:message code="specialty.name2" /></b> <jstl:out
+									value="${specialty.name}"></jstl:out></li>
+							<li><b><spring:message code="specialty.description2" /></b>
+								<jstl:out value="${specialty.description}"></jstl:out></li>
 						</ul>
 					</div>
 				</div>

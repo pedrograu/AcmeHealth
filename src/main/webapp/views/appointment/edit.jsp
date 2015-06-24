@@ -84,7 +84,8 @@
 
 					<jstl:if test="${isOffer==true}">
 						<br />
-						<a href="appointment/patient/calendar2.do?offerId=${appointmentForm.offer.id}">
+						<a
+							href="appointment/patient/calendar2.do?offerId=${appointmentForm.offer.id}">
 							<spring:message code="appointment.selectOther" />
 						</a>
 					</jstl:if>
@@ -158,12 +159,13 @@
 				<jstl:if test="${hayHorasDisponibles==false}">
 					<br />
 					<b><spring:message code="appointment.message" /></b>
-					
+
 					<br />
-                    <a href="appointment/specialist/calendar.do?patientId=<%=  request.getParameter("patientId")%>&specialistId=<%=  request.getParameter("specialistId")%>">
-                            <spring:message code="appointment.selectOther" />
-                    </a>
-					
+					<a
+						href="appointment/specialist/calendar.do?patientId=<%=request.getParameter("patientId")%>&specialistId=<%=request.getParameter("specialistId")%>">
+						<spring:message code="appointment.selectOther" />
+					</a>
+
 				</jstl:if>
 
 			</jstl:if>
@@ -180,14 +182,15 @@
 
 
 <jstl:if test="${isSpecialist==true}">
+	<div class="col-md-7  col-md-offset-2" style="margin-bottom: 20%;">
+		<br /> <br />
+
+		<form:form action="${requestURI}" modelAttribute="appointmentForm">
 
 
-	<form:form action="${requestURI}" modelAttribute="appointmentForm">
-
-
-		<form:hidden path="id" />
-		<form:hidden path="version" />
-		<%-- 	<form:hidden path="offer" /> 
+			<form:hidden path="id" />
+			<form:hidden path="version" />
+			<%-- 	<form:hidden path="offer" /> 
 	<form:hidden path="medicalHistory" />
 	<form:hidden path="prescriptions" />
 	<form:hidden path="patient" />
@@ -195,29 +198,41 @@
 	<form:hidden path="startMoment" /> --%>
 
 
-		<acme:textbox code="appointment.purpose" path="purpose" />
-		<acme:textarea code="appointment.result" path="result" />
-		<acme:checkbox code="appointment.isFinish" path="isFinish" />
+			<acme:textbox code="appointment.purpose" path="purpose" />
+			<acme:textarea code="appointment.result" path="result" />
+			<acme:checkbox code="appointment.isFinish" path="isFinish" />
 
-		<acme:submit code="appointment.save" name="save" />
+			<acme:submit code="appointment.save" name="save" />
 
-	</form:form>
+		</form:form>
 
-	<br />
-	<b><a
-		href="medicalHistory/specialist/detail.do?medicalHistoryId=${appointment.medicalHistory.id}">
-			<spring:message code="appointment.medicalHistory" />
-	</a></b>
-	<br />
-	<b><a
-		href="prescription/specialist/create.do?appointmentId=${appointment.id}">
-			<spring:message code="appointment.prescription" />
-	</a></b>
-	<br />
-	<b><a
-		href="appointment/specialist/select.do?patientId=${appointment.patient.id}">
-			<spring:message code="appointment.createAppointment" />
-	</a></b>
-
+		<br /> <br /> <br />
+		<div class="row">
+			<a
+				href="medicalHistory/specialist/detail.do?medicalHistoryId=${appointment.medicalHistory.id}">
+				<button type="button" class="btn btn-default btn-lg btn-block">
+					<spring:message code="appointment.medicalHistory" />
+				</button>
+			</a>
+		</div>
+		<br />
+		<div class="row">
+			<a
+				href="prescription/specialist/create.do?appointmentId=${appointment.id}">
+				<button type="button" class="btn btn-default btn-lg btn-block">
+					<spring:message code="appointment.prescription" />
+				</button>
+			</a>
+		</div>
+		<br />
+		<div class="row">
+			<a
+				href="appointment/specialist/select.do?patientId=${appointment.patient.id}">
+				<button type="button" class="btn btn-default btn-lg btn-block">
+					<spring:message code="appointment.createAppointment" />
+				</button>
+			</a>
+		</div>
+	</div>
 </jstl:if>
 
