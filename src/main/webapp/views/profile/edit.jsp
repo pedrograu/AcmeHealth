@@ -93,14 +93,12 @@
     </jstl:if>
 
     <jstl:if test="${GPmine==true}">
-     <div class="panel panel-default">
-      <div class="panel-body">
-       <h4 class="centered">
-       <spring:message code="profile.change.specialist.mine" />
-       </h4>
-        
-      </div>
-     </div>
+
+     <h4 class="centered alert alert-success">
+      <spring:message code="profile.change.specialist.mine" />
+     </h4>
+
+
     </jstl:if>
    </security:authorize>
 
