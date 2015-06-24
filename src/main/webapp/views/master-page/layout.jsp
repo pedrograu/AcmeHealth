@@ -55,7 +55,7 @@
 
 <style type="text/css">
 #calendar {
-	width: 900px;
+	width: 80%;
 	margin: 0 auto;
 }
 </style>
@@ -132,58 +132,60 @@
 	<script src='scripts/fullcalendar.js'></script>
 
 	<script type="text/javascript">
-		$(document).ready(function() {
+		$(document).ready(
+				function() {
 					
 
 
-			//poner en rojo los campos incorrectos
-			if ($('span.error').length > 0) {
+					//poner en rojo los campos incorrectos
+					if ($('span.error').length > 0) {
 
-				if ($('span.error').parent().length > 0) {
-					$('span.error').parent()
-							.attr('style', 'color:red;');
+						if ($('span.error').parent().length > 0) {
+							$('span.error').parent()
+									.attr('style', 'color:red;');
 
-				}
-				if ($('span.error').siblings('input').length > 0) {
-					$('span.error').siblings('input').attr('style',
-							'border:1px solid red;');
+						}
+						if ($('span.error').siblings('input').length > 0) {
+							$('span.error').siblings('input').attr('style',
+									'border:1px solid red;');
 
-				}
-				if ($('span.error').siblings('textarea').length > 0) {
-					$('span.error').siblings('textarea').attr('style',
-							'border:1px solid red;');
+						}
+						if ($('span.error').siblings('textarea').length > 0) {
+							$('span.error').siblings('textarea').attr('style',
+									'border:1px solid red;');
 
-				}
-				if ($('span.error').siblings('select').length > 0) {
-					$('span.error').siblings('select').attr('style',
-							'border:1px solid red;');
+						}
+						if ($('span.error').siblings('select').length > 0) {
+							$('span.error').siblings('select').attr('style',
+									'border:1px solid red;');
 
-				}
+						}
 
-			}
+					}
 
-			if ($('div.error').length > 0) {
-				$('div.error').attr('style', 'color:red;');
-			}
+					if ($('div.error').length > 0) {
+						$('div.error').attr('style', 'color:red;');
+						//alert('errorr');
+					}
 
-			//mover de sitio el error que debe salir debajo del formulario y ponerlo rojo.
-			if ($('span.message').length > 0) {
+					//mover de sitio el error que debe salir debajo del formulario y ponerlo rojo.
+					if ($('span.message').length > 0) {
 
-				$('span.message').replaceWith(
-						"<div class=\"message\" style=\"color:red;\">"
-								+ $('span.message').text() + "</div>");
+						$('span.message').replaceWith(
+								"<div class=\"message\" style=\"color:red;\">"
+										+ $('span.message').text() + "</div>");
 
-				jQuery($('div.form-group:last')).append(
-						$('div.message'));
+						jQuery($('div.form-group:last')).append(
+								$('div.message'));
 
-			}
+					}
 
-			function askSubmission(msg, form) {
-				if (confirm(msg))
-					form.submit();
-			}
+					function askSubmission(msg, form) {
+						if (confirm(msg))
+							form.submit();
+					}
 
-	});
+				});
 	</script>
 	<script type="text/javascript">
 		function relativeRedir(loc) {
