@@ -21,6 +21,7 @@
  <a href="#" class="logo"><img src="images/Apple-iconnaranja.png"  width="30" style="vertical-align=text-bottom;">    <b>Acme <b style="color:orange">Health</b></b></a>
  <!--logo end-->
  <div class="nav notify-row" id="top_menu">
+ 
   <!--  notification start -->
   <ul class="nav top-menu">
    <!-- settings start -->
@@ -57,6 +58,8 @@
 
   </ul>
   <!--  notification end -->
+   <b><a href="?language=en" style="color: white;">en</a> | <a href="?language=es" style="color: white;">es</a> </b>
+  
  </div>
 
 
@@ -64,7 +67,9 @@
 
 
  <div class="top-menu">
+ 
   <ul class="nav pull-right top-menu">
+  
    <!-- ANONYMOUS -->
    <security:authorize access="isAnonymous()">
     <%--  <li><a class="logout" href="security/login.do"><spring:message code="master.page.login" /></a></li>
@@ -87,6 +92,7 @@
     <li><a class="logout" href="j_spring_security_logout"><spring:message code="master.page.logout" /></a></li>
    </security:authorize>
   </ul>
+  
  </div>
 
 </header>

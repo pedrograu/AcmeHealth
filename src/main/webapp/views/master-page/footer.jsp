@@ -16,12 +16,12 @@
 <!--footer start-->
 <footer class="site-footer">
  <div class="text-center">
-    <b><a href="?language=en" style="color: white;">en</a> | <a href="?language=es" style="color: white;">es</a> </b>
-    <br>
+<!--     <b><a href="?language=en" style="color: white;">en</a> | <a href="?language=es" style="color: white;">es</a> </b>
+    <br> -->
+  <b><a href="laws/list.do" style="color: white;">Legal Info / Privacy Policy</a></b> &nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;
   <b>Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> Acme-Health Co., Inc. 
-  </b> <a
-   href="" class="go-top"> <i class="fa fa-angle-up"></i>
-  </a>
+  </b> 
  </div>
 </footer>
 <!--footer end-->
