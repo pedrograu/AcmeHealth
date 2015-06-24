@@ -69,8 +69,11 @@
 
 
 
-			<jstl:if test="${cancel == false}">
+			<jstl:if test="${cancel == false && answer==false}">
 				<acme:submit code="message.save" name="save" />
+			</jstl:if>
+			<jstl:if test="${cancel == false && answer==true}">
+				<acme:submit code="message.save" name="save3" />
 			</jstl:if>
 			<jstl:if test="${cancel == true }">
 				<acme:submit code="message.save" name="save2" />

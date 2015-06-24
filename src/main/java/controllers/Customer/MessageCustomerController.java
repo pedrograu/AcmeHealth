@@ -26,242 +26,305 @@ import forms.MessageForm;
 @RequestMapping("/message/customer")
 public class MessageCustomerController extends AbstractController {
 
-    // Services-----
-    @Autowired
-    private MessageService messageService;
-    @Autowired
-    private CustomerService customerService;
-    @Autowired
-    private AppointmentService appointmentService;
+	// Services-----
+	@Autowired
+	private MessageService messageService;
+	@Autowired
+	private CustomerService customerService;
+	@Autowired
+	private AppointmentService appointmentService;
 
-    // Constructors -----------------------------------------------------------
+	// Constructors -----------------------------------------------------------
 
-    public MessageCustomerController() {
-        super();
-    }
+	public MessageCustomerController() {
+		super();
+	}
 
-    // List ------------------------------------------------------------------
+	// List ------------------------------------------------------------------
 
-    @RequestMapping(value = "/list-inbox", method = RequestMethod.GET)
-    public ModelAndView listInbox() {
+	@RequestMapping(value = "/list-inbox", method = RequestMethod.GET)
+	public ModelAndView listInbox() {
 
-        ModelAndView result;
-        Collection<Message> messages;
+		ModelAndView result;
+		Collection<Message> messages;
 
-        messages = messageService.getMessageInbox();
+		messages = messageService.getMessageInbox();
 
-        result = new ModelAndView("message/list");
+		result = new ModelAndView("message/list");
 
-        result.addObject("messages", messages);
-        result.addObject("inbox", true);
-        result.addObject("requestURI", "message/customer/list-inbox.do");
+		result.addObject("messages", messages);
+		result.addObject("inbox", true);
+		result.addObject("requestURI", "message/customer/list-inbox.do");
 
-        return result;
-    }
+		return result;
+	}
 
-    @RequestMapping(value = "/list-outbox", method = RequestMethod.GET)
-    public ModelAndView listOutbox() {
+	@RequestMapping(value = "/list-outbox", method = RequestMethod.GET)
+	public ModelAndView listOutbox() {
 
-        ModelAndView result;
-        Collection<Message> messages;
+		ModelAndView result;
+		Collection<Message> messages;
 
-        messages = messageService.getMessageOutbox();
+		messages = messageService.getMessageOutbox();
 
-        result = new ModelAndView("message/list");
-        result.addObject("messages", messages);
-        result.addObject("inbox", false);
-        result.addObject("requestURI", "message/customer/list-outbox.do");
+		result = new ModelAndView("message/list");
+		result.addObject("messages", messages);
+		result.addObject("inbox", false);
+		result.addObject("requestURI", "message/customer/list-outbox.do");
 
-        return result;
-    }
+		return result;
+	}
 
-    // Creation ---------------------------------------------------------------
-    @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public ModelAndView create() {
-        ModelAndView result;
+	// Creation ---------------------------------------------------------------
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public ModelAndView create() {
+		ModelAndView result;
 
-        MessageForm messageForm = new MessageForm();
+		MessageForm messageForm = new MessageForm();
 
-        result = createEditModelAndView(messageForm);
-        result.addObject("messageForm", messageForm);
+		result = createEditModelAndView(messageForm);
+		result.addObject("messageForm", messageForm);
 
-        return result;
-    }
+		return result;
+	}
 
-    @RequestMapping(value = "/answer", method = RequestMethod.GET)
-    public ModelAndView answer(@RequestParam int messageId) {
+	@RequestMapping(value = "/answer", method = RequestMethod.GET)
+	public ModelAndView answer(@RequestParam int messageId) {
 
-        Message originalMessage = messageService.findOneToEdit(messageId);
+		Message originalMessage = messageService.findOneToEdit(messageId);
 
-        Customer customer = originalMessage.getSender();
-        ModelAndView result;
+		Customer customer = originalMessage.getSender();
+		ModelAndView result;
 
-        MessageForm messageForm = new MessageForm();
+		MessageForm messageForm = new MessageForm();
 
-        messageForm.setRecipient(customer);
-        result = createEditModelAndView(messageForm);
-        result.addObject("answer", true);
-        result.addObject("cancel", false);
-        result.addObject("messageForm", messageForm);
-        return result;
-    }
+		messageForm.setRecipient(customer);
+		result = createEditModelAndView3(messageForm);
+		result.addObject("answer", true);
+		result.addObject("cancel", false);
+		result.addObject("messageForm", messageForm);
+		return result;
+	}
 
-    //Cancel an appointment and send message to patient
-    @RequestMapping(value = "/cancel", method = RequestMethod.GET)
-    public ModelAndView cancel(@RequestParam int appointmentId) {
+	// Cancel an appointment and send message to patient
+	@RequestMapping(value = "/cancel", method = RequestMethod.GET)
+	public ModelAndView cancel(@RequestParam int appointmentId) {
 
-        Appointment appointment = appointmentService.findOneToEdit(appointmentId);
+		Appointment appointment = appointmentService
+				.findOneToEdit(appointmentId);
 
-        Customer customer = customerService.findOneToEdit(appointment.getPatient().getId());
-        ModelAndView result;
+		Customer customer = customerService.findOneToEdit(appointment
+				.getPatient().getId());
+		ModelAndView result;
 
-        MessageForm messageForm = new MessageForm();
+		MessageForm messageForm = new MessageForm();
 
-        messageForm.setRecipient(customer);
-        result = createEditModelAndView2(messageForm, appointmentId);
-        result.addObject("answer", true);
-        result.addObject("cancel", true);
-        result.addObject("messageForm", messageForm);
-        result.addObject("requestURI", "message/customer/edit.do?messageId=" + messageForm.getId() + "&appointmentId="
-                + appointmentId);
-        return result;
-    }
+		messageForm.setRecipient(customer);
+		result = createEditModelAndView2(messageForm, appointmentId);
+		result.addObject("answer", true);
+		result.addObject("cancel", true);
+		result.addObject("messageForm", messageForm);
+		result.addObject("requestURI", "message/customer/edit.do?messageId="
+				+ messageForm.getId() + "&appointmentId=" + appointmentId);
+		return result;
+	}
 
-    @RequestMapping(value = "/details", method = RequestMethod.GET)
-    public ModelAndView details(@RequestParam int messageId) {
-        ModelAndView result;
-        Message messageCustomer = messageService.findOneToEdit(messageId);
+	@RequestMapping(value = "/details", method = RequestMethod.GET)
+	public ModelAndView details(@RequestParam int messageId) {
+		ModelAndView result;
+		Message messageCustomer = messageService.findOneToEdit(messageId);
 
-        result = new ModelAndView("message/edit");
+		result = new ModelAndView("message/edit");
 
-        result.addObject("messageCustomer", messageCustomer);
-        result.addObject("details", true);
-        result.addObject("requestURI", "message/customer/details.do?messageId=" + messageCustomer.getId());
+		result.addObject("messageCustomer", messageCustomer);
+		result.addObject("details", true);
+		result.addObject("requestURI", "message/customer/details.do?messageId="
+				+ messageCustomer.getId());
 
-        return result;
-    }
+		return result;
+	}
 
-    // Edition--------------------------------------------------------------------------
-    @RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-    public ModelAndView save(@Valid MessageForm messageForm, BindingResult binding) {
-        ModelAndView result;
-        Message message;
+	// Edition--------------------------------------------------------------------------
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+	public ModelAndView save(@Valid MessageForm messageForm,
+			BindingResult binding) {
+		ModelAndView result;
+		Message message;
 
-        if (binding.hasErrors()) {
-            result = createEditModelAndView(messageForm);
-        } else {
-            try {
-                message = messageService.recontructor(messageForm);
-                messageService.save(message);
-                result = new ModelAndView("redirect:list-outbox.do");
-            } catch (Throwable oops) {
-                result = createEditModelAndView(messageForm, "message.commit.error");
-            }
-        }
+		if (binding.hasErrors()) {
+			result = createEditModelAndView(messageForm);
+		} else {
+			try {
+				message = messageService.recontructor(messageForm);
+				messageService.save(message);
+				result = new ModelAndView("redirect:list-outbox.do");
+			} catch (Throwable oops) {
+				result = createEditModelAndView(messageForm,
+						"message.commit.error");
+			}
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    @RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save2")
-    public ModelAndView save2(@Valid MessageForm messageForm, BindingResult binding, @RequestParam int appointmentId) {
-        ModelAndView result;
-        Message message;
-        Appointment appointment = appointmentService.findOneToEdit(appointmentId);
+	// para las answer
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save3")
+	public ModelAndView save3(@Valid MessageForm messageForm,
+			BindingResult binding) {
+		ModelAndView result;
+		Message message;
 
-        if (binding.hasErrors()) {
-            result = createEditModelAndView2(messageForm, appointmentId);
-        } else {
-            try {
-                message = messageService.recontructor(messageForm);
+		if (binding.hasErrors()) {
+			result = createEditModelAndView3(messageForm);
+		} else {
+			try {
+				message = messageService.recontructor(messageForm);
+				messageService.save(message);
+				result = new ModelAndView("redirect:list-outbox.do");
+			} catch (Throwable oops) {
+				result = createEditModelAndView3(messageForm,
+						"message.commit.error");
+			}
+		}
 
-                messageService.save(message);
-                appointmentService.cancel(appointment);
+		return result;
+	}
 
-                result = new ModelAndView("redirect:../../appointment/specialist/listNotFinish.do");
-            } catch (Throwable oops) {
-                result = createEditModelAndView2(messageForm, "message.commit.error", appointmentId);
-            }
-        }
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save2")
+	public ModelAndView save2(@Valid MessageForm messageForm,
+			BindingResult binding, @RequestParam int appointmentId) {
+		ModelAndView result;
+		Message message;
+		Appointment appointment = appointmentService
+				.findOneToEdit(appointmentId);
 
-        return result;
-    }
+		if (binding.hasErrors()) {
+			result = createEditModelAndView2(messageForm, appointmentId);
+		} else {
+			try {
+				message = messageService.recontructor(messageForm);
 
-    // Ancillary methods--------------------------------------------------------
+				messageService.save(message);
+				appointmentService.cancel(appointment);
 
-    protected ModelAndView createEditModelAndView(MessageForm messageForm) {
-        assert messageForm != null;
+				result = new ModelAndView(
+						"redirect:../../appointment/specialist/listNotFinish.do");
+			} catch (Throwable oops) {
+				result = createEditModelAndView2(messageForm,
+						"message.commit.error", appointmentId);
+			}
+		}
 
-        ModelAndView result;
+		return result;
+	}
 
-        result = createEditModelAndView(messageForm, null);
+	// Ancillary methods--------------------------------------------------------
 
-        return result;
-    }
+	protected ModelAndView createEditModelAndView(MessageForm messageForm) {
+		assert messageForm != null;
 
-    protected ModelAndView createEditModelAndView(MessageForm messageForm, String message) {
-        assert messageForm != null;
-        ModelAndView result;
+		ModelAndView result;
 
-        result = new ModelAndView("message/edit");
-        result.addObject("requestURI", "message/customer/edit.do?messageId=" + messageForm.getId());
-        result.addObject("messageForm", messageForm);
-        result.addObject("message", message);
-        Customer customerConnect = customerService.findByPrincipal();
+		result = createEditModelAndView(messageForm, null);
 
-        if (messageForm.getRecipient() == null) {
-            Collection<Customer> customers = customerService.findAll();
-            if (Patient.class == customerConnect.getClass()) {
-                customers = customerService.findOnlySpecialist();
+		return result;
+	}
 
-            }
+	protected ModelAndView createEditModelAndView(MessageForm messageForm,
+			String message) {
+		assert messageForm != null;
+		ModelAndView result;
 
-            result.addObject("customers", customers);
-            result.addObject("answer", false);
-        } else {
-            result.addObject("answer", true);
-        }
-        result.addObject("details", false);
-        result.addObject("cancel", false);
+		result = new ModelAndView("message/edit");
+		result.addObject("requestURI", "message/customer/edit.do?messageId="
+				+ messageForm.getId());
+		result.addObject("messageForm", messageForm);
+		result.addObject("message", message);
+		Customer customerConnect = customerService.findByPrincipal();
 
-        return result;
-    }
+		Collection<Customer> customers = customerService.findAll();
+		if (Patient.class == customerConnect.getClass()) {
+			customers = customerService.findOnlySpecialist();
 
-    protected ModelAndView createEditModelAndView2(MessageForm messageForm, int appointmentId) {
-        assert messageForm != null;
+		}
 
-        ModelAndView result;
+		result.addObject("customers", customers);
+		result.addObject("answer", false);
 
-        result = createEditModelAndView2(messageForm, null, appointmentId);
+		result.addObject("details", false);
+		result.addObject("cancel", false);
 
-        return result;
-    }
+		return result;
+	}
 
-    protected ModelAndView createEditModelAndView2(MessageForm messageForm, String message, int appointmentId) {
-        assert messageForm != null;
-        ModelAndView result;
+	protected ModelAndView createEditModelAndView2(MessageForm messageForm,
+			int appointmentId) {
+		assert messageForm != null;
 
-        result = new ModelAndView("message/edit");
-        result.addObject("requestURI", "message/customer/edit.do?messageId=" + messageForm.getId() + "&appointmentId="
-                + appointmentId);
-        result.addObject("messageForm", messageForm);
-        result.addObject("message", message);
-        Customer customerConnect = customerService.findByPrincipal();
+		ModelAndView result;
 
-        if (messageForm.getRecipient() == null) {
-            Collection<Customer> customers = customerService.findAll();
-            if (Patient.class == customerConnect.getClass()) {
-                customers = customerService.findOnlySpecialist();
+		result = createEditModelAndView2(messageForm, null, appointmentId);
 
-            }
+		return result;
+	}
 
-            result.addObject("customers", customers);
-            result.addObject("answer", false);
-        } else {
-            result.addObject("answer", true);
-        }
-        result.addObject("details", false);
-        result.addObject("cancel", true);
+	protected ModelAndView createEditModelAndView2(MessageForm messageForm,
+			String message, int appointmentId) {
+		assert messageForm != null;
+		ModelAndView result;
 
-        return result;
-    }
+		result = new ModelAndView("message/edit");
+		result.addObject("requestURI", "message/customer/edit.do?messageId="
+				+ messageForm.getId() + "&appointmentId=" + appointmentId);
+		result.addObject("messageForm", messageForm);
+		result.addObject("message", message);
+		Customer customerConnect = customerService.findByPrincipal();
+
+		if (messageForm.getRecipient() == null) {
+			Collection<Customer> customers = customerService.findAll();
+			if (Patient.class == customerConnect.getClass()) {
+				customers = customerService.findOnlySpecialist();
+
+			}
+
+			result.addObject("customers", customers);
+			result.addObject("answer", false);
+		} else {
+			result.addObject("answer", true);
+		}
+		result.addObject("details", false);
+		result.addObject("cancel", true);
+
+		return result;
+	}
+
+	// para las answer
+	protected ModelAndView createEditModelAndView3(MessageForm messageForm) {
+		assert messageForm != null;
+
+		ModelAndView result;
+
+		result = createEditModelAndView3(messageForm, null);
+
+		return result;
+	}
+
+	protected ModelAndView createEditModelAndView3(MessageForm messageForm,
+			String message) {
+		assert messageForm != null;
+		ModelAndView result;
+
+		result = new ModelAndView("message/edit");
+		result.addObject("requestURI", "message/customer/edit.do?messageId="
+				+ messageForm.getId());
+		result.addObject("messageForm", messageForm);
+		result.addObject("message", message);
+
+		result.addObject("answer", true);
+
+		result.addObject("details", false);
+		result.addObject("cancel", false);
+
+		return result;
+	}
 }
