@@ -31,40 +31,40 @@
    <div class="item active">
     <img src="images/empaste2.png" style="width: 100%" class="img-responsive">
     <div class="carousel-caption">
-     <h1>Oferta empastes</h1>
+     <h1><spring:message code="welcome.empastes" /></h1>
      <p></p>
      <p>
-      <a class="btn btn-lg btn-primary" href="http://localhost:8080/Acme-Health/offer/details.do?offerId=23"><spring:message code="welcome.button" /></a>
+      <a class="btn btn-primary btn-responsive" href="http://localhost:8080/Acme-Health/offer/details.do?offerId=23"><spring:message code="welcome.button" /></a>
      </p>
     </div>
    </div>
    <div class="item">
     <img src="images/blanqueamiento2.png" style="width: 100%" class="img-responsive">
     <div class="carousel-caption">
-    <h1>Oferta blanqueamiento</h1>
+    <h1><spring:message code="welcome.blanqueamiento" /></h1>
      <p></p>
      <p>
-      <a class="btn btn-lg btn-primary" href="http://localhost:8080/Acme-Health/offer/details.do?offerId=22"><spring:message code="welcome.button" /></a>
+      <a class="btn btn-primary btn-responsive" href="http://localhost:8080/Acme-Health/offer/details.do?offerId=22"><spring:message code="welcome.button" /></a>
      </p>
      </div>
    </div>
    <div class="item">
     <img src="images/masaje2.png" style="width: 100%" class="img-responsive">
     <div class="carousel-caption">
-    <h1>Oferta masajes</h1>
+    <h1><spring:message code="welcome.masajes" /></h1>
      <p></p>
      <p>
-      <a class="btn btn-lg btn-primary" href="http://localhost:8080/Acme-Health/offer/details.do?offerId=24"><spring:message code="welcome.button" /></a>
+      <a class="btn btn-primary btn-responsive" href="http://localhost:8080/Acme-Health/offer/details.do?offerId=24"><spring:message code="welcome.button" /></a>
      </p>
      </div>
    </div>
    <div class="item">
     <img src="images/optica2.png" style="width: 100%" class="img-responsive">
     <div class="carousel-caption">
-    <h1>Oferta optica</h1>
+    <h1><spring:message code="welcome.optica" /></h1>
      <p></p>
      <p>
-      <a class="btn btn-lg btn-primary" href="http://localhost:8080/Acme-Health/offer/details.do?offerId=26"><spring:message code="welcome.button" /></a>
+      <a class="btn btn-primary btn-responsive" href="http://localhost:8080/Acme-Health/offer/details.do?offerId=26"><spring:message code="welcome.button" /></a>
      </p>
      </div>
    </div>
