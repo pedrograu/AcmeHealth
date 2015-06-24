@@ -18,7 +18,7 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<div class="col-md-7  col-md-offset-2" style="margin-bottom: 100px;">
+<div class="col-md-7  col-md-offset-2" style="margin-bottom: 20%;">
  <jstl:if test="${createOffer==true}">
 
 
@@ -54,12 +54,12 @@
   </form:form>
 
  </jstl:if>
-</div>
+
 
 <jstl:if test="${detailsOffer==true}">
  <div class="col-lg-12">
   <div class="row row-centered">
-   <div class="col-lg-6 col-md-6 col-sm-6 mb">
+   <div class="col-lg-12 col-md-12 col-sm-12 mb">
     <div class="panel panel-default">
      <div class="panel-heading">
       <h3 class="centered">
@@ -74,10 +74,10 @@
        <li><b><spring:message code="offer.finishMoment" /></b> <fmt:formatDate value="${offer.finishMoment}"
          pattern="dd/MM/yyyy" /></li>
        <li><b><spring:message code="offer.title" /></b> <jstl:out value="${offer.title}"></jstl:out></li>
-       <li><b><spring:message code="offer.description" /></b> <jstl:out value="${offer.description}"></jstl:out></li>
        <li><b><spring:message code="offer.price" /></b> <jstl:out value="${offer.price}"></jstl:out></li>
        <li><b><spring:message code="offer.amountPerson" /></b> <jstl:out value="${offer.amountPerson}"></jstl:out></li>
        <li><b><spring:message code="offer.enrollees" /></b> <jstl:out value="${offer.enrollees}"></jstl:out></li>
+       <li><b><spring:message code="offer.description" /></b> <jstl:out value="${offer.description}"></jstl:out></li>
       </ul>
      </div>
     </div>
@@ -94,24 +94,5 @@
    </div>
   </security:authorize>
  </div>
-
-<%-- 
- <b><spring:message code="offer.details" /></b>
- <br />
-
- <ul>
-
-  <li><b><spring:message code="offer.startMoment" /></b> <fmt:formatDate value="${offer.startMoment}"
-    pattern="dd/MM/yyyy" /></li>
-  <li><b><spring:message code="offer.finishMoment" /></b> <fmt:formatDate value="${offer.finishMoment}"
-    pattern="dd/MM/yyyy" /></li>
-  <li><b><spring:message code="offer.title" /></b> <jstl:out value="${offer.title}"></jstl:out></li>
-  <li><b><spring:message code="offer.description" /></b> <jstl:out value="${offer.description}"></jstl:out></li>
-  <li><b><spring:message code="offer.price" /></b> <jstl:out value="${offer.price}"></jstl:out></li>
-  <li><b><spring:message code="offer.amountPerson" /></b> <jstl:out value="${offer.amountPerson}"></jstl:out></li>
-  <li><b><spring:message code="offer.enrollees" /></b> <jstl:out value="${offer.enrollees}"></jstl:out></li>
- </ul>
- <security:authorize access="hasRole('PATIENT')">
-  <a href="offer/patient/print.do?offerId=${offer.id}"><spring:message code="offer.print" /></a>
- </security:authorize>
- --%></jstl:if>
+</jstl:if>
+</div>

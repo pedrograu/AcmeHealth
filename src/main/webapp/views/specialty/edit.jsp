@@ -47,18 +47,40 @@
 </jstl:if>
 
 <jstl:if test="${detailsSpecialty==true}">
-
-	<b><spring:message code="specialty.details" /></b>
+	<br />
 	<br />
 
-	<ul>
-		<li><b><spring:message code="specialty.name" /></b> <jstl:out
-				value="${specialty.name}"></jstl:out></li>
-		<li><b><spring:message code="specialty.description" /></b> <jstl:out
-				value="${specialty.description}"></jstl:out></li>
-	</ul>
 
-	<b><spring:message code="specialists.list" /></b>
+	<div class="col-lg-12 ">
+		<div class="row row-centered">
+			<div class="col-lg-7 col-lg-offset-2 col-md-12 col-sm-12 mb">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="centered">
+							<b><spring:message code="specialty.details" /></b>
+						</h3>
+					</div>
+					<div class="panel-body">
+						<ul>
+							<li><b><spring:message code="specialty.name" /></b> <jstl:out
+									value="${specialty.name2}"></jstl:out></li>
+							<li><b><spring:message code="specialty.description" /></b>
+								<jstl:out value="${specialty.description2}"></jstl:out></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<br />
+	<br />
+	<h3>
+		<spring:message code="specialists.list" />
+	</h3>
 	<br />
 	<div class="table-responsive">
 		<display:table name="specialists" id="row" requestURI="${requestURI}"
@@ -94,5 +116,3 @@
 	</div>
 
 </jstl:if>
-
-
