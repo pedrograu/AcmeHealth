@@ -16,201 +16,219 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<div class="row mt">
- <div class="col-lg-12">
-  <!-- ADMINISTRATOR -->
-  <security:authorize access="hasRole('ADMINISTRATOR')">
-   <!-- 1st ROW OF PANELS -->
-   <div class="row">
+<div id="tf-services" class="text-center">
+ <div class="row mt">
+  <div class="col-lg-12">
+   <!-- ADMINISTRATOR -->
+   <security:authorize access="hasRole('ADMINISTRATOR')">
+    <!-- 1st ROW OF PANELS -->
+    <div class="row">
 
 
 
-    <!-- TWITTER PANEL -->
-    <div class="col-lg-4 col-md-4 col-sm-4 mb">
-     <div class="product-panel-2 pn">
-      <a href="register/specialist/edit.do" style="color: rgb(22, 140, 204);"> <i class="fa fa-user-md fa-6x"></i>
-      </a>
-     </div>
+     <!-- Register Specialist -->
+     <a href="register/specialist/edit.do">
+      <div class="col-lg-4 col-md-4 col-sm-4 mb service">
+       <i class="fa fa-user-md"></i>
+       <h4>
+        <strong><spring:message code="customerArea.administrator.register.specialist" /></strong>
+       </h4>
+      </div>
+     </a>
+
+
+     <!-- Create specialty -->
+
+     <a href="specialty/administrator/create.do">
+      <div class="col-lg-4 col-md-4 col-sm-4 mb service">
+       <i class="fa fa-medkit"></i>
+       <h4>
+        <strong><spring:message code="customerArea.administrator.create.specialty" /></strong>
+       </h4>
+      </div>
+     </a>
+
+     <!-- Create offer -->
+
+     <a href="offer/administrator/create.do">
+      <div class="col-lg-4 col-md-4 col-sm-4 mb service">
+       <i class="fa fa-plus-square"></i>
+       <h4>
+        <strong><spring:message code="customerArea.administrator.create.offer" /></strong>
+       </h4>
+      </div>
+     </a>
+
+
+     <!-- /col-md-4 -->
     </div>
+    <!--/END 1ST ROW OF PANELS-->
+   </security:authorize>
 
-    <!-- /col-md-4 -->
 
-    <div class="col-lg-4 col-md-4 col-sm-4 mb">
-     <div class="product-panel-2 pn">
-      <a href="specialty/administrator/create.do" style="color: rgb(255, 165, 57);"> <i class="fa fa-medkit fa-6x"></i>
-      </a>
-     </div>
+   <!--PATIENT-->
+   <security:authorize access="hasRole('PATIENT')">
+    <!-- 1st ROW OF PANELS -->
+    <div class="row">
+
+
+
+     <!--Personal Data-->
+     <a href="appointment/patient/calendar.do">
+      <div class="col-lg-4 col-md-4 col-sm-4 mb service">
+
+       <i class="fa fa-pencil-square-o"></i>
+       <h4>
+        <strong><spring:message code="customerArea.patient.personal.data" /></strong>
+       </h4>
+
+      </div>
+     </a>
+
+     <!-- Create Appointment -->
+
+     <a href="appointment/patient/calendar.do">
+      <div class="col-lg-4 col-md-4 col-sm-4 mb service">
+       <i class="fa fa-calendar"></i>
+       <h4>
+        <strong><spring:message code="customerArea.patient.appointment" /></strong>
+       </h4>
+      </div>
+     </a>
+     <!-- /col-md-4 -->
+
+
+     <!-- /col-md-4 -->
     </div>
-    <!-- /col-md-4 -->
+    <!--/END 1ST ROW OF PANELS-->
+   </security:authorize>
 
-    <div class="col-lg-4 col-md-4 col-sm-4 mb">
-     <div class="product-panel-2 pn">
-      <a href="offer/administrator/create.do"> <i class="fa fa-plus-square  fa-6x"></i>
-      </a>
-     </div>
+
+   <!-- SPECIALIST -->
+   <security:authorize access="hasRole('SPECIALIST')">
+    <!--1st ROW OF PANELS-->
+    <div class="row">
+
+     <!-- Profile -->
+     <a href="profile/specialist/detail.do">
+      <div class="col-lg-4 col-md-4 col-sm-4 mb service">
+       <i class="fa fa-user"></i>
+       <h4>
+        <strong><spring:message code="customerArea.specialist.profile" /></strong>
+       </h4>
+      </div>
+     </a>
+
+     <!-- Timetable -->
+
+     <a href="timetable/specialist/create.do">
+      <div class="col-lg-4 col-md-4 col-sm-4 mb service">
+       <i class="fa fa-table"></i>
+       <h4>
+        <strong><spring:message code="customerArea.specialist.create.timetable" /></strong>
+       </h4>
+      </div>
+     </a>
+
+     <!-- Free day -->
+
+     <a href="freeDay/specialist/create.do">
+      <div class="col-lg-4 col-md-4 col-sm-4 mb service">
+       <i class="fa fa-plane "></i>
+       <h4>
+        <strong><spring:message code="customerArea.specialist.create.free.day" /></strong>
+       </h4>
+      </div>
+     </a>
+
+
+     <!-- /col-md-4 -->
     </div>
-    <!-- /col-md-4 -->
-   </div>
-   <!--/END 1ST ROW OF PANELS-->
-  </security:authorize>
+    <!--/END 1ST ROW OF PANELS-->
+   </security:authorize>
 
 
-  <!--PATIENT-->
-  <security:authorize access="hasRole('PATIENT')">
-   <!-- 1st ROW OF PANELS -->
-   <div class="row">
+   <!-- 2ND ROW OF PANELS -->
+   <!-- ADMINISTRATOR -->
+   <security:authorize access="hasRole('ADMINISTRATOR')">
+    <div class="row">
 
-
-
-    <!--TWITTER PANEL-->
-    <div class="col-lg-4 col-md-4 col-sm-4 mb">
-     <div class="product-panel-2 pn">
-      <a href="appointment/patient/calendar.do"> <i class="fa fa-calendar fa-6x"></i>
-      
-      </a>
-      <h4>Logo Design</h4>
+     <!-- Dashboard-->
+     <a href="dashboard/administrator/dashboard.do">
+     <div class="col-lg-4 col-md-4 col-sm-4 mb service">
+      <i class="fa fa-desktop"></i>
+      <h4>
+       
+       <strong><spring:message code="customerArea.administrator.dashboard" /></strong>
+      </h4>
      </div>
+     </a>
+
+     <!--/col-md-4-->
     </div>
+   </security:authorize>
 
-    <!-- /col-md-4 -->
-
-    <div class="col-lg-4 col-md-4 col-sm-4 mb">
-     <div class="product-panel-2 pn">
-      <a href="appointment/patient/calendar.do"> <i class="fa fa-calendar fa-6x"></i>
-      </a>
-     </div>
-    </div>
-    <!-- /col-md-4 -->
-
-
-    <!-- /col-md-4 -->
-   </div>
-   <!--/END 1ST ROW OF PANELS-->
-  </security:authorize>
-
-
-  <!-- SPECIALIST -->
-  <security:authorize access="hasRole('SPECIALIST')">
-   <!--1st ROW OF PANELS-->
-   <div class="row">
-
-    <!-- TWITTER PANEL -->
-    <div class="col-lg-4 col-md-4 col-sm-4 mb">
-     <div class="product-panel-2 pn">
-      <a href="profile/specialist/detail.do"> <i class="fa fa-user-md fa-6x"></i>
-      </a>
-     </div>
-    </div>
-
-    <!-- /col-md-4 -->
-
-    <div class="col-lg-4 col-md-4 col-sm-4 mb">
-     <div class="product-panel-2 pn">
-      <a href="timetable/specialist/create.do"> <i class="fa fa-user-md fa-6x"></i>
-      </a>
-     </div>
-    </div>
-    <!-- /col-md-4 -->
-
-    <div class="col-lg-4 col-md-4 col-sm-4 mb">
-     <div class="product-panel-2 pn">
-      <a href="freeDay/specialist/create.do"> <i class="fa fa-user-md fa-6x"></i>
-      </a>
-     </div>
-    </div>
-    <!-- /col-md-4 -->
-   </div>
-   <!--/END 1ST ROW OF PANELS-->
-  </security:authorize>
-
-
-  <!-- 2ND ROW OF PANELS -->
-  <!-- ADMINISTRATOR -->
-  <security:authorize access="hasRole('ADMINISTRATOR')">
-   <div class="row">
-    <!-- TODO PANEL-->
-    <div class="col-lg-4 col-md-4 col-sm-4 mb">
-     <div class="product-panel-2 pn">
-      <a href="dashboard/administrator/dashboard.do"> <i class="fa fa-user-md fa-6x"></i>
-      </a>
-     </div>
-    </div>
-    <!--/col-md-4-->
-   </div>
-  </security:authorize>
-  <!--PATIENT-->
-  <security:authorize access="hasRole('PATIENT')">
-   <div class="row">
-    <!-- TODO PANEL-->
-    <div class="col-lg-12 col-md-12 col-sm-12 mb">
-     <div class="table-responsive">
-      <display:table name="appointments" id="row" requestURI="${requestURI}" pagesize="5" class="table table-hover"
-       keepStatus="true">
-
-       <spring:message code="appointment.startMoment" var="startMoment" />
-       <display:column property="startMoment" title="${startMoment}" sortable="${true}"
-        format="{0,date,dd/MM/yyyy HH:mm}" />
-
-       <spring:message code="appointment.specialist" var="specialist" />
-       <display:column property="specialist.name" title="${specialist}" sortable="${true}" />
-
-       <spring:message code="appointment.specialty" var="specialty" />
-       <display:column property="specialist.specialty.name" title="${specialty}" sortable="${true}" />
-
-
-      </display:table>
-     </div>
-    </div>
-    <!--/col-md-4-->
-   </div>
-  </security:authorize>
-  <!-- SPECIALIST -->
-  <security:authorize access="hasRole('SPECIALIST')">
-   <div class="row">
-    <!-- TODO PANEL-->
-    <div class="col-lg-12 col-md-12 col-sm-12 mb">
-     <div class="table-responsive">
-      <display:table name="appointments" id="row" requestURI="${requestURI}" pagesize="5" class="table table-hover"
-       keepStatus="true">
-
-
-
-
-
-       <spring:message code="appointment.startMoment" var="startMoment" />
-       <display:column property="startMoment" title="${startMoment}" sortable="${true}"
-        format="{0,date,dd/MM/yyyy HH:mm}" />
-
-       <spring:message code="appointment.specialist" var="specialist" />
-       <display:column property="specialist.name" title="${specialist}" sortable="${true}" />
-
-       <spring:message code="appointment.specialty" var="specialty" />
-       <display:column property="specialist.specialty.name" title="${specialty}" sortable="${true}" />
-
-       <security:authorize access="hasRole('SPECIALIST')">
-        <display:column>
-         <a href="appointment/specialist/edit.do?appointmentId=${row.id}">
-          <button class="btn btn-primary btn-xs">
-           <i class="fa fa-pencil"></i>
-          </button>
-         </a>
-        </display:column>
-        <display:column>
-         <a href="message/customer/cancel.do?appointmentId=${row.id}">
-          <button class="btn btn-danger btn-xs">
-           <i class="fa fa-trash-o "></i>
-          </button>
-         </a>
-        </display:column>
-
-       </security:authorize>
-
-
-      </display:table>
-     </div>
-    </div>
-    <!--/col-md-4 -->
-   </div>
-  </security:authorize>
+  </div>
  </div>
 </div>
+<!--PATIENT-->
+<security:authorize access="hasRole('PATIENT')">
+ <!-- TODO PANEL-->
+ <div class="table-responsive">
+  <display:table name="appointments" id="row" requestURI="${requestURI}" pagesize="5" class="table table-hover"
+   keepStatus="true">
+
+   <spring:message code="appointment.startMoment" var="startMoment" />
+   <display:column property="startMoment" title="${startMoment}" sortable="${true}" format="{0,date,dd/MM/yyyy HH:mm}" />
+
+   <spring:message code="appointment.specialist" var="specialist" />
+   <display:column property="specialist.name" title="${specialist}" sortable="${true}" />
+
+   <spring:message code="appointment.specialty" var="specialty" />
+   <display:column property="specialist.specialty.name" title="${specialty}" sortable="${true}" />
+
+
+  </display:table>
+ </div>
+</security:authorize>
+<!-- SPECIALIST -->
+<security:authorize access="hasRole('SPECIALIST')">
+ <div class="table-responsive">
+  <display:table name="appointments" id="row" requestURI="${requestURI}" pagesize="5" class="table table-hover"
+   keepStatus="true">
+
+
+
+
+
+   <spring:message code="appointment.startMoment" var="startMoment" />
+   <display:column property="startMoment" title="${startMoment}" sortable="${true}" format="{0,date,dd/MM/yyyy HH:mm}" />
+
+   <spring:message code="appointment.specialist" var="specialist" />
+   <display:column property="specialist.name" title="${specialist}" sortable="${true}" />
+
+   <spring:message code="appointment.specialty" var="specialty" />
+   <display:column property="specialist.specialty.name" title="${specialty}" sortable="${true}" />
+
+   <security:authorize access="hasRole('SPECIALIST')">
+    <display:column>
+     <a href="appointment/specialist/edit.do?appointmentId=${row.id}">
+      <button class="btn btn-primary btn-xs">
+       <i class="fa fa-pencil"></i>
+      </button>
+     </a>
+    </display:column>
+    <display:column>
+     <a href="message/customer/cancel.do?appointmentId=${row.id}">
+      <button class="btn btn-danger btn-xs">
+       <i class="fa fa-trash-o "></i>
+      </button>
+     </a>
+    </display:column>
+
+   </security:authorize>
+
+
+  </display:table>
+ </div>
+</security:authorize>
