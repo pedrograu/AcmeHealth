@@ -18,16 +18,18 @@
 
 <input type="hidden" size="20" id="patientId" name="patientId" value="<%=  request.getParameter("patientId")%> "/>
 
-
+<br/>
+<br/>
     <SELECT name="specialistId" id="specialistId">
 
         <jstl:forEach var="x" items="${specialists}">
-            <OPTION VALUE="${x.id}">${x.name}</OPTION>
+            <OPTION VALUE="${x.id}">${x.surname}, ${x.name} (${x.specialty.name})</OPTION>
         </jstl:forEach>
 
     </SELECT> 
 
-
+<br/>
+<br/>
 <button type="submit" class="btn btn-primary">
     <spring:message code="appointment.selectSpecialist" />
 </button>

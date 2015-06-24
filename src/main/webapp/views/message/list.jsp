@@ -35,23 +35,23 @@
 
 		<spring:message code="message.subject" var="subject" />
 		<display:column property="subject" title="${subject}"
-			sortable="${false}" />
+			sortable="${true}" />
 
 
+		<spring:message code="message.sender" var="sender" />
+		<display:column property="sender.name" title="${sender}"
+			sortable="${true}" />
+			
+			
 		<spring:message code="message.creationMoment" var="creationMoment" />
 		<display:column property="creationMoment" title="${creationMoment}"
 			sortable="${true}" format="{0,date,dd/MM/yyyy HH:mm}" />
 
 
-		<spring:message code="message.sender" var="sender" />
-		<display:column property="sender.name" title="${sender}"
-			sortable="${false}" />
-
-
-		<spring:message code="message.recipient" var="recipient" />
+<%-- 		<spring:message code="message.recipient" var="recipient" />
 		<display:column property="recipient.name" title="${recipient}"
 			sortable="${false}" />
-
+ --%>
 
 
 	</display:table>

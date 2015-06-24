@@ -26,14 +26,16 @@
 <jstl:if test="${details==true }">
 	<b><spring:message code="message.details" /></b>
 	<ul>
-
-		<li><b><spring:message code="message.subject" /></b> <jstl:out
+		<li><b><spring:message code="message.sender2" /></b> <jstl:out
+				value="${messageCustomer.sender.surname}, ${messageCustomer.sender.name}"></jstl:out></li>
+		<li><b><spring:message code="message.subject2" /></b> <jstl:out
 				value="${messageCustomer.subject}"></jstl:out></li>
-		<li><b><spring:message code="message.textBody" /></b> <jstl:out
+		<li><b><spring:message code="message.creationMoment2" /></b> <fmt:formatDate
+				value="${messageCustomer.creationMoment}" pattern="dd/MM/yyyy HH:mm" /></li>
+		<li><b><spring:message code="message.textBody2" /></b> <jstl:out
 				value="${messageCustomer.textBody}"></jstl:out></li>
 
-		<li><b><spring:message code="message.creationMoment" /></b> <fmt:formatDate
-				value="${messageCustomer.creationMoment}" pattern="dd/MM/yyyy HH:mm" /></li>
+
 	</ul>
 	<br />
 
