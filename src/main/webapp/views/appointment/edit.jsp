@@ -25,91 +25,79 @@
 
 
 <jstl:if test="${isSpecialist==false}">
+	<div class="col-md-6  col-md-offset-2" style="margin-bottom: 20%;">
+		<br />
+		<br />
+		<jstl:if test="${existAppointment==true}">
+			<b><spring:message code="appointment.message2" /></b>
+		</jstl:if>
 
-	<jstl:if test="${existAppointment==true}">
-		<b><spring:message code="appointment.message2" /></b>
-	</jstl:if>
+		<jstl:if test="${existAppointment==false}">
 
-	<jstl:if test="${existAppointment==false}">
-
-		<form:form action="${requestURI}" modelAttribute="appointmentForm">
-
-
-			<form:hidden path="id" />
-			<form:hidden path="version" />
-			<form:hidden path="offer" />
-			<%-- 
-	<form:hidden path="medicalHistory" />
-	<form:hidden path="prescriptions" />
-	<form:hidden path="patient" />
-	<form:hidden path="timetable" /> --%>
+			<form:form action="${requestURI}" modelAttribute="appointmentForm">
 
 
+				<form:hidden path="id" />
+				<form:hidden path="version" />
+				<form:hidden path="offer" />
 
-			<jstl:if test="${create==false}">
 
-				<jstl:if test="${hayHorasDisponibles==true}">
-					<form:select hidden="true" path="startMoment"
-						items="${listaDeFechas}"></form:select>
+				<jstl:if test="${create==false}">
 
-					<b><spring:message code="appointment.confirmAppointment" />${fecha}
-						<spring:message code="appointment.at" /> ${hora} <spring:message
-							code="appointment.hours" />? </b>
-					<br />
+					<jstl:if test="${hayHorasDisponibles==true}">
+						<form:select hidden="true" path="startMoment"
+							items="${listaDeFechas}"></form:select>
 
-					<acme:submit code="appointment.confirm" name="save2" />
+						<h4>
+							<spring:message code="appointment.confirmAppointment" />${fecha}
+							<spring:message code="appointment.at" />
+							${hora}
+							<spring:message code="appointment.hours" />
+							?
+						</h4>
+						<br />
 
-					<jstl:if test="${isOffer==false}">
-						<acme:cancel url="appointment/patient/calendar.do"
-							code="appointment.cancel" />
+						<acme:submit code="appointment.confirm" name="save2" />
+
+						<jstl:if test="${isOffer==false}">
+							<acme:cancel url="appointment/patient/calendar.do"
+								code="appointment.cancel" />
+						</jstl:if>
+
+						<jstl:if test="${isOffer==true}">
+							<acme:cancel
+								url="appointment/patient/calendar2.do?offerId=${appointmentForm.offer.id}"
+								code="appointment.cancel" />
+						</jstl:if>
+
 					</jstl:if>
 
-					<jstl:if test="${isOffer==true}">
-						<acme:cancel
-							url="appointment/patient/calendar2.do?offerId=${appointmentForm.offer.id}"
-							code="appointment.cancel" />
+					<jstl:if test="${hayHorasDisponibles==false}">
+						<br />
+						<b><spring:message code="appointment.message" /></b>
+						<jstl:if test="${isOffer==false}">
+							<br />
+
+							<a href="appointment/patient/calendar.do"> <spring:message
+									code="appointment.selectOther" /></a>
+						</jstl:if>
+
+						<jstl:if test="${isOffer==true}">
+							<br />
+							<a
+								href="appointment/patient/calendar2.do?offerId=${appointmentForm.offer.id}">
+								<spring:message code="appointment.selectOther" />
+							</a>
+						</jstl:if>
 					</jstl:if>
 
 				</jstl:if>
 
-				<jstl:if test="${hayHorasDisponibles==false}">
-					<br />
-					<b><spring:message code="appointment.message" /></b>
-					<jstl:if test="${isOffer==false}">
-						<br />
 
-						<a href="appointment/patient/calendar.do"> <spring:message
-								code="appointment.selectOther" /></a>
-					</jstl:if>
+			</form:form>
 
-					<jstl:if test="${isOffer==true}">
-						<br />
-						<a
-							href="appointment/patient/calendar2.do?offerId=${appointmentForm.offer.id}">
-							<spring:message code="appointment.selectOther" />
-						</a>
-					</jstl:if>
-				</jstl:if>
-
-			</jstl:if>
-
-
-		</form:form>
-
-
-		<%-- 	<jstl:if test="${isOffer==false}">
-		<br/>
-		
-		<a href="appointment/patient/calendar.do"> <spring:message code="appointment.selectOther" /></a>
-	</jstl:if>
-	
-	<jstl:if test="${isOffer==true}">
-		<br/>
-		<a href="appointment/patient/calendar2.do?offerId=${appointmentForm.offer.id}"> <spring:message code="appointment.selectOther" /></a>
-	</jstl:if> --%>
-
-	</jstl:if>
-
+		</jstl:if>
+	</div>
 </jstl:if>
 
 
