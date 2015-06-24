@@ -33,7 +33,7 @@
 			sortable="${true}" format="{0,date,HH:mm}" />
 
 		<spring:message code="timetable.day" var="day" />
-		<display:column title="${day}" sortable="${false}">
+		<display:column title="${day}" sortable="${true}">
 			<jstl:if test="${row.day == 1 }">
 				<spring:message code="timetable.day.sunday" />
 			</jstl:if>
