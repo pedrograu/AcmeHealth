@@ -21,49 +21,119 @@
 
 
 <jstl:if test="${detail==true}">
-
-	<ul>
-		<img style="width: 50px; height: 50px;"
-			src="profile/patient/showImage.do?patientId=${patient.id}" />
-
-		<li><b><spring:message code="personalData.name" /></b> <jstl:out
-				value="${patient.name}"></jstl:out></li>
-		<li><b><spring:message code="personalData.surname" /></b> <jstl:out
-				value="${patient.surname}"></jstl:out></li>
-		<li><b><spring:message code="personalData.emailAddress" /></b> <jstl:out
-				value="${patient.emailAddress}"></jstl:out></li>
-		<li><b><spring:message code="personalData.address" /></b> <jstl:out
-				value="${patient.address}"></jstl:out></li>
-		<li><b><spring:message code="personalData.phone" /></b> <jstl:out
-				value="${patient.phone}"></jstl:out></li>
-
-		<li><b><spring:message
-					code="personalData.creditCard.holderName" /></b> <jstl:out
-				value="${patient.creditCard.holderName}"></jstl:out></li>
-		<li><b><spring:message
-					code="personalData.creditCard.brandName" /></b> <jstl:out
-				value="${patient.creditCard.brandName}"></jstl:out></li>
-		<li><b><spring:message code="personalData.creditCard.number" /></b>
-			<jstl:out value="${patient.creditCard.number}"></jstl:out></li>
-		<li><b><spring:message
-					code="personalData.creditCard.expirationMonth" /></b> <jstl:out
-				value="${patient.creditCard.expirationMonth}"></jstl:out></li>
-		<li><b><spring:message
-					code="personalData.creditCard.expirationYear" /></b> <jstl:out
-				value="${patient.creditCard.expirationYear}"></jstl:out></li>
-		<li><b><spring:message code="personalData.creditCard.cVVcode" /></b>
-			<jstl:out value="${patient.creditCard.cVVcode}"></jstl:out></li>
-
-	</ul>
-
-	<b><a href="profile/patient/edit.do"><spring:message
-				code="personalData.edit" /></a></b>
 	<br />
-	<b><a href="profile/patient/changePassword.do"><spring:message
-				code="personalData.changePassword" /></a></b>
 	<br />
-	<b><a href="profile/patient/editCreditCard.do"><spring:message
-				code="personalData.editCreditCard" /></a></b>
+
+
+	<div class="row">
+		<div class="col-md-5  toppad  pull-right col-md-offset-3 "></div>
+		<div
+			class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad">
+
+
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<h3 class="panel-title">${patient.surname},${patient.name}</h3>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-xs-3 col-md-3 col-lg-3 " align="center">
+							<img style="width: 100%; height: 100%;"
+								src="profile/patient/showImage.do?patientId=${patient.id}">
+						</div>
+
+						<div class=" col-md-9 col-lg-9 ">
+							<table class="table table-user-information">
+								<tbody>
+				
+									<tr>
+										<td><b><spring:message
+													code="personalData.message" /></b></td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>
+										<td>
+									</tr>
+									<tr>
+										<td><spring:message code="personalData.address" /></td>
+										<td><jstl:out value="${patient.address}"></jstl:out></td>
+									</tr>
+									<tr>
+										<td><spring:message code="personalData.phone" /></td>
+										<td><jstl:out value="${patient.phone}"></jstl:out></td>
+									</tr>
+									<tr>
+										<td><spring:message code="personalData.emailAddress" /></td>
+										<td><a href="mailto:${patient.emailAddress}"><jstl:out
+													value="${patient.emailAddress}"></jstl:out></a></td>
+									</tr>
+									<tr>
+										<td>
+										<td>
+									</tr>
+									<tr>
+										<td><b><spring:message
+													code="personalData.creditCard.name" /></b></td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>
+										<td>
+									</tr>
+									<tr>
+										<td><spring:message
+												code="personalData.creditCard.holderName" /></td>
+										<td><jstl:out value="${patient.creditCard.holderName}"></jstl:out></td>
+									</tr>
+									<tr>
+										<td><spring:message
+												code="personalData.creditCard.brandName" /></td>
+										<td><jstl:out value="${patient.creditCard.brandName}"></jstl:out></td>
+									</tr>
+									<tr>
+										<td><spring:message code="personalData.creditCard.number" /></td>
+										<td><jstl:out value="${patient.creditCard.number}"></jstl:out></td>
+									</tr>
+									<tr>
+										<td><spring:message
+												code="personalData.creditCard.expirationMonth" /></td>
+										<td><jstl:out
+												value="${patient.creditCard.expirationMonth}"></jstl:out></td>
+									</tr>
+									<tr>
+										<td><spring:message
+												code="personalData.creditCard.expirationYear" /></td>
+										<td><jstl:out
+												value="${patient.creditCard.expirationYear}"></jstl:out></td>
+									</tr>
+									<tr>
+									<tr>
+										<td><spring:message
+												code="personalData.creditCard.cVVcode" /></td>
+										<td><jstl:out value="${patient.creditCard.cVVcode}"></jstl:out></td>
+									</tr>
+
+
+								</tbody>
+							</table>
+					</div>
+					<div class=" col-md-12 col-lg-12 " align="center">
+							<a href="profile/patient/edit.do" class="btn btn-primary"><spring:message
+									code="personalData.edit" /></a> &nbsp;<a
+								href="profile/patient/changePassword.do" class="btn btn-primary"><spring:message
+									code="personalData.changePassword" /></a> &nbsp;<a
+								href="profile/patient/editCreditCard.do" class="btn btn-primary"><spring:message
+									code="personalData.editCreditCard" /></a>
+						
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
 
 
 </jstl:if>
