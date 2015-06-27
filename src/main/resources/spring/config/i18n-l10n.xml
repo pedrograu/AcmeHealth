@@ -42,6 +42,7 @@
 		<value>/views/freeDay/messages</value>
 		<value>/views/patient/messages</value>
 		<value>/views/customerArea/messages</value>
+	    <value>/views/personalData/messages</value>
 		
 
 

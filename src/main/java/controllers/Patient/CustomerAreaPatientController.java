@@ -25,6 +25,7 @@ public class CustomerAreaPatientController extends AbstractController {
 
     // Listing ----------------------------------------------------------------
 
+    //citas pendientes
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView list() {
         ModelAndView result;

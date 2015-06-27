@@ -102,6 +102,7 @@
 							<spring:message code="profile.change.specialist" />
 						</button>
 					</a>
+					<br />
 				</jstl:if>
 
 				<jstl:if test="${GPmine==true}">
@@ -117,14 +118,11 @@
 		</div>
 	</div>
 
-
 	<br />
 	<br />
 	<h3>
 		<spring:message code="profile.comments" />
 	</h3>
-
-
 
 	<br />
 	<div class="table-responsive">

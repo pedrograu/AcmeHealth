@@ -81,6 +81,7 @@
 		<security:intercept-url pattern="/customerArea/patient/list.do"
             access="hasRole('PATIENT')" />
 
+
 		<!-- <security:intercept-url pattern="/message/customer/list-outbox.do" 
 			access="hasRole('PATIENT')" /> <security:intercept-url pattern="/message/customer/list-inbox.do" 
 			access="hasRole('PATIENT')" /> <security:intercept-url pattern="/message/customer/create.do" 
