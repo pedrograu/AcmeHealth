@@ -156,6 +156,7 @@ public class PatientService {
         patient.getUserAccount().setUsername(patientForm.getUsername());
         patient.setPhone(patientForm.getPhone());
         patient.setSpecialist(patientForm.getSpecialist());
+        patient.setImage(patientForm.getImage());
 
         return patient;
     }

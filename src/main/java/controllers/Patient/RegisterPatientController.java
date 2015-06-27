@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.GregorianCalendar;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,11 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.MedicalHistoryService;
@@ -45,6 +49,15 @@ public class RegisterPatientController extends AbstractController {
     public RegisterPatientController() {
         super();
     }
+    
+    
+    //Convertidor de imagenes
+	@InitBinder
+	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
+
+		binder.registerCustomEditor(byte[].class, new ByteArrayMultipartFileEditor());
+	}
+	
 
     // Registration -----------------------------------------------------------
 
@@ -124,6 +137,8 @@ public class RegisterPatientController extends AbstractController {
                 result = new ModelAndView("redirect:../../security/login.do");
 
             } catch (DataIntegrityViolationException oops) {
+            	
+            	
                 result = createEditModelAndView(patientForm, "register.duplicate.error");
 
             } catch (Throwable oops) {

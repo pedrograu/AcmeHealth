@@ -21,9 +21,10 @@
 
 <jstl:if test="${registerPatient==true}">
 
-	<form:form action="${requestURI}" modelAttribute="${actor}">
+	<form:form action="${requestURI}" modelAttribute="${actor}"
+		enctype="multipart/form-data">
 
-		<div class="col-md-6" style="margin-bottom: 100px;">
+		<div class="col-md-6" style="margin-bottom: 100px;"><br />
 
 
 			<acme:textbox code="register.username" path="username" />
@@ -52,7 +53,9 @@
 		<div class="col-md-6">
 
 			<fieldset>
-				<legend>Credit Card</legend>
+				<legend>
+					<spring:message code="register.creditCard.name" />
+				</legend>
 
 				<acme:textbox code="register.creditCard.holderName"
 					path="creditCard.holderName" />
@@ -69,6 +72,19 @@
 
 
 			</fieldset>
+			<fieldset>
+				<legend>
+					<spring:message code="register.image" />
+				</legend>
+
+				<%-- 				<form:label path="image">
+					<spring:message code="register.image" />
+				</form:label> --%>
+				<form:input path="image" type="file" />
+				<form:errors cssClass="error" path="image" />
+			</fieldset>
+
+			<br /><br />
 
 			<acme:checkbox path="available" url="laws/list.do"
 				code="register.text" />

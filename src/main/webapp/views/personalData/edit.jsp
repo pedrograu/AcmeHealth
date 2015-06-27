@@ -23,6 +23,8 @@
 <jstl:if test="${detail==true}">
 
 	<ul>
+		<img style="width: 50px; height: 50px;"
+			src="profile/patient/showImage.do?patientId=${patient.id}" />
 
 		<li><b><spring:message code="personalData.name" /></b> <jstl:out
 				value="${patient.name}"></jstl:out></li>

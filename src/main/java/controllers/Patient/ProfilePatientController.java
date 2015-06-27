@@ -2,11 +2,14 @@ package controllers.Patient;
 
 import java.util.Collection;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -53,6 +56,23 @@ public class ProfilePatientController extends AbstractController {
 	public ProfilePatientController() {
 		super();
 	}
+	
+	//para recuperar imagen de db y mostrarla
+	@RequestMapping(value = "/showImage")
+    public ModelAndView showImage(HttpServletResponse response, @RequestParam int patientId) throws Exception {
+
+			Patient patient = patientService.findOneToEdit(patientId);
+     
+
+            response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+            response.setContentLength(patient.getImage().length);
+            response.setHeader("Content-Disposition","attachment; filename=\"" + patient.getName() +"\"");
+     
+            FileCopyUtils.copy(patient.getImage(), response.getOutputStream());
+     
+            return null;
+     
+        }
 
 	// Datos personales del paciente
 	@RequestMapping(value = "/myPersonalDatas", method = RequestMethod.GET)
