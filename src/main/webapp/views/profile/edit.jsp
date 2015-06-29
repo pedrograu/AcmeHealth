@@ -43,7 +43,7 @@
 									value="${specialist.emailAddress}"></jstl:out></li>
 							<li><b><spring:message
 										code="profile.datosPersonales.text" /></b> <jstl:out
-									value="${profile.text}"></jstl:out></li>
+									value="${specialist.profile.text}"></jstl:out></li>
 
 						</ul>
 					</div>
