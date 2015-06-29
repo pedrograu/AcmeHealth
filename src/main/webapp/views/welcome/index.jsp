@@ -34,7 +34,7 @@
      <h1><spring:message code="welcome.empastes" /></h1>
      <p></p>
      <p>
-      <a class="btn btn-primary btn-responsive" href="http://localhost:8080/Acme-Health/offer/details.do?offerId=23"><spring:message code="welcome.button" /></a>
+      <a class="btn btn-primary btn-responsive" href="http://localhost:8080/Acme-Health/offer/details.do?offerId=31"><spring:message code="welcome.button" /></a>
      </p>
     </div>
    </div>
@@ -44,7 +44,7 @@
     <h1><spring:message code="welcome.blanqueamiento" /></h1>
      <p></p>
      <p>
-      <a class="btn btn-primary btn-responsive" href="http://localhost:8080/Acme-Health/offer/details.do?offerId=22"><spring:message code="welcome.button" /></a>
+      <a class="btn btn-primary btn-responsive" href="http://localhost:8080/Acme-Health/offer/details.do?offerId=30"><spring:message code="welcome.button" /></a>
      </p>
      </div>
    </div>
@@ -54,7 +54,7 @@
     <h1><spring:message code="welcome.masajes" /></h1>
      <p></p>
      <p>
-      <a class="btn btn-primary btn-responsive" href="http://localhost:8080/Acme-Health/offer/details.do?offerId=24"><spring:message code="welcome.button" /></a>
+      <a class="btn btn-primary btn-responsive" href="http://localhost:8080/Acme-Health/offer/details.do?offerId=32"><spring:message code="welcome.button" /></a>
      </p>
      </div>
    </div>
@@ -64,7 +64,7 @@
     <h1><spring:message code="welcome.optica" /></h1>
      <p></p>
      <p>
-      <a class="btn btn-primary btn-responsive" href="http://localhost:8080/Acme-Health/offer/details.do?offerId=26"><spring:message code="welcome.button" /></a>
+      <a class="btn btn-primary btn-responsive" href="http://localhost:8080/Acme-Health/offer/details.do?offerId=34"><spring:message code="welcome.button" /></a>
      </p>
      </div>
    </div>

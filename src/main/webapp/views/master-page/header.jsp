@@ -58,7 +58,7 @@
 
   </ul>
   <!--  notification end -->
-   <b><a href="?language=en" style="color: white;">en</a> | <a href="?language=es" style="color: white;">es</a> </b>
+
   
  </div>
 
