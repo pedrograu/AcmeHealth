@@ -1,5 +1,6 @@
 package controllers.Patient;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.GregorianCalendar;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -32,195 +34,248 @@ import forms.TokenForm;
 @RequestMapping("/register/patient")
 public class RegisterPatientController extends AbstractController {
 
-    // Services ---------------------------------------------------------------
+	// Services ---------------------------------------------------------------
 
-    @Autowired
-    private PatientService patientService;
+	@Autowired
+	private PatientService patientService;
 
-    @Autowired
-    private MedicalHistoryService medicalHistoryService;
+	@Autowired
+	private MedicalHistoryService medicalHistoryService;
 
-    @Autowired
-    private SpecialistService specialistService;
+	@Autowired
+	private SpecialistService specialistService;
 
-    // Constructors
-    // ---------------------------------------------------------------
+	// Constructors
+	// ---------------------------------------------------------------
 
-    public RegisterPatientController() {
-        super();
-    }
-    
-    
-    //Convertidor de imagenes
+	public RegisterPatientController() {
+		super();
+	}
+
+	// Convertidor de imagenes
 	@InitBinder
-	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
+	protected void initBinder(HttpServletRequest request,
+			ServletRequestDataBinder binder) throws Exception {
 
-		binder.registerCustomEditor(byte[].class, new ByteArrayMultipartFileEditor());
+		binder.registerCustomEditor(byte[].class,
+				new ByteArrayMultipartFileEditor());
+	}
+
+	// Registration -----------------------------------------------------------
+
+	
+	@RequestMapping(value = "/select", method = RequestMethod.GET)
+	public ModelAndView select() {
+		ModelAndView result;
+
+		result = new ModelAndView("register/select");
+
+		return result;
 	}
 	
+	
+	@RequestMapping(value = "/company", method = RequestMethod.GET)
+	public ModelAndView company() {
+		ModelAndView result;
 
-    // Registration -----------------------------------------------------------
+		result = new ModelAndView("register/company");
 
-    @RequestMapping(value = "/mutua", method = RequestMethod.GET)
-    public ModelAndView mutua() {
-        ModelAndView result;
-        TokenForm tokenForm = new TokenForm();
+		return result;
+	}
 
-        result = createEditModelAndView2(tokenForm);
+	@RequestMapping(value = "/mutua", method = RequestMethod.GET)
+	public ModelAndView mutua(@RequestParam String name) {
+		ModelAndView result;
 
-        return result;
-    }
+		TokenForm tokenForm = new TokenForm();
+		tokenForm.setName(name);
 
-    @RequestMapping(value = "/mutua", method = RequestMethod.POST, params = "check")
-    public ModelAndView check(@Valid TokenForm tokenForm, BindingResult binding) {
+		result = createEditModelAndView2(tokenForm);
 
-        ModelAndView result;
+		return result;
+	}
 
-        if (binding.hasErrors()) {
-            result = createEditModelAndView2(tokenForm);
+	@RequestMapping(value = "/mutua", method = RequestMethod.POST, params = "check")
+	public ModelAndView check(@Valid TokenForm tokenForm, BindingResult binding) {
 
-        } else {
-            String nif = tokenForm.getNif();
-            String pass = tokenForm.getPass();
-            
-            //encriptamos pass
-            Md5PasswordEncoder encoder;
-            encoder = new Md5PasswordEncoder();
-            String hash = encoder.encodePassword(pass, null);
+		ModelAndView result;
 
-            String token = patientService.getToken(nif, hash);
+		if (binding.hasErrors()) {
+			result = createEditModelAndView2(tokenForm);
 
-            if (token == "null") {
-                result = new ModelAndView("register/mutua");
-                result.addObject("error", true);
-                result.addObject("tokenForm", tokenForm);
-                result.addObject("actor", "tokenForm");
-            } else {
-                result = new ModelAndView("redirect:edit.do?token=" + token);
-            }
+		} else {
+			String name = tokenForm.getName();
+			String nif = tokenForm.getNif();
+			String pass = tokenForm.getPass();
 
-        }
-        return result;
-    }
+			// encriptamos pass
+			Md5PasswordEncoder encoder;
+			encoder = new Md5PasswordEncoder();
+			String hash = encoder.encodePassword(pass, null);
 
-    @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public ModelAndView register() {
-        ModelAndView result;
-        PatientForm patientForm = new PatientForm();
+			String token = patientService.getToken(name, nif, hash);
 
-        result = createEditModelAndView(patientForm);
+			if (token == "null") {
+				result = new ModelAndView("register/mutua");
+				result.addObject("error", true);
+				result.addObject("tokenForm", tokenForm);
+				result.addObject("actor", "tokenForm");
+			} else {
 
-        return result;
-    }
+				ArrayList<String> array = patientService.getPersonalData(token);
 
-    @RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-    public ModelAndView save(@Valid PatientForm patientForm, BindingResult binding) {
+				result = new ModelAndView("redirect:edit.do?token=" + token
+						+ "&name=" + array.get(0) + "&surname=" + array.get(1)
+						+ "&address=" + array.get(2) + "&email=" + array.get(3)
+						+ "&phone=" + array.get(4));
+			}
 
-        ModelAndView result;
-        Patient patient;
-        Calendar currentMoment = new GregorianCalendar();
-        int month = patientForm.getCreditCard().getExpirationMonth();
-        int year = patientForm.getCreditCard().getExpirationYear();
-        Calendar dateCreditCard = new GregorianCalendar();
-        dateCreditCard.set(year, month, 1);
+		}
+		return result;
+	}
 
-        if (binding.hasErrors()) {
-            result = createEditModelAndView(patientForm);
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView register() {
+		ModelAndView result;
+		PatientForm patientForm = new PatientForm();
 
-        } else {
+		result = createEditModelAndView(patientForm);
 
-            try {
-                patient = patientService.reconstruct(patientForm);
+		return result;
+	}
 
-                patientService.save(patient);
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+	public ModelAndView save(@Valid PatientForm patientForm,
+			BindingResult binding) {
 
-                result = new ModelAndView("redirect:../../security/login.do");
+		ModelAndView result;
+		Patient patient;
+		Calendar currentMoment = new GregorianCalendar();
+		int month = patientForm.getCreditCard().getExpirationMonth();
+		int year = patientForm.getCreditCard().getExpirationYear();
+		Calendar dateCreditCard = new GregorianCalendar();
+		dateCreditCard.set(year, month, 1);
 
-            } catch (DataIntegrityViolationException oops) {
-            	
-            	
-                result = createEditModelAndView(patientForm, "register.duplicate.error");
+		if (binding.hasErrors()) {
+			result = createEditModelAndView(patientForm);
 
-            } catch (Throwable oops) {
-                oops.getMessage();
+		} else {
 
-                if (!(patientForm.getSecondPassword().equals(patientForm.getPassword()))) {
-                    result = createEditModelAndView(patientForm, "register.wrongSecondPassword.error");
-                } else {
+			try {
+				patient = patientService.reconstruct(patientForm);
 
-                    if (patientForm.getAvailable() == false) {
-                        result = createEditModelAndView(patientForm, "register.available.error");
-                    } else if (!currentMoment.before(dateCreditCard)) {
-                        result = createEditModelAndView(patientForm, "register.creditCard.error");
-                    } else if (!patientService.getTokens().contains(patientForm.getToken())) {
-                        result = createEditModelAndView(patientForm, "register.token.error");
-                    } 
-                    else {
-                        result = createEditModelAndView(patientForm, "register.commit.error");
-                    }
-                }
+				patientService.save(patient);
 
-            }
-        }
-        return result;
-    }
+				result = new ModelAndView("redirect:../../security/login.do");
 
-    // Ancillary methods ------------------------------------------------------
+			} catch (DataIntegrityViolationException oops) {
 
-    protected ModelAndView createEditModelAndView(PatientForm patientForm) {
+				result = createEditModelAndView(patientForm,
+						"register.duplicate.error");
 
-        ModelAndView result;
+			} catch (Throwable oops) {
+				oops.getMessage();
 
-        result = createEditModelAndView(patientForm, null);
+				if (!(patientForm.getSecondPassword().equals(patientForm
+						.getPassword()))) {
+					result = createEditModelAndView(patientForm,
+							"register.wrongSecondPassword.error");
+				} else {
 
-        return result;
-    }
+					if (patientForm.getAvailable() == false) {
+						result = createEditModelAndView(patientForm,
+								"register.available.error");
+					} else if (!currentMoment.before(dateCreditCard)) {
+						result = createEditModelAndView(patientForm,
+								"register.creditCard.error");
+					} else if (!patientService.tokenIsValid((patientForm
+							.getToken()))) {
+						result = createEditModelAndView(patientForm,
+								"register.token.error");
+					} else {
+						result = createEditModelAndView(patientForm,
+								"register.commit.error");
+					}
+				}
 
-    protected ModelAndView createEditModelAndView(PatientForm patientForm, String message) {
+			}
+		}
+		return result;
+	}
 
-        ModelAndView result;
+	// Ancillary methods ------------------------------------------------------
 
-        Patient patient = patientService.create();
-        Collection<Specialist> specialists;
+	protected ModelAndView createEditModelAndView(PatientForm patientForm) {
 
-        specialists = specialistService.findAllSpecialistsOfGeneralMedicine();
+		ModelAndView result;
 
-        result = new ModelAndView("register/edit");
-        result.addObject("patientForm", patientForm);
-        result.addObject("patient", patient);
-        result.addObject("actor", "patientForm");
-        result.addObject("requestURI", "register/patient/edit.do");
-        result.addObject("registerPatient", true);
+		result = createEditModelAndView(patientForm, null);
 
-        result.addObject("specialists", specialists);
+		return result;
+	}
 
-        result.addObject("message", message);
+	protected ModelAndView createEditModelAndView(PatientForm patientForm,
+			String message) {
 
-        return result;
-    }
+		ModelAndView result;
 
-    protected ModelAndView createEditModelAndView2(TokenForm tokenForm) {
+		Patient patient = patientService.create();
+		Collection<Specialist> specialists;
 
-        ModelAndView result;
+		String token = patientForm.getToken();
+		ArrayList<String> array = new ArrayList<String>();
+		if (token != null) {
+			array = patientService.getPersonalData(token);
+		}
 
-        result = createEditModelAndView2(tokenForm, null);
+		specialists = specialistService.findAllSpecialistsOfGeneralMedicine();
 
-        return result;
-    }
+		result = new ModelAndView("register/edit");
+		result.addObject("patientForm", patientForm);
+		result.addObject("patient", patient);
+		result.addObject("actor", "patientForm");
 
-    protected ModelAndView createEditModelAndView2(TokenForm tokenForm, String message) {
+		if (token != null) {
+			result.addObject(
+					"requestURI",
+					"register/patient/edit.do?token=" + token + "&name="
+							+ array.get(0) + "&surname=" + array.get(1)
+							+ "&address=" + array.get(2) + "&email="
+							+ array.get(3) + "&phone=" + array.get(4));
+		}
+		result.addObject("registerPatient", true);
 
-        ModelAndView result;
+		result.addObject("specialists", specialists);
 
-        result = new ModelAndView("register/mutua");
-        result.addObject("tokenForm", tokenForm);
-        result.addObject("actor", "tokenForm");
-        result.addObject("error", false);
-        result.addObject("requestURI", "register/patient/mutua.do");
+		result.addObject("message", message);
 
-        result.addObject("message", message);
+		return result;
+	}
 
-        return result;
-    }
+	protected ModelAndView createEditModelAndView2(TokenForm tokenForm) {
+
+		ModelAndView result;
+
+		result = createEditModelAndView2(tokenForm, null);
+
+		return result;
+	}
+
+	protected ModelAndView createEditModelAndView2(TokenForm tokenForm,
+			String message) {
+
+		ModelAndView result;
+
+		result = new ModelAndView("register/mutua");
+		result.addObject("tokenForm", tokenForm);
+		result.addObject("actor", "tokenForm");
+		result.addObject("error", false);
+		result.addObject("requestURI", "register/patient/mutua.do?name="
+				+ tokenForm.getName());
+
+		result.addObject("message", message);
+
+		return result;
+	}
 
 }

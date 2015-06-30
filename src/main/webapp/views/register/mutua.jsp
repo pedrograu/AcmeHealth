@@ -14,6 +14,7 @@
 
 <form:form action="${requestURI}" modelAttribute="${actor}">
 
+	<%-- <acme:hidden  path ="name"/> --%>
     <acme:textbox placeholder ="NNNNNNNNL" code = "register.nif" path ="nif"/>
     <acme:password code = "register.pass" path ="pass"/>
 

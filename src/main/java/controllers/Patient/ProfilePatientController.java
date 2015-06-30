@@ -85,6 +85,11 @@ public class ProfilePatientController extends AbstractController {
 		result = new ModelAndView("personalData/edit");
 		result.addObject("detail", true);
 		result.addObject("patient", patient);
+		if(patient.getImage()!=null && patient.getImage().length>0){
+			result.addObject("haveImage", true);
+		}else{
+			result.addObject("haveImage", false);
+		}
 
 		return result;
 	}

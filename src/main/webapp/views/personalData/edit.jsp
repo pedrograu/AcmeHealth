@@ -37,10 +37,18 @@
 				</div>
 				<div class="panel-body">
 					<div class="row">
+					<jstl:if test="${haveImage==false}">
+						<div class="col-xs-3 col-md-3 col-lg-3 " align="center">
+							<img style="width: 100%; height: 100%;"
+								src="images/perfil.jpg">
+						</div>
+					</jstl:if>
+					<jstl:if test="${haveImage==true}">
 						<div class="col-xs-3 col-md-3 col-lg-3 " align="center">
 							<img style="width: 100%; height: 100%;"
 								src="profile/patient/showImage.do?patientId=${patient.id}">
 						</div>
+					</jstl:if>
 
 						<div class=" col-md-9 col-lg-9 ">
 							<table class="table table-user-information">

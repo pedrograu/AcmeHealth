@@ -28,6 +28,7 @@ import domain.MedicalHistory;
 import domain.Message;
 import domain.Offer;
 import domain.Patient;
+import domain.PersonalData;
 import domain.Specialist;
 import domain.Token;
 import forms.PatientForm;
@@ -125,11 +126,11 @@ public class PatientService {
 
     }
     
-    public Collection<String> getTokens(){
-        Collection<String> tokens = patientRepository.getTokens();
-    
-        return tokens;
-    }
+//    public Collection<String> getTokens(){
+//        Collection<String> tokens = patientRepository.getTokens();
+//    
+//        return tokens;
+//    }
 
     public Patient reconstruct(PatientForm patientForm) {
 
@@ -139,7 +140,7 @@ public class PatientService {
         Calendar dateCreditCard = new GregorianCalendar();
         dateCreditCard.set(year, month, 1);
 
-        Assert.isTrue(getTokens().contains(patientForm.getToken()));
+        Assert.isTrue(tokenIsValid((patientForm.getToken())));
         
         Assert.isTrue(currentMoment.before(dateCreditCard));
 
@@ -315,12 +316,12 @@ public class PatientService {
 
     }
 
-    public String getToken(String nif, String pass) {
+    public String getToken(String name, String nif, String pass) {
 
         String token = "null";
         try {
             ArrayList<Token> tokens = JSON_MAPPER.readValue(new URL(
-                    "http://52.24.124.225/index.php/api/mutua/search?nif=" + nif + "&pass=" + pass), JSON_MAPPER
+                    "http://52.24.124.225/index.php/api/mutua/get-token?name="+ name + "&nif=" + nif + "&pass=" + pass), JSON_MAPPER
                     .getTypeFactory().constructCollectionType(ArrayList.class, Token.class));
 
             Token t = tokens.get(0);
@@ -328,6 +329,46 @@ public class PatientService {
 
         } catch (IOException e) {
             return token;
+        }
+    }
+    
+    public boolean tokenIsValid(String token) {
+
+        boolean bool = false;
+        try {
+            ArrayList<PersonalData> pd = JSON_MAPPER.readValue(new URL(
+                    "http://52.24.124.225/index.php/api/mutua/get-personaldata?token="+ token), JSON_MAPPER
+                    .getTypeFactory().constructCollectionType(ArrayList.class, PersonalData.class));
+
+            bool = true;
+            return bool;
+
+        } catch (IOException e) {
+            return bool;
+        }
+    }
+    
+    public ArrayList<String> getPersonalData(String token) {
+
+    	ArrayList<String> array = new ArrayList<String>();
+
+        try {
+            ArrayList<PersonalData> pd = JSON_MAPPER.readValue(new URL(
+                    "http://52.24.124.225/index.php/api/mutua/get-personaldata?token="+ token), JSON_MAPPER
+                    .getTypeFactory().constructCollectionType(ArrayList.class, PersonalData.class));
+
+            PersonalData p = pd.get(0);
+            
+            array.add(p.getUsername());
+            array.add(p.getSurname());
+            array.add(p.getAddress());
+            array.add(p.getEmail());
+            array.add(p.getPhone());
+            
+            return array;
+
+        } catch (IOException e) {
+            return array;
         }
     }
 

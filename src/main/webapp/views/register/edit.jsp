@@ -32,17 +32,18 @@
 			<acme:password code="register.second.password" path="secondPassword" />
 
 
-			<acme:textbox code="register.name" path="name" />
-			<acme:textbox code="register.surname" path="surname" />
-			<acme:textbox code="register.emailAddress" path="emailAddress" />
+			<acme:textbox code="register.name" path="name" value="<%=request.getParameter(\"name\")%>"/>
+			<acme:textbox code="register.surname" path="surname" value="<%=request.getParameter(\"surname\")%>"/>
+			<acme:textbox code="register.emailAddress" path="emailAddress" value="<%=request.getParameter(\"email\")%>"/>
 
-			<acme:textbox value="<%=request.getParameter(\"token\")%>"
-				readonly="true" code="register.token" path="token" />
+			<acme:hidden  value="<%=request.getParameter(\"token\")%>" path ="token"/>
+<%-- 			<acme:textbox value="<%=request.getParameter(\"token\")%>"
+				readonly="true" code="register.token" path="token" /> --%>
 
 
-			<acme:textbox code="register.address" path="address" />
+			<acme:textbox code="register.address" path="address" value="<%=request.getParameter(\"address\")%>"/>
 
-			<acme:textbox code="register.phone" path="phone" />
+			<acme:textbox code="register.phone" path="phone" value="<%=request.getParameter(\"phone\")%>"/>
 			<%-- <acme:textbox code = "register.creationMoment" path ="creationMoment"/> --%>
 
 			<acme:select items="${specialists}" itemLabel="name"

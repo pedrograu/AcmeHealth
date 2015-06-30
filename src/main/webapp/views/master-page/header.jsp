@@ -81,7 +81,7 @@
       </button>
       <ul class="dropdown-menu" role="menu" style="left: -180%;">
        <li><a href="security/login.do"><spring:message code="master.page.login" /></a></li>
-       <li><a href="register/patient/mutua.do"><spring:message code="master.page.register.patient" /></a></li>
+       <li><a href="register/patient/select.do"><spring:message code="master.page.register.patient" /></a></li>
       </ul>
      </div>
     </li>
