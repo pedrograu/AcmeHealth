@@ -19,6 +19,8 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+
+<div class="row">
 <div class="col-md-7  col-md-offset-2" style="margin-bottom: 100px;">
 	<form:form action="${requestURI}" modelAttribute="timetableForm">
 
@@ -29,19 +31,8 @@
 
 
 
-		<acme:textbox code="timetable.startShift" path="startShift" />
-		<acme:textbox code="timetable.endShift" path="endShift" />
-		<%-- <!-- Del tag -->
-		<form:label path="day">
-			<spring:message code="timetable.day" />
-		</form:label>
-		<form:select id="${id}" path="${path}" onchange="${onchange}">
-			<form:option value="0" label="----" />
-			<form:options items="${items}" itemValue="id"
-				itemLabel="${itemLabel}" />
-		</form:select>
-		<form:errors path="${path}" cssClass="error" />
-	 --%>
+		<acme:textbox code="timetable.startShift" path="startShift" placeholder ="08:00" />
+		<acme:textbox code="timetable.endShift" path="endShift" placeholder ="14:00" />
 		<div class="form-group">
 			<form:label path="day">
 				<spring:message code="timetable.day" />
@@ -70,30 +61,11 @@
 				</form:option>
 
 
-
-				<%-- <form:option label="<spring:message code="timetable.day.monday" />" value="1" />
-		<form:option label="<spring:message code="timetable.day.tuesday" />" value="2" />
-		<form:option label="<spring:message code="timetable.day.wednesday" />" value="3" />
-		<form:option label="<spring:message code="timetable.day.thursday" />" value="4" />
-		<form:option label="<spring:message code="timetable.day.friday" />" value="5" />
-		<form:option label="<spring:message code="timetable.day.saturday" />" value="6" />
-		 --%>
-				<%-- <form:options items="${days}" itemLabel="title" itemValue="id" /> --%>
 			</form:select>
 		</div>
 		<form:errors cssClass="error" path="day" />
 		<br />
-		<%-- 
-	<!-- Del curriculim -->
-	<form:label path="curriculum">
-		<spring:message code="application.curriculum" />
-	</form:label>
- 	<form:select path="curriculum">
-		<form:option label="----" value="0" />
-		<form:options items="${curricula}" itemLabel="title" itemValue="id" />
-	</form:select>
-	<form:errors cssClass="error" path="curriculum" />
-	<br />  --%>
+
 
 
 		<acme:submit code="timetable.save" name="save" />
@@ -102,4 +74,48 @@
 
 
 	</form:form>
+</div>
+</div>
+
+<div class="table-responsive">
+    <display:table name="timetables" id="row" requestURI="${requestURI}"
+        pagesize="5" class="table table-hover" keepStatus="true">
+
+
+        <spring:message code="timetable.startShift" var="startShift" />
+        <display:column property="startShift" title="${startShift}"
+            sortable="${true}" format="{0,date,HH:mm}" />
+
+        <spring:message code="timetable.endShift" var="endShift" />
+        <display:column property="endShift" title="${endShift}"
+            sortable="${true}" format="{0,date,HH:mm}" />
+
+        <spring:message code="timetable.day" var="day" />
+        <display:column title="${day}" sortable="${true}">
+            <jstl:if test="${row.day == 1 }">
+                <spring:message code="timetable.day.sunday" />
+            </jstl:if>
+            <jstl:if test="${row.day == 2 }">
+                <spring:message code="timetable.day.monday" />
+            </jstl:if>
+            <jstl:if test="${row.day == 3 }">
+                <spring:message code="timetable.day.tuesday" />
+            </jstl:if>
+            <jstl:if test="${row.day == 4 }">
+                <spring:message code="timetable.day.wednesday" />
+            </jstl:if>
+            <jstl:if test="${row.day == 5 }">
+                <spring:message code="timetable.day.thursday" />
+            </jstl:if>
+            <jstl:if test="${row.day == 6 }">
+                <spring:message code="timetable.day.friday" />
+            </jstl:if>
+            <jstl:if test="${row.day == 7 }">
+                <spring:message code="timetable.day.saturday" />
+            </jstl:if>
+        </display:column>
+
+
+
+    </display:table>
 </div>

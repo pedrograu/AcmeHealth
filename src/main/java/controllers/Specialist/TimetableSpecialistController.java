@@ -60,9 +60,13 @@ public class TimetableSpecialistController extends AbstractController {
         ModelAndView result;
 
         TimetableForm timetableForm = new TimetableForm();
+        Collection<Timetable> timetables;
+        Specialist specialistConnect = specialistService.findByPrincipal();
+        timetables = timetableService.getTimetablesForSpecialist(specialistConnect);
 
         result = createEditModelAndView(timetableForm);
         result.addObject("timetableForm", timetableForm);
+        result.addObject("timetables", timetables);
 
         return result;
     }
