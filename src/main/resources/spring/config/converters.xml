@@ -69,6 +69,8 @@
 		<bean class="converters.StringToUserAccountConverter" />
 		<bean class="converters.UserAccountToStringConverter" />
 		
+		<bean class="converters.StringToPatientNotAcceptedConverter" />
+		<bean class="converters.PatientNotAcceptedToStringConverter" />
 		
 	</util:list>
 	

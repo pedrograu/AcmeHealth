@@ -26,7 +26,7 @@
 				<!-- 1st ROW OF PANELS -->
 				<div class="row">
 
-
+					<a href="patient/administrator/listPatientsNoDischarged.do">Lista de usuarios a la espera de ser dados de alta</a>
 
 					<!-- Register Specialist -->
 					<a href="register/specialist/edit.do">

@@ -19,4 +19,4 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 <a href="register/patient/company.do">registrar con mutua</a><br/>
-<a href="">registro individual</a>
+<a href="register/patient/editParticulate.do">registro individual</a>

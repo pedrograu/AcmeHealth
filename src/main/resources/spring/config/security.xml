@@ -53,6 +53,8 @@
             access="permitAll" />
  	    <security:intercept-url pattern="/register/patient/select.do"
             access="permitAll" />
+       	<security:intercept-url pattern="/register/patient/editParticulate.do"
+            access="permitAll" />
 		<security:intercept-url pattern="/specialty/detail.do"
 			access="permitAll" />
 		<security:intercept-url pattern="/specialty/list-all.do"
@@ -109,7 +111,11 @@
 			access="hasRole('ADMINISTRATOR')" />
 		<security:intercept-url pattern="/patient/administrator/list.do"
 			access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url pattern="/patient/administrator/listPatientsNoDischarged.do"
+			access="hasRole('ADMINISTRATOR')" />
 		<security:intercept-url pattern="/patient/administrator/ban.do"
+			access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url pattern="/patient/administrator/discharge.do"
 			access="hasRole('ADMINISTRATOR')" />
 		<security:intercept-url pattern="/customerArea/administrator/list.do"
             access="hasRole('ADMINISTRATOR')" />

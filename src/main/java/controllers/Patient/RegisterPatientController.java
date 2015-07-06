@@ -21,14 +21,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.MedicalHistoryService;
-import services.PatientService;
-import services.SpecialistService;
 import controllers.AbstractController;
 import domain.Patient;
 import domain.Specialist;
 import forms.PatientForm;
+import forms.PatientForm5;
 import forms.TokenForm;
+import services.MedicalHistoryService;
+import services.PatientNotAcceptedService;
+import services.PatientService;
+import services.SpecialistService;
 
 @Controller
 @RequestMapping("/register/patient")
@@ -38,6 +40,9 @@ public class RegisterPatientController extends AbstractController {
 
 	@Autowired
 	private PatientService patientService;
+	
+	@Autowired
+	private PatientNotAcceptedService patientNotAcceptedService;
 
 	@Autowired
 	private MedicalHistoryService medicalHistoryService;
@@ -143,6 +148,16 @@ public class RegisterPatientController extends AbstractController {
 
 		return result;
 	}
+	
+	@RequestMapping(value = "/editParticulate", method = RequestMethod.GET)
+	public ModelAndView registerParticulate() {
+		ModelAndView result;
+		PatientForm5 patientForm = new PatientForm5();
+
+		result = createEditModelAndView3(patientForm);
+
+		return result;
+	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid PatientForm patientForm,
@@ -194,6 +209,62 @@ public class RegisterPatientController extends AbstractController {
 								"register.token.error");
 					} else {
 						result = createEditModelAndView(patientForm,
+								"register.commit.error");
+					}
+				}
+
+			}
+		}
+		return result;
+	}
+	
+	
+	@RequestMapping(value = "/editParticulate", method = RequestMethod.POST, params = "save2")
+	public ModelAndView save2(@Valid PatientForm5 patientForm,
+			BindingResult binding) {
+
+		ModelAndView result;
+		Patient patient;
+		Calendar currentMoment = new GregorianCalendar();
+		int month = patientForm.getCreditCard().getExpirationMonth();
+		int year = patientForm.getCreditCard().getExpirationYear();
+		Calendar dateCreditCard = new GregorianCalendar();
+		dateCreditCard.set(year, month, 1);
+
+		if (binding.hasErrors()) {
+			result = createEditModelAndView3(patientForm);
+
+		} else {
+
+			try {
+				patient = patientService.reconstruct5(patientForm);
+
+				patientNotAcceptedService.savePatientNotAccepted(patient);
+
+				result = new ModelAndView("redirect:../../security/login.do");
+
+			} catch (DataIntegrityViolationException oops) {
+
+				result = createEditModelAndView3(patientForm,
+						"register.duplicate.error");
+
+			} catch (Throwable oops) {
+				oops.getMessage();
+
+				if (!(patientForm.getSecondPassword().equals(patientForm
+						.getPassword()))) {
+					result = createEditModelAndView3(patientForm,
+							"register.wrongSecondPassword.error");
+				} else {
+
+					if (patientForm.getAvailable() == false) {
+						result = createEditModelAndView3(patientForm,
+								"register.available.error");
+					} else if (!currentMoment.before(dateCreditCard)) {
+						result = createEditModelAndView3(patientForm,
+								"register.creditCard.error");
+					} else {
+						result = createEditModelAndView3(patientForm,
 								"register.commit.error");
 					}
 				}
@@ -272,6 +343,42 @@ public class RegisterPatientController extends AbstractController {
 		result.addObject("error", false);
 		result.addObject("requestURI", "register/patient/mutua.do?name="
 				+ tokenForm.getName());
+
+		result.addObject("message", message);
+
+		return result;
+	}
+	
+	protected ModelAndView createEditModelAndView3(PatientForm5 patientForm) {
+
+		ModelAndView result;
+
+		result = createEditModelAndView3(patientForm, null);
+
+		return result;
+	}
+
+	protected ModelAndView createEditModelAndView3(PatientForm5 patientForm,
+			String message) {
+
+		ModelAndView result;
+
+		//Patient patient = patientService.create();
+		Collection<Specialist> specialists;
+
+
+		specialists = specialistService.findAllSpecialistsOfGeneralMedicine();
+
+		result = new ModelAndView("register/edit");
+		result.addObject("patientForm5", patientForm);
+		//result.addObject("patient", patient);
+		//result.addObject("actor", "patientForm");
+
+		result.addObject("requestURI","register/patient/editParticulate.do");
+		
+		result.addObject("registerPatientParticulate", true);
+
+		result.addObject("specialists", specialists);
 
 		result.addObject("message", message);
 

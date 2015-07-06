@@ -35,6 +35,7 @@ import forms.PatientForm;
 import forms.PatientForm2;
 import forms.PatientForm3;
 import forms.PatientForm4;
+import forms.PatientForm5;
 
 @Service
 @Transactional
@@ -110,6 +111,7 @@ public class PatientService {
         String hash = encoder.encodePassword(pass, null);
         patient.getUserAccount().setPassword(hash);
 
+        
         Patient patient2 = patientRepository.save(patient);
 
         //creamos un medialHistory para este patient
@@ -117,12 +119,12 @@ public class PatientService {
         medicalHistoryService.save(medicalHistory);
 
     }
+ 
     
-    
-    public void save2(Patient patient) {
+    public Patient save2(Patient patient) {
 
         Assert.notNull(patient);
-        patientRepository.save(patient);
+         return patientRepository.save(patient);
 
     }
     
@@ -215,6 +217,34 @@ public class PatientService {
 
 
         return patientConnect;
+    }
+    
+    public Patient reconstruct5(PatientForm5 patientForm) {
+
+        Calendar currentMoment = new GregorianCalendar();
+        int month = patientForm.getCreditCard().getExpirationMonth();
+        int year = patientForm.getCreditCard().getExpirationYear();
+        Calendar dateCreditCard = new GregorianCalendar();
+        dateCreditCard.set(year, month, 1);
+        
+        Assert.isTrue(currentMoment.before(dateCreditCard));
+
+        Patient patient = create();
+        Assert.isTrue(patientForm.getAvailable());
+        Assert.isTrue(patientForm.getPassword().equals(patientForm.getSecondPassword()));
+
+        patient.setCreditCard(patientForm.getCreditCard());
+        patient.setName(patientForm.getName());
+        patient.setSurname(patientForm.getSurname());
+        patient.setEmailAddress(patientForm.getEmailAddress());
+        patient.setAddress(patientForm.getAddress());
+        patient.getUserAccount().setPassword(patientForm.getPassword());
+        patient.getUserAccount().setUsername(patientForm.getUsername());
+        patient.setPhone(patientForm.getPhone());
+        patient.setSpecialist(patientForm.getSpecialist());
+        patient.setImage(patientForm.getImage());
+
+        return patient;
     }
 
     public Patient findByPrincipal() {

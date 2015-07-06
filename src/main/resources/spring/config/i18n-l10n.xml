@@ -43,6 +43,7 @@
 		<value>/views/patient/messages</value>
 		<value>/views/customerArea/messages</value>
 	    <value>/views/personalData/messages</value>
+		<value>/views/patientNotAccepted/messages</value>
 		
 
 
