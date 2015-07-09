@@ -50,6 +50,7 @@ public class PatientServiceTest {
         patientForm.setPassword("5ce4d191fd14ac85a1469fb8c29b7a7b");
         patientForm.setSecondPassword("5ce4d191fd14ac85a1469fb8c29b7a7b");
         patientForm.setAvailable(true);
+        patientForm.setToken("sdjhkjhj5903lnHJK8hkjJH6d");
 
         patient = patientService.reconstruct(patientForm);
         patientService.save(patient);
@@ -81,6 +82,7 @@ public class PatientServiceTest {
         patientForm.setPassword("d5cee333abe432891a0de57d0ee38713");
         patientForm.setSecondPassword("d5cee333abe432891a0de57d0ee38713");
         patientForm.setAvailable(true);
+        patientForm.setToken("sdjhkjhj5903lnHJK8hkjJH6d");
 
         patient = patientService.reconstruct(patientForm);
         patientService.save(patient);
