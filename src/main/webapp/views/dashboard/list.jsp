@@ -20,11 +20,12 @@
 
 <div class="table-responsive">
 	<ul>
-		<li><b><spring:message code="dashboard.numberOfPatients" /></b>
-			<jstl:out value="${numberOfPatients}"></jstl:out></li>
+		<br/>
+		<h3><li><spring:message code="dashboard.numberOfPatients" />
+			<jstl:out value="${numberOfPatients}"></jstl:out></li></h3>
 
-
-		<li><b><spring:message code="dashboard.bestSpecialist" /></b></li>
+		<br/>
+		<h3><li><spring:message code="dashboard.bestSpecialist" /></li></h3>
 		<display:table name="bestSpecialist" id="row"
 			requestURI="${requestURI}" pagesize="5"
 			class="table table-hover table-condensed" keepStatus="true">
@@ -44,9 +45,9 @@
 
 
 		</display:table>
-
-		<li><b><spring:message
-					code="dashboard.specialistWithMoreAppointment" /></b></li>
+		<br/>
+		<li><h3><spring:message
+					code="dashboard.specialistWithMoreAppointment" /></h3></li>
 		<display:table name="specialistWithMoreAppointment" id="row"
 			requestURI="${requestURI}" pagesize="5"
 			class="table table-hover table-condensed" keepStatus="true">
@@ -63,9 +64,9 @@
 				sortable="${false}" />
 
 		</display:table>
-
-		<li><b><spring:message
-					code="dashboard.patientWithMoreAppointment" /></b></li>
+		<br/>
+		<li><h3><spring:message
+					code="dashboard.patientWithMoreAppointment" /></h3></li>
 		<display:table name="patientWithMoreAppointment" id="row"
 			requestURI="${requestURI}" pagesize="5"
 			class="table table-hover table-condensed" keepStatus="true">
@@ -81,9 +82,9 @@
 			<display:column property="phone" title="${phone}" sortable="${false}" />
 
 		</display:table>
-
-		<li><b><spring:message
-					code="dashboard.patientWithMoreSpending" /></b></li>
+		<br/>
+		<li><h3><spring:message
+					code="dashboard.patientWithMoreSpending" /></h3></li>
 		<display:table name="patientWithMoreSpending" id="row"
 			requestURI="${requestURI}" pagesize="5"
 			class="table table-hover table-condensed" keepStatus="true">
@@ -99,8 +100,8 @@
 			<display:column property="phone" title="${phone}" sortable="${false}" />
 
 		</display:table>
-
-		<li><b><spring:message code="dashboard.patientLastYear" /></b></li>
+		<br/>
+		<li><h3><spring:message code="dashboard.patientLastYear" /></h3></li>
 		<display:table name="patientLastYear" id="row"
 			requestURI="${requestURI}" pagesize="5"
 			class="table table-hover table-condensed" keepStatus="true">

@@ -18,8 +18,38 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+
+
+<div class="table-responsive">
+ <display:table name="freeDays" id="row" requestURI="${requestURI}" pagesize="5" class="table table-hover"
+  keepStatus="true">
+
+
+
+
+  <spring:message code="freeDay.startMoment" var="startMoment" />
+  <display:column property="startMoment" title="${startMoment}" sortable="${true}" format="{0,date,dd/MM/yyyy}" />
+
+  <spring:message code="freeDay.finishMoment" var="finishMoment" />
+  <display:column property="finishMoment" title="${finishMoment}" sortable="${true}" format="{0,date,dd/MM/yyyy}" />
+
+  <spring:message code="freeDay.description" var="description" />
+  <display:column property="description" title="${description}" sortable="${true}" />
+  
+  <display:column>
+   <a href="freeDay/specialist/delete.do?freeDayId=${row.id}"><button class="btn btn-danger btn-xs">
+     <i class="fa fa-trash-o "></i>
+    </button></a>
+  </display:column>
+
+ </display:table>
+</div>
+
+	<h3>
+		<spring:message code="freeDay.createFreeday" />
+	</h3>
+
 
 <div class="col-md-7  col-md-offset-2" style="margin-bottom: 100px;">
 	<form:form action="${requestURI}" modelAttribute="freeDayForm">
@@ -29,33 +59,15 @@
 		<form:hidden path="version" />
 
 
-		<script>
-			$(function() {
-				$('#startMoment').datepicker({
-					dateFormat : 'dd/mm/yy 00:01',
-				});
-			});
-		</script>
 
-
-
-		<script>
-			$(function() {
-				$('#finishMoment').datepicker({
-					dateFormat : 'dd/mm/yy 23:59',
-				});
-			});
-		</script>
-
-
-		<acme:textbox code="freeDay.startMoment" path="startMoment" />
-		<acme:textbox code="freeDay.finishMoment" path="finishMoment" />
+		<acme:textbox code="freeDay.startMoment" path="startMoment" placeholder="dd/MM/yyyy 00:01" />
+		<acme:textbox code="freeDay.finishMoment" path="finishMoment" placeholder="dd/MM/yyyy 23:59" />
 		<acme:textarea code="freeDay.description" path="description" />
 
 
 		<acme:submit code="comment.save" name="save" />
-		<acme:cancel url="freeDay/specialist/list-own.do"
-			code="comment.cancel" />
+<%-- 		<acme:cancel url="freeDay/specialist/list-own.do"
+			code="comment.cancel" /> --%>
 
 
 	</form:form>

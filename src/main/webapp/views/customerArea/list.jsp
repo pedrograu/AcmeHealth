@@ -26,7 +26,6 @@
 				<!-- 1st ROW OF PANELS -->
 				<div class="row">
 
-					<a href="patient/administrator/listPatientsNoDischarged.do">Lista de usuarios a la espera de ser dados de alta</a>
 
 					<!-- Register Specialist -->
 					<a href="register/specialist/edit.do">
@@ -56,7 +55,7 @@
 
 					<a href="offer/administrator/create.do">
 						<div class="col-lg-4 col-md-4 col-sm-4 mb service">
-							<i class="fa fa-plus-square"></i>
+							<i class="fa fa-dollar"></i>
 							<h4>
 								<strong><spring:message
 										code="customerArea.administrator.create.offer" /></strong>
@@ -99,6 +98,19 @@
 							<h4>
 								<strong><spring:message
 										code="customerArea.patient.appointment" /></strong>
+							</h4>
+						</div>
+					</a>
+					
+					
+				<!-- List prescriptions -->
+
+					<a href="prescription/patient/list-my-prescription.do">
+						<div class="col-lg-4 col-md-4 col-sm-4 mb service">
+							<i class="fa fa-stethoscope"></i>
+							<h4>
+								<strong><spring:message
+										code="customerArea.patient.prescriptions" /></strong>
 							</h4>
 						</div>
 					</a>
@@ -174,6 +186,18 @@
 							</h4>
 						</div>
 					</a>
+					
+					
+					<!-- list patiens for enable-->
+					<a href="patient/administrator/listPatientsNoDischarged.do">
+						<div class="col-lg-4 col-md-4 col-sm-4 mb service">
+							<i class="fa fa-users"></i>
+							<h4>
+								<strong><spring:message
+										code="customerArea.administrator.patientsNoDischarged" /></strong>
+							</h4>
+						</div>
+					</a>
 
 					<!--/col-md-4-->
 				</div>
@@ -216,6 +240,13 @@
 </security:authorize>
 <!-- SPECIALIST -->
 <security:authorize access="hasRole('SPECIALIST')">
+
+	<br />
+	<br />
+	<h3>
+		<spring:message code="customerArea.appointments" />
+	</h3>
+	
 	<div class="table-responsive">
 		<display:table name="appointments" id="row" requestURI="${requestURI}"
 			pagesize="5" class="table table-hover" keepStatus="true">
@@ -228,13 +259,13 @@
 			<display:column property="startMoment" title="${startMoment}"
 				sortable="${true}" format="{0,date,dd/MM/yyyy HH:mm}" />
 
-			<spring:message code="appointment.specialist" var="specialist" />
-			<display:column property="specialist.name" title="${specialist}"
+			<spring:message code="appointment.patient.name" var="patient" />
+			<display:column property="patient.name" title="${patient}"
 				sortable="${true}" />
 
-			<spring:message code="appointment.specialty" var="specialty" />
-			<display:column property="specialist.specialty.name"
-				title="${specialty}" sortable="${true}" />
+			<spring:message code="appointment.patient.surname" var="patient" />
+			<display:column property="patient.surname" title="${patient}"
+				sortable="${true}" />
 
 			<security:authorize access="hasRole('SPECIALIST')">
 				<display:column>

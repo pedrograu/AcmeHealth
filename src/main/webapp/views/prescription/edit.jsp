@@ -23,7 +23,7 @@
 	<br />
 	<br />
 
-	<jstl:if test="${isPatient==true}">
+<%-- 	<jstl:if test="${isPatient==true}"> --%>
 
 		<div class="col-lg-12">
 			<div class="row row-centered">
@@ -65,9 +65,20 @@
 					</a>
 				</div>
 			</security:authorize>
+			
+			<security:authorize access="hasRole('SPECIALIST')">
+				<div class="row">
+					<a
+						href="prescription/specialist/print.do?prescriptionId=${prescription.id}">
+						<button type="button" class="btn btn-default btn-lg btn-block">
+							<spring:message code="prescription.print" />
+						</button>
+					</a>
+				</div>
+			</security:authorize>
 		</div>
 
-	</jstl:if>
+<%-- 	</jstl:if> --%>
 
 
 	<jstl:if test="${isPatient==false}">

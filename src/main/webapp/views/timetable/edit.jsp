@@ -19,64 +19,10 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-
-<div class="row">
-<div class="col-md-7  col-md-offset-2" style="margin-bottom: 100px;">
-	<form:form action="${requestURI}" modelAttribute="timetableForm">
-
-
-		<form:hidden path="id" />
-		<form:hidden path="version" />
-
-
-
-
-		<acme:textbox code="timetable.startShift" path="startShift" placeholder ="08:00" />
-		<acme:textbox code="timetable.endShift" path="endShift" placeholder ="14:00" />
-		<div class="form-group">
-			<form:label path="day">
-				<spring:message code="timetable.day" />
-			</form:label>
-			<form:select path="day" class="form-control" >
-				<form:option label="1" value="1">
-					<spring:message code="timetable.day.sunday" />
-				</form:option>
-				<form:option label="2" value="2">
-					<spring:message code="timetable.day.monday" />
-				</form:option>
-				<form:option label="3" value="3">
-					<spring:message code="timetable.day.tuesday" />
-				</form:option>
-				<form:option label="4" value="4">
-					<spring:message code="timetable.day.wednesday" />
-				</form:option>
-				<form:option label="5" value="5">
-					<spring:message code="timetable.day.thursday" />
-				</form:option>
-				<form:option label="6" value="6">
-					<spring:message code="timetable.day.friday" />
-				</form:option>
-				<form:option label="7" value="7">
-					<spring:message code="timetable.day.saturday" />
-				</form:option>
-
-
-			</form:select>
-		</div>
-		<form:errors cssClass="error" path="day" />
-		<br />
-
-
-
-		<acme:submit code="timetable.save" name="save" />
-		<acme:cancel url="timetable/specialist/list-own.do"
-			code="comment.cancel" />
-
-
-	</form:form>
-</div>
-</div>
-
+<%-- 	<h2>
+		<spring:message code="timetable.listTimetable" />
+	</h2> --%>
+	
 <div class="table-responsive">
     <display:table name="timetables" id="row" requestURI="${requestURI}"
         pagesize="5" class="table table-hover" keepStatus="true">
@@ -114,8 +60,76 @@
                 <spring:message code="timetable.day.saturday" />
             </jstl:if>
         </display:column>
+        
+          <display:column>
+		   <a href="timetable/specialist/delete.do?timetableId=${row.id}"><button class="btn btn-danger btn-xs">
+		     <i class="fa fa-trash-o "></i>
+		    </button></a>
+		  </display:column>
 
 
 
     </display:table>
 </div>
+
+	<h3>
+		<spring:message code="timetable.createTimetable" />
+	</h3>
+
+<div class="row">
+<div class="col-md-7  col-md-offset-2" style="margin-bottom: 100px;">
+	<form:form action="${requestURI}" modelAttribute="timetableForm">
+
+
+		<form:hidden path="id" />
+		<form:hidden path="version" />
+
+
+
+
+		<acme:textbox code="timetable.startShift" path="startShift" placeholder ="HH:mm" />
+		<acme:textbox code="timetable.endShift" path="endShift" placeholder ="HH:mm" />
+		<div class="form-group">
+			<form:label path="day">
+				<spring:message code="timetable.day" />
+			</form:label>
+			<form:select path="day" class="form-control" >
+				<form:option label="1" value="1">
+					<spring:message code="timetable.day.sunday" />
+				</form:option>
+				<form:option label="2" value="2">
+					<spring:message code="timetable.day.monday" />
+				</form:option>
+				<form:option label="3" value="3">
+					<spring:message code="timetable.day.tuesday" />
+				</form:option>
+				<form:option label="4" value="4">
+					<spring:message code="timetable.day.wednesday" />
+				</form:option>
+				<form:option label="5" value="5">
+					<spring:message code="timetable.day.thursday" />
+				</form:option>
+				<form:option label="6" value="6">
+					<spring:message code="timetable.day.friday" />
+				</form:option>
+				<form:option label="7" value="7">
+					<spring:message code="timetable.day.saturday" />
+				</form:option>
+
+
+			</form:select>
+		</div>
+		<form:errors cssClass="error" path="day" />
+		<br />
+
+
+
+		<acme:submit code="timetable.save" name="save" />
+<%-- 		<acme:cancel url="timetable/specialist/list-own.do"
+			code="comment.cancel" /> --%>
+
+
+	</form:form>
+</div>
+</div>
+

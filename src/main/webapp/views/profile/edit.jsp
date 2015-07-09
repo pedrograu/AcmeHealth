@@ -118,6 +118,7 @@
 		</div>
 	</div>
 
+
 	<br />
 	<br />
 	<h3>
@@ -138,6 +139,12 @@
 			<security:authorize access="hasRole('PATIENT')">
 				<display:column>
 					<a href="comment/patient/details.do?commentId=${row.id}"><spring:message
+							code="profile.comment.details" /></a>
+				</display:column>
+			</security:authorize>
+			<security:authorize access="hasRole('SPECIALIST')">
+				<display:column>
+					<a href="comment/specialist/details.do?commentId=${row.id}"><spring:message
 							code="profile.comment.details" /></a>
 				</display:column>
 			</security:authorize>
@@ -162,20 +169,38 @@
 	</div>
 	<security:authorize access="hasRole('PATIENT')">
 		<jstl:if test="${hasAppointmentFinish==true}">
-			<a
-				href="comment/patient/create.do?profileId=${specialist.profile.id}"><spring:message
-					code="profile.comment.create" /></a>
+
+
+			<div
+				class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-4 col-md-offset-4 col-sm-offset-4">
+				<a
+					href="comment/patient/create.do?profileId=${specialist.profile.id}">
+					<button type="button" class="btn btn-default btn-lg btn-block">
+						<spring:message code="profile.comment.create" />
+					</button>
+				</a> <br />
+			</div>
+			
 		</jstl:if>
 	</security:authorize>
 	<br />
 	<br />
 	<security:authorize access="hasRole('SPECIALIST')">
 
-		<a
-			href="profile/specialist/edit.do?profileId=${specialist.profile.id}"><spring:message
-				code="specialist.profile.edit" /></a>
+		<div
+			class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-4 col-md-offset-4 col-sm-offset-4">
+			<a
+				href="profile/specialist/edit.do?profileId=${specialist.profile.id}">
+				<button type="button" class="btn btn-default btn-lg btn-block">
+					<spring:message code="specialist.profile.edit" />
+				</button>
+			</a> <br />
+		</div>
+
+
 
 	</security:authorize>
+
 
 
 

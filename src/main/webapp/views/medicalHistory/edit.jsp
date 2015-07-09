@@ -38,15 +38,15 @@
 						</div>
 						<div class="panel-body">
 							<ul>
-								<li><b><spring:message code="medicalHistory.note" /></b> <jstl:out
-										value="${medicalHistory.note}"></jstl:out></li>
-								<li><b><spring:message code="medicalHistory.bloodGroup" /></b>
+
+								<li><b><spring:message code="medicalHistory.bloodGroup2" /></b>
 									<jstl:out value="${medicalHistory.bloodGroup}"></jstl:out></li>
-								<li><b><spring:message code="medicalHistory.allergy" /></b>
+								<li><b><spring:message code="medicalHistory.allergy2" /></b>
 									<jstl:out value="${medicalHistory.allergy}"></jstl:out></li>
-								<li><b><spring:message
-											code="medicalHistory.incompatibilities" /></b> <jstl:out
+								<li><b><spring:message code="medicalHistory.incompatibilities2" /></b> <jstl:out
 										value="${medicalHistory.incompatibilities}"></jstl:out></li>
+								<li><b><spring:message code="medicalHistory.note2" /></b> <jstl:out
+										value="${medicalHistory.note}"></jstl:out></li>
 
 							</ul>
 						</div>

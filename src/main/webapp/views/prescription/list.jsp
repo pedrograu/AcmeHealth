@@ -28,6 +28,12 @@
 						code="prescription.details" /></a>
 			</display:column>
 		</jstl:if>
+		<security:authorize access="hasRole('SPECIALIST')">
+			<display:column>
+				<a href="prescription/specialist/details.do?prescriptionId=${row.id}"><spring:message
+						code="prescription.details" /></a>
+			</display:column>
+		</security:authorize>
 
 		<spring:message code="prescription.title" var="title" />
 		<display:column property="title" title="${title}" sortable="${true}" />

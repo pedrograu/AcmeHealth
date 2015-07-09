@@ -39,6 +39,8 @@
 							<ul>
 								<li><b><spring:message code="message.sender2" /></b> <jstl:out
 										value="${messageCustomer.sender.surname}, ${messageCustomer.sender.name}"></jstl:out></li>
+								<li><b><spring:message code="message.recipient2" /></b> <jstl:out
+										value="${messageCustomer.recipient.surname}, ${messageCustomer.recipient.name}"></jstl:out></li>
 								<li><b><spring:message code="message.subject2" /></b> <jstl:out
 										value="${messageCustomer.subject}"></jstl:out></li>
 								<li><b><spring:message code="message.creationMoment2" /></b>
@@ -106,7 +108,7 @@
 					code="comment.cancel" />
 			</jstl:if>
 			<jstl:if test="${cancel == true}">
-				<acme:cancel url="appointment/specialist/listNotFinish.do"
+				<acme:cancel url="customerArea/specialist/list.do"
 					code="comment.cancel" />
 			</jstl:if>
 

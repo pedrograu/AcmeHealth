@@ -60,7 +60,7 @@
 
      </ul></li> --%>
 
-    <li class="sub-menu"><a href="javascript:;"> <i class="fa fa-plus-square "></i> <span><spring:message
+    <li class="sub-menu"><a href="javascript:;"> <i class="fa fa-dollar "></i> <span><spring:message
         code="master.page.offer" /></span>
     </a>
      <ul class="sub">
@@ -88,14 +88,17 @@
         code="master.page.appointment.list" /></span>
     </a></li>
 
-    <li class=""><a href="prescription/patient/list-my-prescription.do"> <i class="fa fa-stethoscope"></i> <span><spring:message
+<%--     <li class=""><a href="prescription/patient/list-my-prescription.do"> <i class="fa fa-stethoscope"></i> <span><spring:message
         code="master.page.prescription.listMyPrescription" /></span>
-    </a></li>
+    </a></li> --%>
     <li class=""><a href="specialist/patient/list.do"> <i class="fa fa-users"></i> <span><spring:message
         code="master.page.specialist.listAll" /></span>
     </a></li>
+    <li class=""><a href="specialty/patient/list-all.do"> <i class="fa fa-medkit"></i> <span><spring:message
+        code="master.page.specialty.listAll" /></span>
+    </a></li>
 
-    <li class="sub-menu"><a href="javascript:;"> <i class="fa fa-plus-square "></i> <span><spring:message
+    <li class="sub-menu"><a href="javascript:;"> <i class="fa fa-dollar "></i> <span><spring:message
         code="master.page.offer" /></span>
     </a>
      <ul class="sub">
@@ -136,20 +139,20 @@
      </ul></li>
 
 
-    <li class=""><a href=timetable/specialist/list-own.do> <i class="fa fa-table"></i> <span><spring:message
+<%--     <li class=""><a href=timetable/specialist/list-own.do> <i class="fa fa-table"></i> <span><spring:message
         code="master.page.specialist.timetable.list.own" /></span>
-    </a></li>
+    </a></li> --%>
 
 
 
 
-    <li class=""><a href="offer/specialist/list-not-finished.do"> <i class="fa fa-plus-square "></i> <span><spring:message
+    <li class=""><a href="offer/specialist/list-not-finished.do"> <i class="fa fa-dollar "></i> <span><spring:message
         code="master.page.offer" /></span>
     </a></li>
 
-    <li class=""><a href="freeDay/specialist/list-own.do"> <i class="fa fa-plane "></i> <span><spring:message
+<%--     <li class=""><a href="freeDay/specialist/list-own.do"> <i class="fa fa-plane "></i> <span><spring:message
         code="master.page.specialist.freeDays.list-own" /></span>
-    </a></li>
+    </a></li> --%>
 
 
     <li class="sub-menu"><a href="javascript:;"> <i class="fa fa-envelope"></i> <span><spring:message

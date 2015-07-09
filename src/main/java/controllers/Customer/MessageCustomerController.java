@@ -213,7 +213,7 @@ public class MessageCustomerController extends AbstractController {
 				appointmentService.cancel(appointment);
 
 				result = new ModelAndView(
-						"redirect:../../appointment/specialist/listNotFinish.do");
+						"redirect:../../customerArea/specialist/list.do");
 			} catch (Throwable oops) {
 				result = createEditModelAndView2(messageForm,
 						"message.commit.error", appointmentId);

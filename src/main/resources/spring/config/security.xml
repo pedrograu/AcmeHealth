@@ -86,6 +86,8 @@
 			access="hasRole('PATIENT')" />
 		<security:intercept-url pattern="/customerArea/patient/list.do"
             access="hasRole('PATIENT')" />
+            		<security:intercept-url pattern="/specialty/patient/list-all.do"
+            access="hasRole('PATIENT')" />
 
 
 		<!-- <security:intercept-url pattern="/message/customer/list-outbox.do" 
@@ -139,6 +141,8 @@
 			access="hasRole('SPECIALIST')" />
 		<security:intercept-url pattern="/timetable/specialist/edit.do"
 			access="hasRole('SPECIALIST')" />
+		<security:intercept-url pattern="/timetable/specialist/delete.do"
+			access="hasRole('SPECIALIST')" />
 
 		<security:intercept-url pattern="/freeDay/specialist/list-own.do"
 			access="hasRole('SPECIALIST')" />
@@ -154,7 +158,13 @@
 			access="hasRole('SPECIALIST')" />			
 		<security:intercept-url pattern="/prescription/specialist/list.do"
 			access="hasRole('SPECIALIST')" />
+		<security:intercept-url pattern="/prescription/specialist/print.do"
+			access="hasRole('SPECIALIST')" />
+		<security:intercept-url pattern="/prescription/specialist/details.do"
+			access="hasRole('SPECIALIST')" />
 		<security:intercept-url pattern="/customerArea/specialist/list.do"
+            access="hasRole('SPECIALIST')" />
+		<security:intercept-url pattern="/comment/specialist/details.do"
             access="hasRole('SPECIALIST')" />
 
 		<security:intercept-url pattern="/message/customer/list-outbox.do"

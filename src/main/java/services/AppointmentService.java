@@ -2,13 +2,11 @@ package services;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import repositories.AppointmentRepository;
 import domain.Appointment;
 import domain.FreeDay;
 import domain.Offer;
@@ -28,6 +25,7 @@ import domain.Timetable;
 import forms.AppointmentForm;
 import forms.AppointmentForm2;
 import forms.AppointmentForm3;
+import repositories.AppointmentRepository;
 
 @Service
 @Transactional
@@ -189,24 +187,6 @@ public class AppointmentService {
         return appointment;
     }
 
-    //	public Appointment save(Appointment appointment, boolean isOffer) {
-    //
-    //		Date currentMoment = new Date();
-    //		if (isOffer == false) {
-    //			Assert.isTrue(appointment.getStartMoment().after(currentMoment));
-    //		} else {
-    //			Appointment appointment2 = getAppointmentForPatientAndOffer(appointment.getOffer());
-    //			Assert.isTrue(appointment2==null);
-    //			Assert.isTrue(appointment.getStartMoment().after(currentMoment));
-    //			Assert.isTrue(appointment.getOffer().getStartMoment().before(appointment.getStartMoment())
-    //					&& appointment.getOffer().getFinishMoment().after(appointment.getStartMoment()));
-    //
-    //		}
-    //		Appointment appointment2 = appointmentRepository.save(appointment);
-    //
-    //		return appointment2;
-    //
-    //	}
 
     public void save2(Appointment appointment) {
 

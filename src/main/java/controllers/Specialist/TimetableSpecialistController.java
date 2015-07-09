@@ -11,14 +11,17 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import controllers.AbstractController;
 
 import services.SpecialistService;
 import services.TimetableService;
+import domain.FreeDay;
 import domain.Specialist;
 import domain.Timetable;
+import forms.FreeDayForm;
 import forms.TimetableForm;
 
 @Controller
@@ -83,7 +86,7 @@ public class TimetableSpecialistController extends AbstractController {
             try {
                 timetable = timetableService.recontructor(timetableForm);
                 timetableService.save(timetable);
-                result = new ModelAndView("redirect:list-own.do");
+                result = new ModelAndView("redirect:create.do");
 
             } catch (Throwable oops) {
                 result = createEditModelAndView(timetableForm, "timetable.commit.error");
@@ -92,6 +95,30 @@ public class TimetableSpecialistController extends AbstractController {
 
         return result;
 
+    }
+    
+    
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    public ModelAndView delete(@RequestParam int timetableId) {
+
+        ModelAndView result;
+        Timetable timetable = timetableService.findOneToEdit(timetableId);
+
+        timetableService.delete(timetable);
+        Collection<Timetable> timetables;
+
+        Specialist specialistConnect = specialistService.findByPrincipal();
+
+        timetables = timetableService.getTimetablesForSpecialist(specialistConnect);
+
+        result = new ModelAndView("timetable/edit");
+        result.addObject("timetables", timetables);
+        TimetableForm timetableForm = new TimetableForm();
+        result.addObject("timetableForm", timetableForm);
+        //result.addObject("requestURI", "timetable/specialist/create.do");
+        result = new ModelAndView("redirect:create.do");
+        
+        return result;
     }
 
     // Ancillary methods ------------------------------------------------------
@@ -124,6 +151,12 @@ public class TimetableSpecialistController extends AbstractController {
         result.addObject("message", message);
         result.addObject("timetableForm", timetableForm);
         result.addObject("days", days);
+        
+        Collection<Timetable> timetables;
+        Specialist specialistConnect = specialistService.findByPrincipal();
+        timetables = timetableService.getTimetablesForSpecialist(specialistConnect);
+
+        result.addObject("timetables", timetables);
 
         return result;
     }

@@ -18,5 +18,22 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<a href="register/patient/company.do">registrar con mutua</a><br/>
-<a href="register/patient/editParticulate.do">registro individual</a>
+
+<br/><br/><br/>
+<div
+	class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-4 col-md-offset-4 col-sm-offset-4">
+	<a href="register/patient/company.do">
+		<button type="button" class="btn btn-default btn-lg btn-block">
+			<spring:message code="register.optionMutua" />
+		</button>
+	</a> <br />
+</div>
+
+<div
+	class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-4 col-md-offset-4 col-sm-offset-4">
+	<a href="register/patient/editParticulate.do">
+		<button type="button" class="btn btn-default btn-lg btn-block">
+			<spring:message code="register.optionSingle" />
+		</button>
+	</a> <br />
+</div>

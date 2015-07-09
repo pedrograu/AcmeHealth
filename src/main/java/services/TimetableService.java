@@ -537,6 +537,13 @@ public class TimetableService {
 
         return result;
     }
+    
+    
+    public void delete(Timetable timetable) {
+        checkPrincipal(timetable);
+        timetableRepository.delete(timetable);
+
+    }
 
     public void save(Timetable timetable) {
         Assert.notNull(timetable);
@@ -547,5 +554,15 @@ public class TimetableService {
         Assert.isTrue(start.before(finish));
         timetableRepository.save(timetable);
 
+    }
+    
+    public Collection<Timetable> findAllTimetables() {
+        Collection<Timetable> res = timetableRepository.findAllTimetables();
+        return res;
+    }
+    
+    public void checkPrincipal(Timetable timetable) {
+        Specialist specialistConnect = specialistService.findByPrincipal();
+        Assert.isTrue(timetable.getSpecialist().equals(specialistConnect));
     }
 }
