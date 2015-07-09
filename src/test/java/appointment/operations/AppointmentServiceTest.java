@@ -217,19 +217,18 @@ public class AppointmentServiceTest {
 
         Appointment appointment = appointmentService.recontructor3(appointmentForm);
         appointment.setSpecialist(specialist);
-        appointmentService.save2(appointment);
+        Appointment a = appointmentService.save2(appointment);
 
-        Assert.isTrue(!specialist.getAppointments().isEmpty());
+        Assert.notNull(a);
 
         boolean res = false;
-        for (Appointment a : patient.getAppointments()) {
+
             if ((a.getStartMoment().equals(fechaElegida)) && (a.getSpecialist().equals(specialist))
                     && a.getIsFinish() == false && a.getOffer() == null) {
 
                 res = true;
-                break;
             }
-        }
+ 
 
         Assert.isTrue(res);
 

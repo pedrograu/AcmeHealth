@@ -188,7 +188,7 @@ public class AppointmentService {
     }
 
 
-    public void save2(Appointment appointment) {
+    public Appointment save2(Appointment appointment) {
 
         Date currentMoment = new Date();
 
@@ -234,7 +234,7 @@ public class AppointmentService {
         c.add(Calendar.MINUTE, 10);
         appointment.setFinishMoment(c.getTime());
         
-        appointmentRepository.save(appointment);
+        return appointmentRepository.save(appointment);
 
     }
 
