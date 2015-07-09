@@ -66,7 +66,7 @@ public class SpecialistServiceTest {
         Collection<Specialist> specialists;
         specialists = specialistService.findAllSpecialists();
 
-        Assert.isTrue(specialists.size() == 3);
+        Assert.isTrue(specialists.size() == 5);
     }
 
     @Test
@@ -75,13 +75,13 @@ public class SpecialistServiceTest {
         Collection<Specialist> specialists;
         specialists = specialistService.findAllSpecialists();
 
-        Assert.isTrue(specialists.size() == 3);
+        Assert.isTrue(specialists.size() == 5);
     }
 
     @Test
     public void testListNotAuthenticateForSpecialityNotAuthenticate() {
         Collection<Specialist> specialists;
-        Specialty specialty = specialtyService.findOneToEdit(10);
+        Specialty specialty = specialtyService.findOneToEdit(12);
         specialists = specialistService.findSpecialistsForSpecialty(specialty);
 
         Assert.isTrue(specialists.size() == 2);
@@ -91,7 +91,7 @@ public class SpecialistServiceTest {
     public void testListNotAuthenticateForSpecialityAuthenticateAdministrator() {
         authenticate("administrator1");
         Collection<Specialist> specialists;
-        Specialty specialty = specialtyService.findOneToEdit(10);
+        Specialty specialty = specialtyService.findOneToEdit(12);
         specialists = specialistService.findSpecialistsForSpecialty(specialty);
 
         Assert.isTrue(specialists.size() == 2);
@@ -103,7 +103,7 @@ public class SpecialistServiceTest {
         Collection<Specialist> specialists;
         specialists = specialistService.findAllSpecialists();
 
-        Assert.isTrue(specialists.size() == 3);
+        Assert.isTrue(specialists.size() == 5);
     }
 
 }

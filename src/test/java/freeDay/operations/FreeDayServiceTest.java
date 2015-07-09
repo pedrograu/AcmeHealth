@@ -80,7 +80,7 @@ public class FreeDayServiceTest {
 
         freeDayService.save(freeDay);
 
-        Specialist s = specialistService.findOneToEdit(12);
+        Specialist s = specialistService.findOneToEdit(16);
         Collection<FreeDay> freeDays = freeDayService.getFreeDaysForSpecialist(s);
 
         boolean res = false;
@@ -101,9 +101,9 @@ public class FreeDayServiceTest {
 
         authenticate("specialist1");
 
-        FreeDay freeDay = freeDayService.findOneToEdit(36);
+        FreeDay freeDay = freeDayService.findOneToEdit(46);
         freeDayService.delete(freeDay);
-        FreeDay freeDay2 = freeDayService.findOneToEdit(36);
+        FreeDay freeDay2 = freeDayService.findOneToEdit(46);
 
         Assert.isTrue(freeDay2 == null);
 
@@ -114,7 +114,7 @@ public class FreeDayServiceTest {
 
         authenticate("specialist2");
 
-        FreeDay freeDay = freeDayService.findOneToEdit(36);
+        FreeDay freeDay = freeDayService.findOneToEdit(46);
         freeDayService.delete(freeDay);
 
     }

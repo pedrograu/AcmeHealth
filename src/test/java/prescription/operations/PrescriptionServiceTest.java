@@ -71,7 +71,7 @@ public class PrescriptionServiceTest {
     public void testCreatePrescriptionAuthenticateSpecialist() {
         authenticate("specialist1");
 
-        Appointment a = appointmentService.findOneToEdit(35);
+        Appointment a = appointmentService.findOneToEdit(43);
 
         Prescription prescription = prescriptionService.create(a);
         prescription.setTitle("titulo de la receta");
@@ -80,7 +80,7 @@ public class PrescriptionServiceTest {
 
         Prescription prescription2 = prescriptionService.save(prescription);
 
-        Patient patient = patientService.findOneToEdit(20);
+        Patient patient = patientService.findOneToEdit(26);
 
         Assert.isTrue(prescription2.getAppointment().getMedicalHistory().getPatient().equals(patient));
 
@@ -91,7 +91,7 @@ public class PrescriptionServiceTest {
     public void testCreatePrescriptionAuthenticateSpecialist2() {
         authenticate("specialist3");
 
-        Appointment a = appointmentService.findOneToEdit(35);
+        Appointment a = appointmentService.findOneToEdit(43);
 
         Prescription prescription = prescriptionService.create(a);
         prescription.setTitle("titulo de la receta");

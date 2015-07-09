@@ -595,7 +595,7 @@
 		<property name="emailAddress" value="anttorval2@gmail.com"></property>
 		<property name="address" value="c/Villamartin nº 5"></property>
 		<property name="phone" value="652154888"></property>
-		<property name="creationMoment" value="04/05/2014"></property>
+		<property name="creationMoment" value="04/05/2015"></property>
 		<property name="creditCard">
 			<ref bean="creditCard1" />
 		</property>
@@ -695,7 +695,7 @@
 		<property name="description" value="Prueba nuestro fantastico laser ahora un 30% de descuento."></property>
 		<property name="price" value="15.00"></property>
 		<property name="amountPerson" value="1"></property>
-		<property name="enrollees" value="1"></property>
+		<property name="enrollees" value="2"></property>
 		<property name="administrator">
 			<ref bean="administrator1" />
 		</property>

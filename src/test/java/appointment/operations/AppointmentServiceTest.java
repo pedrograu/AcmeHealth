@@ -93,7 +93,7 @@ public class AppointmentServiceTest {
         Calendar startCalendar = new GregorianCalendar();
         startCalendar.set(Calendar.DAY_OF_MONTH, 27);
         startCalendar.set(Calendar.MONTH, 06);
-        startCalendar.set(Calendar.YEAR, 2014);
+        startCalendar.set(Calendar.YEAR, 2016);
         startCalendar.set(Calendar.HOUR_OF_DAY, 8);
         startCalendar.set(Calendar.MINUTE, 00);
         startCalendar.set(Calendar.SECOND, 00);
@@ -103,7 +103,7 @@ public class AppointmentServiceTest {
         appointmentForm.setStartMoment(fechaElegida);
 
         Appointment appointment = appointmentService.recontructor(appointmentForm);
-        Specialist s = specialistService.findOneToEdit(12);
+        Specialist s = specialistService.findOneToEdit(16);
         appointment.setSpecialist(s);
         appointmentService.save2(appointment);
 
@@ -131,7 +131,7 @@ public class AppointmentServiceTest {
 
         authenticate("patient1");
 
-        Offer offer = offerService.findOneToEdit(22);
+        Offer offer = offerService.findOneToEdit(30);
 
         Calendar startCalendar = new GregorianCalendar();
         startCalendar.set(Calendar.DAY_OF_MONTH, 7);
@@ -147,7 +147,7 @@ public class AppointmentServiceTest {
         appointmentForm.setOffer(offer);
 
         Appointment appointment = appointmentService.recontructor(appointmentForm);
-        Specialist s = specialistService.findOneToEdit(12);
+        Specialist s = specialistService.findOneToEdit(16);
         appointment.setSpecialist(s);
         appointmentService.save2(appointment);
 
@@ -175,7 +175,7 @@ public class AppointmentServiceTest {
 
         authenticate("specialist1");
 
-        Appointment ap = appointmentService.findOneToEdit(35);
+        Appointment ap = appointmentService.findOneToEdit(43);
 
         AppointmentForm2 appointmentForm = appointmentService.createForm2(ap);
 
@@ -198,13 +198,13 @@ public class AppointmentServiceTest {
     public void testCreateAppointmentSpecialistForPatient() {
 
         authenticate("specialist1");
-        Patient patient = patientService.findOneToEdit(20);
-        Specialist specialist = specialistService.findOneToEdit(16);
+        Patient patient = patientService.findOneToEdit(26);
+        Specialist specialist = specialistService.findOneToEdit(24);
 
         Calendar startCalendar = new GregorianCalendar();
         startCalendar.set(Calendar.DAY_OF_MONTH, 14);
         startCalendar.set(Calendar.MONTH, 9);
-        startCalendar.set(Calendar.YEAR, 2014);
+        startCalendar.set(Calendar.YEAR, 2016);
         startCalendar.set(Calendar.HOUR_OF_DAY, 14);
         startCalendar.set(Calendar.MINUTE, 00);
         startCalendar.set(Calendar.SECOND, 00);
@@ -240,9 +240,9 @@ public class AppointmentServiceTest {
     public void testCancelAppointmentSpecialistForPatient() {
 
         authenticate("specialist1");
-        Patient patient = patientService.findOneToEdit(20);
+        Patient patient = patientService.findOneToEdit(26);
         Specialist specialist = specialistService.findByPrincipal();
-        Appointment appointment = appointmentService.findOneToEdit(35);
+        Appointment appointment = appointmentService.findOneToEdit(43);
 
         MessageForm messageForm = new MessageForm();
 
@@ -255,7 +255,7 @@ public class AppointmentServiceTest {
         Message messagePrueba = messageService.save(message);
         appointmentService.cancel(appointment);
 
-        Appointment appointment2 = appointmentService.findOneToEdit(35);
+        Appointment appointment2 = appointmentService.findOneToEdit(43);
         Assert.isTrue(appointment2 == null);
         Assert.isTrue(messagePrueba.getSender().equals(specialist) && messagePrueba.getRecipient().equals(patient));
 
@@ -280,7 +280,7 @@ public class AppointmentServiceTest {
         appointmentForm.setStartMoment(fechaElegida);
 
         Appointment appointment = appointmentService.recontructor(appointmentForm);
-        Specialist s = specialistService.findOneToEdit(12);
+        Specialist s = specialistService.findOneToEdit(16);
         appointment.setSpecialist(s);
         appointmentService.save2(appointment);
 
@@ -305,7 +305,7 @@ public class AppointmentServiceTest {
         appointmentForm.setStartMoment(fechaElegida);
 
         Appointment appointment = appointmentService.recontructor(appointmentForm);
-        Specialist s = specialistService.findOneToEdit(12);
+        Specialist s = specialistService.findOneToEdit(16);
         appointment.setSpecialist(s);
         appointmentService.save2(appointment);
 
@@ -317,7 +317,7 @@ public class AppointmentServiceTest {
 
         authenticate("patient1");
 
-        Offer offer = offerService.findOneToEdit(23);
+        Offer offer = offerService.findOneToEdit(30);
 
         Calendar startCalendar = new GregorianCalendar();
         startCalendar.set(Calendar.DAY_OF_MONTH, 8);
@@ -333,7 +333,7 @@ public class AppointmentServiceTest {
         appointmentForm.setOffer(offer);
 
         Appointment appointment = appointmentService.recontructor(appointmentForm);
-        Specialist s = specialistService.findOneToEdit(12);
+        Specialist s = specialistService.findOneToEdit(16);
         appointment.setSpecialist(s);
         appointmentService.save2(appointment);
 
@@ -345,7 +345,7 @@ public class AppointmentServiceTest {
 
         authenticate("patient1");
 
-        Offer offer = offerService.findOneToEdit(22);
+        Offer offer = offerService.findOneToEdit(30);
 
         Calendar startCalendar = new GregorianCalendar();
         startCalendar.set(Calendar.DAY_OF_MONTH, 8);
@@ -361,7 +361,7 @@ public class AppointmentServiceTest {
         appointmentForm.setOffer(offer);
 
         Appointment appointment = appointmentService.recontructor(appointmentForm);
-        Specialist s = specialistService.findOneToEdit(12);
+        Specialist s = specialistService.findOneToEdit(16);
         appointment.setSpecialist(s);
         appointmentService.save2(appointment);
 

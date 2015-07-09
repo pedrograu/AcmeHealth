@@ -64,8 +64,8 @@ public class MedicalHistoryServiceTest {
     @Test
     public void testEditMedicalHistory() {
         authenticate("specialist1");
-        MedicalHistory medicalHistory = medicalHistoryService.findOneToEdit(19);
-        Patient owner = patientService.findOneToEdit(18);
+        MedicalHistory medicalHistory = medicalHistoryService.findOneToEdit(27);
+        Patient owner = patientService.findOneToEdit(26);
         medicalHistory.setAllergy("Graminias");
         medicalHistoryService.save(medicalHistory);
         Assert.isTrue(owner.getMedicalHistory().getAllergy().equals(medicalHistory.getAllergy()));

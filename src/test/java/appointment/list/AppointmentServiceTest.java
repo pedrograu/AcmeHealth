@@ -70,7 +70,7 @@ public class AppointmentServiceTest {
     }
 
     @Test
-    public void testListMyAppouintmentNotFinishAuthenticatedPatient() {
+    public void testListMyAppointmentNotFinishAuthenticatedPatient() {
 
         authenticate("patient2");
 
@@ -89,7 +89,7 @@ public class AppointmentServiceTest {
     }
 
     @Test
-    public void testListMyAppouintmentNotFinishAuthenticatedSpecialist() {
+    public void testListMyAppointmentNotFinishAuthenticatedSpecialist() {
 
         authenticate("specialist1");
 
@@ -107,7 +107,7 @@ public class AppointmentServiceTest {
     }
 
     @Test
-    public void testListMyAppouintmentFinishAuthenticatedSpecialist() {
+    public void testListMyAppointmentFinishAuthenticatedSpecialist() {
 
         authenticate("specialist1");
 

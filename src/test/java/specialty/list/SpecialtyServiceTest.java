@@ -63,7 +63,7 @@ public class SpecialtyServiceTest {
         Collection<Specialty> specialties;
         specialties = specialtyService.getAll();
 
-        Assert.isTrue(specialties.size() == 2);
+        Assert.isTrue(specialties.size() == 4);
     }
 
     @Test
@@ -72,12 +72,12 @@ public class SpecialtyServiceTest {
         Collection<Specialty> specialties;
         specialties = specialtyService.getAll();
 
-        Assert.isTrue(specialties.size() == 2);
+        Assert.isTrue(specialties.size() == 4);
     }
 
     @Test
     public void testDetails() {
-        Specialty specialty = specialtyService.findOneToEdit(10);
+        Specialty specialty = specialtyService.findOneToEdit(12);
         Assert.isTrue(specialty.getAdministrator().getUserAccount().getUsername().equals("administrator1"));
     }
 

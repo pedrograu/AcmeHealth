@@ -72,7 +72,7 @@ public class MessageServiceTest {
     @Test()
     public void testCreateMessage() {
         authenticate("patient1");
-        Customer customerRecipient = customerService.findOneToEdit(12);
+        Customer customerRecipient = customerService.findOneToEdit(16);
         Message message;
 
         MessageForm messageForm = new MessageForm();
@@ -98,7 +98,7 @@ public class MessageServiceTest {
     @Test(expected = IllegalArgumentException.class)
     public void testCreateMessageFailNotAuthenticated() {
         desauthenticate();
-        Customer customerRecipient = customerService.findOneToEdit(12);
+        Customer customerRecipient = customerService.findOneToEdit(16);
         Message message;
 
         MessageForm messageForm = new MessageForm();
@@ -114,7 +114,7 @@ public class MessageServiceTest {
     @Test(expected = IllegalArgumentException.class)
     public void testCreateFailPatientWithOtherPatient() {
         authenticate("patient1");
-        Customer customerRecipient = customerService.findOneToEdit(20);
+        Customer customerRecipient = customerService.findOneToEdit(28);
         Message message;
 
         MessageForm messageForm = new MessageForm();
@@ -130,7 +130,7 @@ public class MessageServiceTest {
     @Test
     public void testEnableSendMessage() {
         authenticate("administrator1");
-        Patient patient = patientService.findOneToEdit(20);
+        Patient patient = patientService.findOneToEdit(28);
 
         patient.setEnableMessage(true);
 
@@ -141,7 +141,7 @@ public class MessageServiceTest {
     @Test
     public void testDisableSendMessage() {
         authenticate("administrator1");
-        Patient patient = patientService.findOneToEdit(20);
+        Patient patient = patientService.findOneToEdit(28);
 
         patient.setEnableMessage(false);
 

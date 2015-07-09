@@ -71,7 +71,7 @@ public class OfferServiceTest {
         authenticate("administrator1");
         Date startMoment = new Date(2014, 05, 30);
         Date finishMoment = new Date(2015, 05, 30);
-        Specialist specialist = specialistService.findOneToEdit(12);
+        Specialist specialist = specialistService.findOneToEdit(16);
         Offer offer = offerService.create();
         offer.setSpecialist(specialist);
         offer.setStartMoment(startMoment);
@@ -100,7 +100,7 @@ public class OfferServiceTest {
         desauthenticate();
         Date startMoment = new Date(2014, 05, 30);
         Date finishMoment = new Date(2015, 05, 30);
-        Specialist specialist = specialistService.findOneToEdit(12);
+        Specialist specialist = specialistService.findOneToEdit(16);
         Offer offer = offerService.create();
         offer.setSpecialist(specialist);
         offer.setStartMoment(startMoment);
@@ -116,17 +116,17 @@ public class OfferServiceTest {
 
     @Test
     public void testDelete() {
-        authenticate("administrator1");
-        Offer offer = offerService.findOneToEdit(23);
+        authenticate("administrator2");
+        Offer offer = offerService.findOneToEdit(35);
         offerService.delete(offer);
-        Assert.isTrue(offerService.findOneToEdit(23) == null);
+        Assert.isTrue(offerService.findOneToEdit(35) == null);
 
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testDeleteFailNotAuthenticated() {
         desauthenticate();
-        Offer offer = offerService.findOneToEdit(23);
+        Offer offer = offerService.findOneToEdit(30);
         offerService.delete(offer);
 
     }
@@ -134,7 +134,7 @@ public class OfferServiceTest {
     @Test(expected = IllegalArgumentException.class)
     public void testDeleteFailPatientEnroller() {
         authenticate("administrator1");
-        Offer offer = offerService.findOneToEdit(22);
+        Offer offer = offerService.findOneToEdit(30);
         offerService.delete(offer);
 
     }
@@ -143,16 +143,16 @@ public class OfferServiceTest {
     public void testHire() {
         authenticate("patient1");
         Patient patientConnect = patientService.findByPrincipal();
-        Offer offer = offerService.findOneToEdit(23);
+        Offer offer = offerService.findOneToEdit(31);
         offerService.hire(offer);
-        Assert.isTrue(offerService.findOneToEdit(23).getEnrollees().equals(1));
-        Assert.isTrue(patientConnect.getOffers().contains(offerService.findOneToEdit(23)));
+        Assert.isTrue(offerService.findOneToEdit(31).getEnrollees().equals(1));
+        Assert.isTrue(patientConnect.getOffers().contains(offerService.findOneToEdit(31)));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testHireFailNotAuthenticated() {
         desauthenticate();
-        Offer offer = offerService.findOneToEdit(23);
+        Offer offer = offerService.findOneToEdit(30);
         offerService.hire(offer);
 
     }
@@ -162,7 +162,7 @@ public class OfferServiceTest {
     public void testHireEnrolleesFull() {
         authenticate("patient2");
 
-        Offer offer = offerService.findOneToEdit(22);
+        Offer offer = offerService.findOneToEdit(30);
         offerService.hire(offer);
 
     }
@@ -172,7 +172,7 @@ public class OfferServiceTest {
     public void testHireOfferFinish() {
         authenticate("patient2");
 
-        Offer offer = offerService.findOneToEdit(25);
+        Offer offer = offerService.findOneToEdit(35);
         offerService.hire(offer);
 
     }
