@@ -85,7 +85,7 @@
 
 
 
-	<div>
+	<div class="page-header">
 		<h2>
 			<tiles:insertAttribute name="title" />
 		</h2>
