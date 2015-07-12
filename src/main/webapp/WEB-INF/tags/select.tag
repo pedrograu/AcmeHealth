@@ -39,15 +39,16 @@
 
 <%-- Definition --%>
 
-<div>
+<div class="form-group">
 	<form:label path="${path}">
 		<spring:message code="${code}" />
 	</form:label>	
-	<form:select id="${id}" path="${path}" onchange="${onchange}">
+	<form:select id="${id}" class="form-control" path="${path}" onchange="${onchange}">
 		<form:option value="0" label="----" />		
 		<form:options items="${items}" itemValue="id" itemLabel="${itemLabel}" />
 	</form:select>
 	<form:errors path="${path}" cssClass="error" />
 </div>
+
 
 

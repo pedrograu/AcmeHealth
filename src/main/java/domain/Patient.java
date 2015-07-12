@@ -8,6 +8,7 @@ import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Index;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -32,6 +33,17 @@ public class Patient extends Customer {
     private String phone;
     private Date creationMoment;
     private Boolean enableMessage;
+	private byte[] image;
+	
+	
+	@Lob
+	public byte[] getImage() {
+		return image;
+	}
+	
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
 
     @NotNull
     public Boolean getEnableMessage() {

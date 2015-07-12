@@ -92,7 +92,7 @@ public class PrescriptionServiceTest {
     public void testListPrescriptionsForPatient() {
 
         authenticate("specialist1");
-        Patient patient = patientService.findOneToEdit(18);
+        Patient patient = patientService.findOneToEdit(26);
         Collection<Prescription> prescriptions = prescriptionService.findForPatient(patient);
 
         boolean res = false;

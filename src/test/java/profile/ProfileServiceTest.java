@@ -67,16 +67,16 @@ public class ProfileServiceTest {
 
     @Test
     public void testViewProfileNotAuthenticate() {
-        Profile profile = profileService.findOneToEdit(13);
+        Profile profile = profileService.findOneToEdit(17);
         Specialist specialist = profile.getSpecialist();
         Double rating = profile.getRating();
         Collection<Comment> comments = profile.getComments();
 
-        Assert.isTrue(specialist.getId() == 12);
+        Assert.isTrue(specialist.getId() == 16);
 
         Integer acum = 0;
         for (Comment c : comments) {
-            Assert.isTrue(c.getProfile().getSpecialist().getId() == 12);
+            Assert.isTrue(c.getProfile().getSpecialist().getId() == 16);
             acum += c.getRating();
 
         }
@@ -89,16 +89,16 @@ public class ProfileServiceTest {
 
         authenticate("patient1");
 
-        Profile profile = profileService.findOneToEdit(13);
+        Profile profile = profileService.findOneToEdit(17);
         Specialist specialist = profile.getSpecialist();
         Double rating = profile.getRating();
         Collection<Comment> comments = profile.getComments();
 
-        Assert.isTrue(specialist.getId() == 12);
+        Assert.isTrue(specialist.getId() == 16);
 
         Integer acum = 0;
         for (Comment c : comments) {
-            Assert.isTrue(c.getProfile().getSpecialist().getId() == 12);
+            Assert.isTrue(c.getProfile().getSpecialist().getId() == 16);
             acum += c.getRating();
 
         }
@@ -112,7 +112,7 @@ public class ProfileServiceTest {
         authenticate("specialist1");
 
         Specialist specialistConnect = specialistService.findByPrincipal();
-        Profile profile = profileService.findOneToEdit(13);
+        Profile profile = profileService.findOneToEdit(17);
         Specialist specialist = profile.getSpecialist();
         Assert.isTrue(specialistConnect == specialist);
 
@@ -128,7 +128,7 @@ public class ProfileServiceTest {
 
         authenticate("specialist1");
 
-        Profile profile = profileService.findOneToEdit(17);
+        Profile profile = profileService.findOneToEdit(19);
         profile.setText("modificando el texto");
 
         profileService.save2(profile);
@@ -140,7 +140,7 @@ public class ProfileServiceTest {
 
         authenticate("patient1");
 
-        Profile profile = profileService.findOneToEdit(17);
+        Profile profile = profileService.findOneToEdit(19);
         profile.setText("modificando el texto2");
 
         profileService.save2(profile);

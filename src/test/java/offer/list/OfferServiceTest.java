@@ -86,7 +86,7 @@ public class OfferServiceTest {
         Collection<Offer> offers = offerService.findOwn();
 
         for (Offer o : offers) {
-            Assert.isTrue(o.getAdministrator().getId() == 8);
+            Assert.isTrue(o.getAdministrator().getId() == 10);
         }
 
         Assert.isTrue(offers.size() == 4);
@@ -101,7 +101,7 @@ public class OfferServiceTest {
         Date currentMoment = new Date();
 
         for (Offer o : offers) {
-            Assert.isTrue(o.getAdministrator().getId() == 8);
+            Assert.isTrue(o.getAdministrator().getId() == 10);
             Assert.isTrue(o.getFinishMoment().after(currentMoment));
         }
 
@@ -157,7 +157,7 @@ public class OfferServiceTest {
         Date currentMoment = new Date();
 
         for (Offer o : offers) {
-            Assert.isTrue(o.getSpecialist().getId() == 12);
+            Assert.isTrue(o.getSpecialist().getId() == 16);
             Assert.isTrue(o.getFinishMoment().after(currentMoment));
         }
 

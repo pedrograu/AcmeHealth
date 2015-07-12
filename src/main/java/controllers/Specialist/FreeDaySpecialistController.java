@@ -57,12 +57,18 @@ public class FreeDaySpecialistController extends AbstractController {
     public ModelAndView create() {
 
         ModelAndView result;
+        Collection<FreeDay> freeDays;
+        Specialist specialistConnect = specialistService.findByPrincipal();
+
+        freeDays = freeDayService.getFreeDaysForSpecialist(specialistConnect);
+
 
         FreeDayForm freeDayForm = new FreeDayForm();
 
         result = createEditModelAndView(freeDayForm);
-        // result.addObject("details", false);
         result.addObject("freeDayForm", freeDayForm);
+        result.addObject("freeDays", freeDays);
+        //result.addObject("requestURI2", "freeDay/specialist/list-own.do");
 
         return result;
     }
@@ -79,7 +85,7 @@ public class FreeDaySpecialistController extends AbstractController {
             try {
                 freeDay = freeDayService.recontructor(freeDayForm);
                 freeDayService.save(freeDay);
-                result = new ModelAndView("redirect:list-own.do");
+                result = new ModelAndView("redirect:create.do");
 
             } catch (Throwable oops) {
                 result = createEditModelAndView(freeDayForm, "freeDay.commit.error");
@@ -99,11 +105,16 @@ public class FreeDaySpecialistController extends AbstractController {
         freeDayService.delete(freeDay);
         Collection<FreeDay> freeDays;
 
-        freeDays = freeDayService.findAllFreeDays();
+        Specialist specialistConnect = specialistService.findByPrincipal();
 
-        result = new ModelAndView("freeDay/list");
+        freeDays = freeDayService.getFreeDaysForSpecialist(specialistConnect);
+
+        result = new ModelAndView("freeDay/edit");
         result.addObject("freeDays", freeDays);
-        result.addObject("requestURI", "freeDays/specialist/list-own.do");
+        FreeDayForm freeDayForm = new FreeDayForm();
+        result.addObject("freeDayForm", freeDayForm);
+        //result.addObject("requestURI", "freeDays/specialist/create.do");
+        result = new ModelAndView("redirect:create.do");
 
         return result;
     }
@@ -126,9 +137,16 @@ public class FreeDaySpecialistController extends AbstractController {
 
         result = new ModelAndView("freeDay/edit");
         result.addObject("requestURI", "freeDay/specialist/edit.do?freeDayId=" + freeDayForm.getId());
+        //result.addObject("requestURI2", "freeDay/specialist/list-own.do");
 
         result.addObject("message", message);
         result.addObject("freeDayForm", freeDayForm);
+        
+        
+        Collection<FreeDay> freeDays;
+        Specialist specialistConnect = specialistService.findByPrincipal();
+        freeDays = freeDayService.getFreeDaysForSpecialist(specialistConnect);
+        result.addObject("freeDays", freeDays);
 
         return result;
     }

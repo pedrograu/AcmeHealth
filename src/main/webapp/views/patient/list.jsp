@@ -18,43 +18,44 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+<div class="table-responsive">
+	<display:table name="patients" id="row" requestURI="${requestURI}"
+		pagesize="5" class="table table-hover" keepStatus="true">
 
-<display:table name="patients" id="row" requestURI="${requestURI}"
-	pagesize="5" class="displaytag" keepStatus="true">
+		<security:authorize access="hasRole('ADMINISTRATOR')">
+			<jstl:if test="${row.enableMessage == true }">
+				<display:column>
+					<a href="patient/administrator/ban.do?patientId=${row.id}"><spring:message
+							code="patient.ban" /></a>
+				</display:column>
+			</jstl:if>
+			<jstl:if test="${row.enableMessage == false }">
+				<display:column>
+					<a href="patient/administrator/ban.do?patientId=${row.id}"><spring:message
+							code="patient.enable" /></a>
+				</display:column>
+			</jstl:if>
+		</security:authorize>
 
-	<security:authorize access="hasRole('ADMINISTRATOR')">
-	<jstl:if test="${row.enableMessage == true }">
-	<display:column>
-			<a href="patient/administrator/ban.do?patientId=${row.id}"><spring:message
-					code="patient.ban" /></a>
-	</display:column>
-	</jstl:if>
-	<jstl:if test="${row.enableMessage == false }">
-	<display:column>
-			<a href="patient/administrator/ban.do?patientId=${row.id}"><spring:message
-					code="patient.enable" /></a>
-	</display:column>
-	</jstl:if>
-	</security:authorize>
+		<spring:message code="patient.name" var="name" />
+		<display:column property="name" title="${name}" sortable="${true}" />
 
-	<spring:message code="patient.name" var="name" />
-	<display:column property="name" title="${name}" sortable="${true}" />
+		<spring:message code="patient.surname" var="surname" />
+		<display:column property="surname" title="${surname}"
+			sortable="${true}" />
 
-	<spring:message code="patient.surname" var="surname" />
-	<display:column property="surname" title="${surname}"
-		sortable="${true}" />
+		<jstl:if test="${isSpecialist==true}">
+			<display:column>
+				<a href="prescription/specialist/list.do?patientId=${row.id}"><spring:message
+						code="patient.prescription" /></a>
+			</display:column>
 
-	<jstl:if test="${isSpecialist==true}">
-	<display:column>
-			<a href="prescription/specialist/list.do?patientId=${row.id}"><spring:message
-					code="patient.prescription" /></a>
-	</display:column>
-	</jstl:if> 
-	
-	<display:column>
-			<a href="medicalHistory/specialist/detail.do?medicalHistoryId=${row.medicalHistory.id}"><spring:message
-					code="patient.medicalHistory" /></a>
-	</display:column>
+			<display:column>
+				<a
+					href="medicalHistory/specialist/detail.do?medicalHistoryId=${row.medicalHistory.id}"><spring:message
+						code="patient.medicalHistory" /></a>
+			</display:column>
+		</jstl:if>
 
-</display:table>
-
+	</display:table>
+</div>

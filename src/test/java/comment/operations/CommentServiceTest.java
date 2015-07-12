@@ -68,7 +68,7 @@ public class CommentServiceTest {
     public void testCreateComment() {
         authenticate("patient1");
         Comment comment;
-        Profile profile = profileService.findOneToEdit(13);
+        Profile profile = profileService.findOneToEdit(17);
         CommentForm commentForm = new CommentForm();
         commentForm.setProfile(profile);
         commentForm.setText("Hola jUnit");
@@ -94,7 +94,7 @@ public class CommentServiceTest {
     public void testCreateCommentNotAppointment() {
         authenticate("patient1");
         Comment comment;
-        Profile profile = profileService.findOneToEdit(15);
+        Profile profile = profileService.findOneToEdit(23);
         CommentForm commentForm = new CommentForm();
         commentForm.setProfile(profile);
         commentForm.setText("Hola jUnit");
@@ -109,7 +109,7 @@ public class CommentServiceTest {
     public void testCreateCommentNotAuthenticated() {
         desauthenticate();
         Comment comment;
-        Profile profile = profileService.findOneToEdit(13);
+        Profile profile = profileService.findOneToEdit(17);
         CommentForm commentForm = new CommentForm();
         commentForm.setProfile(profile);
         commentForm.setText("Hola jUnit");

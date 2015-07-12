@@ -18,9 +18,9 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-
+<div class="table-responsive">
 <display:table name="specialtys" id="row" requestURI="${requestURI}"
-	pagesize="5" class="displaytag" keepStatus="true">
+	pagesize="5" class="table table-hover" keepStatus="true">
 
 	<security:authorize access="isAnonymous()">
 		<display:column>
@@ -45,4 +45,4 @@
 
 
 </display:table>
-
+</div>

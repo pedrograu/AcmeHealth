@@ -1,5 +1,7 @@
 package controllers.Specialist;
 
+import java.util.Collection;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +13,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.ProfileService;
-import services.SpecialistService;
-
 import controllers.AbstractController;
+import domain.Comment;
 import domain.Profile;
 import domain.Specialist;
+import services.CommentService;
+import services.ProfileService;
+import services.SpecialistService;
 
 @Controller
 @RequestMapping("/profile/specialist")
@@ -27,7 +30,10 @@ public class ProfileSpecialistController extends AbstractController {
 
     @Autowired
     private SpecialistService specialistService;
-
+    
+    @Autowired
+    private CommentService commentService;
+    
     public ProfileSpecialistController() {
         super();
     }
@@ -38,11 +44,14 @@ public class ProfileSpecialistController extends AbstractController {
         ModelAndView result;
         Specialist specialist = specialistService.findByPrincipal();
         Profile profile = specialist.getProfile();
+        
+        Collection<Comment> comments = commentService.getCommentsForSpecialist(specialist);
 
         result = new ModelAndView("profile/edit");
 
         result.addObject("profile", profile);
         result.addObject("specialist", specialist);
+        result.addObject("comments", comments);
         result.addObject("detailsProfile", true);
 
         return result;

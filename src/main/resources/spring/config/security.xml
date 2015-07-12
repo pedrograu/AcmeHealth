@@ -24,6 +24,9 @@
 	<security:http auto-config="true" use-expressions="true">
 		<security:intercept-url pattern="/" access="permitAll" />
 
+        <security:intercept-url pattern="/assets/**"
+            access="permitAll" />
+
 		<security:intercept-url pattern="/favicon.ico"
 			access="permitAll" />
 		<security:intercept-url pattern="/images/**"
@@ -44,6 +47,14 @@
 			access="permitAll" />
 		<security:intercept-url pattern="/register/patient/edit.do"
 			access="permitAll" />
+	    <security:intercept-url pattern="/register/patient/mutua.do"
+            access="permitAll" />
+ 	    <security:intercept-url pattern="/register/patient/company.do"
+            access="permitAll" />
+ 	    <security:intercept-url pattern="/register/patient/select.do"
+            access="permitAll" />
+       	<security:intercept-url pattern="/register/patient/editParticulate.do"
+            access="permitAll" />
 		<security:intercept-url pattern="/specialty/detail.do"
 			access="permitAll" />
 		<security:intercept-url pattern="/specialty/list-all.do"
@@ -73,6 +84,11 @@
 			access="hasRole('PATIENT')" />
 		<security:intercept-url pattern="/timetable/patient/**"
 			access="hasRole('PATIENT')" />
+		<security:intercept-url pattern="/customerArea/patient/list.do"
+            access="hasRole('PATIENT')" />
+            		<security:intercept-url pattern="/specialty/patient/list-all.do"
+            access="hasRole('PATIENT')" />
+
 
 		<!-- <security:intercept-url pattern="/message/customer/list-outbox.do" 
 			access="hasRole('PATIENT')" /> <security:intercept-url pattern="/message/customer/list-inbox.do" 
@@ -97,8 +113,14 @@
 			access="hasRole('ADMINISTRATOR')" />
 		<security:intercept-url pattern="/patient/administrator/list.do"
 			access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url pattern="/patient/administrator/listPatientsNoDischarged.do"
+			access="hasRole('ADMINISTRATOR')" />
 		<security:intercept-url pattern="/patient/administrator/ban.do"
 			access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url pattern="/patient/administrator/discharge.do"
+			access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url pattern="/customerArea/administrator/list.do"
+            access="hasRole('ADMINISTRATOR')" />
 
 
 		<security:intercept-url pattern="/appointment/specialist/**"
@@ -119,6 +141,8 @@
 			access="hasRole('SPECIALIST')" />
 		<security:intercept-url pattern="/timetable/specialist/edit.do"
 			access="hasRole('SPECIALIST')" />
+		<security:intercept-url pattern="/timetable/specialist/delete.do"
+			access="hasRole('SPECIALIST')" />
 
 		<security:intercept-url pattern="/freeDay/specialist/list-own.do"
 			access="hasRole('SPECIALIST')" />
@@ -134,6 +158,14 @@
 			access="hasRole('SPECIALIST')" />			
 		<security:intercept-url pattern="/prescription/specialist/list.do"
 			access="hasRole('SPECIALIST')" />
+		<security:intercept-url pattern="/prescription/specialist/print.do"
+			access="hasRole('SPECIALIST')" />
+		<security:intercept-url pattern="/prescription/specialist/details.do"
+			access="hasRole('SPECIALIST')" />
+		<security:intercept-url pattern="/customerArea/specialist/list.do"
+            access="hasRole('SPECIALIST')" />
+		<security:intercept-url pattern="/comment/specialist/details.do"
+            access="hasRole('SPECIALIST')" />
 
 		<security:intercept-url pattern="/message/customer/list-outbox.do"
 			access="hasRole('CUSTOMER')" />
@@ -149,6 +181,7 @@
 			access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/message/customer/cancel.do"
 			access="hasRole('CUSTOMER')" />
+		
 
 		<!-- <security:intercept-url pattern="/message/customer/**" access="hasRole('SPECIALIST')" 
 			/> -->

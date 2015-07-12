@@ -68,7 +68,7 @@ public class SpecialistServiceTest {
 
         Specialist specialist;
 
-        Specialty specialty = specialtyService.findOneToEdit(10);
+        Specialty specialty = specialtyService.findOneToEdit(12);
 
         SpecialistForm specialistForm = new SpecialistForm();
         specialistForm.setSpecialty(specialty);
@@ -92,7 +92,7 @@ public class SpecialistServiceTest {
 
         Specialist specialist;
 
-        Specialty specialty = specialtyService.findOneToEdit(10);
+        Specialty specialty = specialtyService.findOneToEdit(12);
 
         SpecialistForm specialistForm = new SpecialistForm();
         specialistForm.setSpecialty(specialty);
@@ -112,7 +112,7 @@ public class SpecialistServiceTest {
     @Test(expected = DataIntegrityViolationException.class)
     public void testFailDuplicate() {
         Specialist specialist;
-        Specialty specialty = specialtyService.findOneToEdit(7);
+        Specialty specialty = specialtyService.findOneToEdit(12);
 
         SpecialistForm specialistForm = new SpecialistForm();
         specialistForm.setSpecialty(specialty);
@@ -132,7 +132,7 @@ public class SpecialistServiceTest {
     @Test(expected = IllegalArgumentException.class)
     public void testRegisterPasswordNotEqual() {
 
-        Specialty specialty = specialtyService.findOneToEdit(10);
+        Specialty specialty = specialtyService.findOneToEdit(12);
         Specialist specialist;
         SpecialistForm specialistForm = new SpecialistForm();
         specialistForm.setSpecialty(specialty);

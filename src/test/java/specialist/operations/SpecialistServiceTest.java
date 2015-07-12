@@ -69,7 +69,7 @@ public class SpecialistServiceTest {
         authenticate("patient1");
 
         Patient patient = patientService.findByPrincipal();
-        Specialist specialist = specialistService.findOneToEdit(14);
+        Specialist specialist = specialistService.findOneToEdit(18);
 
         patientService.save(patient, specialist);
 
@@ -84,7 +84,7 @@ public class SpecialistServiceTest {
         authenticate("patient1");
 
         Patient patient = patientService.findByPrincipal();
-        Specialist specialist = specialistService.findOneToEdit(16);
+        Specialist specialist = specialistService.findOneToEdit(20);
 
         patientService.save(patient, specialist);
 

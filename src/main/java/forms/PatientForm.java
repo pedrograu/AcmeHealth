@@ -1,6 +1,7 @@
 package forms;
 
 import javax.persistence.Column;
+import javax.persistence.Lob;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -13,6 +14,7 @@ import domain.Specialist;
 
 public class PatientForm {
 
+    private String token;
     private boolean available;
     private String secondPassword;
     private String name;
@@ -24,6 +26,25 @@ public class PatientForm {
     private String address;
     private String phone;
     private Specialist specialist;
+	private byte[] image;
+	
+	
+	@Lob
+	public byte[] getImage() {
+		return image;
+	}
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
+
+    @NotBlank
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     @Valid
     @NotNull

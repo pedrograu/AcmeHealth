@@ -67,7 +67,7 @@ public class TimetableServiceTest {
     public void testListTimetablesForSpecialistAuthenticatePatient() {
         authenticate("administrator1");
         Collection<Timetable> timetables;
-        Specialist specialist = specialistService.findOneToEdit(12);
+        Specialist specialist = specialistService.findOneToEdit(16);
         timetables = timetableService.getTimetablesForSpecialist(specialist);
         Assert.isTrue(timetables.size() == 3);
 
@@ -82,7 +82,7 @@ public class TimetableServiceTest {
         authenticate("specialist1");
 
         Collection<Timetable> timetables;
-        Specialist specialist = specialistService.findOneToEdit(12);
+        Specialist specialist = specialistService.findOneToEdit(16);
         timetables = timetableService.getTimetablesForSpecialist(specialist);
         Assert.isTrue(timetables.size() == 3);
 

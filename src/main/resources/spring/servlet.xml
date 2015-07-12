@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- 
- * servlet.xml
- *
- * Copyright (C) 2014 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
- * http://www.tdg-seville.info/License.html
- -->
+<!-- * servlet.xml * * Copyright (C) 2014 Universidad de Sevilla * * The 
+	use of this project is hereby constrained to the conditions of the * TDG 
+	Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
@@ -152,16 +146,24 @@
 		<property name="viewClass"
 			value="org.springframework.web.servlet.view.tiles2.TilesView" />
 	</bean>
-	
+
 	<!-- Cache -->
-	
+
 	<import resource="config/cache.xml" />
-	
-	<cache:annotation-driven cache-manager="cacheManager"   
+
+	<cache:annotation-driven cache-manager="cacheManager"
 		proxy-target-class="true" mode="proxy" />
-	
+
 	<bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
-	    <property name="caches" ref="cacheSet" />	        
+		<property name="caches" ref="cacheSet" />
+	</bean>
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+
+		<!-- one of the properties available; the maximum file size in bytes -->
+		<property name="maxUploadSize" value="100000" />
+
 	</bean>
 
 </beans>
