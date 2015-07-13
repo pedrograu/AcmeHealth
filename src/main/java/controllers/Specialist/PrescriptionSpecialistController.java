@@ -79,7 +79,7 @@ public class PrescriptionSpecialistController extends AbstractController {
         Prescription prescription = prescriptionService.findOneToEdit(prescriptionId);
 
         result = new ModelAndView("prescription/edit");
-        //result.addObject("isPatient", true);
+        result.addObject("isPatient", true);
         result.addObject("prescription", prescription);
 
         return result;

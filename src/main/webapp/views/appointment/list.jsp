@@ -44,12 +44,28 @@
 		<display:column property="startMoment" title="${startMoment}"
 			sortable="${true}" format="{0,date,dd/MM/yyyy HH:mm}" />
 
-	<spring:message code="appointment.specialist" var="specialist" />
-	<display:column property="specialist.name" title="${specialist}" sortable="${true}" />
+		<security:authorize access="hasRole('PATIENT')">
 
-	<spring:message code="appointment.specialty" var="specialty" />
-	<display:column property="specialist.specialty.name" title="${specialty}" sortable="${true}" />
-	
+			<spring:message code="appointment.specialist" var="specialist" />
+			<display:column property="specialist.name" title="${specialist}"
+				sortable="${true}" />
+
+			<spring:message code="appointment.specialty" var="specialty" />
+			<display:column property="specialist.specialty.name"
+				title="${specialty}" sortable="${true}" />
+		</security:authorize>
+
+		<security:authorize access="hasRole('SPECIALIST')">
+
+			<spring:message code="appointment.patient.name" var="patient" />
+			<display:column property="patient.name" title="${patient}"
+				sortable="${true}" />
+
+			<spring:message code="appointment.patient.surname" var="patient" />
+			<display:column property="patient.surname" title="${patient}"
+				sortable="${true}" />
+				
+		</security:authorize>
 
 
 	</display:table>

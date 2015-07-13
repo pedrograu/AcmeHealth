@@ -74,6 +74,8 @@
 			access="hasRole('PATIENT')" />
 		<security:intercept-url pattern="/specialist/patient/**"
 			access="hasRole('PATIENT')" />
+		<security:intercept-url pattern="/specialty/patient/**"
+			access="hasRole('PATIENT')" />
 		<security:intercept-url pattern="/profile/patient/**"
 			access="hasRole('PATIENT')" />
 		<security:intercept-url pattern="/comment/patient/**"

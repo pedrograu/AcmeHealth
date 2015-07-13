@@ -95,7 +95,7 @@
 
 			<security:authorize access="hasRole('PATIENT')">
 				<display:column>
-					<a href="profile/pacient/details.do?specialistId=${row.id}"><spring:message
+					<a href="profile/patient/details.do?specialistId=${row.id}"><spring:message
 							code="specialist.profile" /></a>
 				</display:column>
 			</security:authorize>

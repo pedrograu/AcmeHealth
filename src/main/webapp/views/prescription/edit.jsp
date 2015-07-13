@@ -23,7 +23,7 @@
 	<br />
 	<br />
 
-<%-- 	<jstl:if test="${isPatient==true}"> --%>
+ 	<jstl:if test="${isPatient==true}"> 
 
 		<div class="col-lg-12">
 			<div class="row row-centered">
@@ -78,7 +78,7 @@
 			</security:authorize>
 		</div>
 
-<%-- 	</jstl:if> --%>
+ 	</jstl:if> 
 
 
 	<jstl:if test="${isPatient==false}">
