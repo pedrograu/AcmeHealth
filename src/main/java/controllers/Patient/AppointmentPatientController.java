@@ -130,8 +130,6 @@ public class AppointmentPatientController extends AbstractController {
 
         ModelAndView result;
 
-        //Appointment appointment;
-
         Patient patientConnect = patientService.findByPrincipal();
 
         boolean cumplePatron = appointmentService.cumplePatron(startMoment);
@@ -140,7 +138,6 @@ public class AppointmentPatientController extends AbstractController {
             
             
             Date fechaElegida = appointmentService.stringToDate(startMoment);
-            //List<Date> listaDeFechas = timetableService.getDatesAvailables(fechaElegida, null);
             List<Date> listaDeFechas = new ArrayList<Date>();
             listaDeFechas.add(fechaElegida);
             
@@ -150,7 +147,6 @@ public class AppointmentPatientController extends AbstractController {
             DateFormat hor = new SimpleDateFormat("HH:mm");
             String hora = hor.format(listaDeFechas.get(0));
 
-            //appointment = appointmentService.create();
             AppointmentForm appointmentForm = new AppointmentForm();
 
             result = createEditModelAndView(appointmentForm);
@@ -159,11 +155,6 @@ public class AppointmentPatientController extends AbstractController {
             result.addObject("listaDeFechas", listaDeFechas);
             result.addObject("fecha", fecha);
             result.addObject("hora", hora);
-//            if (listaDeFechas.isEmpty()) {
-//                result.addObject("hayHorasDisponibles", false);
-//            } else {
-//                result.addObject("hayHorasDisponibles", true);
-//            }
             result.addObject("hayHorasDisponibles", true);
             result.addObject("create", false);
             result.addObject("isOffer", false);
@@ -172,7 +163,6 @@ public class AppointmentPatientController extends AbstractController {
 
         } else {
 
-            //appointment = appointmentService.create();
             AppointmentForm appointmentForm = new AppointmentForm();
 
             result = createEditModelAndView(appointmentForm);
