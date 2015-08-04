@@ -152,7 +152,7 @@
 
 	<bean id="creditCard1" class="domain.CreditCard">
 		<property name="holderName" value="Antonio"></property>
-		<property name="brandName" value="Toro"></property>
+		<property name="brandName" value="American Express"></property>
 		<property name="number" value="5354406748873221"></property>
 		<property name="expirationMonth" value="01"></property>
 		<property name="expirationYear" value="2017"></property>
@@ -162,7 +162,7 @@
 
 	<bean id="creditCard2" class="domain.CreditCard">
 		<property name="holderName" value="Luis"></property>
-		<property name="brandName" value="Figueroa"></property>
+		<property name="brandName" value="MasterCard"></property>
 		<property name="number" value="6011651684178332"></property>
 		<property name="expirationMonth" value="10"></property>
 		<property name="expirationYear" value="2018"></property>
@@ -172,7 +172,7 @@
 
 	<bean id="creditCard3" class="domain.CreditCard">
 		<property name="holderName" value="Alfredo"></property>
-		<property name="brandName" value="Marquez"></property>
+		<property name="brandName" value="Visa"></property>
 		<property name="number" value="4024007189746810"></property>
 		<property name="expirationMonth" value="11"></property>
 		<property name="expirationYear" value="2019"></property>
@@ -182,7 +182,7 @@
 
 	<bean id="creditCard4" class="domain.CreditCard">
 		<property name="holderName" value="Maite"></property>
-		<property name="brandName" value="Gimeno"></property>
+		<property name="brandName" value="CitiBank"></property>
 		<property name="number" value="4024007187547285"></property>
 		<property name="expirationMonth" value="04"></property>
 		<property name="expirationYear" value="2017"></property>
