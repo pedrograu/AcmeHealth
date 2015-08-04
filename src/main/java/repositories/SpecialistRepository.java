@@ -11,8 +11,6 @@ import domain.Specialist;
 @Repository
 public interface SpecialistRepository extends JpaRepository<Specialist, Integer> {
 
-    @Query("select s from Specialist s")
-    Collection<Specialist> findAllSpecialists();
 
     @Query("select p from Specialist p where p.userAccount.id=?1")
     Specialist findByUserAccountId(int id);
@@ -29,7 +27,5 @@ public interface SpecialistRepository extends JpaRepository<Specialist, Integer>
     @Query("select a.specialist from Appointment a group by a.specialist having sum(a) >= all (select sum(a) from Appointment a group by a.specialist having a.specialist != null)")
     Collection<Specialist> getSpecialistWithMoreAppointment();
 
-    @Query("select s from Specialist s")
-    Collection<Specialist> getAllSpecialist();
 
 }

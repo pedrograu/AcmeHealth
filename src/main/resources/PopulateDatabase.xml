@@ -154,8 +154,8 @@
 		<property name="holderName" value="Antonio"></property>
 		<property name="brandName" value="Toro"></property>
 		<property name="number" value="5354406748873221"></property>
-		<property name="expirationMonth" value="1"></property>
-		<property name="expirationYear" value="2015"></property>
+		<property name="expirationMonth" value="01"></property>
+		<property name="expirationYear" value="2017"></property>
 		<property name="cVVcode" value="257"></property>
 
 	</bean>
@@ -780,7 +780,7 @@
 		<property name="startMoment" value="12/12/2008"></property>
 		<property name="finishMoment" value="12/12/2009"></property>
 		<property name="title" value="Oferta dentadura"></property>
-		<property name="description" value="esta es de descripcion de la oferta 4"></property>
+		<property name="description" value="Apúntate a esta oferta cuanto antes"></property>
 		<property name="price" value="24.00"></property>
 		<property name="amountPerson" value="28"></property>
 		<property name="enrollees" value="0"></property>
@@ -810,7 +810,7 @@
 		<property name="startMoment" value="12/12/2018"></property>
 		<property name="finishMoment" value="12/12/2020"></property>
 		<property name="title" value="Revisión óptica"></property>
-		<property name="description" value="Revisate los ojos en ahora a mitad de precio."></property>
+		<property name="description" value="Revisate los ojos ahora a mitad de precio."></property>
 		<property name="price" value="27.00"></property>
 		<property name="amountPerson" value="28"></property>
 		<property name="enrollees" value="0"></property>
@@ -1087,7 +1087,7 @@
 		<property name="isFinish" value="1"></property>
 		<property name="startMoment" value="01/06/2014 08:20"></property>
 		<property name="finishMoment" value="01/06/2014 08:30"></property>
-		<property name="result" value="Se le ha aplicado un tratamiento de antinflamatorios"></property>
+		<property name="result" value="Se le ha aplicado un tratamiento de antiinflamatorios"></property>
 		<property name="purpose" value="Siente un dolor en la zona lumbar"></property>
 		<property name="patient">
 			<ref bean="patient1" />
