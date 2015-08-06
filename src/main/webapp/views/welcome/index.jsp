@@ -81,17 +81,17 @@
 
 <!-- ADMINISTRATOR -->
 <security:authorize access="hasRole('ADMINISTRATOR')">
-<a href="customerArea/administrator/list.do"><spring:message code="welcome.personal.area"/></a>
+<h3><a href="customerArea/administrator/list.do"><spring:message code="welcome.personal.area"/></a></h3>
 </security:authorize>
 
 <!-- PATIENT -->
 <security:authorize access="hasRole('PATIENT')">
-      <a href="customerArea/patient/list.do"><spring:message code="welcome.personal.area"/></a>
+<h3><a href="customerArea/patient/list.do"><spring:message code="welcome.personal.area"/></a></h3>
 </security:authorize>
 
 <!-- SPECIALIST -->
 <security:authorize access="hasRole('SPECIALIST')">
-<a href="customerArea/specialist/list.do"><spring:message code="welcome.personal.area"/></a>
+<h3><a href="customerArea/specialist/list.do"><spring:message code="welcome.personal.area"/></a></h3>
 </security:authorize>
 
 

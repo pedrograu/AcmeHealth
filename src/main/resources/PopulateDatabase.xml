@@ -695,7 +695,7 @@
 		<property name="description" value="Prueba nuestro fantastico laser ahora un 30% de descuento."></property>
 		<property name="price" value="15.00"></property>
 		<property name="amountPerson" value="1"></property>
-		<property name="enrollees" value="2"></property>
+		<property name="enrollees" value="1"></property>
 		<property name="administrator">
 			<ref bean="administrator1" />
 		</property>

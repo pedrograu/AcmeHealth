@@ -54,7 +54,7 @@ var Script = function () {
                 'margin-left': '0px'
             });
             $('#sidebar').css({
-                'margin-left': '-210px'
+                'margin-left': '-225px'
             });
             $('#sidebar > ul').hide();
             $("#container").addClass("sidebar-closed");

@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
@@ -226,12 +227,14 @@ public class PatientService {
         int year = patientForm.getCreditCard().getExpirationYear();
         Calendar dateCreditCard = new GregorianCalendar();
         dateCreditCard.set(year, month, 1);
+        Collection<String> creditCardNumbers = getAllCreditCardNumber();
         
         Assert.isTrue(currentMoment.before(dateCreditCard));
 
         Patient patient = create();
         Assert.isTrue(patientForm.getAvailable());
         Assert.isTrue(patientForm.getPassword().equals(patientForm.getSecondPassword()));
+        Assert.isTrue(!creditCardNumbers.contains(patientForm.getCreditCard().getNumber()));
 
         patient.setCreditCard(patientForm.getCreditCard());
         patient.setName(patientForm.getName());
@@ -401,5 +404,9 @@ public class PatientService {
             return array;
         }
     }
+
+	public Collection<String> getAllCreditCardNumber() {
+		 return patientRepository.getAllCreditCardNumber();
+	}
 
 }

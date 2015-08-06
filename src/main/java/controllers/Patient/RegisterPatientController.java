@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -230,6 +231,7 @@ public class RegisterPatientController extends AbstractController {
 		int year = patientForm.getCreditCard().getExpirationYear();
 		Calendar dateCreditCard = new GregorianCalendar();
 		dateCreditCard.set(year, month, 1);
+		Collection<String> creditCardNumbers = patientService.getAllCreditCardNumber();
 
 		if (binding.hasErrors()) {
 			result = createEditModelAndView3(patientForm);
@@ -263,6 +265,9 @@ public class RegisterPatientController extends AbstractController {
 					} else if (!currentMoment.before(dateCreditCard)) {
 						result = createEditModelAndView3(patientForm,
 								"register.creditCard.error");
+					}else if (creditCardNumbers.contains(patientForm.getCreditCard().getNumber())) {
+						result = createEditModelAndView3(patientForm,
+								"register.creditCardNumber.error");
 					} else {
 						result = createEditModelAndView3(patientForm,
 								"register.commit.error");

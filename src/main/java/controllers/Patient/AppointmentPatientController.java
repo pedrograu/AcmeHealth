@@ -217,11 +217,6 @@ public class AppointmentPatientController extends AbstractController {
             result.addObject("listaDeFechas", listaDeFechas);
             result.addObject("fecha", fecha);
             result.addObject("hora", hora);
-//            if (listaDeFechas.isEmpty()) {
-//                result.addObject("hayHorasDisponibles", false);
-//            } else {
-//                result.addObject("hayHorasDisponibles", true);
-//            }
             result.addObject("hayHorasDisponibles", true);
             result.addObject("create", false);
             result.addObject("isOffer", true);
@@ -229,7 +224,6 @@ public class AppointmentPatientController extends AbstractController {
 
         } else {
 
-            //appointment = appointmentService.create2(offer);
             AppointmentForm appointmentForm = new AppointmentForm();
             appointmentForm.setOffer(offer);
 
@@ -277,7 +271,7 @@ public class AppointmentPatientController extends AbstractController {
                         appointment.getStartMoment(), appointment.getSpecialist());
                 if (appointment2 == null && res == true) {
                     appointmentService.save2(appointment);
-                    result = new ModelAndView("redirect:list.do");
+                    result = new ModelAndView("redirect:../../customerArea/patient/list.do");
                 } else {
                     result = createEditModelAndView2(appointmentForm, "appointment.commit.error");
                 }
