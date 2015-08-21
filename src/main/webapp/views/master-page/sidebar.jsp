@@ -42,9 +42,6 @@
    <!-- ADMINISTRATOR -->
    <security:authorize access="hasRole('ADMINISTRATOR')">
 
-    <%--     <li class="mt"><a href="register/specialist/edit.do"> <i class="fa fa-dashboard"></i> <span><spring:message
-        code="master.page.register.specialist" /></span>
-    </a></li> --%>
 
     <li class="mt"><a href="specialty/administrator/list-all.do"> <i class="fa fa-medkit"></i> <span><spring:message
         code="master.page.specialty.listAll" /></span>
@@ -122,20 +119,9 @@
      </ul></li>
 
 
-<%--     <li class=""><a href=timetable/specialist/list-own.do> <i class="fa fa-table"></i> <span><spring:message
-        code="master.page.specialist.timetable.list.own" /></span>
-    </a></li> --%>
-
-
-
-
     <li class=""><a href="offer/specialist/list-not-finished.do"> <i class="fa fa-dollar "></i> <span><spring:message
         code="master.page.offer" /></span>
     </a></li>
-
-<%--     <li class=""><a href="freeDay/specialist/list-own.do"> <i class="fa fa-plane "></i> <span><spring:message
-        code="master.page.specialist.freeDays.list-own" /></span>
-    </a></li> --%>
 
 
     <li class="sub-menu"><a href="javascript:;"> <i class="fa fa-envelope"></i> <span><spring:message
