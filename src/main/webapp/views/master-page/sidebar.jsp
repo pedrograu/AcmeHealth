@@ -42,23 +42,10 @@
    <!-- ADMINISTRATOR -->
    <security:authorize access="hasRole('ADMINISTRATOR')">
 
-    <%--     <li class="mt"><a href="register/specialist/edit.do"> <i class="fa fa-dashboard"></i> <span><spring:message
-        code="master.page.register.specialist" /></span>
-    </a></li> --%>
 
     <li class="mt"><a href="specialty/administrator/list-all.do"> <i class="fa fa-medkit"></i> <span><spring:message
         code="master.page.specialty.listAll" /></span>
     </a></li>
-
-    <%--     <li class="sub-menu"><a href="javascript:;"> <i class="fa fa-desktop"></i> <span><spring:message
-        code="master.page.specialty" /></span>
-    </a>
-     <ul class="sub">
-
-      <li><a href="specialty/administrator/list-all.do"><spring:message code="master.page.specialty.listAll" /></a></li>
-      <li><a href="specialty/administrator/create.do"><spring:message code="master.page.specialty.create" /></a></li>
-
-     </ul></li> --%>
 
     <li class="sub-menu"><a href="javascript:;"> <i class="fa fa-dollar "></i> <span><spring:message
         code="master.page.offer" /></span>
@@ -69,7 +56,6 @@
       <li><a href="offer/administrator/list-not-finished.do"><spring:message
          code="master.page.offer.listNotFinished" /></a></li>
       <li><a href="offer/administrator/list-active.do"><spring:message code="master.page.offer.listActive" /></a></li>
-      <%-- <li><a href="offer/administrator/list-order.do"><spring:message code="master.page.offer.listOrder" /></a></li> --%>
      </ul></li>
 
     <li class=""><a href="patient/administrator/list.do"> <i class="fa fa-users"></i> <span><spring:message
@@ -84,13 +70,7 @@
    <!-- PATIENT -->
    <security:authorize access="hasRole('PATIENT')">
 
-    <li class=""><a href="appointment/patient/list.do"> <i class="fa fa-calendar-o"></i> <span><spring:message
-        code="master.page.appointment.list" /></span>
-    </a></li>
 
-<%--     <li class=""><a href="prescription/patient/list-my-prescription.do"> <i class="fa fa-stethoscope"></i> <span><spring:message
-        code="master.page.prescription.listMyPrescription" /></span>
-    </a></li> --%>
     <li class=""><a href="specialist/patient/list.do"> <i class="fa fa-users"></i> <span><spring:message
         code="master.page.specialist.listAll" /></span>
     </a></li>
@@ -139,20 +119,9 @@
      </ul></li>
 
 
-<%--     <li class=""><a href=timetable/specialist/list-own.do> <i class="fa fa-table"></i> <span><spring:message
-        code="master.page.specialist.timetable.list.own" /></span>
-    </a></li> --%>
-
-
-
-
     <li class=""><a href="offer/specialist/list-not-finished.do"> <i class="fa fa-dollar "></i> <span><spring:message
         code="master.page.offer" /></span>
     </a></li>
-
-<%--     <li class=""><a href="freeDay/specialist/list-own.do"> <i class="fa fa-plane "></i> <span><spring:message
-        code="master.page.specialist.freeDays.list-own" /></span>
-    </a></li> --%>
 
 
     <li class="sub-menu"><a href="javascript:;"> <i class="fa fa-envelope"></i> <span><spring:message

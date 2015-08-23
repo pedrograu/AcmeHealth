@@ -32,8 +32,10 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
 
     @Query("select a.medicalHistory.patient from Appointment a where a.startMoment >= ?1 and a.isFinish=true")
     Collection<Patient> findToday(Date currentMoment);
+
+    @Query("select p.creditCard.number from Patient p")
+	Collection<String> getAllCreditCardNumber();
     
-//    @Query("select m.token from Mutua m")
-//    Collection<String> getTokens();
+
 
 }

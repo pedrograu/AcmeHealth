@@ -124,7 +124,7 @@ public class SpecialistService {
     // Metodos ---------------------------------------------
 
     public Collection<Specialist> findAllSpecialists() {
-        Collection<Specialist> res = specialistRepository.findAllSpecialists();
+        Collection<Specialist> res = specialistRepository.findAll();
         return res;
     }
 
@@ -175,7 +175,7 @@ public class SpecialistService {
 
     public Collection<Specialist> getAllSpecialist() {
 
-        Collection<Specialist> specialists = specialistRepository.getAllSpecialist();
+        Collection<Specialist> specialists = specialistRepository.findAll();
         return specialists;
     }
 

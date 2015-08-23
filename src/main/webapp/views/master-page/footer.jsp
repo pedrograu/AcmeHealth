@@ -10,6 +10,8 @@
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
 <jsp:useBean id="date" class="java.util.Date" />
 
@@ -18,7 +20,7 @@
  <div class="text-center">
    <b><a href="?language=en" style="color: white;">en</a> | <a href="?language=es" style="color: white;">es</a> </b>
     <br> 
-  <b><a href="laws/list.do" style="color: white;">Legal Info / Privacy Policy</a></b> &nbsp;&nbsp;&nbsp;&nbsp;
+  <b><a href="laws/list.do" style="color: white;"><spring:message code="master.page.legal"/></a></b> &nbsp;&nbsp;&nbsp;&nbsp;
   &nbsp;&nbsp;&nbsp;
   <b>Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> Acme-Health Co., Inc. 
   </b> 

@@ -32,15 +32,15 @@
 
 			<spring:message code="dashboard.name" var="name" />
 			<display:column property="specialist.name" title="${name}"
-				sortable="${false}" />
+				sortable="${true}" />
 
 			<spring:message code="dashboard.surname" var="surname" />
 			<display:column property="specialist.surname" title="${surname}"
-				sortable="${false}" />
+				sortable="${true}" />
 
 			<spring:message code="dashboard.specialty.name" var="name" />
 			<display:column property="specialist.specialty.name" title="${name}"
-				sortable="${false}" />
+				sortable="${true}" />
 
 
 
@@ -53,15 +53,15 @@
 			class="table table-hover table-condensed" keepStatus="true">
 
 			<spring:message code="dashboard.name" var="name" />
-			<display:column property="name" title="${name}" sortable="${false}" />
+			<display:column property="name" title="${name}" sortable="${true}" />
 
 			<spring:message code="dashboard.surname" var="surname" />
 			<display:column property="surname" title="${surname}"
-				sortable="${false}" />
+				sortable="${true}" />
 
 			<spring:message code="dashboard.specialty.name" var="name" />
 			<display:column property="specialty.name" title="${name}"
-				sortable="${false}" />
+				sortable="${true}" />
 
 		</display:table>
 		<br/>
@@ -72,14 +72,14 @@
 			class="table table-hover table-condensed" keepStatus="true">
 
 			<spring:message code="dashboard.name" var="name" />
-			<display:column property="name" title="${name}" sortable="${false}" />
+			<display:column property="name" title="${name}" sortable="${true}" />
 
 			<spring:message code="dashboard.surname" var="surname" />
 			<display:column property="surname" title="${surname}"
-				sortable="${false}" />
+				sortable="${true}" />
 
 			<spring:message code="dashboard.phone" var="phone" />
-			<display:column property="phone" title="${phone}" sortable="${false}" />
+			<display:column property="phone" title="${phone}" sortable="${true}" />
 
 		</display:table>
 		<br/>
@@ -90,14 +90,14 @@
 			class="table table-hover table-condensed" keepStatus="true">
 
 			<spring:message code="dashboard.name" var="name" />
-			<display:column property="name" title="${name}" sortable="${false}" />
+			<display:column property="name" title="${name}" sortable="${true}" />
 
 			<spring:message code="dashboard.surname" var="surname" />
 			<display:column property="surname" title="${surname}"
-				sortable="${false}" />
+				sortable="${true}" />
 
 			<spring:message code="dashboard.phone" var="phone" />
-			<display:column property="phone" title="${phone}" sortable="${false}" />
+			<display:column property="phone" title="${phone}" sortable="${true}" />
 
 		</display:table>
 		<br/>
@@ -107,14 +107,14 @@
 			class="table table-hover table-condensed" keepStatus="true">
 
 			<spring:message code="dashboard.name" var="name" />
-			<display:column property="name" title="${name}" sortable="${false}" />
+			<display:column property="name" title="${name}" sortable="${true}" />
 
 			<spring:message code="dashboard.surname" var="surname" />
 			<display:column property="surname" title="${surname}"
-				sortable="${false}" />
+				sortable="${true}" />
 
 			<spring:message code="dashboard.phone" var="phone" />
-			<display:column property="phone" title="${phone}" sortable="${false}" />
+			<display:column property="phone" title="${phone}" sortable="${true}" />
 
 			<spring:message code="dashboard.creationMoment" var="creationMoment" />
 			<display:column property="creationMoment" title="${creationMoment}"

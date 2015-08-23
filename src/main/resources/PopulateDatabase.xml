@@ -152,17 +152,17 @@
 
 	<bean id="creditCard1" class="domain.CreditCard">
 		<property name="holderName" value="Antonio"></property>
-		<property name="brandName" value="Toro"></property>
+		<property name="brandName" value="American Express"></property>
 		<property name="number" value="5354406748873221"></property>
-		<property name="expirationMonth" value="1"></property>
-		<property name="expirationYear" value="2015"></property>
+		<property name="expirationMonth" value="01"></property>
+		<property name="expirationYear" value="2017"></property>
 		<property name="cVVcode" value="257"></property>
 
 	</bean>
 
 	<bean id="creditCard2" class="domain.CreditCard">
 		<property name="holderName" value="Luis"></property>
-		<property name="brandName" value="Figueroa"></property>
+		<property name="brandName" value="MasterCard"></property>
 		<property name="number" value="6011651684178332"></property>
 		<property name="expirationMonth" value="10"></property>
 		<property name="expirationYear" value="2018"></property>
@@ -172,7 +172,7 @@
 
 	<bean id="creditCard3" class="domain.CreditCard">
 		<property name="holderName" value="Alfredo"></property>
-		<property name="brandName" value="Marquez"></property>
+		<property name="brandName" value="Visa"></property>
 		<property name="number" value="4024007189746810"></property>
 		<property name="expirationMonth" value="11"></property>
 		<property name="expirationYear" value="2019"></property>
@@ -182,7 +182,7 @@
 
 	<bean id="creditCard4" class="domain.CreditCard">
 		<property name="holderName" value="Maite"></property>
-		<property name="brandName" value="Gimeno"></property>
+		<property name="brandName" value="CitiBank"></property>
 		<property name="number" value="4024007187547285"></property>
 		<property name="expirationMonth" value="04"></property>
 		<property name="expirationYear" value="2017"></property>
@@ -695,7 +695,7 @@
 		<property name="description" value="Prueba nuestro fantastico laser ahora un 30% de descuento."></property>
 		<property name="price" value="15.00"></property>
 		<property name="amountPerson" value="1"></property>
-		<property name="enrollees" value="2"></property>
+		<property name="enrollees" value="1"></property>
 		<property name="administrator">
 			<ref bean="administrator1" />
 		</property>
@@ -780,7 +780,7 @@
 		<property name="startMoment" value="12/12/2008"></property>
 		<property name="finishMoment" value="12/12/2009"></property>
 		<property name="title" value="Oferta dentadura"></property>
-		<property name="description" value="esta es de descripcion de la oferta 4"></property>
+		<property name="description" value="Apúntate a esta oferta cuanto antes"></property>
 		<property name="price" value="24.00"></property>
 		<property name="amountPerson" value="28"></property>
 		<property name="enrollees" value="0"></property>
@@ -810,7 +810,7 @@
 		<property name="startMoment" value="12/12/2018"></property>
 		<property name="finishMoment" value="12/12/2020"></property>
 		<property name="title" value="Revisión óptica"></property>
-		<property name="description" value="Revisate los ojos en ahora a mitad de precio."></property>
+		<property name="description" value="Revisate los ojos ahora a mitad de precio."></property>
 		<property name="price" value="27.00"></property>
 		<property name="amountPerson" value="28"></property>
 		<property name="enrollees" value="0"></property>
@@ -1087,7 +1087,7 @@
 		<property name="isFinish" value="1"></property>
 		<property name="startMoment" value="01/06/2014 08:20"></property>
 		<property name="finishMoment" value="01/06/2014 08:30"></property>
-		<property name="result" value="Se le ha aplicado un tratamiento de antinflamatorios"></property>
+		<property name="result" value="Se le ha aplicado un tratamiento de antiinflamatorios"></property>
 		<property name="purpose" value="Siente un dolor en la zona lumbar"></property>
 		<property name="patient">
 			<ref bean="patient1" />

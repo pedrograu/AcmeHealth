@@ -34,7 +34,7 @@
      <h1><spring:message code="welcome.empastes" /></h1>
      <p></p>
      <p>
-      <a class="btn btn-primary btn-responsive" href="http://localhost:8080/Acme-Health/offer/details.do?offerId=31"><spring:message code="welcome.button" /></a>
+      <a class="btn btn-primary btn-responsive" href="offer/details.do?offerId=31"><spring:message code="welcome.button" /></a>
      </p>
     </div>
    </div>
@@ -44,7 +44,7 @@
     <h1><spring:message code="welcome.blanqueamiento" /></h1>
      <p></p>
      <p>
-      <a class="btn btn-primary btn-responsive" href="http://localhost:8080/Acme-Health/offer/details.do?offerId=30"><spring:message code="welcome.button" /></a>
+      <a class="btn btn-primary btn-responsive" href="offer/details.do?offerId=30"><spring:message code="welcome.button" /></a>
      </p>
      </div>
    </div>
@@ -54,7 +54,7 @@
     <h1><spring:message code="welcome.masajes" /></h1>
      <p></p>
      <p>
-      <a class="btn btn-primary btn-responsive" href="http://localhost:8080/Acme-Health/offer/details.do?offerId=32"><spring:message code="welcome.button" /></a>
+      <a class="btn btn-primary btn-responsive" href="offer/details.do?offerId=32"><spring:message code="welcome.button" /></a>
      </p>
      </div>
    </div>
@@ -64,7 +64,7 @@
     <h1><spring:message code="welcome.optica" /></h1>
      <p></p>
      <p>
-      <a class="btn btn-primary btn-responsive" href="http://localhost:8080/Acme-Health/offer/details.do?offerId=34"><spring:message code="welcome.button" /></a>
+      <a class="btn btn-primary btn-responsive" href="offer/details.do?offerId=34"><spring:message code="welcome.button" /></a>
      </p>
      </div>
    </div>
@@ -81,17 +81,17 @@
 
 <!-- ADMINISTRATOR -->
 <security:authorize access="hasRole('ADMINISTRATOR')">
-<a href="customerArea/administrator/list.do"><spring:message code="welcome.personal.area"/></a>
+<h3><a href="customerArea/administrator/list.do"><spring:message code="welcome.personal.area"/></a></h3>
 </security:authorize>
 
 <!-- PATIENT -->
 <security:authorize access="hasRole('PATIENT')">
-      <a href="customerArea/patient/list.do"><spring:message code="welcome.personal.area"/></a>
+<h3><a href="customerArea/patient/list.do"><spring:message code="welcome.personal.area"/></a></h3>
 </security:authorize>
 
 <!-- SPECIALIST -->
 <security:authorize access="hasRole('SPECIALIST')">
-<a href="customerArea/specialist/list.do"><spring:message code="welcome.personal.area"/></a>
+<h3><a href="customerArea/specialist/list.do"><spring:message code="welcome.personal.area"/></a></h3>
 </security:authorize>
 
 
