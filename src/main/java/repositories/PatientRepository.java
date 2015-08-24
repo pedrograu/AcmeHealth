@@ -35,6 +35,9 @@ public interface PatientRepository extends JpaRepository<Patient, Integer> {
 
     @Query("select p.creditCard.number from Patient p")
 	Collection<String> getAllCreditCardNumber();
+
+    @Query("select p.userAccount.username from Patient p")
+	Collection<String> getAllNameUserPatients();
     
 
 

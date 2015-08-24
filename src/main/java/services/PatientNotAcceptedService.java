@@ -48,6 +48,12 @@ public class PatientNotAcceptedService {
     public void savePatientNotAccepted(Patient patient) {
 
         Date currentMoment = new Date(System.currentTimeMillis() - 1000);
+        
+		Collection<String> creditCardNumbers = patientService.getAllCreditCardNumber();
+		Collection<String> 	nameUserPatiens = patientService.getAllNameUserPatient();
+		
+		Assert.isTrue(!nameUserPatiens.contains(patient.getUserAccount().getUsername()));
+		Assert.isTrue(!creditCardNumbers.contains(patient.getCreditCard().getNumber()));
 
         Assert.isTrue(patient.getCreditCard().getExpirationYear() >= currentMoment.getYear());
         if (patient.getCreditCard().getExpirationYear() == currentMoment.getYear()) {

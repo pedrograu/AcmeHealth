@@ -232,6 +232,7 @@ public class RegisterPatientController extends AbstractController {
 		Calendar dateCreditCard = new GregorianCalendar();
 		dateCreditCard.set(year, month, 1);
 		Collection<String> creditCardNumbers = patientService.getAllCreditCardNumber();
+		Collection<String> 	nameUserPatiens = patientService.getAllNameUserPatient();
 
 		if (binding.hasErrors()) {
 			result = createEditModelAndView3(patientForm);
@@ -268,6 +269,9 @@ public class RegisterPatientController extends AbstractController {
 					}else if (creditCardNumbers.contains(patientForm.getCreditCard().getNumber())) {
 						result = createEditModelAndView3(patientForm,
 								"register.creditCardNumber.error");
+					}else if (nameUserPatiens.contains(patientForm.getUsername())) {
+						result = createEditModelAndView3(patientForm,
+								"register.duplicateNameUser.error");
 					} else {
 						result = createEditModelAndView3(patientForm,
 								"register.commit.error");

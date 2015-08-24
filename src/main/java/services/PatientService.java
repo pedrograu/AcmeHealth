@@ -409,4 +409,8 @@ public class PatientService {
 		 return patientRepository.getAllCreditCardNumber();
 	}
 
+	public Collection<String> getAllNameUserPatient() {
+		return patientRepository.getAllNameUserPatients();
+	}
+
 }
