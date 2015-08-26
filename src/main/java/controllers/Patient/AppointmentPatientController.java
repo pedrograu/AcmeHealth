@@ -79,14 +79,22 @@ public class AppointmentPatientController extends AbstractController {
 
         ModelAndView result;
         
-               
-        List<Date> lista = timetableService.getDatesAvailables(null);
-        String eventos = timetableService.convertListToStringJson(lista,"calendar", 0,0,0);
-               
+        Patient patientConnect = patientService.findByPrincipal();
         result = new ModelAndView("appointment/calendar");
-        result.addObject("eventos", eventos);
-        result.addObject("requestURI", "appointment/patient/create.do");
-
+        
+        if(patientConnect.getSpecialist()!=null){
+        	
+            List<Date> lista = timetableService.getDatesAvailables(null);
+            String eventos = timetableService.convertListToStringJson(lista,"calendar", 0,0,0);
+                   
+            result.addObject("eventos", eventos);
+            result.addObject("requestURI", "appointment/patient/create.do");
+        	
+        }else{
+        	
+        	result.addObject("mensaje", true);
+        }
+          
         return result;
     }
 
