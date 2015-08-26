@@ -291,25 +291,6 @@ public class AppointmentService {
         return appointment;
     }
 
-    //
-//    public boolean isCreate(Appointment appointment) {
-//        boolean res = false;
-//        Date startMoment = appointment.getStartMoment();
-//        if (startMoment == null) {
-//            res = true;
-//        } else {
-//            Calendar calendar = new GregorianCalendar();
-//            calendar.setTime(startMoment);
-//            Integer h = calendar.get(Calendar.HOUR);
-//            Integer m = calendar.get(Calendar.MINUTE);
-//
-//            if (h == 0 && m == 0) {
-//                res = true;
-//            }
-//        }
-//        return res;
-//    }
-
     //Devuelve el appointment para un tratamiento en oferta del paciente que está logueado en el sistema
     public Appointment getAppointmentForPatientAndOffer(Offer offer) {
         Patient patientConnect = patientService.findByPrincipal();
