@@ -37,6 +37,7 @@ public class MessageService {
 
     // Simple CRUD methods --------------------------------------
 
+    //Devuelve todos los mensajes de la bandeja de entrada del customer que se encuentra logueado en el sistema
     public Collection<Message> getMessageInbox() {
         Collection<Message> messages;
         Customer customerConnect = customerService.findByPrincipal();
@@ -44,6 +45,7 @@ public class MessageService {
         return messages;
     }
 
+    //Devuelve todos los mensajes de la bandeja de salida del customer que se encuentra logueado en el sistema
     public Collection<Message> getMessageOutbox() {
         Collection<Message> messages;
         Customer customerConnect = customerService.findByPrincipal();
@@ -51,6 +53,7 @@ public class MessageService {
         return messages;
     }
 
+    //Crea un mensaje para el customer que se encuentra logueado en el sistema
     public Message create() {
         Customer customer;
         customer = customerService.findByPrincipal();
@@ -68,6 +71,7 @@ public class MessageService {
         return message;
     }
 
+    //Guarda en la base de datos un mensaje para el customer que se encuentra logueado en el sistema
     public Message save(Message customerMessage) {
         Assert.notNull(customerMessage);
         Customer customerConnect = customerService.findByPrincipal();
@@ -77,8 +81,12 @@ public class MessageService {
         currentMoment = new Date(System.currentTimeMillis() - 1000);
         customerMessage.setCreationMoment(currentMoment);
         if (Patient.class == customerConnect.getClass()) {
+        	
+        	//Comprueba que la persona a la cual le manda el mensaje es un especialista
             Assert.isTrue(customerMessage.getRecipient().getClass() == Specialist.class);
             Patient patientConnect = patientService.findByPrincipal();
+            
+            //Comprueba que ese customer tiene habilitado el envío de mensajes
             Assert.isTrue(patientConnect.getEnableMessage());
         }
 
@@ -87,6 +95,7 @@ public class MessageService {
         return customerMessage;
     }
 
+    //Comprueba que el customer que se encuentra logueado en el sistema es el que envía o el que recibe el mensaje
     public void checkPrincipal(Message customerMessage) {
 
         Assert.notNull(customerMessage);
@@ -99,6 +108,7 @@ public class MessageService {
 
     }
 
+    //Devuelve un mensaje dado su id
     public Message findOneToEdit(int messageId) {
 
         Assert.isTrue(messageId != 0);
@@ -108,6 +118,7 @@ public class MessageService {
         return res;
     }
 
+    //Reconstruye un mensaje a partir de un objeto formulario de tipo mensaje
     public Message recontructor(MessageForm messageForm) {
         Message result = create();
         Customer customerConnect = customerService.findByPrincipal();

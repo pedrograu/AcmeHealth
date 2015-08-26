@@ -26,11 +26,14 @@ import forms.MessageForm;
 @RequestMapping("/message/customer")
 public class MessageCustomerController extends AbstractController {
 
-	// Services-----
+	// Services.......................................................
+	
 	@Autowired
 	private MessageService messageService;
+	
 	@Autowired
 	private CustomerService customerService;
+	
 	@Autowired
 	private AppointmentService appointmentService;
 
@@ -42,6 +45,7 @@ public class MessageCustomerController extends AbstractController {
 
 	// List ------------------------------------------------------------------
 
+	//Muestra la bandeja de entrada de los mensajes
 	@RequestMapping(value = "/list-inbox", method = RequestMethod.GET)
 	public ModelAndView listInbox() {
 
@@ -59,6 +63,7 @@ public class MessageCustomerController extends AbstractController {
 		return result;
 	}
 
+	//Muestra la bandeja de salida de los mensajes
 	@RequestMapping(value = "/list-outbox", method = RequestMethod.GET)
 	public ModelAndView listOutbox() {
 
@@ -76,6 +81,8 @@ public class MessageCustomerController extends AbstractController {
 	}
 
 	// Creation ---------------------------------------------------------------
+	
+	//Crea un nuevo mensaje
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
@@ -88,6 +95,7 @@ public class MessageCustomerController extends AbstractController {
 		return result;
 	}
 
+	//Responde a un mensaje dado su id
 	@RequestMapping(value = "/answer", method = RequestMethod.GET)
 	public ModelAndView answer(@RequestParam int messageId) {
 
@@ -106,7 +114,7 @@ public class MessageCustomerController extends AbstractController {
 		return result;
 	}
 
-	// Cancel an appointment and send message to patient
+	// Cancela una cita y envía un mensaje al paciente con el motivo de la cancelación
 	@RequestMapping(value = "/cancel", method = RequestMethod.GET)
 	public ModelAndView cancel(@RequestParam int appointmentId) {
 
@@ -129,6 +137,7 @@ public class MessageCustomerController extends AbstractController {
 		return result;
 	}
 
+	//Muestra los detalles de un mensaje dado su id
 	@RequestMapping(value = "/details", method = RequestMethod.GET)
 	public ModelAndView details(@RequestParam int messageId) {
 		ModelAndView result;
@@ -150,6 +159,8 @@ public class MessageCustomerController extends AbstractController {
 	}
 
 	// Edition--------------------------------------------------------------------------
+	
+	//Guarda en la base de datos un mensaje
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid MessageForm messageForm,
 			BindingResult binding) {
@@ -171,30 +182,8 @@ public class MessageCustomerController extends AbstractController {
 
 		return result;
 	}
-
-	// para las answer
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save3")
-	public ModelAndView save3(@Valid MessageForm messageForm,
-			BindingResult binding) {
-		ModelAndView result;
-		Message message;
-
-		if (binding.hasErrors()) {
-			result = createEditModelAndView3(messageForm);
-		} else {
-			try {
-				message = messageService.recontructor(messageForm);
-				messageService.save(message);
-				result = new ModelAndView("redirect:list-outbox.do");
-			} catch (Throwable oops) {
-				result = createEditModelAndView3(messageForm,
-						"message.commit.error");
-			}
-		}
-
-		return result;
-	}
-
+	
+	//Guarda en la base de datos un mensaje (para las cancelaciones de citas).
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save2")
 	public ModelAndView save2(@Valid MessageForm messageForm,
 			BindingResult binding, @RequestParam int appointmentId) {
@@ -222,6 +211,32 @@ public class MessageCustomerController extends AbstractController {
 
 		return result;
 	}
+	
+
+	//Guarda en la base de datos un mensaje (para las respuestas).
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save3")
+	public ModelAndView save3(@Valid MessageForm messageForm,
+			BindingResult binding) {
+		ModelAndView result;
+		Message message;
+
+		if (binding.hasErrors()) {
+			result = createEditModelAndView3(messageForm);
+		} else {
+			try {
+				message = messageService.recontructor(messageForm);
+				messageService.save(message);
+				result = new ModelAndView("redirect:list-outbox.do");
+			} catch (Throwable oops) {
+				result = createEditModelAndView3(messageForm,
+						"message.commit.error");
+			}
+		}
+
+		return result;
+	}
+
+
 
 	// Ancillary methods--------------------------------------------------------
 
@@ -303,7 +318,7 @@ public class MessageCustomerController extends AbstractController {
 		return result;
 	}
 
-	// para las answer
+	// para las respuestas
 	protected ModelAndView createEditModelAndView3(MessageForm messageForm) {
 		assert messageForm != null;
 

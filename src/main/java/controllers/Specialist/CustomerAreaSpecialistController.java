@@ -16,15 +16,20 @@ import domain.Appointment;
 @RequestMapping("/customerArea/specialist")
 public class CustomerAreaSpecialistController extends AbstractController {
 
+	//Services..................................................................
+	
     @Autowired
     private AppointmentService appointmentService;
 
+    //Constructors..............................................................
+    
     public CustomerAreaSpecialistController() {
         super();
     }
 
     // Listing ----------------------------------------------------------------
 
+    //Muestra el área de cliente de un especialista
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView list() {
         ModelAndView result;

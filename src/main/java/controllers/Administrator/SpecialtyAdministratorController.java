@@ -25,18 +25,23 @@ import domain.Specialty;
 @RequestMapping("/specialty/administrator")
 public class SpecialtyAdministratorController extends AbstractController {
 
+	//Services.....................................
+	
     @Autowired
     private SpecialtyService specialtyService;
 
     @Autowired
     private SpecialistService specialistService;
 
+    //Constructor..............................
+    
     public SpecialtyAdministratorController() {
         super();
     }
 
     // Listing.....................
 
+    //Lista todas las especialidades 
     @RequestMapping(value = "/list-all", method = RequestMethod.GET)
     public ModelAndView listAll() {
 
@@ -52,6 +57,7 @@ public class SpecialtyAdministratorController extends AbstractController {
         return result;
     }
 
+    //Muestra los detalles de una especialidad dado su id
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     public ModelAndView detail(@RequestParam int specialtyId) {
 
@@ -70,6 +76,7 @@ public class SpecialtyAdministratorController extends AbstractController {
 
     // Edition ----------------------------------------------------------------
 
+    //Crea una nueva especialidad
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public ModelAndView create() {
 
@@ -88,6 +95,7 @@ public class SpecialtyAdministratorController extends AbstractController {
         return result;
     }
 
+    //Edita una especialidad dado su id
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public ModelAndView edit(@RequestParam int specialtyId) {
 
@@ -102,6 +110,7 @@ public class SpecialtyAdministratorController extends AbstractController {
         return result;
     }
 
+    //Guarda en la base de datos una especialidad
     @RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
     public ModelAndView save(@Valid Specialty specialty, BindingResult binding) {
 

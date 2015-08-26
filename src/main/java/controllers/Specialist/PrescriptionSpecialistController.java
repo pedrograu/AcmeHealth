@@ -53,6 +53,8 @@ public class PrescriptionSpecialistController extends AbstractController {
     }
 
     //List --------------------------------------------------------------------
+    
+    //Lista las recetas de un paciente
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView list(@RequestParam int patientId) {
 
@@ -71,6 +73,7 @@ public class PrescriptionSpecialistController extends AbstractController {
 
     // Details.....................
 
+    //Muestra los detalles de una receta dado su id
     @RequestMapping(value = "/details", method = RequestMethod.GET)
     public ModelAndView details(@RequestParam int prescriptionId) {
 
@@ -87,6 +90,7 @@ public class PrescriptionSpecialistController extends AbstractController {
     
     // Edition ----------------------------------------------------------------
 
+    //Crea una nueva receta (cuando se está atendiendo una cita)
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public ModelAndView create(@RequestParam int appointmentId) {
 
@@ -106,6 +110,7 @@ public class PrescriptionSpecialistController extends AbstractController {
         return result;
     }
 
+    //Guarda en la bd una receta
     @RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
     public ModelAndView save(@Valid Prescription prescription, BindingResult binding) {
 
@@ -127,6 +132,7 @@ public class PrescriptionSpecialistController extends AbstractController {
 
     }
     
+    //Da formato y convierte a pdf los detalles de una receta
     @RequestMapping(value = "/print", method = RequestMethod.GET)
     public void print(HttpServletResponse response, @RequestParam int prescriptionId) throws IOException {
         try {

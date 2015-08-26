@@ -35,6 +35,7 @@ public class TimetablePatientController extends AbstractController {
 
     // Listing.....................
 
+    //Muestra el horario de un especialista
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView list(@RequestParam int specialistId) {
 

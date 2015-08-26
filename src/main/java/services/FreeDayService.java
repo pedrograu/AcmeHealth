@@ -34,6 +34,7 @@ public class FreeDayService {
         super();
     }
 
+    //Devuelve los días libres de un especialista
     public Collection<FreeDay> getFreeDaysForSpecialist(Specialist s) {
 
         Collection<FreeDay> freeDays = freeDayRepository.getFreeDaysForSpecialist(s.getId());
@@ -41,6 +42,7 @@ public class FreeDayService {
         return freeDays;
     }
 
+    //Reconstruye un freeday a partir de un objeto formulario de tipo freeday
     public FreeDay recontructor(FreeDayForm freeDayForm) {
         FreeDay result = create();
         result.setId(freeDayForm.getId());
@@ -52,6 +54,7 @@ public class FreeDayService {
         return result;
     }
 
+    //Crea un freeday para el especialista que está logueado en el sistema.
     public FreeDay create() {
         Specialist specialistConnect = specialistService.findByPrincipal();
 
@@ -61,6 +64,7 @@ public class FreeDayService {
         return result;
     }
 
+    //Guarda en la base de datos un freeday
     public void save(FreeDay freeDay) {
         checkPrincipal(freeDay);
         Date currentMoment = new Date();
@@ -75,6 +79,7 @@ public class FreeDayService {
 
     }
 
+    //Devuelve un freeday dado su id
     public FreeDay findOneToEdit(int id) {
         Assert.isTrue(id != 0);
         FreeDay res;
@@ -82,17 +87,20 @@ public class FreeDayService {
         return res;
     }
 
+    //Elimina un freeday de la base de datos
     public void delete(FreeDay freeDay) {
         checkPrincipal(freeDay);
         freeDayRepository.delete(freeDay);
 
     }
 
+    //Devuelte todos los freedays
     public Collection<FreeDay> findAllFreeDays() {
         Collection<FreeDay> res = freeDayRepository.findAllFreeDays();
         return res;
     }
 
+    //Comprueba que el freeday es del especialista que está logueado en el sistema
     public void checkPrincipal(FreeDay freeDay) {
         Specialist specialistConnect = specialistService.findByPrincipal();
         Assert.isTrue(freeDay.getSpecialist().equals(specialistConnect));

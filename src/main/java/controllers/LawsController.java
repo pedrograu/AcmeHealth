@@ -15,6 +15,7 @@ public class LawsController extends AbstractController {
         super();
     }
 
+    //Muestra los terminos y condiciones de la aplicación
     @RequestMapping(value = "/list")
     public ModelAndView index(@RequestParam(required = false, defaultValue = "") String name) {
         ModelAndView result;

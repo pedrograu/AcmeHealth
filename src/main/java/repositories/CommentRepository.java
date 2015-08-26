@@ -11,6 +11,7 @@ import domain.Comment;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
 
+	//Devuelve una collection de comentarios de un especialista dado
     @Query("select c from Comment c where c.profile.specialist.id = ?1")
     Collection<Comment> getCommentsForSpecialist(int id);
 

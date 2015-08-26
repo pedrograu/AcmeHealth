@@ -31,8 +31,7 @@ public class RegisterSpecialistController extends AbstractController {
     @Autowired
     private SpecialtyService specialtyService;
 
-    // Constructors
-    // ---------------------------------------------------------------
+    // Constructors --------------------------------------------------------------
 
     public RegisterSpecialistController() {
         super();
@@ -40,6 +39,7 @@ public class RegisterSpecialistController extends AbstractController {
 
     // Registration -----------------------------------------------------------
 
+    //Formulario de registro de un especialista
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public ModelAndView register() {
         ModelAndView result;
@@ -50,6 +50,7 @@ public class RegisterSpecialistController extends AbstractController {
         return result;
     }
 
+    //Guarda en la bd un nuevo especialista
     @RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
     public ModelAndView save(@Valid SpecialistForm specialistForm, BindingResult binding) {
 

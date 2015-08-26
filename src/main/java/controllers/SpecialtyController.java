@@ -32,6 +32,7 @@ public class SpecialtyController extends AbstractController {
 
     // Listing.....................
 
+    //Lista todas las especialidades 
     @RequestMapping(value = "/list-all", method = RequestMethod.GET)
     public ModelAndView listAll() {
 
@@ -47,6 +48,7 @@ public class SpecialtyController extends AbstractController {
         return result;
     }
 
+    //Muestra los detalles de una especialidad dado su id
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     public ModelAndView detail(@RequestParam int specialtyId) {
 

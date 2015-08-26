@@ -11,9 +11,11 @@ import domain.FreeDay;
 @Repository
 public interface FreeDayRepository extends JpaRepository<FreeDay, Integer> {
 
+	//Devuelve una collection de freedays de un especialista
     @Query("select f from FreeDay f where f.specialist.id=?1")
     Collection<FreeDay> getFreeDaysForSpecialist(int id);
 
+    //Devuelve todos los freedays del sistema
     @Query("select f from FreeDay f")
     Collection<FreeDay> findAllFreeDays();
 

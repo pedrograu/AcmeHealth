@@ -11,12 +11,15 @@ import controllers.AbstractController;
 @RequestMapping("/customerArea/administrator")
 public class CustomerAreaAdministratorController extends AbstractController {
 
+	//Constructors............................................................
+	
     public CustomerAreaAdministratorController() {
         super();
     }
 
     // Listing ----------------------------------------------------------------
 
+    //Muestra el área de cliente de un administrador
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView list() {
         ModelAndView result;

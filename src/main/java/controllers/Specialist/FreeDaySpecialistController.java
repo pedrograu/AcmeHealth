@@ -24,17 +24,23 @@ import forms.FreeDayForm;
 @RequestMapping("/freeDay/specialist")
 public class FreeDaySpecialistController extends AbstractController {
 
+	//Services........................................................................
+	
     @Autowired
     private SpecialistService specialistService;
+    
     @Autowired
     private FreeDayService freeDayService;
 
+    //Constructors.......................................................................
+    
     public FreeDaySpecialistController() {
         super();
     }
 
     // List -------------------------------------------------------------------
 
+    //Lista los dias libres del especialista logueado
     @RequestMapping(value = "/list-own", method = RequestMethod.GET)
     public ModelAndView listOwn() {
 
@@ -53,6 +59,7 @@ public class FreeDaySpecialistController extends AbstractController {
 
     // Edition -----------------------------------------------------------------
 
+    //Crea un nuevo freeday
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public ModelAndView create() {
 
@@ -68,11 +75,11 @@ public class FreeDaySpecialistController extends AbstractController {
         result = createEditModelAndView(freeDayForm);
         result.addObject("freeDayForm", freeDayForm);
         result.addObject("freeDays", freeDays);
-        //result.addObject("requestURI2", "freeDay/specialist/list-own.do");
 
         return result;
     }
 
+    //Guarda en la base de datos un freeday
     @RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
     public ModelAndView save(@Valid FreeDayForm freeDayForm, BindingResult binding) {
 
@@ -96,6 +103,7 @@ public class FreeDaySpecialistController extends AbstractController {
 
     }
 
+    //Elimina un freeday
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public ModelAndView delete(@RequestParam int freeDayId) {
 
@@ -113,7 +121,6 @@ public class FreeDaySpecialistController extends AbstractController {
         result.addObject("freeDays", freeDays);
         FreeDayForm freeDayForm = new FreeDayForm();
         result.addObject("freeDayForm", freeDayForm);
-        //result.addObject("requestURI", "freeDays/specialist/create.do");
         result = new ModelAndView("redirect:create.do");
 
         return result;
@@ -137,7 +144,6 @@ public class FreeDaySpecialistController extends AbstractController {
 
         result = new ModelAndView("freeDay/edit");
         result.addObject("requestURI", "freeDay/specialist/edit.do?freeDayId=" + freeDayForm.getId());
-        //result.addObject("requestURI2", "freeDay/specialist/list-own.do");
 
         result.addObject("message", message);
         result.addObject("freeDayForm", freeDayForm);

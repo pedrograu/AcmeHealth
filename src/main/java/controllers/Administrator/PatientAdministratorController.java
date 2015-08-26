@@ -19,17 +19,23 @@ import services.PatientService;
 @RequestMapping("/patient/administrator")
 public class PatientAdministratorController extends AbstractController {
 
+    // Services --------------------------------------------------------------
+	
     @Autowired
     private PatientService patientService;
     
     @Autowired
     private PatientNotAcceptedService patientNotAcceptedService;
 
+    // Constructor --------------------------------------------------------------
+    
     public PatientAdministratorController() {
         super();
     }
 
     // List --------------------------------------------------------------
+    
+    //Lista todos los pacientes registrados en el sistema
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView list() {
 
@@ -44,7 +50,7 @@ public class PatientAdministratorController extends AbstractController {
         return result;
     }
     
-    //listado de pacientes no dados de alta
+    //listado de pacientes no dados de alta (los que se registran como persona particular y tienen que esperar a que el admin los acepte)
     @RequestMapping(value = "/listPatientsNoDischarged", method = RequestMethod.GET)
     public ModelAndView listPatientsNoDischarged() {
 
@@ -59,7 +65,7 @@ public class PatientAdministratorController extends AbstractController {
         return result;
     }
 
-    // Details.....................
+    //Permitir/prohibir el envío de mensajes a un paciente
     @RequestMapping(value = "/ban", method = RequestMethod.GET)
     public ModelAndView ban(@RequestParam int patientId) {
 
@@ -76,7 +82,7 @@ public class PatientAdministratorController extends AbstractController {
         return result;
     }
     
-    //Dar de alta a nuevos pacientes
+    //Aceptar en el sistema a un paciente que se registra como persona particular
     @RequestMapping(value = "/discharge", method = RequestMethod.GET)
     public ModelAndView discharge(@RequestParam int patientNotAcceptedId) {
 

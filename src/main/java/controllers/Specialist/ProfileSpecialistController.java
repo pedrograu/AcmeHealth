@@ -25,6 +25,8 @@ import services.SpecialistService;
 @RequestMapping("/profile/specialist")
 public class ProfileSpecialistController extends AbstractController {
 
+	//Services.................................................
+	
     @Autowired
     private ProfileService profileService;
 
@@ -34,10 +36,12 @@ public class ProfileSpecialistController extends AbstractController {
     @Autowired
     private CommentService commentService;
     
+    //Constructors.............................................
     public ProfileSpecialistController() {
         super();
     }
 
+    //Muestra el perfil del especialista logueado
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     public ModelAndView detail() {
 
@@ -57,6 +61,7 @@ public class ProfileSpecialistController extends AbstractController {
         return result;
     }
 
+    //Edita el perfil de un especialista
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public ModelAndView edit(@RequestParam int profileId) {
 
@@ -70,6 +75,7 @@ public class ProfileSpecialistController extends AbstractController {
         return result;
     }
 
+    //Guarda en la bd el perfil de un especialista
     @RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
     public ModelAndView save(@Valid Profile profile, BindingResult binding) {
 

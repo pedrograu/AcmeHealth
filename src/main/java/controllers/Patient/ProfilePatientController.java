@@ -16,11 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.AppointmentService;
-import services.CommentService;
-import services.PatientService;
-import services.ProfileService;
-import services.SpecialistService;
 import controllers.AbstractController;
 import domain.Appointment;
 import domain.Comment;
@@ -29,15 +24,16 @@ import domain.Specialist;
 import forms.PatientForm2;
 import forms.PatientForm3;
 import forms.PatientForm4;
+import services.AppointmentService;
+import services.CommentService;
+import services.PatientService;
+import services.SpecialistService;
 
 @Controller
 @RequestMapping("/profile/patient")
 public class ProfilePatientController extends AbstractController {
 
 	// Services -----------------------------------------------------------
-
-	@Autowired
-	private ProfileService profileService;
 
 	@Autowired
 	private SpecialistService specialistService;
@@ -57,7 +53,7 @@ public class ProfilePatientController extends AbstractController {
 		super();
 	}
 	
-	//para recuperar imagen de db y mostrarla
+	//para recuperar imagen de perfil de un paciente de la base de datos y mostrarla
 	@RequestMapping(value = "/showImage")
     public ModelAndView showImage(HttpServletResponse response, @RequestParam int patientId) throws Exception {
 
@@ -74,7 +70,7 @@ public class ProfilePatientController extends AbstractController {
      
         }
 
-	// Datos personales del paciente
+	//Muestra los datos personales del paciente
 	@RequestMapping(value = "/myPersonalDatas", method = RequestMethod.GET)
 	public ModelAndView personalDatas() {
 
@@ -95,6 +91,8 @@ public class ProfilePatientController extends AbstractController {
 	}
 
 	// Details.....................
+	
+	//Muestra el perfil de un especialista dado su id
 	@RequestMapping(value = "/details", method = RequestMethod.GET)
 	public ModelAndView details(@RequestParam int specialistId) {
 
@@ -140,7 +138,7 @@ public class ProfilePatientController extends AbstractController {
 		return result;
 	}
 
-	// Change.....................
+	//Cambia el medico de cabecera del paciente por el que se le pasa como parametro de entrada
 	@RequestMapping(value = "/change", method = RequestMethod.GET)
 	public ModelAndView change(@RequestParam int specialistId) {
 		ModelAndView result;
@@ -162,7 +160,7 @@ public class ProfilePatientController extends AbstractController {
 		return result;
 	}
 
-	// Editar datos personales del paciente
+	//Editar datos personales del paciente
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView editPersonalDatas() {
 
@@ -208,6 +206,7 @@ public class ProfilePatientController extends AbstractController {
 		return result;
 	}
 
+	//Guarda los nuevos datos personales del paciente en la base de datos
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid PatientForm2 patientForm2,
 			BindingResult binding) {
@@ -238,6 +237,7 @@ public class ProfilePatientController extends AbstractController {
 		return result;
 	}
 
+	//Guarda la nueva contraseña del paciente en la base de datos
 	@RequestMapping(value = "/changePassword", method = RequestMethod.POST, params = "save2")
     public ModelAndView save2(@Valid PatientForm3 patientForm, BindingResult binding) {
 
@@ -278,7 +278,7 @@ public class ProfilePatientController extends AbstractController {
         return result;
     }
 	
-	
+	//Guarda los nuevos datos bancarios del paciente en la base de datos
 	@RequestMapping(value = "/editCreditCard", method = RequestMethod.POST, params = "save3")
 	public ModelAndView save3(@Valid PatientForm4 patientForm4,
 			BindingResult binding) {
@@ -308,6 +308,8 @@ public class ProfilePatientController extends AbstractController {
 		}
 		return result;
 	}
+	
+    // Ancillary methods ------------------------------------------------------
 
 	protected ModelAndView createEditModelAndView(PatientForm2 patientForm) {
 

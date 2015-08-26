@@ -33,11 +33,7 @@
 			<a href="profile/administrator/details.do?specialistId=${row.id}"><spring:message
 					code="specialist.profile" /></a>
 		</display:column>
-<%-- 
-		<display:column>
-			<a href="specialist/administrator/delete.do?specialistId=${row.id}"><spring:message
-					code="administrator.deleteSpecialist" /></a>
-		</display:column> --%>
+
 	</security:authorize>
 	<security:authorize access="hasRole('PATIENT')">
 		<display:column>

@@ -11,6 +11,7 @@ import domain.Specialty;
 @Repository
 public interface SpecialtyRepository extends JpaRepository<Specialty, Integer> {
 
+	//Devuelve una collection de todas las especialidades registradas en el sistema
     @Query("select s from Specialty s")
     Collection<Specialty> getAll();
 

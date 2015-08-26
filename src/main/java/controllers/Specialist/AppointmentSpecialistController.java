@@ -35,6 +35,8 @@ import forms.AppointmentForm3;
 @RequestMapping("/appointment/specialist")
 public class AppointmentSpecialistController extends AbstractController {
 
+	//Services.............................................
+	
     @Autowired
     private AppointmentService appointmentService;
 
@@ -46,16 +48,19 @@ public class AppointmentSpecialistController extends AbstractController {
 
     @Autowired
     private SpecialistService specialistService;
+    
     @Autowired
     private MessageService messageService;
 
+    //Constructors...........................................
+    
     public AppointmentSpecialistController() {
         super();
     }
 
     // Listing.....................
 
-    // citas finalizadas
+    //Listar todas las citas finalizadas del especialista logueado
     @RequestMapping(value = "/listFinish", method = RequestMethod.GET)
     public ModelAndView listFinish() {
 
@@ -71,7 +76,7 @@ public class AppointmentSpecialistController extends AbstractController {
         return result;
     }
 
-    // citas pendientes
+    //Listar las citas pendientes del especialista logueado
     @RequestMapping(value = "/listNotFinish", method = RequestMethod.GET)
     public ModelAndView listNotFinish() {
 
@@ -91,13 +96,13 @@ public class AppointmentSpecialistController extends AbstractController {
     // Edit.........................................
     
     
-    //seleccionar especialista para pedir cita con él
+    //seleccionar especialista para pedir cita con él (para el paciente pasado como parametro de entrada)
     @RequestMapping(value = "/select", method = RequestMethod.GET)
     public ModelAndView select(@RequestParam int patientId) {
 
         ModelAndView result;
         
-        Collection<Specialist> specialists = specialistService.getAllSpecialist();
+        Collection<Specialist> specialists = specialistService.findAllSpecialists();
 
         result = new ModelAndView("appointment/select");
         result.addObject("specialists", specialists);
@@ -106,7 +111,7 @@ public class AppointmentSpecialistController extends AbstractController {
         return result;
     }
 
-    // crear cita para un paciente
+    //Muestra el calendario para seleccionar el slot en el que se quiere pedir la cita para un paciente
     @RequestMapping(value = "/calendar", method = RequestMethod.GET)
     public ModelAndView calendar(@RequestParam int patientId, @RequestParam int specialistId) {
 
@@ -123,6 +128,7 @@ public class AppointmentSpecialistController extends AbstractController {
         return result;
     }
 
+    //Cancelar una cita (incluyendo el envío de un mensaje al paciente con el motivo de la anulacion)
     @RequestMapping(value = "/cancel", method = RequestMethod.GET)
     public ModelAndView cancel(@RequestParam int appointmentId) {
 
@@ -138,6 +144,7 @@ public class AppointmentSpecialistController extends AbstractController {
         return result;
     }
 
+    //Confirmacion de la cita seleccionada
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public ModelAndView create(@RequestParam String startMoment, @RequestParam int patientId, @RequestParam int specialistId) {
 
@@ -213,6 +220,7 @@ public class AppointmentSpecialistController extends AbstractController {
         return result;
     }
 
+    //Guardar en la base de datos una cita (cuando el especialista está atendiendo una cita y le da a guardar)
     @RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
     public ModelAndView save(@Valid AppointmentForm2 appointmentForm, BindingResult binding) {
 
@@ -238,6 +246,7 @@ public class AppointmentSpecialistController extends AbstractController {
 
     }
 
+    //Guardar en la base de datos una cita (cuando el especialista pide cita a su paciente para otro especialista)
     @RequestMapping(value = "/edit2", method = RequestMethod.POST, params = "save2")
     public ModelAndView save2(@Valid AppointmentForm3 appointmentForm, BindingResult binding) {
 
@@ -301,14 +310,12 @@ public class AppointmentSpecialistController extends AbstractController {
         Assert.notNull(appointmentForm);
         ModelAndView result;
 
-        //Appointment appointment = appointmentService.recontructor3(appointmentForm);
 
         result = new ModelAndView("appointment/edit");
 
         result.addObject("appointmentForm", appointmentForm);
 
         result.addObject("existAppointment", false);
-        //result.addObject("requestURI", "appointment/patient/edit.do?appointmentId=" + appointment.getId());
         result.addObject("create", false);
         result.addObject("hayHorasDisponibles", true);
 

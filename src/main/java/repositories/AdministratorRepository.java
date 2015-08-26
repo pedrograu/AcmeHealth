@@ -9,6 +9,7 @@ import domain.Administrator;
 @Repository
 public interface AdministratorRepository extends JpaRepository<Administrator, Integer> {
 
+	//Devuelve un administrador pasandole el id del userAccount
     @Query("select a from Administrator a where a.userAccount.id=?1")
     Administrator findByUserAccountId(int id);
 

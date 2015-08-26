@@ -66,8 +66,6 @@
 
 
 		<acme:submit code="comment.save" name="save" />
-<%-- 		<acme:cancel url="freeDay/specialist/list-own.do"
-			code="comment.cancel" /> --%>
 
 
 	</form:form>
