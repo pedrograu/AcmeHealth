@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -28,7 +27,6 @@ import domain.Specialist;
 import forms.PatientForm;
 import forms.PatientForm5;
 import forms.TokenForm;
-import services.MedicalHistoryService;
 import services.PatientNotAcceptedService;
 import services.PatientService;
 import services.SpecialistService;
@@ -46,13 +44,9 @@ public class RegisterPatientController extends AbstractController {
 	private PatientNotAcceptedService patientNotAcceptedService;
 
 	@Autowired
-	private MedicalHistoryService medicalHistoryService;
-
-	@Autowired
 	private SpecialistService specialistService;
 
-	// Constructors
-	// ---------------------------------------------------------------
+	// Constructors---------------------------------------------------------------
 
 	public RegisterPatientController() {
 		super();
@@ -69,7 +63,7 @@ public class RegisterPatientController extends AbstractController {
 
 	// Registration -----------------------------------------------------------
 
-	
+	//Selecciona el tipo de registro (como particular o a traves de mutua)
 	@RequestMapping(value = "/select", method = RequestMethod.GET)
 	public ModelAndView select() {
 		ModelAndView result;
@@ -79,7 +73,7 @@ public class RegisterPatientController extends AbstractController {
 		return result;
 	}
 	
-	
+	//Selecciona la mutua (para el registro a traves de mutua)
 	@RequestMapping(value = "/company", method = RequestMethod.GET)
 	public ModelAndView company() {
 		ModelAndView result;
@@ -89,6 +83,7 @@ public class RegisterPatientController extends AbstractController {
 		return result;
 	}
 
+	//Introducir el nif y la contraseña proporcionada por la mutua (para el registro a traves de mutua)
 	@RequestMapping(value = "/mutua", method = RequestMethod.GET)
 	public ModelAndView mutua(@RequestParam String name) {
 		ModelAndView result;
@@ -101,6 +96,7 @@ public class RegisterPatientController extends AbstractController {
 		return result;
 	}
 
+	//Comprueba que el token es valido para los datos personales introducidos
 	@RequestMapping(value = "/mutua", method = RequestMethod.POST, params = "check")
 	public ModelAndView check(@Valid TokenForm tokenForm, BindingResult binding) {
 
@@ -140,6 +136,7 @@ public class RegisterPatientController extends AbstractController {
 		return result;
 	}
 
+	//Muestra el formulario de registro (para el registro a traves de mutua)
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView register() {
 		ModelAndView result;
@@ -150,6 +147,7 @@ public class RegisterPatientController extends AbstractController {
 		return result;
 	}
 	
+	//Muestra el formulario de registro (para el registro como persona particular)
 	@RequestMapping(value = "/editParticulate", method = RequestMethod.GET)
 	public ModelAndView registerParticulate() {
 		ModelAndView result;
@@ -160,6 +158,7 @@ public class RegisterPatientController extends AbstractController {
 		return result;
 	}
 
+	//Guarda el nuevo paciente en la base de datos (registro a traves de mutua)
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid PatientForm patientForm,
 			BindingResult binding) {
@@ -219,7 +218,7 @@ public class RegisterPatientController extends AbstractController {
 		return result;
 	}
 	
-	
+	//Guarda el nuevo paciente en la base de datos (registro como persona particular)
 	@RequestMapping(value = "/editParticulate", method = RequestMethod.POST, params = "save2")
 	public ModelAndView save2(@Valid PatientForm5 patientForm,
 			BindingResult binding) {
@@ -232,6 +231,7 @@ public class RegisterPatientController extends AbstractController {
 		Calendar dateCreditCard = new GregorianCalendar();
 		dateCreditCard.set(year, month, 1);
 		Collection<String> creditCardNumbers = patientService.getAllCreditCardNumber();
+		Collection<String> 	nameUserPatiens = patientService.getAllNameUserPatient();
 
 		if (binding.hasErrors()) {
 			result = createEditModelAndView3(patientForm);
@@ -268,6 +268,9 @@ public class RegisterPatientController extends AbstractController {
 					}else if (creditCardNumbers.contains(patientForm.getCreditCard().getNumber())) {
 						result = createEditModelAndView3(patientForm,
 								"register.creditCardNumber.error");
+					}else if (nameUserPatiens.contains(patientForm.getUsername())) {
+						result = createEditModelAndView3(patientForm,
+								"register.duplicateNameUser.error");
 					} else {
 						result = createEditModelAndView3(patientForm,
 								"register.commit.error");
@@ -368,7 +371,6 @@ public class RegisterPatientController extends AbstractController {
 
 		ModelAndView result;
 
-		//Patient patient = patientService.create();
 		Collection<Specialist> specialists;
 
 
@@ -376,8 +378,6 @@ public class RegisterPatientController extends AbstractController {
 
 		result = new ModelAndView("register/edit");
 		result.addObject("patientForm5", patientForm);
-		//result.addObject("patient", patient);
-		//result.addObject("actor", "patientForm");
 
 		result.addObject("requestURI","register/patient/editParticulate.do");
 		

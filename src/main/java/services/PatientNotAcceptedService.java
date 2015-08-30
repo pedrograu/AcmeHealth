@@ -45,16 +45,28 @@ public class PatientNotAcceptedService {
 
     // Simple CRUD methods --------------------------------------
 
+    //Guarda en la base de datos un paciente registrado como persona particular y que aun no ha sido aceptado en el sistema por el administrador.
     public void savePatientNotAccepted(Patient patient) {
 
         Date currentMoment = new Date(System.currentTimeMillis() - 1000);
+        
+		Collection<String> creditCardNumbers = patientService.getAllCreditCardNumber();
+		Collection<String> 	nameUserPatiens = patientService.getAllNameUserPatient();
+		
+		//Comprueba que el nombre de usuario no exista en la base de datos
+		Assert.isTrue(!nameUserPatiens.contains(patient.getUserAccount().getUsername()));
+		
+		//Comprueba que el numero bancario no exista en la base de datos
+		Assert.isTrue(!creditCardNumbers.contains(patient.getCreditCard().getNumber()));
 
+		//Comprueba que la base de datos no esté caducada
         Assert.isTrue(patient.getCreditCard().getExpirationYear() >= currentMoment.getYear());
         if (patient.getCreditCard().getExpirationYear() == currentMoment.getYear()) {
             Assert.isTrue(patient.getCreditCard().getExpirationMonth() >= currentMoment.getMonth());
         }
         Assert.notNull(patient);
 
+        //Encripta en md5 la contraseña
         Md5PasswordEncoder encoder;
         String pass = patient.getUserAccount().getPassword();
         encoder = new Md5PasswordEncoder();
@@ -78,11 +90,13 @@ public class PatientNotAcceptedService {
 
     }
     
+    //Devuelve todos los pacientes no aceptados en el sistema aun por el administrador.
     public Collection<PatientNotAccepted> findAll() {
         Collection<PatientNotAccepted> patients = patientNotAcceptedRepository.findAll();
         return patients;
     }
     
+    //Devuelve un paciente no aceptado en el sistema dado su id
     public PatientNotAccepted findOneToEdit(int patientNotAcceptedId) {
         Assert.isTrue(patientNotAcceptedId != 0);
         PatientNotAccepted res;
@@ -90,6 +104,8 @@ public class PatientNotAcceptedService {
         return res;
     }
 
+    //Da de alta en el sistema a un paciente registrado como persona particular que ha sido aceptado por el administrador
+    //(Guarda en la base de datos un patient y elimina su patientNotAccepted)
     public void discharge(PatientNotAccepted patientNotAccepted) {
         Assert.notNull(patientNotAccepted);
         

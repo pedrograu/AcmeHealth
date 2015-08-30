@@ -40,10 +40,9 @@ public class PrescriptionPatientController extends AbstractController {
         super();
     }
 
-    // List ------------------------------------------------------------------		
-
     // Listing.....................
 
+    //Lista todas las recetas del paciente
     @RequestMapping(value = "/list-my-prescription", method = RequestMethod.GET)
     public ModelAndView listMyPrescription() {
 
@@ -62,6 +61,7 @@ public class PrescriptionPatientController extends AbstractController {
 
     // Details.....................
 
+    //Muestra los detalles de la oferta que se le pasa como parametro
     @RequestMapping(value = "/details", method = RequestMethod.GET)
     public ModelAndView details(@RequestParam int prescriptionId) {
 
@@ -76,6 +76,7 @@ public class PrescriptionPatientController extends AbstractController {
         return result;
     }
 
+    //Le da formato y descarga en pdf los detalles de la receta que se le pasa como parametro
     @RequestMapping(value = "/print", method = RequestMethod.GET)
     public void print(HttpServletResponse response, @RequestParam int prescriptionId) throws IOException {
         try {

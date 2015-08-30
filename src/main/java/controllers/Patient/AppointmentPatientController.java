@@ -33,7 +33,7 @@ import forms.AppointmentForm;
 @RequestMapping("/appointment/patient")
 public class AppointmentPatientController extends AbstractController {
     
-
+	//Services.......................................
 
     @Autowired
     private AppointmentService appointmentService;
@@ -47,6 +47,7 @@ public class AppointmentPatientController extends AbstractController {
     @Autowired
     private PatientService patientService;
 
+    //Constructors......................................
     
     public AppointmentPatientController() {
         super();
@@ -54,6 +55,7 @@ public class AppointmentPatientController extends AbstractController {
 
     // Listing.....................
 
+    //Lista las citas pendientes que tiene el paciente 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView list() {
 
@@ -71,25 +73,32 @@ public class AppointmentPatientController extends AbstractController {
 
     // Edition ----------------------------------------------------------------
 
-    //calendario (citas para medico de cabecera)
+    //Muestra el calendario (citas para medico de cabecera)
     @RequestMapping(value = "/calendar", method = RequestMethod.GET)
     public ModelAndView calendar() {
 
         ModelAndView result;
         
-               
-        List<Date> lista = timetableService.getDatesAvailables(null);
-        String eventos = timetableService.convertListToStringJson(lista,"calendar", 0,0,0);
-               
+        Patient patientConnect = patientService.findByPrincipal();
         result = new ModelAndView("appointment/calendar");
-        result.addObject("eventos", eventos);
-        //result.addObject("isPatient", true);
-        result.addObject("requestURI", "appointment/patient/create.do");
-
+        
+        if(patientConnect.getSpecialist()!=null){
+        	
+            List<Date> lista = timetableService.getDatesAvailables(null);
+            String eventos = timetableService.convertListToStringJson(lista,"calendar", 0,0,0);
+                   
+            result.addObject("eventos", eventos);
+            result.addObject("requestURI", "appointment/patient/create.do");
+        	
+        }else{
+        	
+        	result.addObject("mensaje", true);
+        }
+          
         return result;
     }
 
-    //calendario (citas para oferta)
+    //Muestra el calendario (citas para tratamiento en oferta)
     @RequestMapping(value = "/calendar2", method = RequestMethod.GET)
     public ModelAndView calendar2(@RequestParam int offerId) {
 
@@ -115,7 +124,6 @@ public class AppointmentPatientController extends AbstractController {
             String eventos = timetableService.convertListToStringJson(lista,"calendar2", offerId,0,0);
 
             result.addObject("eventos", eventos);
-            //result.addObject("isPatient", true);
             result.addObject("requestURI", "appointment/patient/create2.do?offerId=" + offerId);
         }
         
@@ -124,7 +132,7 @@ public class AppointmentPatientController extends AbstractController {
         return result;
     }
 
-    //citas para tu medico de cabecera(version nueva)
+    //Crea una nueva cita para tu medico de cabecera dada la fecha
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public ModelAndView create(@RequestParam String startMoment) {
 
@@ -180,7 +188,7 @@ public class AppointmentPatientController extends AbstractController {
 
     }
 
-    //citas para una oferta
+    //Crea una nueva cita para un tratamiento en oferta dada la fecha y el id de la oferta.
     @RequestMapping(value = "/create2", method = RequestMethod.GET)
     public ModelAndView create2(@RequestParam String startMoment, @RequestParam int offerId) {
 
@@ -200,7 +208,6 @@ public class AppointmentPatientController extends AbstractController {
             
             DateFormat hor = new SimpleDateFormat("HH:mm");
             String hora = hor.format(listaDeFechas.get(0));
-            //appointment = appointmentService.create2(offer);
             AppointmentForm appointmentForm = new AppointmentForm();
             appointmentForm.setOffer(offer);
 
@@ -244,7 +251,7 @@ public class AppointmentPatientController extends AbstractController {
     }
     
     
-
+    //Guarda en la base de datos una cita
     @RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save2")
     public ModelAndView save2(@Valid AppointmentForm appointmentForm, BindingResult binding) {
 
@@ -353,16 +360,9 @@ public class AppointmentPatientController extends AbstractController {
         listaDeFechas.add(appointment.getStartMoment());
         if (appointment.getOffer() != null) {
             result.addObject("isOffer", true);
-            //listaDeFechas = timetableService.getDatesAvailables(appointment.getOffer());
         } else {
             result.addObject("isOffer", false);
-            //listaDeFechas = timetableService.getDatesAvailables(null);
         }
-//        if (listaDeFechas.isEmpty()) {
-//            result.addObject("hayHorasDisponibles", false);
-//        } else {
-//            result.addObject("hayHorasDisponibles", true);
-//        }
         result.addObject("listaDeFechas", listaDeFechas);
         result.addObject("message", message);
 

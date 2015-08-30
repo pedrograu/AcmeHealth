@@ -49,6 +49,7 @@ public class SpecialistService {
 
     // Simple CRUD methods --------------------------------------
 
+    //Crea un nuevo especialista
     public Specialist create() {
         Specialist specialist = new Specialist();
 
@@ -81,12 +82,14 @@ public class SpecialistService {
         return specialist;
     }
 
+    //Guarda en la base de datos un especialista
     public void save(Specialist specialist) {
 
         Assert.notNull(specialist);
         Administrator administratorConnect = administratorService.findByPrincipal();
         Assert.isTrue(Administrator.class == administratorConnect.getClass());
 
+        //Encripta en md5 la contraseña
         Md5PasswordEncoder encoder;
         String pass = specialist.getUserAccount().getPassword();
         encoder = new Md5PasswordEncoder();
@@ -103,10 +106,15 @@ public class SpecialistService {
 
     }
 
+    //Reconstruye un especialista a partir de un objeto formulario de tipo especialista
     public Specialist reconstruct(SpecialistForm specialistForm) {
 
         Specialist specialist = create();
+        
+        //Comprueba que se aceptaron los terminos y condiciones
         Assert.isTrue(specialistForm.getAvailable());
+        
+        //Comprueba que las contraseñas coinciden
         Assert.isTrue(specialistForm.getPassword().equals(specialistForm.getSecondPassword()));
 
         specialist.setName(specialistForm.getName());
@@ -121,18 +129,19 @@ public class SpecialistService {
         return specialist;
     }
 
-    // Metodos ---------------------------------------------
-
+    //devuelve todos los especialistas registrados en el sistema
     public Collection<Specialist> findAllSpecialists() {
         Collection<Specialist> res = specialistRepository.findAll();
         return res;
     }
 
+    //Devuelve todos los especialistas que tengan la especialidad pasada como parametro de entrada
     public Collection<Specialist> findSpecialistsForSpecialty(Specialty specialty) {
         Collection<Specialist> res = specialistRepository.findSpecialistsForSpecialty(specialty.getId());
         return res;
     }
 
+    //Devuelve un especialista dado su id
     public Specialist findOneToEdit(int id) {
         Assert.isTrue(id != 0);
         Specialist res;
@@ -140,11 +149,13 @@ public class SpecialistService {
         return res;
     }
 
+    //Devuelve el especialista que se encuentra logueado en el sistema
     public Specialist findByPrincipal() {
         UserAccount userAccount = LoginService.getPrincipal();
         return findByUserAccount(userAccount);
     }
 
+    //Devuelve un especialista pasado el userAccount
     public Specialist findByUserAccount(UserAccount userAccount) {
 
         Specialist result;
@@ -154,6 +165,7 @@ public class SpecialistService {
         return result;
     }
 
+    //Devuelve todos los especialistas que son medicos de cabecera
     public Collection<Specialist> findAllSpecialistsOfGeneralMedicine() {
         String medicinaGeneral = "Medicina General";
         Collection<Specialist> specialists;
@@ -161,22 +173,19 @@ public class SpecialistService {
         return specialists;
     }
 
+    //Devuelve un especialista dado su username
     public Specialist findForUsername(String username) {
         Specialist specialist;
         specialist = specialistRepository.findForUsername(username);
         return specialist;
     }
 
+    //Devuelve los especialistas que mas citas tienen
     public Collection<Specialist> getSpecialistWithMoreAppointment() {
         Collection<Specialist> specialists;
         specialists = specialistRepository.getSpecialistWithMoreAppointment();
         return specialists;
     }
 
-    public Collection<Specialist> getAllSpecialist() {
-
-        Collection<Specialist> specialists = specialistRepository.findAll();
-        return specialists;
-    }
 
 }

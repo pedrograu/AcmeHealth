@@ -9,11 +9,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.CommentService;
-import services.ProfileService;
-import services.SpecialistService;
 import domain.Comment;
 import domain.Specialist;
+import services.CommentService;
+import services.SpecialistService;
 
 @Controller
 @RequestMapping("/profile")
@@ -21,8 +20,6 @@ public class ProfileController extends AbstractController {
 
     // Services -----------------------------------------------------------
 
-    @Autowired
-    private ProfileService profileService;
 
     @Autowired
     private SpecialistService specialistService;
@@ -37,6 +34,8 @@ public class ProfileController extends AbstractController {
     }
 
     // Details.....................
+    
+    //Muestra el perfil de un especialista dado su id
     @RequestMapping(value = "/details", method = RequestMethod.GET)
     public ModelAndView details(@RequestParam int specialistId) {
 

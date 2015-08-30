@@ -270,10 +270,7 @@
 
 		});
 
-		/* 		function askSubmission(msg, form) {
-		 if (confirm(msg))
-		 form.submit();
-		 } */
+
 	</script>
 
 </body>

@@ -11,12 +11,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.CommentService;
-import services.ProfileService;
 import controllers.AbstractController;
 import domain.Comment;
 import domain.Profile;
 import forms.CommentForm;
+import services.CommentService;
 
 @Controller
 @RequestMapping("/comment/specialist")
@@ -27,8 +26,6 @@ public class CommentSpecialistController extends AbstractController {
     @Autowired
     private CommentService commentService;
 
-    @Autowired
-    private ProfileService profileService;
 
     // Constructors -----------------------------------------------------------
 
@@ -39,6 +36,7 @@ public class CommentSpecialistController extends AbstractController {
     // List ------------------------------------------------------------------
 
 
+    //Muestra los detalles de un comentario dado su id
     @RequestMapping(value = "/details", method = RequestMethod.GET)
     public ModelAndView details(@RequestParam int commentId) {
 
@@ -53,6 +51,7 @@ public class CommentSpecialistController extends AbstractController {
         return result;
     }
 
+    //Guarda en la base de datos un comentario
     @RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
     public ModelAndView save(@Valid CommentForm commentForm, BindingResult binding) {
 

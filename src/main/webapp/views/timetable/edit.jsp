@@ -19,9 +19,6 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<%-- 	<h2>
-		<spring:message code="timetable.listTimetable" />
-	</h2> --%>
 	
 <div class="table-responsive">
     <display:table name="timetables" id="row" requestURI="${requestURI}"
@@ -125,8 +122,6 @@
 
 
 		<acme:submit code="timetable.save" name="save" />
-<%-- 		<acme:cancel url="timetable/specialist/list-own.do"
-			code="comment.cancel" /> --%>
 
 
 	</form:form>

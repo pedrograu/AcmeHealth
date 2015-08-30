@@ -119,11 +119,6 @@
 				<form:hidden path="patient" />
 				<form:hidden path="specialist" />
 
-				<%-- 
-	<form:hidden path="medicalHistory" />
-	<form:hidden path="prescriptions" />
-	<form:hidden path="patient" />
-	<form:hidden path="timetable" /> --%>
 
 				<jstl:if test="${create==false}">
 
@@ -178,12 +173,6 @@
 
 			<form:hidden path="id" />
 			<form:hidden path="version" />
-			<%-- 	<form:hidden path="offer" /> 
-	<form:hidden path="medicalHistory" />
-	<form:hidden path="prescriptions" />
-	<form:hidden path="patient" />
-	<form:hidden path="timetable" />
-	<form:hidden path="startMoment" /> --%>
 
 
 			<acme:textbox code="appointment.purpose" path="purpose" />

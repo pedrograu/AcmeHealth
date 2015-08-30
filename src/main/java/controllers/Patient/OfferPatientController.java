@@ -13,9 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.OfferService;
-import services.SpecialistService;
-
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Document;
 import com.lowagie.text.Font;
@@ -25,6 +22,7 @@ import com.lowagie.text.pdf.PdfWriter;
 
 import controllers.AbstractController;
 import domain.Offer;
+import services.OfferService;
 
 @Controller
 @RequestMapping("/offer/patient")
@@ -35,8 +33,6 @@ public class OfferPatientController extends AbstractController {
     @Autowired
     private OfferService offerService;
 
-    @Autowired
-    private SpecialistService specialistService;
 
     // Constructors -----------------------------------------------------------
 
@@ -46,6 +42,7 @@ public class OfferPatientController extends AbstractController {
 
     // List ------------------------------------------------------------------
 
+    //Lista todas las ofertas no finalizadas
     @RequestMapping(value = "/list-not-finished", method = RequestMethod.GET)
     public ModelAndView listNotFinished() {
 
@@ -62,6 +59,7 @@ public class OfferPatientController extends AbstractController {
         return result;
     }
 
+    //Lista todas las ofertas en las que está inscrito el paciente que se encuentra logueado 
     @RequestMapping(value = "/list-own", method = RequestMethod.GET)
     public ModelAndView listOwn() {
 
@@ -78,6 +76,7 @@ public class OfferPatientController extends AbstractController {
         return result;
     }
 
+    //Inscribe en el tratamiento en oferta, que se le pasa como parametro de entrada, al paciente logueado
     @RequestMapping(value = "/hire", method = RequestMethod.GET)
     public ModelAndView hire(@RequestParam int offerId) {
 
@@ -105,6 +104,7 @@ public class OfferPatientController extends AbstractController {
 
     }
 
+    //Muestra los detalles de una oferta dado su id
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     public ModelAndView detail(@RequestParam int offerId) {
 
@@ -121,6 +121,7 @@ public class OfferPatientController extends AbstractController {
         return result;
     }
 
+    //Le da formato y descarga en pdf los detalles de la oferta que se le pasa como parametro de entrada
     @RequestMapping(value = "/print", method = RequestMethod.GET)
     public void print(HttpServletResponse response, @RequestParam int offerId) throws IOException {
         try {

@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import repositories.MedicalHistoryRepository;
 import domain.Appointment;
 import domain.MedicalHistory;
 import domain.Patient;
+import repositories.MedicalHistoryRepository;
 
 @Service
 @Transactional
@@ -21,8 +21,7 @@ public class MedicalHistoryService {
     private MedicalHistoryRepository medicalHistoryRepository;
 
     // Managed service ---------------------------------------
-    @Autowired
-    private PatientService patientService;
+
 
     // Constructors ---------------------------------------------
 
@@ -32,6 +31,7 @@ public class MedicalHistoryService {
 
     // Simple CRUD methods --------------------------------------
 
+    //Crea un medicalHistory para un paciente
     public MedicalHistory create(Patient patient2) {
 
         MedicalHistory medicalHistory = new MedicalHistory();
@@ -43,6 +43,7 @@ public class MedicalHistoryService {
         return medicalHistory;
     }
 
+    //Guarda en la base de datos un medicalHistory
     public void save(MedicalHistory medicalHistory) {
 
         MedicalHistory medicalHistory2 = medicalHistoryRepository.save(medicalHistory);
@@ -50,6 +51,7 @@ public class MedicalHistoryService {
 
     }
 
+    //Devuelve un medicalhistory a partir de su id
     public MedicalHistory findOneToEdit(int medicalHistoryId) {
         MedicalHistory s = medicalHistoryRepository.findOne(medicalHistoryId);
         return s;

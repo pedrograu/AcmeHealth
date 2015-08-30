@@ -41,9 +41,6 @@ public class AppointmentService {
     private PatientService patientService;
 
     @Autowired
-    private TimetableService timetableService;
-
-    @Autowired
     private SpecialistService specialistService;
 
     // Constructors ---------------------------------------------
@@ -54,6 +51,7 @@ public class AppointmentService {
 
     // Simple CRUD methods --------------------------------------
 
+    //Crea un appointment nuevo para el paciente que está logueado
     public Appointment create() {
 
         Appointment appointment = new Appointment();
@@ -68,6 +66,7 @@ public class AppointmentService {
         return appointment;
     }
 
+    //Crea un appointment nuevo
     public Appointment create2() {
 
         Appointment appointment = new Appointment();
@@ -78,6 +77,7 @@ public class AppointmentService {
         return appointment;
     }
 
+    //Crea un objeto formulario de tipo appointment a partir de un appointment
     public AppointmentForm createForm(Appointment appointment) {
 
         AppointmentForm appointmentForm = new AppointmentForm();
@@ -93,6 +93,7 @@ public class AppointmentService {
         return appointmentForm;
     }
 
+    //Crea un objeto formulario de tipo appointment a partir de un appointment
     public AppointmentForm2 createForm2(Appointment appointment) {
 
         AppointmentForm2 appointmentForm = new AppointmentForm2();
@@ -103,11 +104,11 @@ public class AppointmentService {
         appointmentForm.setPurpose(appointment.getPurpose());
         appointmentForm.setResult(appointment.getResult());
         appointmentForm.setIsFinish(appointment.getIsFinish());
-        //appointmentForm.setStartMoment(appointment.getStartMoment());
 
         return appointmentForm;
     }
 
+    //Crea un objeto formulario de tipo appointment a partir de un appointment
     public AppointmentForm3 createForm3(Appointment appointment) {
 
         AppointmentForm3 appointmentForm = new AppointmentForm3();
@@ -121,6 +122,7 @@ public class AppointmentService {
         return appointmentForm;
     }
 
+    //Se reconstruye un appointment a partir de un objeto formulario de tipo appointment
     public Appointment recontructor(AppointmentForm appointmentForm) {
 
         Appointment result;
@@ -137,6 +139,7 @@ public class AppointmentService {
         return result;
     }
 
+    //Se reconstruye un appointment a partir de un objeto formulario de tipo appointment
     public Appointment recontructor2(AppointmentForm2 appointmentForm) {
 
         Specialist specialist = specialistService.findByPrincipal();
@@ -150,11 +153,11 @@ public class AppointmentService {
         result.setPurpose(appointmentForm.getPurpose());
         result.setResult(appointmentForm.getResult());
         result.setIsFinish(appointmentForm.getIsFinish());
-        //result.setStartMoment(appointmentForm.getStartMoment());
 
         return result;
     }
 
+  //Se reconstruye un appointment a partir de un objeto formulario de tipo appointment
     public Appointment recontructor3(AppointmentForm3 appointmentForm) {
 
         Appointment result;
@@ -171,15 +174,14 @@ public class AppointmentService {
         return result;
     }
 
+    //Se crea un appointment para un tratamiento en oferta
     public Appointment create2(Offer offer) {
 
         Appointment appointment = new Appointment();
         Collection<Prescription> prescriptions = new HashSet<Prescription>();
         Patient patientConnect = patientService.findByPrincipal();
 
-        //appointment.setTimetable(timetable);
         appointment.setPrescriptions(prescriptions);
-        //appointment.setSpecialist(patientConnect.getSpecialist());
         appointment.setPatient(patientConnect);
         appointment.setMedicalHistory(patientConnect.getMedicalHistory());
         appointment.setOffer(offer);
@@ -187,11 +189,12 @@ public class AppointmentService {
         return appointment;
     }
 
-
+    //Se guarda un appointment en la base de datos
     public Appointment save2(Appointment appointment) {
 
         Date currentMoment = new Date();
 
+        //Se comprueba que la fecha de la cita es valida(es posterior a la fecha actual)
         Assert.isTrue(appointment.getStartMoment().after(currentMoment));
 
         Calendar calendar3 = new GregorianCalendar();
@@ -206,6 +209,7 @@ public class AppointmentService {
                 break;
             }
         }
+        //Se comprueba que la fecha de la cita es valida(está dentro del horario del especialista) 
         Assert.isTrue(res);
         boolean res2 = true;
         for (FreeDay f : appointment.getSpecialist().getFreeDays()) {
@@ -216,14 +220,18 @@ public class AppointmentService {
                 break;
             }
         }
+        //Se comprueba que la fecha de la cita es valida(no está contenida dentro de los días libres del especialista)
         Assert.isTrue(res2);
 
         if (appointment.getOffer() != null) {
 
             Appointment appointment2 = getAppointmentForPatientAndOffer(appointment.getOffer());
             Assert.isTrue(appointment2 == null);
+            //Se comprueba que la  fecha de la cita que se solicita para recibir el tratamiento en oferta 
+            //está entre la fecha de inicio y de fin del tratamiento en oferta.
             Assert.isTrue(appointment.getOffer().getStartMoment().before(appointment.getStartMoment())
                     && appointment.getOffer().getFinishMoment().after(appointment.getStartMoment()));
+            //Se comprueba que ese paciente está inscrito en la oferta para la que va a pedir cita
             Assert.isTrue(appointment.getOffer().getPatients().contains(appointment.getPatient()));
 
         }
@@ -238,12 +246,14 @@ public class AppointmentService {
 
     }
 
+    //Se guarda un appointment en la base de datos
     public Appointment save3(Appointment appointment) {
         checkPrincipal(appointment);
         Appointment appointment2 = appointmentRepository.save(appointment);
         return appointment2;
     }
 
+    //Devuelve una collection de appointments finalizados del especialista logueado en el sistema.
     public Collection<Appointment> getAppointmentsFinish() {
         Specialist specialistConnect = specialistService.findByPrincipal();
         Collection<Appointment> appointments = appointmentRepository.getAppointmentsFinish(specialistConnect.getId());
@@ -251,14 +261,15 @@ public class AppointmentService {
         return appointments;
     }
 
+    //Devuelve una collection de appointments no finalizados del especialista logueado en el sistema.
     public Collection<Appointment> getAppointmentsNotFinish() {
         Specialist specialistConnect = specialistService.findByPrincipal();
-        Collection<Appointment> appointments = appointmentRepository.getAppointmentsNotFinish2(specialistConnect
-                .getId());
+        Collection<Appointment> appointments = appointmentRepository.getAppointmentsNotFinish2(specialistConnect.getId());
 
         return appointments;
     }
 
+    //Devuelve una collection de appointments no finalizadas para el paciente logueado en el sistema.
     public Collection<Appointment> getMyScheduledAppointments() {
 
         Patient patientConnect = patientService.findByPrincipal();
@@ -267,41 +278,27 @@ public class AppointmentService {
         return appointments;
     }
 
+    //Devuelve una collection de appointments para un especialista y un paciente
     public Collection<Appointment> getAppointmentforOneSpecialistAndOnePatient(Specialist specialist, Patient patient) {
         Collection<Appointment> appointments = appointmentRepository.getAppointmentforOneSpecialistAndOnePatient(
                 specialist.getId(), patient.getId());
         return appointments;
     }
 
+    //Devuelve un appointment dado su id
     public Appointment findOneToEdit(int appointmentId) {
         Appointment appointment = appointmentRepository.findOne(appointmentId);
         return appointment;
     }
 
-    public boolean isCreate(Appointment appointment) {
-        boolean res = false;
-        Date startMoment = appointment.getStartMoment();
-        if (startMoment == null) {
-            res = true;
-        } else {
-            Calendar calendar = new GregorianCalendar();
-            calendar.setTime(startMoment);
-            Integer h = calendar.get(Calendar.HOUR);
-            Integer m = calendar.get(Calendar.MINUTE);
-
-            if (h == 0 && m == 0) {
-                res = true;
-            }
-        }
-        return res;
-    }
-
+    //Devuelve el appointment para un tratamiento en oferta del paciente que está logueado en el sistema
     public Appointment getAppointmentForPatientAndOffer(Offer offer) {
         Patient patientConnect = patientService.findByPrincipal();
         Appointment ap = appointmentRepository.getAppointmentForPatientAndOffer(patientConnect.getId(), offer.getId());
         return ap;
     }
 
+    //Convierte un string en un date
     public Date stringToDate(String startMoment) {
 
         SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -321,6 +318,7 @@ public class AppointmentService {
         return fecha;
     }
 
+    //Comprueba que un string cumple el patron de una fecha
     public boolean cumplePatron(String startMoment) {
         boolean res = false;
         Pattern pat = Pattern.compile("^(0[1-9]|[12][0-9]|3[01])[/](0[1-9]|1[012])[/](19|20)[0-9][0-9]\\s([01][0-9]|2[0-4]):[0-5][0-9]$");
@@ -331,12 +329,14 @@ public class AppointmentService {
         return res;
     }
 
+    //Devuelve un appointment dado el especialista y la fecha de inicio
     public Appointment getAppointmentForStartMoment(Date startMoment, Specialist specialist) {
         Appointment ap = appointmentRepository.getAppointmentForStartMoment(startMoment, specialist.getId());
 
         return ap;
     }
 
+    //Devuelve una collection de appointment para un especialista y una fecha de inicio.
     public Collection<Appointment> getAppointmentforOneSpecialistAndDay(int id, Date d1) {
 
         String format = new SimpleDateFormat("yyyy-MM-dd").format(d1);
@@ -357,11 +357,13 @@ public class AppointmentService {
         return appointmentRepository.getAppointmentforOneSpecialistAndDay(id, date1, date2);
     }
 
+    //Comprueba que el appointment es del especialista que está logueado en el sistema.
     public void checkPrincipal(Appointment appointment) {
         Specialist specialist = specialistService.findByPrincipal();
         Assert.isTrue(appointment.getSpecialist().equals(specialist));
     }
 
+    //Elimina un appointment de la base de datos
     public void cancel(Appointment appointment) {
         appointmentRepository.delete(appointment);
 

@@ -52,6 +52,8 @@ public class TimetableService {
 
     // Simple CRUD methods --------------------------------------
 
+    
+    //Devuelve una collection de timetables perteneciente a un especialista
     public Collection<Timetable> getTimetablesForSpecialist(Specialist s) {
 
         Collection<Timetable> timetables = timetableRepository.getTimetablesForSpecialist(s.getId());
@@ -59,11 +61,13 @@ public class TimetableService {
         return timetables;
     }
 
+    //Devuelve un timetable dado su id
     public Timetable findOneToEdit(int timetableId) {
         Timetable timetable = timetableRepository.findOne(timetableId);
         return timetable;
     }
 
+    //Devuelve la lista de fechas disponibles para la cual se puede pedir cita para tu medico de cabecera o para un tratamiento en oferta
     public List<Date> getDatesAvailables(Offer offer) {
 
         //miramos si es para tu medico de cabecera o para un especialista de una oferta
@@ -81,7 +85,7 @@ public class TimetableService {
 
         List<Date> freeSlotsComplete = new ArrayList<Date>();
 
-        //iteramos 7 veces, uno por cada dia de la semana desde la fecha de hoy.
+        //iteramos 7 veces, uno por cada dia de la semana desde la fecha de hoy. (ofrecemos cita para los proximos 7 días)
         mainLoop: //para que el break salga hasta aqui
         for (int i = 0; i < 7; i++) {
 
@@ -253,9 +257,10 @@ public class TimetableService {
         return freeSlotsComplete;
     }
 
+    //Convierte una lista de fechas a json (se le dará un formato u otro dependiendo de para lo que lo necesitemos,
+    //esta cadena json es la que recibe el calendar javascript para mostrar los slots disponibles)
     public String convertListToStringJson(List<Date> listaDeFechas, String tipo, int offerId, int patientId , int specialistId) {
 
-        //List<Date> listaDeFechas = getDatesAvailables(new Date(), null);
 
         String cadena = "[";
         int i = 0;
@@ -269,7 +274,7 @@ public class TimetableService {
             DateFormat df2 = new SimpleDateFormat("MM/dd/yyyy HH:mm");
             String dateString2 = df2.format(d);
 
-            //añadir 10 min para obtener fecha de fin y convertiendo a string:
+            //añadir 10 min para obtener fecha de fin y convertimos a string:
             Calendar cal = new GregorianCalendar();
             cal.setLenient(false);
             cal.setTime(d);
@@ -318,6 +323,7 @@ public class TimetableService {
         return cadena;
     }
 
+    //Devuelve una collection de citas para un especialista y un día dado.
     public Collection<Appointment> appointmentsForDay(Specialist s, Date day) {
 
         Collection<Appointment> aps = appointmentService.getAppointmentforOneSpecialistAndDay(s.getId(), day);
@@ -325,6 +331,8 @@ public class TimetableService {
         return aps;
     }
 
+    //Devuelve una lista de fechas disponibles en la cual se puede pedir cita para un especialista dado
+    //(este método es el que se usa cuando un especialista pide cita para mandar a su paciente a otro especialista)
     public List<Date> getDatesAvailables2(Specialist specialist) {
 
         Date fechaDeHoy = new Date();
@@ -505,6 +513,7 @@ public class TimetableService {
         return freeSlotsComplete;
     }
 
+    //Devuelve una lista de timetables para un dia de la semana y un especialista
     public List<Timetable> getTimetablesForDayOfWeekAndSpecialist(int diaDeLaSemana, int id) {
 
         List<Timetable> timetablesParaEseDiaDeLaSemana = new ArrayList<Timetable>();
@@ -513,12 +522,14 @@ public class TimetableService {
         return timetablesParaEseDiaDeLaSemana;
     }
 
+    //Elimina de la base de datos una collection de timetables que se le pasa como parametro de entrada
     public void delete2(Collection<Timetable> timetables) {
 
         timetableRepository.delete(timetables);
 
     }
 
+    //Recontruye un timetable a partir de un objeto formulario de tipo timetable
     public Timetable recontructor(TimetableForm timetableForm) {
         Timetable result = create();
         result.setId(timetableForm.getId());
@@ -530,6 +541,7 @@ public class TimetableService {
         return result;
     }
 
+    //Crea un nuevo timetable para el especialista que se encuentra logueado en el sistema
     public Timetable create() {
         Specialist specialistConnect = specialistService.findByPrincipal();
         Timetable result = new Timetable();
@@ -538,13 +550,14 @@ public class TimetableService {
         return result;
     }
     
-    
+    //Elimina un timetable de la base de datos
     public void delete(Timetable timetable) {
         checkPrincipal(timetable);
         timetableRepository.delete(timetable);
 
     }
 
+    //Guarda en la base de datos un timetable
     public void save(Timetable timetable) {
         Assert.notNull(timetable);
         Calendar start = new GregorianCalendar();
@@ -556,11 +569,13 @@ public class TimetableService {
 
     }
     
+    //Devuelve todos los timetables almacenados en la base de datos
     public Collection<Timetable> findAllTimetables() {
         Collection<Timetable> res = timetableRepository.findAllTimetables();
         return res;
     }
     
+    //Comprueba que el timetable pertenece al especialista logueado en el sistema
     public void checkPrincipal(Timetable timetable) {
         Specialist specialistConnect = specialistService.findByPrincipal();
         Assert.isTrue(timetable.getSpecialist().equals(specialistConnect));

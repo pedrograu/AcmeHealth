@@ -8,37 +8,38 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.CommentService;
-import services.CustomerService;
-import services.PatientService;
-import services.ProfileService;
-import services.SpecialistService;
 import controllers.AbstractController;
 import domain.Patient;
 import domain.Profile;
 import domain.Specialist;
+import services.PatientService;
+import services.ProfileService;
+import services.SpecialistService;
 
 @Controller
 @RequestMapping("/dashboard/administrator")
 public class DashboardAdministratorController extends AbstractController {
 
-    @Autowired
-    private CustomerService customerService;
+	//Services.........................................................
+	
     @Autowired
     private PatientService patientService;
+    
     @Autowired
     private SpecialistService specialistService;
-    @Autowired
-    private CommentService commentService;
+    
     @Autowired
     private ProfileService profileService;
 
+    //Constructor............................................................
+    
     public DashboardAdministratorController() {
         super();
     }
 
     // Listing ----------------------------------------------------------------
 
+    //Muestra el panel de control del administrador con todas las estadisticas
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
     public ModelAndView list() {
         ModelAndView result;

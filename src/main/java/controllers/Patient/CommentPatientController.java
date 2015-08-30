@@ -36,10 +36,9 @@ public class CommentPatientController extends AbstractController {
         super();
     }
 
-    // List ------------------------------------------------------------------
-
     // Edit........................
 
+    //Crea un nuevo comentario en el perfil que se le pasa como parametro de entrada
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public ModelAndView create(@RequestParam int profileId) {
 
@@ -48,7 +47,6 @@ public class CommentPatientController extends AbstractController {
         Profile profile = profileService.findOneToEdit(profileId);
         CommentForm commentForm = new CommentForm();
         commentForm.setProfile(profile);
-        // Comment i = commentService.create();
 
         result = createEditModelAndView(commentForm);
         result.addObject("details", false);
@@ -57,6 +55,7 @@ public class CommentPatientController extends AbstractController {
         return result;
     }
 
+    //Muestra los detalles de un comentario dado su id
     @RequestMapping(value = "/details", method = RequestMethod.GET)
     public ModelAndView details(@RequestParam int commentId) {
 
@@ -71,6 +70,7 @@ public class CommentPatientController extends AbstractController {
         return result;
     }
 
+    //Guarda un comentario en la base de datos
     @RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
     public ModelAndView save(@Valid CommentForm commentForm, BindingResult binding) {
 

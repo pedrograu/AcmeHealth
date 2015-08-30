@@ -42,16 +42,19 @@ public class CommentService {
 
     // Simple CRUD methods --------------------------------------
 
+    //Devuelve una collection de commnents para un especialista dado.
     public Collection<Comment> getCommentsForSpecialist(Specialist specialist) {
         Collection<Comment> comments = commentRepository.getCommentsForSpecialist(specialist.getId());
         return comments;
     }
 
+    //Devuelve un comment dado su id
     public Comment findOneToEdit(int commentId) {
         Comment comment = commentRepository.findOne(commentId);
         return comment;
     }
 
+    //Crea un objeto formulario de tipo comment para un commnent dado.
     public CommentForm createForm(Comment comment) {
         CommentForm commentForm = new CommentForm();
         commentForm.setId(comment.getId());
@@ -64,6 +67,7 @@ public class CommentService {
         return null;
     }
 
+    //Reconstruye un comment a partir de un objeto formulario de tipo comment
     public Comment recontructor(CommentForm commentForm) {
         Comment result = create();
 
@@ -76,6 +80,7 @@ public class CommentService {
         return result;
     }
 
+    //Crea un comment para el paciente logueado en el sistema
     public Comment create() {
 
         Comment result = new Comment();
@@ -89,18 +94,23 @@ public class CommentService {
         return result;
     }
 
+    //Guarda un comment en la base da datos
     public void save(Comment comment) {
 
         Patient patient = patientService.findByPrincipal();
         Specialist specialist = comment.getProfile().getSpecialist();
         Collection<Appointment> appointments = appointmentService.getAppointmentforOneSpecialistAndOnePatient(
                 specialist, patient);
+        //Comprueba que el paciente ha tenido al menos una cita con el especialista al que va a ponerle un comentario
         Assert.isTrue(!appointments.isEmpty());
         commentRepository.save(comment);
+        
+        //Actualiza la valoración del especialista
         profileService.updateRating(comment.getProfile());
 
     }
 
+    //Elimina de la base de datos una collections de comments
     public void delete2(Collection<Comment> comments) {
 
         commentRepository.delete(comments);

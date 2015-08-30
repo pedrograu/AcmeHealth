@@ -28,11 +28,13 @@ public class AdministratorService {
 
     // Simple CRUD methods --------------------------------------
 
+    //Obtiene el administrador logueado en el sistema
     public Administrator findByPrincipal() {
         UserAccount userAccount = LoginService.getPrincipal();
         return findByUserAccount(userAccount);
     }
 
+    //Obtiene el administrador pasandole como parametro de entrada un userAccount
     public Administrator findByUserAccount(UserAccount userAccount) {
 
         Administrator result;

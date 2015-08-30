@@ -29,6 +29,7 @@ public class PatientSpecialistController extends AbstractController {
 
     // List ------------------------------------------------------------------		
 
+    //Lista los pacientes de un especialista
     @RequestMapping(value = "/list-own", method = RequestMethod.GET)
     public ModelAndView listOwn() {
 
@@ -46,6 +47,7 @@ public class PatientSpecialistController extends AbstractController {
         return result;
     }
 
+    //Lista los pacientes que el especialista ha atendido en el dia de hoy
     @RequestMapping(value = "/list-today", method = RequestMethod.GET)
     public ModelAndView listToday() {
 

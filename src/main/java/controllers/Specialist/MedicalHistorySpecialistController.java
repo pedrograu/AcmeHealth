@@ -20,13 +20,18 @@ import domain.MedicalHistory;
 @RequestMapping("/medicalHistory/specialist")
 public class MedicalHistorySpecialistController extends AbstractController {
 
+	//Services.........................................................
+	
     @Autowired
     private MedicalHistoryService medicalHistoryService;
-
+    
+    //Constructors......................................................
+    
     public MedicalHistorySpecialistController() {
         super();
     }
 
+    //Muestra los detalles del historial medico dado su id
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     public ModelAndView detail(@RequestParam int medicalHistoryId) {
 
@@ -40,6 +45,7 @@ public class MedicalHistorySpecialistController extends AbstractController {
         return result;
     }
 
+    //Editar la informacion del historial medico
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public ModelAndView edit(@RequestParam int medicalHistoryId) {
 
@@ -53,6 +59,7 @@ public class MedicalHistorySpecialistController extends AbstractController {
         return result;
     }
 
+    //Guarda el historial medico en la bd
     @RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
     public ModelAndView save(@Valid MedicalHistory medicalHistory, BindingResult binding) {
 

@@ -28,6 +28,7 @@ public class SpecialistController extends AbstractController {
 
     // List ------------------------------------------------------------------		
 
+    //Lista todos los especialistas
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView list() {
 

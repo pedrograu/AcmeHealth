@@ -38,6 +38,7 @@ public class ProfileService {
 
     // Simple CRUD methods --------------------------------------
 
+    //Crea un profile para un especialista
     public Profile create(Specialist specialist2) {
 
         Profile profile = new Profile();
@@ -49,10 +50,13 @@ public class ProfileService {
         return profile;
     }
 
+    //Guarda un profile en la base de datos
     public Profile save(Profile profile) {
 
         Administrator administratorConnect = administratorService.findByPrincipal();
         Assert.notNull(profile);
+        
+        //Comprueba que el usuario logueado en el sistema es un administrador
         Assert.isTrue(Administrator.class == administratorConnect.getClass());
         Profile profile1 = profileRepository.save(profile);
 
@@ -60,6 +64,7 @@ public class ProfileService {
 
     }
 
+  //Guarda un profile en la base de datos
     public Profile save2(Profile profile) {
         Assert.notNull(profile);
         checkPrincipal(profile);
@@ -70,18 +75,21 @@ public class ProfileService {
 
     }
 
+    //Devuelve un profile pasado su id
     public Profile findOneToEdit(int profileId) {
 
         Profile profile = profileRepository.findOne(profileId);
         return profile;
     }
 
+    //Comprueba que el perfil es del especialista logueado en el sistema
     public void checkPrincipal(Profile profile) {
         Specialist specialistConnect = specialistService.findByPrincipal();
         Assert.isTrue(profile.getSpecialist().equals(specialistConnect));
 
     }
 
+    //Actualiza la valoracion del perfil de un especialista
     public void updateRating(Profile profile) {
         Double d = profileRepository.updateRating(profile.getId());
         profile.setRating(Math.round((d) * Math.pow(10, 2)) / Math.pow(10, 2));
@@ -90,11 +98,13 @@ public class ProfileService {
 
     }
 
+    //Elimina de la base de datos un profile
     public void delete(Profile profile) {
         profileRepository.delete(profile);
 
     }
 
+    //Devuelve los especialistas que tienen la mejor valoracion
     public Collection<Profile> getBestSpecialist() {
         Collection<Profile> profiles;
         profiles = profileRepository.getBestSpecialist();

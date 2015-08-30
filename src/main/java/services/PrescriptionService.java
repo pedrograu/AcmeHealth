@@ -38,6 +38,7 @@ public class PrescriptionService {
 
     // Metodos ---------------------------------------------
 
+    //Crea una prescription asociada a un appointment
     public Prescription create(Appointment a) {
 
         Prescription p = new Prescription();
@@ -50,6 +51,7 @@ public class PrescriptionService {
 
     }
 
+    //Guarda una prescription en la base de datos
     public Prescription save(Prescription p) {
 
         checkPrincipal(p);
@@ -61,12 +63,14 @@ public class PrescriptionService {
         return prescription2;
     }
 
+    //Devuelve todas las prescription del paciente que se encuentra logueado en el sistema
     public Collection<Prescription> findMyPrescriptions() {
         Patient patientConnect = patientService.findByPrincipal();
         Collection<Prescription> prescriptions = prescriptionRepository.findMyPrescriptions(patientConnect.getId());
         return prescriptions;
     }
 
+    //Devuelve una prescription dada su id
     public Prescription findOneToEdit(int id) {
         Assert.isTrue(id != 0);
         Prescription res;
@@ -74,11 +78,13 @@ public class PrescriptionService {
         return res;
     }
 
+    //Comprueba que la prescription es del especialista logueado en el sistema
     public void checkPrincipal(Prescription prescription) {
         Specialist specialistConnect = specialistService.findByPrincipal();
         Assert.isTrue(prescription.getAppointment().getSpecialist().equals(specialistConnect));
     }
 
+    //Devuelve todas las prescription del paciente logueado en el sistema y del paciente dado como parametro de entrada.
     public Collection<Prescription> findForPatient(Patient patientConnect) {
 
         Specialist specialistConnect = specialistService.findByPrincipal();

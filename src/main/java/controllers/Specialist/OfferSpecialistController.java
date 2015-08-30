@@ -31,6 +31,7 @@ public class OfferSpecialistController extends AbstractController {
 
     // List ------------------------------------------------------------------		
 
+    //Lista las ofertas no finalizadas del especialista logueado
     @RequestMapping(value = "/list-not-finished", method = RequestMethod.GET)
     public ModelAndView listNotFinished() {
 
@@ -47,6 +48,7 @@ public class OfferSpecialistController extends AbstractController {
         return result;
     }
 
+    //Muestra los detalles de una oferta dado su id
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     public ModelAndView detail(@RequestParam int offerId) {
 

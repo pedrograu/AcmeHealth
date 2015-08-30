@@ -24,37 +24,7 @@
  
   <!--  notification start -->
   <ul class="nav top-menu">
-   <!-- settings start -->
-   <!-- settings end -->
-   <!-- inbox dropdown start-->
-   <!-- 
-   <li id="header_inbox_bar" class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
-     <i class="fa fa-envelope-o"></i>
-   </a>
-    <ul class="dropdown-menu extended inbox">
-     <div class="notify-arrow notify-arrow-green"></div>
-     <li>
-      <p class="green">You have 5 new messages</p>
-     </li>
-     <li><a href="index.html#"> <span class="photo"><img alt="avatar" src="assets/img/ui-zac.jpg"></span>
-       <span class="subject"> <span class="from">Zac Snider</span> <span class="time">Just now</span>
-      </span> <span class="message"> Hi mate, how is everything? </span>
-     </a></li>
-     <li><a href="index.html#"> <span class="photo"><img alt="avatar" src="assets/img/ui-divya.jpg"></span>
-       <span class="subject"> <span class="from">Divya Manian</span> <span class="time">40 mins.</span>
-      </span> <span class="message"> Hi, I need your help with this. </span>
-     </a></li>
-     <li><a href="index.html#"> <span class="photo"><img alt="avatar" src="assets/img/ui-danro.jpg"></span>
-       <span class="subject"> <span class="from">Dan Rogers</span> <span class="time">2 hrs.</span>
-      </span> <span class="message"> Love your new Dashboard. </span>
-     </a></li>
-     <li><a href="index.html#"> <span class="photo"><img alt="avatar" src="assets/img/ui-sherman.jpg"></span>
-       <span class="subject"> <span class="from">Dj Sherman</span> <span class="time">4 hrs.</span>
-      </span> <span class="message"> Please, answer asap. </span>
-     </a></li>
-     <li><a href="index.html#">See all messages</a></li>
-    </ul></li> -->
-   <!-- inbox dropdown end -->
+
 
   </ul>
   <!--  notification end -->
@@ -72,8 +42,7 @@
   
    <!-- ANONYMOUS -->
    <security:authorize access="isAnonymous()">
-    <%--  <li><a class="logout" href="security/login.do"><spring:message code="master.page.login" /></a></li>
-    <li><a class="logout" href="register/patient/edit.do"><spring:message code="master.page.register.patient" /></a></li> --%>
+
     <li style="margin-top: 15px; margin-right: 15px;">
      <div class="btn-group ">
       <button type="button" class="btn btn-theme dropdown-toggle" data-toggle="dropdown">

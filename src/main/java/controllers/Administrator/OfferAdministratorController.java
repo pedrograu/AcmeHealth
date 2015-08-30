@@ -44,6 +44,7 @@ public class OfferAdministratorController extends AbstractController {
 
     // List ------------------------------------------------------------------
 
+    //Muestra un listado de las ofertas creadas por él
     @RequestMapping(value = "/list-own", method = RequestMethod.GET)
     public ModelAndView listOwn() {
 

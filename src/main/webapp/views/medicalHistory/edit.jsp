@@ -25,8 +25,6 @@
 
 	<jstl:if test="${detailsMedicalHistory==true}">
 
-
-
 		<div class="col-lg-12">
 			<div class="row row-centered">
 				<div class="col-lg-12 col-md-12 col-sm-12 mb">
@@ -62,9 +60,6 @@
 				</a>
 			</div>
 		</div>
-
-
-
 
 
 	</jstl:if>

@@ -27,6 +27,7 @@ public class CommentController extends AbstractController {
 
     // Edit........................
 
+    //Muestra los detalles de un comentario dado su id
     @RequestMapping(value = "/details", method = RequestMethod.GET)
     public ModelAndView details(@RequestParam int commentId) {
 

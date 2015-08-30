@@ -19,18 +19,23 @@ import services.SpecialtyService;
 @RequestMapping("/specialty/patient")
 public class SpecialtyPatientController extends AbstractController {
 
+	//Services......................................
+	
     @Autowired
     private SpecialtyService specialtyService;
 
     @Autowired
     private SpecialistService specialistService;
 
+    //Constructor......................................
+    
     public SpecialtyPatientController() {
         super();
     }
 
     // Listing.....................
 
+    //Lista todas las especialidades
     @RequestMapping(value = "/list-all", method = RequestMethod.GET)
     public ModelAndView listAll() {
 
@@ -46,6 +51,7 @@ public class SpecialtyPatientController extends AbstractController {
         return result;
     }
 
+    //Muestra los detalles de una especialidad dada su id
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     public ModelAndView detail(@RequestParam int specialtyId) {
 

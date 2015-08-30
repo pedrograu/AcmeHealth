@@ -35,17 +35,20 @@ public class SpecialtyService {
 
     // Simple CRUD methods --------------------------------------
 
+    //Devuelve todas las especialidades del sistema
     public Collection<Specialty> getAll() {
 
         Collection<Specialty> specialtys = specialtyRepository.getAll();
         return specialtys;
     }
 
+    //Devuelve una especialidad dado su id
     public Specialty findOneToEdit(int specialtyId) {
         Specialty s = specialtyRepository.findOne(specialtyId);
         return s;
     }
 
+    //Crea una nueva especialidad
     public Specialty create() {
 
         Specialty result = new Specialty();
@@ -60,6 +63,7 @@ public class SpecialtyService {
 
     }
 
+    //Guarda en la base de datos una especialidad
     public void save(Specialty specialty) {
         checkPrincipal(specialty);
         Assert.notNull(specialty);
@@ -67,6 +71,7 @@ public class SpecialtyService {
 
     }
 
+    //Comprueba que la especialidad ha sido creada por el administrador que se encuentra logueado en el sistema
     public void checkPrincipal(Specialty specialty) {
         Administrator administratorConnect = administratorService.findByPrincipal();
         Assert.isTrue(specialty.getAdministrator().equals(administratorConnect));
