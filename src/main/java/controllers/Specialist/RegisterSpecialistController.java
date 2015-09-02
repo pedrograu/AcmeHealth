@@ -66,7 +66,7 @@ public class RegisterSpecialistController extends AbstractController {
                 specialist = specialistService.reconstruct(specialistForm);
 
                 specialistService.save(specialist);
-                result = new ModelAndView("redirect:../../security/login.do");
+                result = new ModelAndView("redirect:../../customerArea/administrator/list.do");
 
             } catch (DataIntegrityViolationException oops) {
                 result = createEditModelAndView(specialistForm, "register.duplicate.error");
